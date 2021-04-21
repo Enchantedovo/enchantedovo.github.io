@@ -447,6 +447,28 @@
       </tags>
   </entry>
   <entry>
+    <title>PTA习题2.7</title>
+    <url>/2021/04/20/PTA%E4%B9%A0%E9%A2%982.7/</url>
+    <content><![CDATA[<p>设有一个球从高度为h米的地方落下，碰到地面后又弹到高度为原来p倍的位置，然后又落下，再弹起，再落下…。请编写函数求初始高度为h的球下落后到基本停下来（高度小于给定阈值TOL）时在空中所经过的路程总和。</p>
+<p>函数接口定义：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">double dist( double h, double p );</span><br></pre></td></tr></table></figure>
+<p>其中h是球的初始高度，p是球弹起高度与弹起前落下高度的比值；函数dist要返回球下落后到基本停下来时在空中所经过的路程总和。注意：当弹起的高度小于裁判程序定义的常数TOL时，弹起的距离不计算在内。</p>
+<p>裁判测试程序样例：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line">#define TOL 1E-2</span><br><span class="line"></span><br><span class="line">double dist( double h, double p );</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    double h, p, d;</span><br><span class="line">    scanf(&quot;%lf %lf&quot;, &amp;h, &amp;p);</span><br><span class="line">    d &#x3D; dist(h, p);</span><br><span class="line">    printf(&quot;%.6f\n&quot;, d);</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;* 你的代码将被嵌在这里 *&#x2F;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>输入样例：<br><code>1.0 0.4</code><br>输出样例：<br><code>2.319680</code></p>
+<p><strong>递归实现</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">double dist( double h, double p )&#123;</span><br><span class="line">    if(p*h&lt;TOL) return h;</span><br><span class="line">    else return h+h*p+dist(h*p,p);&#x2F;&#x2F;重复的</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>非递归实现</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">double dist( double h, double p )&#x2F;&#x2F;右一个注意点两次触地时走过的距离为 h+2*h*p</span><br><span class="line">&#123;</span><br><span class="line">    double mix&#x3D;h*p;</span><br><span class="line">    double sum &#x3D; h;&#x2F;&#x2F;第一次落下走过的距离是h</span><br><span class="line">    while(mix&gt;&#x3D;TOL)</span><br><span class="line">    &#123;</span><br><span class="line">        sum+&#x3D; 2*mix;&#x2F;&#x2F;第二次落下走过的是 h+2*h*p，依次类推</span><br><span class="line">        mix &#x3D; mix*p;</span><br><span class="line">    &#125;</span><br><span class="line">    return sum;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>刷题</category>
+      </categories>
+      <tags>
+        <tag>PTA</tag>
+        <tag>Markdown</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Hexo搭建博客</title>
     <url>/2021/01/31/build-blog/</url>
     <content><![CDATA[<h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><h3 id="预备知识"><a href="#预备知识" class="headerlink" title="预备知识"></a>预备知识</h3><ul>
@@ -456,9 +478,9 @@
 </ul>
 <h3 id="本文所使用环境"><a href="#本文所使用环境" class="headerlink" title="本文所使用环境"></a>本文所使用环境</h3><ul>
 <li>Windows8.1</li>
-<li><a href="mailto:&#110;&#x6f;&#x64;&#x65;&#46;&#106;&#115;&#x40;&#53;&#46;&#x35;&#46;&#x30;">&#110;&#x6f;&#x64;&#x65;&#46;&#106;&#115;&#x40;&#53;&#46;&#x35;&#46;&#x30;</a></li>
-<li><a href="mailto:&#103;&#105;&#x74;&#x40;&#x31;&#46;&#x39;&#x2e;&#50;">&#103;&#105;&#x74;&#x40;&#x31;&#46;&#x39;&#x2e;&#50;</a></li>
-<li><a href="mailto:&#104;&#101;&#120;&#x6f;&#x40;&#51;&#x2e;&#50;&#46;&#50;">&#104;&#101;&#120;&#x6f;&#x40;&#51;&#x2e;&#50;&#46;&#50;</a></li>
+<li><a href="mailto:&#110;&#111;&#x64;&#101;&#46;&#106;&#115;&#64;&#x35;&#x2e;&#x35;&#x2e;&#48;">&#110;&#111;&#x64;&#101;&#46;&#106;&#115;&#64;&#x35;&#x2e;&#x35;&#x2e;&#48;</a></li>
+<li><a href="mailto:&#x67;&#x69;&#116;&#64;&#49;&#x2e;&#57;&#x2e;&#x32;">&#x67;&#x69;&#116;&#64;&#49;&#x2e;&#57;&#x2e;&#x32;</a></li>
+<li><a href="mailto:&#104;&#101;&#x78;&#111;&#x40;&#51;&#x2e;&#50;&#x2e;&#x32;">&#104;&#101;&#x78;&#111;&#x40;&#51;&#x2e;&#50;&#x2e;&#x32;</a></li>
 </ul>
 <h2 id="搭建GitHub博客"><a href="#搭建GitHub博客" class="headerlink" title="搭建GitHub博客"></a>搭建GitHub博客</h2><h3 id="安装hexo"><a href="#安装hexo" class="headerlink" title="安装hexo"></a>安装hexo</h3><p>先创建一个文件夹blog，然后cd到这个文件夹下（或者在这个文件夹下直接右键git bash打开）。</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm install -g hexo-cli</span><br></pre></td></tr></table></figure>
@@ -531,8 +553,8 @@
         <category>其他</category>
       </categories>
       <tags>
-        <tag>Hexo</tag>
         <tag>Markdown</tag>
+        <tag>Hexo</tag>
       </tags>
   </entry>
   <entry>
@@ -740,10 +762,5 @@
         <tag>python</tag>
         <tag>可视化</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>PTA</title>
-    <url>/2021/04/20/PTA%E4%B9%A0%E9%A2%982.7/</url>
-    <content><![CDATA[]]></content>
   </entry>
 </search>
