@@ -1,0 +1,326 @@
+<!DOCTYPE html><html lang="zh-cn" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>seaborn | Enchanted to Meet U</title><meta name="keywords" content="python,可视化"><meta name="author" content="HattieHD"><meta name="copyright" content="HattieHD"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="description" content="数据可视化学习(≖ᴗ≖)✧">
+<meta property="og:type" content="article">
+<meta property="og:title" content="seaborn">
+<meta property="og:url" content="https://enchantedovo.cn/2021/02/03/seaborn/index.html">
+<meta property="og:site_name" content="Enchanted to Meet U">
+<meta property="og:description" content="数据可视化学习(≖ᴗ≖)✧">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.loli.net/2021/01/29/1OnRmrgpo5AqXST.png">
+<meta property="article:published_time" content="2021-02-03T03:12:39.000Z">
+<meta property="article:modified_time" content="2021-02-12T12:29:37.784Z">
+<meta property="article:author" content="HattieHD">
+<meta property="article:tag" content="python">
+<meta property="article:tag" content="可视化">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2021/01/29/1OnRmrgpo5AqXST.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://enchantedovo.cn/2021/02/03/seaborn/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css" media="print" onload="this.media='all'"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"We didn't find any results for the search: ${query}"}},
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"简"},
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: 'days',
+  date_suffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"Traditional Chinese Activated Manually","cht_to_chs":"Simplified Chinese Activated Manually","day_to_night":"Dark Mode Activated Manually","night_to_day":"Light Mode Activated Manually","bgLight":"#49b1f5","bgDark":"#121212","position":"bottom-left"},
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isanchor: true
+};
+
+var saveToLocal = {
+  set: function setWithExpiry(key, value, ttl) {
+    const now = new Date()
+    const expiryDay = ttl * 86400000
+    const item = {
+      value: value,
+      expiry: now.getTime() + expiryDay,
+    }
+    localStorage.setItem(key, JSON.stringify(item))
+  },
+
+  get: function getWithExpiry(key) {
+    const itemStr = localStorage.getItem(key)
+
+    if (!itemStr) {
+      return undefined
+    }
+    const item = JSON.parse(itemStr)
+    const now = new Date()
+
+    if (now.getTime() > item.expiry) {
+      localStorage.removeItem(key)
+      return undefined
+    }
+    return item.value
+  }
+}
+
+// https://stackoverflow.com/questions/16839698/jquery-getscript-alternative-in-native-javascript
+const getScript = url => new Promise((resolve, reject) => {
+  const script = document.createElement('script')
+  script.src = url
+  script.async = true
+  script.onerror = reject
+  script.onload = script.onreadystatechange = function() {
+    const loadState = this.readyState
+    if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+    script.onload = script.onreadystatechange = null
+    resolve()
+  }
+  document.head.appendChild(script)
+})</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2021-02-12 20:29:37'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(function () {  window.activateDarkMode = function () {
+    document.documentElement.setAttribute('data-theme', 'dark')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+    }
+  }
+  window.activateLightMode = function () {
+    document.documentElement.setAttribute('data-theme', 'light')
+   if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+    }
+  }
+  const autoChangeMode = 'false'
+  const t = saveToLocal.get('theme')
+  if (autoChangeMode === '1') {
+    const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+    const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+    const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+    if (t === undefined) {
+      if (isLightMode) activateLightMode()
+      else if (isDarkMode) activateDarkMode()
+      else if (isNotSpecified || hasNoSupport) {
+        const now = new Date()
+        const hour = now.getHours()
+        const isNight = hour <= 6 || hour >= 18
+        isNight ? activateDarkMode() : activateLightMode()
+      }
+      window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+        if (saveToLocal.get('theme') === undefined) {
+          e.matches ? activateDarkMode() : activateLightMode()
+        }
+      })
+    } else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else if (autoChangeMode === '2') {
+    const now = new Date()
+    const hour = now.getHours()
+    const isNight = hour <= 6 || hour >= 18
+    if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+    else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else {
+    if (t === 'dark') activateDarkMode()
+    else if (t === 'light') activateLightMode()
+  }const asideStatus = saveToLocal.get('aside-status')
+if (asideStatus !== undefined) {
+   if (asideStatus === 'hide') {
+     document.documentElement.classList.add('hide-aside')
+   } else {
+     document.documentElement.classList.remove('hide-aside')
+   }
+}const fontSizeVal = saveToLocal.get('global-font-size')
+if (fontSizeVal !== undefined) {
+  document.documentElement.style.setProperty('--global-font-size', fontSizeVal + 'px')
+}})()</script><link rel="stylesheet" href="/css/diy.css"><meta name="generator" content="Hexo 5.3.0"><link rel="alternate" href="/atom.xml" title="Enchanted to Meet U" type="application/atom+xml">
+</head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" data-lazy-src="/img/ava.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">8</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">Tags</div><div class="length-num">10</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">Categories</div><div class="length-num">5</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(https://i.loli.net/2021/01/29/1OnRmrgpo5AqXST.png)"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Enchanted to Meet U</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> Search</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">seaborn</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2021-02-03T03:12:39.000Z" title="Created 2021-02-03 11:12:39">2021-02-03</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2021-02-12T12:29:37.784Z" title="Updated 2021-02-12 20:29:37">2021-02-12</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%8F%AF%E8%A7%86%E5%8C%96/">可视化</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">Word count:</span><span class="word-count">1.5k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">Reading time:</span><span>5min</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h2 id="seaborn简介">seaborn简介</h2>
+<p><code>seaborn</code>同<code>matplotlib</code>一样，是Python进行数据可视化分析的重要第三方包。但<code>seaborn</code>是在<code>matplotlib</code>的基础上进行了<strong>更高级的API封装</strong>。使用<code>seaborn</code>，可以在不需要了解那么多底层参数的情况下，同样能够画出比较好看的图表。</p>
+<h2 id="seaborn使用">seaborn使用</h2>
+<h3 id="安装-导入">安装&amp;导入</h3>
+<p>首先确定你的电脑已安装以下应用</p>
+<ul>
+<li>Python 2.7+ or Python 3</li>
+<li>Pandas</li>
+<li>Matplotlib</li>
+<li>Seaborn</li>
+<li>Jupyter Notebook(可选)</li>
+</ul>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jupyter notebook</span><br></pre></td></tr></table></figure>
+<p>出现jupyternotebook的界面，即可进行代码编写：</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2021/02/03/seaborn/img1.png" class title="img1">
+<p>导入相关包：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib <span class="keyword">as</span> mpl</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> seaborn <span class="keyword">as</span> sns</span><br><span class="line">%matplotlib inline</span><br></pre></td></tr></table></figure>
+<h3 id="seaborn绘图风格">seaborn绘图风格</h3>
+<p>首先定义一个简单的方程来绘制一些偏置的正弦波：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">sinplot</span>(<span class="params">flip=<span class="number">1</span></span>):</span></span><br><span class="line">    x = np.linspace(<span class="number">0</span>, <span class="number">14</span>, <span class="number">100</span>)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, <span class="number">7</span>):</span><br><span class="line">        plt.plot(x, np.sin(x + i * <span class="number">.5</span>) * (<span class="number">7</span> - i) * flip)</span><br></pre></td></tr></table></figure>
+<p><code>matplotlib</code>默认会绘制如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sinplot()</span><br></pre></td></tr></table></figure>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2021/02/03/seaborn/img2.png" class title="img2">
+<p>转换为<code>seaborn</code>默认绘图，可以简单的用set()方法。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sns.<span class="built_in">set</span>()</span><br><span class="line">sinplot()</span><br></pre></td></tr></table></figure>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2021/02/03/seaborn/img3.png" class title="img3">
+<p>有五种seaborn的风格，它们分别是：</p>
+<ul>
+<li>darkgrid（默认）</li>
+<li>whitegrid</li>
+<li>dark</li>
+<li>white</li>
+<li>ticks</li>
+</ul>
+<p>另外可以自己设置相关配置：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sns.set_style(<span class="string">&quot;darkgrid&quot;</span>, &#123;<span class="string">&quot;axes.facecolor&quot;</span>: <span class="string">&quot;.9&quot;</span>&#125;)</span><br><span class="line">sinplot()</span><br></pre></td></tr></table></figure>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2021/02/03/seaborn/img4.png" class title="img4">
+<h3 id="数据可视化demo">数据可视化demo</h3>
+<p>对数据的可视化操作，乍看起来很复杂，其实种类总结起来可以分为下面几种：</p>
+<ul>
+<li>单变量分布可视化(displot)</li>
+<li>双变量分布可视化(jointplot)</li>
+<li>数据集中成对双变量分布(pairplot)</li>
+<li>双变量-三变量散点图(relplot)</li>
+<li>双变量-三变量连线图(relplot)</li>
+<li>双变量-三变量简单拟合</li>
+<li>分类数据的特殊绘图</li>
+</ul>
+<h4 id="单变量分布">单变量分布</h4>
+<p>单变量分布可视化是通过将单变量数据进行统计从而实现画出概率分布的功能，<strong>同时</strong>概率分布有<strong>直方图</strong>与<strong>概率分布曲线</strong>两种形式。<br>
+利用displot()对单变量分布画出直方图(可以取消)，并自动进行概率分布的拟合(也可以使用参数取消)。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sns.set_style(<span class="string">&#x27;darkgrid&#x27;</span>)</span><br><span class="line">x = np.random.randn(<span class="number">300</span>)</span><br><span class="line">sns.distplot(x);</span><br></pre></td></tr></table></figure>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2021/02/03/seaborn/img5.png" class title="img5">
+<p>还可以使用sns.kdeplot()画出核密度估计图。核密度估计是概率论上用来估计未知的密度函数，属于非参数检验，通过核密度估计图可以比较直观的看出样本数据本身的分布特征。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">x=np.random.randn(<span class="number">100</span>)</span><br><span class="line"><span class="comment">#是否进行阴影处理</span></span><br><span class="line">sns.kdeplot(x,shade=<span class="literal">True</span>,color=<span class="string">&quot;g&quot;</span>)</span><br></pre></td></tr></table></figure>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2021/02/03/seaborn/img6.png" class title="img6">
+<p>二元kde图像，很少使用，稍微了解一下即可：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#x,y</span></span><br><span class="line">y=np.random.randn(<span class="number">100</span>)</span><br><span class="line"><span class="comment">#cbar：参数若为True，则会添加一个颜色棒(颜色帮在二元kde图像中才有)</span></span><br><span class="line">sns.kdeplot(x,y,shade=<span class="literal">True</span>,cbar=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2021/02/03/seaborn/img7.png" class title="img7">
+<h4 id="双变量分布">双变量分布</h4>
+<p>双变量分布通俗来说就是分析两个变量的联合概率分布和每一个变量的分布。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line">mean, cov = [<span class="number">0</span>, <span class="number">1</span>], [(<span class="number">1</span>, <span class="number">.5</span>), (<span class="number">.5</span>, <span class="number">1</span>)]</span><br><span class="line">data = np.random.multivariate_normal(mean, cov, <span class="number">200</span>)</span><br><span class="line">df = pd.DataFrame(data, columns=[<span class="string">&quot;x&quot;</span>, <span class="string">&quot;y&quot;</span>])</span><br><span class="line">sns.jointplot(x=<span class="string">&quot;x&quot;</span>, y=<span class="string">&quot;y&quot;</span>, data=df);</span><br></pre></td></tr></table></figure>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2021/02/03/seaborn/img8.png" class title="img8">
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 同样可以使用曲线来拟合分布密度</span></span><br><span class="line">sns.jointplot(x=<span class="string">&quot;x&quot;</span>, y=<span class="string">&quot;y&quot;</span>, data=df, kind=<span class="string">&quot;kde&quot;</span>);</span><br></pre></td></tr></table></figure>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2021/02/03/seaborn/img9.png" class title="img9">
+<h4 id="数据集中成对双变量分析">数据集中成对双变量分析</h4>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 对角线化的是单变量的分布</span></span><br><span class="line">iris = sns.load_dataset(<span class="string">&quot;iris&quot;</span>)</span><br><span class="line">sns.pairplot(iris);</span><br></pre></td></tr></table></figure>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2021/02/03/seaborn/img10.png" class title="img10">
+<p>可以进行一些配置：</p>
+<ul>
+<li>hue——》指定分类变量</li>
+<li>markers——》使用不同的形状</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">g1 = sns.pairplot(iris, hue=<span class="string">&quot;species&quot;</span>, markers=[<span class="string">&quot;o&quot;</span>, <span class="string">&quot;s&quot;</span>, <span class="string">&quot;D&quot;</span>])</span><br></pre></td></tr></table></figure>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2021/02/03/seaborn/img11.png" class title="img11">
+<p>还有其他配置如下:</p>
+<ul>
+<li>使用调色板</li>
+<li>使用 KDE</li>
+<li>使用回归</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">g2 = sns.pairplot(iris, hue=<span class="string">&quot;species&quot;</span>, palette=<span class="string">&quot;husl&quot;</span>)</span><br><span class="line">g3 = sns.pairplot(iris, diag_kind=<span class="string">&quot;kde&quot;</span>)</span><br><span class="line">g4 = sns.pairplot(iris, kind=<span class="string">&quot;reg&quot;</span>)</span><br></pre></td></tr></table></figure>
+<h4 id="双变量-三变量散点图">双变量-三变量散点图</h4>
+<p>这里使用tips数据集：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">tips = sns.load_dataset(<span class="string">&quot;tips&quot;</span>)</span><br><span class="line">sns.relplot(x=<span class="string">&quot;total_bill&quot;</span>, y=<span class="string">&quot;tip&quot;</span>, data=tips);</span><br><span class="line"><span class="comment"># 除了画出双变量的散点图外，还可以利用颜色来增加一个维度将点分离开</span></span><br><span class="line">sns.relplot(x=<span class="string">&quot;total_bill&quot;</span>, y=<span class="string">&quot;tip&quot;</span>, hue=<span class="string">&quot;smoker&quot;</span>, data=tips);</span><br></pre></td></tr></table></figure>
+<p><strong>通过hue设置来进行区分</strong></p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2021/02/03/seaborn/img11.png" class title="img11">
+<h4 id="简单线性拟合">简单线性拟合</h4>
+<p>主要用regplot()进行画图，这个函数绘制两个变量的散点图，x和y，然后拟合回归模型并绘制得到的回归直线和该回归一个95％置信区间。<br>
+（不过一般这种工作可以用sklearn来做）</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sns.set_style(<span class="string">&#x27;darkgrid&#x27;</span>)</span><br><span class="line">sns.regplot(x=<span class="string">&quot;total_bill&quot;</span>, y=<span class="string">&quot;tip&quot;</span>, data=tips);</span><br></pre></td></tr></table></figure>
+<p>线性模型对某些数据可能适应不够好，可以使用高阶模型拟合，也可以删除部分数据：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 利用order2阶模型来拟合</span></span><br><span class="line">sns.regplot(x=<span class="string">&quot;x&quot;</span>, y=<span class="string">&quot;y&quot;</span>, data=anscombe.query(<span class="string">&quot;dataset == &#x27;II&#x27;&quot;</span>),ci=<span class="literal">None</span>,order = <span class="number">2</span>);</span><br><span class="line"><span class="comment"># 如果数据中有明显错误的数据点可以进行删除</span></span><br><span class="line">sns.regplot(x=<span class="string">&quot;x&quot;</span>, y=<span class="string">&quot;y&quot;</span>, data=anscombe.query(<span class="string">&quot;dataset == &#x27;III&#x27;&quot;</span>),ci=<span class="literal">None</span>);</span><br><span class="line">plt.figure()</span><br><span class="line">sns.regplot(x=<span class="string">&quot;x&quot;</span>, y=<span class="string">&quot;y&quot;</span>, data=anscombe.query(<span class="string">&quot;dataset == &#x27;III&#x27;&quot;</span>),ci=<span class="literal">None</span>,robust = <span class="literal">True</span>);</span><br></pre></td></tr></table></figure>
+<h4 id="热力图">热力图</h4>
+<p>取出三个特征进行热力图的绘制figures.pivot() 其中第三个属性表示热力图上实际的值。<br>
+常用设置：</p>
+<ul>
+<li>annot：是否显示数值注释</li>
+<li>fmt：format的缩写，设置数值的格式化形式</li>
+<li>linewidths：热力图矩阵之间的间隔大小</li>
+<li>vmax,vmin：图例中最大值和最小值的显示值，没有该参数时默认不显示</li>
+<li>cmap：matplotlib的colormap名称或颜色对象；如果没有提供，默认为：
+<ul>
+<li>cubehelix map (数据集为连续数据集时)</li>
+<li>RdBu_r (数据集为离散数据集时)</li>
+</ul>
+</li>
+<li>xticklabels, yticklabels：绘制dataframe的行列名</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">flights = sns.load_dataset(<span class="string">&#x27;flights&#x27;</span>)</span><br><span class="line"><span class="comment"># 取出这三个属性画热力图，坐标点的位置是passengers</span></span><br><span class="line">flights = flights.pivot(<span class="string">&#x27;month&#x27;</span>, <span class="string">&#x27;year&#x27;</span>, <span class="string">&#x27;passengers&#x27;</span>)</span><br><span class="line">ax = sns.heatmap(flights)</span><br><span class="line">plt.show()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将实际的数值绘制到上面</span></span><br><span class="line">flights = sns.load_dataset(<span class="string">&#x27;flights&#x27;</span>)</span><br><span class="line"><span class="comment"># 取出这三个属性画热力图，坐标点的位置是passengers</span></span><br><span class="line">flights = flights.pivot(<span class="string">&#x27;month&#x27;</span>, <span class="string">&#x27;year&#x27;</span>, <span class="string">&#x27;passengers&#x27;</span>)</span><br><span class="line">ax = sns.heatmap(flights, annot=<span class="literal">True</span>, fmt=<span class="string">&#x27;d&#x27;</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2021/02/03/seaborn/img12.png" class title="img12">
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">plt.figure(figsize=(<span class="number">10</span>,<span class="number">6</span>))</span><br><span class="line">ax = sns.heatmap(flights, fmt=<span class="string">&#x27;d&#x27;</span>, linewidths=<span class="number">.5</span>, cmap=<span class="string">&#x27;YlGnBu&#x27;</span>)</span><br></pre></td></tr></table></figure></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">HattieHD</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="https://enchantedovo.cn/2021/02/03/seaborn/">https://enchantedovo.cn/2021/02/03/seaborn/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/python/">python</a><a class="post-meta__tags" href="/tags/%E5%8F%AF%E8%A7%86%E5%8C%96/">可视化</a></div><div class="post_share"><div class="social-share" data-image="https://i.loli.net/2021/01/29/1OnRmrgpo5AqXST.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2021/02/12/nlp1/"><img class="prev-cover" data-lazy-src="https://i.loli.net/2021/01/29/1OnRmrgpo5AqXST.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">Previous Post</div><div class="prev_info">NLP基础</div></div></a></div><div class="next-post pull-right"><a href="/2021/01/31/build-blog/"><img class="next-cover" data-lazy-src="https://i.loli.net/2021/01/29/1OnRmrgpo5AqXST.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">Hexo搭建博客</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> Related Articles</span></div><div class="relatedPosts-list"><div><a href="/2021/02/12/nlp1/" title="NLP基础"><img class="cover" data-lazy-src="https://i.loli.net/2021/01/29/1OnRmrgpo5AqXST.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-02-12</div><div class="title">NLP基础</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> Comment</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" data-lazy-src="/img/ava.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">HattieHD</div><div class="author-info__description">————butterfly的个人博客</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">8</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">Tags</div><div class="length-num">10</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">Categories</div><div class="length-num">5</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/xxxxx" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:xxxxxx@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>Announcement</span></div><div class="announcement_content">Welcome to My Blog ❤</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Catalog</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#seaborn%E7%AE%80%E4%BB%8B"><span class="toc-number">1.</span> <span class="toc-text">seaborn简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#seaborn%E4%BD%BF%E7%94%A8"><span class="toc-number">2.</span> <span class="toc-text">seaborn使用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85-%E5%AF%BC%E5%85%A5"><span class="toc-number">2.1.</span> <span class="toc-text">安装&amp;导入</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#seaborn%E7%BB%98%E5%9B%BE%E9%A3%8E%E6%A0%BC"><span class="toc-number">2.2.</span> <span class="toc-text">seaborn绘图风格</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96demo"><span class="toc-number">2.3.</span> <span class="toc-text">数据可视化demo</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8D%95%E5%8F%98%E9%87%8F%E5%88%86%E5%B8%83"><span class="toc-number">2.3.1.</span> <span class="toc-text">单变量分布</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%8C%E5%8F%98%E9%87%8F%E5%88%86%E5%B8%83"><span class="toc-number">2.3.2.</span> <span class="toc-text">双变量分布</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E9%9B%86%E4%B8%AD%E6%88%90%E5%AF%B9%E5%8F%8C%E5%8F%98%E9%87%8F%E5%88%86%E6%9E%90"><span class="toc-number">2.3.3.</span> <span class="toc-text">数据集中成对双变量分析</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%8C%E5%8F%98%E9%87%8F-%E4%B8%89%E5%8F%98%E9%87%8F%E6%95%A3%E7%82%B9%E5%9B%BE"><span class="toc-number">2.3.4.</span> <span class="toc-text">双变量-三变量散点图</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AE%80%E5%8D%95%E7%BA%BF%E6%80%A7%E6%8B%9F%E5%90%88"><span class="toc-number">2.3.5.</span> <span class="toc-text">简单线性拟合</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%83%AD%E5%8A%9B%E5%9B%BE"><span class="toc-number">2.3.6.</span> <span class="toc-text">热力图</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/08/27/IELTS2/" title="雅思写作Task2"><img data-lazy-src="https://pic1.zhimg.com/v2-e947841f5b3f71e49f8e315fdc1841c6_r.jpg?source=172ae18b" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="雅思写作Task2"/></a><div class="content"><a class="title" href="/2022/08/27/IELTS2/" title="雅思写作Task2">雅思写作Task2</a><time datetime="2022-08-27T07:10:16.552Z" title="Created 2022-08-27 15:10:16">2022-08-27</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/05/20/LC%E6%97%8B%E8%BD%AC%E6%95%B0%E7%BB%84/" title="LC旋转数组"><img data-lazy-src="https://i.loli.net/2021/01/29/1OnRmrgpo5AqXST.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="LC旋转数组"/></a><div class="content"><a class="title" href="/2021/05/20/LC%E6%97%8B%E8%BD%AC%E6%95%B0%E7%BB%84/" title="LC旋转数组">LC旋转数组</a><time datetime="2021-05-20T15:23:42.000Z" title="Created 2021-05-20 23:23:42">2021-05-20</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/05/13/PTA%E4%B9%A0%E9%A2%987-1/" title="PTA习题7-1"><img data-lazy-src="https://i.loli.net/2021/01/29/2rFRyemLK6HwJjV.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="PTA习题7-1"/></a><div class="content"><a class="title" href="/2021/05/13/PTA%E4%B9%A0%E9%A2%987-1/" title="PTA习题7-1">PTA习题7-1</a><time datetime="2021-05-13T14:38:19.000Z" title="Created 2021-05-13 22:38:19">2021-05-13</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/04/20/PTA%E4%B9%A0%E9%A2%982.7/" title="PTA习题2.7"><img data-lazy-src="https://i.loli.net/2021/01/29/1OnRmrgpo5AqXST.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="PTA习题2.7"/></a><div class="content"><a class="title" href="/2021/04/20/PTA%E4%B9%A0%E9%A2%982.7/" title="PTA习题2.7">PTA习题2.7</a><time datetime="2021-04-20T15:59:22.000Z" title="Created 2021-04-20 23:59:22">2021-04-20</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/02/12/IELTS1/" title="雅思写作Task1"><img data-lazy-src="https://pic1.zhimg.com/v2-e947841f5b3f71e49f8e315fdc1841c6_r.jpg?source=172ae18b" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="雅思写作Task1"/></a><div class="content"><a class="title" href="/2021/02/12/IELTS1/" title="雅思写作Task1">雅思写作Task1</a><time datetime="2021-02-12T14:43:18.000Z" title="Created 2021-02-12 22:43:18">2021-02-12</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By HattieHD</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">❤Hi, welcome to my blog!❤</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="font-plus" type="button" title="Increase font size"><i class="fas fa-plus"></i></button><button id="font-minus" type="button" title="Decrease font size"><i class="fas fa-minus"></i></button><button id="translateLink" type="button" title="Toggle Between Traditional Chinese And Simplified Chinese">简</button><button id="darkmode" type="button" title="Toggle Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="Scroll To Comments"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="Back To Top"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">Local search</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="Search for Posts" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>function loadValine () {
+  function initValine () {
+    let initData = {
+      el: '#vcomment',
+      appId: 'idIIOSAeq1UbVzvHKh7NdbXC-gzGzoHsz',
+      appKey: 'Ozg70h4ULc79NSqitNLUL3vP',
+      placeholder: 'Please leave your footprints',
+      avatar: 'monsterid',
+      meta: 'nick,mail,link'.split(','),
+      pageSize: '10',
+      lang: 'zh-CN',
+      recordIP: false,
+      serverURLs: '',
+      emojiCDN: '',
+      emojiMaps: "",
+      enableQQ: false,
+      path: window.location.pathname,
+    }
+
+    if (true) { 
+      initData.requiredFields= ('nick,mail'.split(','))
+    }
+    
+    if (false) {
+      const otherData = false
+      initData = Object.assign(initData, otherData)
+    }
+    
+    const valine = new Valine(initData)
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !true) {
+  if (true) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></div></body></html>
