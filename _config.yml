@@ -13,6 +13,7 @@ timezone: ''
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://example.com/child' and root as '/child/'
+# url: https://enchantedovo.cn
 url: https://enchantedovo.cn
 root: /
 permalink: :year/:month/:day/:title/
@@ -111,7 +112,7 @@ theme: butterfly
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
   type: git
-  repository: https://github.com/Enchantedovo/Enchantedovo.github.io.git
+  repository: https://github.com/Enchantedovo/enchantedovo.github.io.git
   branch: master
 
 
