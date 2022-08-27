@@ -538,6 +538,31 @@ Overall the consumption of the world’s resources is undergoing a dangerous rat
       </tags>
   </entry>
   <entry>
+    <title>PTA习题2.7</title>
+    <url>/2021/04/20/PTA%E4%B9%A0%E9%A2%982.7/</url>
+    <content><![CDATA[<h1>弹球距离</h1>
+<p>设有一个球从高度为h米的地方落下，碰到地面后又弹到高度为原来p倍的位置，然后又落下，再弹起，再落下…。请编写函数求初始高度为h的球下落后到基本停下来（高度小于给定阈值TOL）时在空中所经过的路程总和。</p>
+<p>函数接口定义：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">double dist( double h, double p );</span><br></pre></td></tr></table></figure>
+<p>其中h是球的初始高度，p是球弹起高度与弹起前落下高度的比值；函数dist要返回球下落后到基本停下来时在空中所经过的路程总和。注意：当弹起的高度小于裁判程序定义的常数TOL时，弹起的距离不计算在内。</p>
+<p>裁判测试程序样例：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line">#define TOL 1E-2</span><br><span class="line"></span><br><span class="line">double dist( double h, double p );</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    double h, p, d;</span><br><span class="line">    scanf(&quot;%lf %lf&quot;, &amp;h, &amp;p);</span><br><span class="line">    d &#x3D; dist(h, p);</span><br><span class="line">    printf(&quot;%.6f\n&quot;, d);</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;* 你的代码将被嵌在这里 *&#x2F;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>输入样例：<br>
+<code>1.0 0.4</code><br>
+输出样例：<br>
+<code>2.319680</code></p>
+<p><strong>递归实现</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">double dist( double h, double p )&#123;</span><br><span class="line">    if(p*h&lt;TOL) return h;</span><br><span class="line">    else return h+h*p+dist(h*p,p);&#x2F;&#x2F;重复的</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>非递归实现</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">double dist( double h, double p )&#x2F;&#x2F;右一个注意点两次触地时走过的距离为 h+2*h*p</span><br><span class="line">&#123;</span><br><span class="line">    double mix&#x3D;h*p;</span><br><span class="line">    double sum &#x3D; h;&#x2F;&#x2F;第一次落下走过的距离是h</span><br><span class="line">    while(mix&gt;&#x3D;TOL)</span><br><span class="line">    &#123;</span><br><span class="line">        sum+&#x3D; 2*mix;&#x2F;&#x2F;第二次落下走过的是 h+2*h*p，依次类推</span><br><span class="line">        mix &#x3D; mix*p;</span><br><span class="line">    &#125;</span><br><span class="line">    return sum;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>刷题</category>
+      </categories>
+      <tags>
+        <tag>PTA</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>LC旋转数组</title>
     <url>/2021/05/20/LC%E6%97%8B%E8%BD%AC%E6%95%B0%E7%BB%84/</url>
     <content><![CDATA[<h1>旋转数组</h1>
@@ -590,23 +615,50 @@ Overall the consumption of the world’s resources is undergoing a dangerous rat
       </tags>
   </entry>
   <entry>
-    <title>PTA习题2.7</title>
-    <url>/2021/04/20/PTA%E4%B9%A0%E9%A2%982.7/</url>
-    <content><![CDATA[<h1>弹球距离</h1>
-<p>设有一个球从高度为h米的地方落下，碰到地面后又弹到高度为原来p倍的位置，然后又落下，再弹起，再落下…。请编写函数求初始高度为h的球下落后到基本停下来（高度小于给定阈值TOL）时在空中所经过的路程总和。</p>
-<p>函数接口定义：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">double dist( double h, double p );</span><br></pre></td></tr></table></figure>
-<p>其中h是球的初始高度，p是球弹起高度与弹起前落下高度的比值；函数dist要返回球下落后到基本停下来时在空中所经过的路程总和。注意：当弹起的高度小于裁判程序定义的常数TOL时，弹起的距离不计算在内。</p>
-<p>裁判测试程序样例：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line">#define TOL 1E-2</span><br><span class="line"></span><br><span class="line">double dist( double h, double p );</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    double h, p, d;</span><br><span class="line">    scanf(&quot;%lf %lf&quot;, &amp;h, &amp;p);</span><br><span class="line">    d &#x3D; dist(h, p);</span><br><span class="line">    printf(&quot;%.6f\n&quot;, d);</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;* 你的代码将被嵌在这里 *&#x2F;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>输入样例：<br>
-<code>1.0 0.4</code><br>
-输出样例：<br>
-<code>2.319680</code></p>
-<p><strong>递归实现</strong></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">double dist( double h, double p )&#123;</span><br><span class="line">    if(p*h&lt;TOL) return h;</span><br><span class="line">    else return h+h*p+dist(h*p,p);&#x2F;&#x2F;重复的</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><strong>非递归实现</strong></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">double dist( double h, double p )&#x2F;&#x2F;右一个注意点两次触地时走过的距离为 h+2*h*p</span><br><span class="line">&#123;</span><br><span class="line">    double mix&#x3D;h*p;</span><br><span class="line">    double sum &#x3D; h;&#x2F;&#x2F;第一次落下走过的距离是h</span><br><span class="line">    while(mix&gt;&#x3D;TOL)</span><br><span class="line">    &#123;</span><br><span class="line">        sum+&#x3D; 2*mix;&#x2F;&#x2F;第二次落下走过的是 h+2*h*p，依次类推</span><br><span class="line">        mix &#x3D; mix*p;</span><br><span class="line">    &#125;</span><br><span class="line">    return sum;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+    <title>PTA习题7-1</title>
+    <url>/2021/05/13/PTA%E4%B9%A0%E9%A2%987-1/</url>
+    <content><![CDATA[<h1>7-1 最大子列和问题</h1>
+<p>给定K个整数组成的序列 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">{</mo><msub><mi>N</mi><mn>1</mn></msub><mo separator="true">,</mo><msub><mi>N</mi><mn>2</mn></msub><mo separator="true">,</mo><mo>⋯</mo><mtext> </mtext><mo separator="true">,</mo><msub><mi>N</mi><mi>k</mi></msub><mo stretchy="false">}</mo></mrow><annotation encoding="application/x-tex">\lbrace N_1,N_2,\cdots,N_k \rbrace</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">{</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.10903em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.10903em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="minner">⋯</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:-0.10903em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">}</span></span></span></span>，“连续子列”被定义为<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">{</mo><msub><mi>N</mi><mi>i</mi></msub><mo separator="true">,</mo><msub><mi>N</mi><mrow><mi>i</mi><mo>+</mo><mn>1</mn></mrow></msub><mo separator="true">,</mo><mo>⋯</mo><mtext> </mtext><mo separator="true">,</mo><msub><mi>N</mi><mi>j</mi></msub><mo stretchy="false">}</mo></mrow><annotation encoding="application/x-tex">\lbrace N_i,N_{i+1},\cdots,N_j \rbrace</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.036108em;vertical-align:-0.286108em;"></span><span class="mopen">{</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.10903em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.311664em;"><span style="top:-2.5500000000000003em;margin-left:-0.10903em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">i</span><span class="mbin mtight">+</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.208331em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="minner">⋯</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.311664em;"><span style="top:-2.5500000000000003em;margin-left:-0.10903em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.05724em;">j</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span><span class="mclose">}</span></span></span></span>，其中 1≤i≤j≤K。“最大子列和”则被定义为所有连续子列元素的和中最大者。例如给定序列{ -2, 11, -4, 13, -5, -2 }，其连续子列{ 11, -4, 13 }有最大的和20。现要求你编写程序，计算给定整数序列的最大子列和。</p>
+<p>本题旨在测试各种不同的算法在各种数据情况下的表现。各组测试数据特点如下：</p>
+<ul>
+<li>数据1：与样例等价，测试基本正确性；</li>
+<li>数据2：102个随机整数；</li>
+<li>数据3：103个随机整数；</li>
+<li>数据4：104个随机整数；</li>
+<li>数据5：105个随机整数；</li>
+</ul>
+<p>输入格式:<br>
+<code>输入第1行给出正整数K (≤100000)；第2行给出K个整数，其间以空格分隔。</code></p>
+<p>输出格式:<br>
+<code>在一行中输出最大子列和。如果序列中所有整数皆为负数，则输出0。</code></p>
+<p>输入样例:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">6</span><br><span class="line">-2 11 -4 13 -5 -2</span><br></pre></td></tr></table></figure>
+<h2 id="解法一：存放在数组中，一个一个来比较">解法一：存放在数组中，一个一个来比较</h2>
+<p>时间复杂度为：<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>T</mi><mo stretchy="false">(</mo><mi>n</mi><mo stretchy="false">)</mo><mo>=</mo><mi>O</mi><mo stretchy="false">(</mo><msup><mi>n</mi><mn>2</mn></msup><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">T(n)=O(n^2)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="mopen">(</span><span class="mord mathnormal">n</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1.064108em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal">n</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span></p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i,j,n,max=<span class="number">0</span>,sum=<span class="number">0</span>;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;n);</span><br><span class="line">    <span class="keyword">int</span> a[n];</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;n;i++)&#123;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;a[i]);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;n;i++)&#123;</span><br><span class="line">        <span class="comment">//每一趟</span></span><br><span class="line">        <span class="keyword">for</span>(j=i;j&lt;n;j++)&#123;</span><br><span class="line">            sum+=a[j];</span><br><span class="line">            <span class="keyword">if</span>(sum&gt;max)&#123;</span><br><span class="line">                max=sum;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        sum=<span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%d&quot;</span>,max);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="解法二：联机实现">解法二：联机实现</h2>
+<p>时间复杂度为：<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>T</mi><mo stretchy="false">(</mo><mi>n</mi><mo stretchy="false">)</mo><mo>=</mo><mi>O</mi><mo stretchy="false">(</mo><mi>n</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">T(n)=O(n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="mopen">(</span><span class="mord mathnormal">n</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathnormal">n</span><span class="mclose">)</span></span></span></span></p>
+<p>步骤：</p>
+<ol>
+<li>先进行初始化，max赋0</li>
+<li>再从头开始累加，加到大于最大子序列和的值，把这个值给MaxSum</li>
+<li>如果累加为负数，这一小段的最大子序列就已经出来了，可以重新进行累加比较了</li>
+<li>最后MaxSum一定为最大子序列的和</li>
+</ol>
+<p>这题的关键：只要是首位元素为负数的肯定不是最大子列的组成部分，我们可以将其抛弃。即如果某个子列的首位为负数，那么它一定要借助后面的非负数。所以<strong>如果前面的n项是负数的话，后面的K-n项和一定会比K项和要大，所以在遇到前n项和是负数时，直接将和置0，从n+1项重新开始加</strong></p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdlib&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">int</span> a[<span class="number">100001</span>];</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> n;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;n);</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++)</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;a[i]);</span><br><span class="line">    <span class="keyword">int</span> sum = <span class="number">0</span>, maxsum = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        sum += a[i]; <span class="comment">//依次向右累加</span></span><br><span class="line">        <span class="keyword">if</span> (sum &gt; maxsum)</span><br><span class="line">            maxsum = sum; <span class="comment">//更新最大值</span></span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (sum &lt; <span class="number">0</span>)</span><br><span class="line">            sum = <span class="number">0</span>; <span class="comment">//如果当前和为负数，那么后面的和会减小，所以需要新的起点。</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, maxsum);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="解法三：分治法">解法三：分治法</h2>
+<p>首先，我们可以把整个序列平均分成左右两部分，答案则会在以下三种情况中：</p>
+<ol>
+<li>所求序列完全包含在左半部分的序列中。</li>
+<li>所求序列完全包含在右半部分的序列中。</li>
+<li>所求序列刚好横跨分割点，即左右序列各占一部分。</li>
+</ol>
+<p>前两种情况和大问题一样，只是规模小了些，如果三个子问题都能解决，那么答案就是三个结果的最大值。</p>
+<p>我们主要研究一下第<strong>三种情况</strong>如何解决：</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2021/05/13/PTA%E4%B9%A0%E9%A2%987-1/img.png" class title="img">
+<p>我们只要计算出：以分割点为起点向左的最大连续序列和、以分割点为起点向右的最大连续序列和，这两个结果的和就是第三种情况的答案。因为已知起点，所以这两个结果都能在O(N)的时间复杂度能算出来。</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">//N是数组长度，num是待计算的数组，放在全局区是因为可以开很大的数组</span></span><br><span class="line"><span class="keyword">int</span> N, num[<span class="number">16777216</span>];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">solve</span><span class="params">(<span class="keyword">int</span> left, <span class="keyword">int</span> right)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">//序列长度为1时</span></span><br><span class="line">    <span class="keyword">if</span>(left == right)</span><br><span class="line">        <span class="keyword">return</span> num[left];</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//划分为两个规模更小的问题</span></span><br><span class="line">    <span class="keyword">int</span> mid = left + right &gt;&gt; <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">int</span> lans = solve(left, mid);</span><br><span class="line">    <span class="keyword">int</span> rans = solve(mid + <span class="number">1</span>, right);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//横跨分割点的情况</span></span><br><span class="line">    <span class="keyword">int</span> sum = <span class="number">0</span>, lmax = num[mid], rmax = num[mid + <span class="number">1</span>];</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = mid; i &gt;= left; i--) &#123;</span><br><span class="line">        sum += num[i];</span><br><span class="line">        <span class="keyword">if</span>(sum &gt; lmax) lmax = sum;</span><br><span class="line">    &#125;</span><br><span class="line">    sum = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = mid + <span class="number">1</span>; i &lt;= right; i++) &#123;</span><br><span class="line">        sum += num[i];</span><br><span class="line">        <span class="keyword">if</span>(sum &gt; rmax) rmax = sum;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//答案是三种情况的最大值</span></span><br><span class="line">    <span class="keyword">int</span> ans = lmax + rmax;</span><br><span class="line">    <span class="keyword">if</span>(lans &gt; ans) ans = lans;</span><br><span class="line">    <span class="keyword">if</span>(rans &gt; ans) ans = rans;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> ans;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">//输入数据</span></span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;N);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= N; i++)</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;num[i]);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, solve(<span class="number">1</span>, N));</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>]]></content>
       <categories>
         <category>刷题</category>
       </categories>
@@ -729,55 +781,109 @@ Overall the consumption of the world’s resources is undergoing a dangerous rat
       </tags>
   </entry>
   <entry>
-    <title>PTA习题7-1</title>
-    <url>/2021/05/13/PTA%E4%B9%A0%E9%A2%987-1/</url>
-    <content><![CDATA[<h1>7-1 最大子列和问题</h1>
-<p>给定K个整数组成的序列 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">{</mo><msub><mi>N</mi><mn>1</mn></msub><mo separator="true">,</mo><msub><mi>N</mi><mn>2</mn></msub><mo separator="true">,</mo><mo>⋯</mo><mtext> </mtext><mo separator="true">,</mo><msub><mi>N</mi><mi>k</mi></msub><mo stretchy="false">}</mo></mrow><annotation encoding="application/x-tex">\lbrace N_1,N_2,\cdots,N_k \rbrace</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">{</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.10903em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.10903em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="minner">⋯</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:-0.10903em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">}</span></span></span></span>，“连续子列”被定义为<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">{</mo><msub><mi>N</mi><mi>i</mi></msub><mo separator="true">,</mo><msub><mi>N</mi><mrow><mi>i</mi><mo>+</mo><mn>1</mn></mrow></msub><mo separator="true">,</mo><mo>⋯</mo><mtext> </mtext><mo separator="true">,</mo><msub><mi>N</mi><mi>j</mi></msub><mo stretchy="false">}</mo></mrow><annotation encoding="application/x-tex">\lbrace N_i,N_{i+1},\cdots,N_j \rbrace</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.036108em;vertical-align:-0.286108em;"></span><span class="mopen">{</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.10903em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.311664em;"><span style="top:-2.5500000000000003em;margin-left:-0.10903em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">i</span><span class="mbin mtight">+</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.208331em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="minner">⋯</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.311664em;"><span style="top:-2.5500000000000003em;margin-left:-0.10903em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.05724em;">j</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span><span class="mclose">}</span></span></span></span>，其中 1≤i≤j≤K。“最大子列和”则被定义为所有连续子列元素的和中最大者。例如给定序列{ -2, 11, -4, 13, -5, -2 }，其连续子列{ 11, -4, 13 }有最大的和20。现要求你编写程序，计算给定整数序列的最大子列和。</p>
-<p>本题旨在测试各种不同的算法在各种数据情况下的表现。各组测试数据特点如下：</p>
+    <title>NLP基础</title>
+    <url>/2021/02/12/nlp1/</url>
+    <content><![CDATA[<blockquote>
+<p>参考书籍：</p>
 <ul>
-<li>数据1：与样例等价，测试基本正确性；</li>
-<li>数据2：102个随机整数；</li>
-<li>数据3：103个随机整数；</li>
-<li>数据4：104个随机整数；</li>
-<li>数据5：105个随机整数；</li>
+<li>《自然语言处理理论与实战》</li>
+<li>《Python 自然语言处理》</li>
+<li>《Python 自然语言处理实战：核心技术与算法》</li>
 </ul>
-<p>输入格式:<br>
-<code>输入第1行给出正整数K (≤100000)；第2行给出K个整数，其间以空格分隔。</code></p>
-<p>输出格式:<br>
-<code>在一行中输出最大子列和。如果序列中所有整数皆为负数，则输出0。</code></p>
-<p>输入样例:</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">6</span><br><span class="line">-2 11 -4 13 -5 -2</span><br></pre></td></tr></table></figure>
-<h2 id="解法一：存放在数组中，一个一个来比较">解法一：存放在数组中，一个一个来比较</h2>
-<p>时间复杂度为：<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>T</mi><mo stretchy="false">(</mo><mi>n</mi><mo stretchy="false">)</mo><mo>=</mo><mi>O</mi><mo stretchy="false">(</mo><msup><mi>n</mi><mn>2</mn></msup><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">T(n)=O(n^2)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="mopen">(</span><span class="mord mathnormal">n</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1.064108em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal">n</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span></p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i,j,n,max=<span class="number">0</span>,sum=<span class="number">0</span>;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;n);</span><br><span class="line">    <span class="keyword">int</span> a[n];</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;n;i++)&#123;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;a[i]);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;n;i++)&#123;</span><br><span class="line">        <span class="comment">//每一趟</span></span><br><span class="line">        <span class="keyword">for</span>(j=i;j&lt;n;j++)&#123;</span><br><span class="line">            sum+=a[j];</span><br><span class="line">            <span class="keyword">if</span>(sum&gt;max)&#123;</span><br><span class="line">                max=sum;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        sum=<span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%d&quot;</span>,max);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="解法二：联机实现">解法二：联机实现</h2>
-<p>时间复杂度为：<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>T</mi><mo stretchy="false">(</mo><mi>n</mi><mo stretchy="false">)</mo><mo>=</mo><mi>O</mi><mo stretchy="false">(</mo><mi>n</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">T(n)=O(n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="mopen">(</span><span class="mord mathnormal">n</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathnormal">n</span><span class="mclose">)</span></span></span></span></p>
-<p>步骤：</p>
-<ol>
-<li>先进行初始化，max赋0</li>
-<li>再从头开始累加，加到大于最大子序列和的值，把这个值给MaxSum</li>
-<li>如果累加为负数，这一小段的最大子序列就已经出来了，可以重新进行累加比较了</li>
-<li>最后MaxSum一定为最大子序列的和</li>
-</ol>
-<p>这题的关键：只要是首位元素为负数的肯定不是最大子列的组成部分，我们可以将其抛弃。即如果某个子列的首位为负数，那么它一定要借助后面的非负数。所以<strong>如果前面的n项是负数的话，后面的K-n项和一定会比K项和要大，所以在遇到前n项和是负数时，直接将和置0，从n+1项重新开始加</strong></p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdlib&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">int</span> a[<span class="number">100001</span>];</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> n;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;n);</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++)</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;a[i]);</span><br><span class="line">    <span class="keyword">int</span> sum = <span class="number">0</span>, maxsum = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        sum += a[i]; <span class="comment">//依次向右累加</span></span><br><span class="line">        <span class="keyword">if</span> (sum &gt; maxsum)</span><br><span class="line">            maxsum = sum; <span class="comment">//更新最大值</span></span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (sum &lt; <span class="number">0</span>)</span><br><span class="line">            sum = <span class="number">0</span>; <span class="comment">//如果当前和为负数，那么后面的和会减小，所以需要新的起点。</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, maxsum);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="解法三：分治法">解法三：分治法</h2>
-<p>首先，我们可以把整个序列平均分成左右两部分，答案则会在以下三种情况中：</p>
-<ol>
-<li>所求序列完全包含在左半部分的序列中。</li>
-<li>所求序列完全包含在右半部分的序列中。</li>
-<li>所求序列刚好横跨分割点，即左右序列各占一部分。</li>
-</ol>
-<p>前两种情况和大问题一样，只是规模小了些，如果三个子问题都能解决，那么答案就是三个结果的最大值。</p>
-<p>我们主要研究一下第<strong>三种情况</strong>如何解决：</p>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2021/05/13/PTA%E4%B9%A0%E9%A2%987-1/img.png" class title="img">
-<p>我们只要计算出：以分割点为起点向左的最大连续序列和、以分割点为起点向右的最大连续序列和，这两个结果的和就是第三种情况的答案。因为已知起点，所以这两个结果都能在O(N)的时间复杂度能算出来。</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">//N是数组长度，num是待计算的数组，放在全局区是因为可以开很大的数组</span></span><br><span class="line"><span class="keyword">int</span> N, num[<span class="number">16777216</span>];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">solve</span><span class="params">(<span class="keyword">int</span> left, <span class="keyword">int</span> right)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">//序列长度为1时</span></span><br><span class="line">    <span class="keyword">if</span>(left == right)</span><br><span class="line">        <span class="keyword">return</span> num[left];</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//划分为两个规模更小的问题</span></span><br><span class="line">    <span class="keyword">int</span> mid = left + right &gt;&gt; <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">int</span> lans = solve(left, mid);</span><br><span class="line">    <span class="keyword">int</span> rans = solve(mid + <span class="number">1</span>, right);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//横跨分割点的情况</span></span><br><span class="line">    <span class="keyword">int</span> sum = <span class="number">0</span>, lmax = num[mid], rmax = num[mid + <span class="number">1</span>];</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = mid; i &gt;= left; i--) &#123;</span><br><span class="line">        sum += num[i];</span><br><span class="line">        <span class="keyword">if</span>(sum &gt; lmax) lmax = sum;</span><br><span class="line">    &#125;</span><br><span class="line">    sum = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = mid + <span class="number">1</span>; i &lt;= right; i++) &#123;</span><br><span class="line">        sum += num[i];</span><br><span class="line">        <span class="keyword">if</span>(sum &gt; rmax) rmax = sum;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//答案是三种情况的最大值</span></span><br><span class="line">    <span class="keyword">int</span> ans = lmax + rmax;</span><br><span class="line">    <span class="keyword">if</span>(lans &gt; ans) ans = lans;</span><br><span class="line">    <span class="keyword">if</span>(rans &gt; ans) ans = rans;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> ans;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">//输入数据</span></span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;N);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= N; i++)</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;num[i]);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, solve(<span class="number">1</span>, N));</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>]]></content>
+</blockquote>
+<h2 id="NLP基本概念">NLP基本概念</h2>
+<h3 id="什么是NLP">什么是NLP</h3>
+<p>NLP定义：自然语言处理，用计算机处理、理解以及运行的人类语言（如中文、英文等）</p>
+<p>NLP分类：</p>
+<ul>
+<li>自然语言理解
+<ul>
+<li>音系学：语法中发讯的系统化组织</li>
+<li>词态学：研究单词构成及相互关系</li>
+<li>句法学：给定文本哪部分是语法正确的</li>
+<li>语义句法学：给定文本的含义是什么？</li>
+<li>语法学：文本的目的是什么？</li>
+</ul>
+</li>
+<li>自然语言处理
+<ul>
+<li>自然语言文本</li>
+</ul>
+</li>
+</ul>
+<p>NLP的研究任务</p>
+<ul>
+<li>机器翻译：计算机具备将一种语言<strong>翻译成另一种语言</strong>的能力</li>
+<li>情感分析：计算机能够判断用户评论<strong>是否积极</strong></li>
+<li>智能问答：计算机能够正确<strong>回答输入的问题</strong></li>
+<li>文摘生成：计算机能够准确<strong>归纳、总结并产生文本摘要</strong></li>
+<li>文本分类：计算机能够采集各种文章，进行<strong>主题分析</strong>，从而进行<strong>自动分类</strong></li>
+<li>舆论分析：计算机能够<strong>判断目前舆论的导向</strong></li>
+<li>知识图谱：知识点相互连接而成的<strong>语义网络</strong></li>
+</ul>
+<h2 id="NLP常用术语">NLP常用术语</h2>
+<ul>
+<li>分词（segment）
+<ul>
+<li>将句子分成独立的有意义的语言成分（词）</li>
+</ul>
+</li>
+<li>词性标注（part-of-speech tagging）
+<ul>
+<li>对词的词性进行标注（例：动词、名词、形容词）</li>
+</ul>
+</li>
+<li>命名实体识别（NER, Named Entity Recognition）
+<ul>
+<li>从文本中识别具有特定类别的实体（例：人名、地名、机构名等）</li>
+</ul>
+</li>
+<li>句法分析（syntax parsing）
+<ul>
+<li>分析句子各个成分的依赖关系（例：主从关系），最后可生成句法分析树</li>
+</ul>
+</li>
+<li>指代消解（anaphora resolution）
+<ul>
+<li>代词指代</li>
+</ul>
+</li>
+<li>情感识别（emotion recognition）
+<ul>
+<li>本质是分类问题，经常应用在舆情分析等领域，可分为两类（正面、负面）或者三类（+中性）</li>
+</ul>
+</li>
+<li>纠错（correction）
+<ul>
+<li>在搜索技术和输入法中利用很多，具体做法可以根据N-Gram、字典树等等方法</li>
+</ul>
+</li>
+<li>问答系统（QA system）
+<ul>
+<li>类似机器人的人工智能系统</li>
+</ul>
+</li>
+</ul>
+<h2 id="语料库">语料库</h2>
+<ul>
+<li>中文维基百科</li>
+<li>搜狗新闻语料库</li>
+<li>IMDB情感分析语料库</li>
+<li>等</li>
+</ul>
+<h2 id="三个层次">三个层次</h2>
+<ul>
+<li>词法分析</li>
+<li>句法分析</li>
+<li>语义分析</li>
+</ul>
+]]></content>
       <categories>
-        <category>刷题</category>
+        <category>自然语言处理</category>
       </categories>
       <tags>
-        <tag>PTA</tag>
+        <tag>自然语言处理</tag>
+        <tag>python</tag>
       </tags>
   </entry>
   <entry>
@@ -901,112 +1007,6 @@ Overall the consumption of the world’s resources is undergoing a dangerous rat
       <tags>
         <tag>python</tag>
         <tag>可视化</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>NLP基础</title>
-    <url>/2021/02/12/nlp1/</url>
-    <content><![CDATA[<blockquote>
-<p>参考书籍：</p>
-<ul>
-<li>《自然语言处理理论与实战》</li>
-<li>《Python 自然语言处理》</li>
-<li>《Python 自然语言处理实战：核心技术与算法》</li>
-</ul>
-</blockquote>
-<h2 id="NLP基本概念">NLP基本概念</h2>
-<h3 id="什么是NLP">什么是NLP</h3>
-<p>NLP定义：自然语言处理，用计算机处理、理解以及运行的人类语言（如中文、英文等）</p>
-<p>NLP分类：</p>
-<ul>
-<li>自然语言理解
-<ul>
-<li>音系学：语法中发讯的系统化组织</li>
-<li>词态学：研究单词构成及相互关系</li>
-<li>句法学：给定文本哪部分是语法正确的</li>
-<li>语义句法学：给定文本的含义是什么？</li>
-<li>语法学：文本的目的是什么？</li>
-</ul>
-</li>
-<li>自然语言处理
-<ul>
-<li>自然语言文本</li>
-</ul>
-</li>
-</ul>
-<p>NLP的研究任务</p>
-<ul>
-<li>机器翻译：计算机具备将一种语言<strong>翻译成另一种语言</strong>的能力</li>
-<li>情感分析：计算机能够判断用户评论<strong>是否积极</strong></li>
-<li>智能问答：计算机能够正确<strong>回答输入的问题</strong></li>
-<li>文摘生成：计算机能够准确<strong>归纳、总结并产生文本摘要</strong></li>
-<li>文本分类：计算机能够采集各种文章，进行<strong>主题分析</strong>，从而进行<strong>自动分类</strong></li>
-<li>舆论分析：计算机能够<strong>判断目前舆论的导向</strong></li>
-<li>知识图谱：知识点相互连接而成的<strong>语义网络</strong></li>
-</ul>
-<h2 id="NLP常用术语">NLP常用术语</h2>
-<ul>
-<li>分词（segment）
-<ul>
-<li>将句子分成独立的有意义的语言成分（词）</li>
-</ul>
-</li>
-<li>词性标注（part-of-speech tagging）
-<ul>
-<li>对词的词性进行标注（例：动词、名词、形容词）</li>
-</ul>
-</li>
-<li>命名实体识别（NER, Named Entity Recognition）
-<ul>
-<li>从文本中识别具有特定类别的实体（例：人名、地名、机构名等）</li>
-</ul>
-</li>
-<li>句法分析（syntax parsing）
-<ul>
-<li>分析句子各个成分的依赖关系（例：主从关系），最后可生成句法分析树</li>
-</ul>
-</li>
-<li>指代消解（anaphora resolution）
-<ul>
-<li>代词指代</li>
-</ul>
-</li>
-<li>情感识别（emotion recognition）
-<ul>
-<li>本质是分类问题，经常应用在舆情分析等领域，可分为两类（正面、负面）或者三类（+中性）</li>
-</ul>
-</li>
-<li>纠错（correction）
-<ul>
-<li>在搜索技术和输入法中利用很多，具体做法可以根据N-Gram、字典树等等方法</li>
-</ul>
-</li>
-<li>问答系统（QA system）
-<ul>
-<li>类似机器人的人工智能系统</li>
-</ul>
-</li>
-</ul>
-<h2 id="语料库">语料库</h2>
-<ul>
-<li>中文维基百科</li>
-<li>搜狗新闻语料库</li>
-<li>IMDB情感分析语料库</li>
-<li>等</li>
-</ul>
-<h2 id="三个层次">三个层次</h2>
-<ul>
-<li>词法分析</li>
-<li>句法分析</li>
-<li>语义分析</li>
-</ul>
-]]></content>
-      <categories>
-        <category>自然语言处理</category>
-      </categories>
-      <tags>
-        <tag>python</tag>
-        <tag>自然语言处理</tag>
       </tags>
   </entry>
 </search>
