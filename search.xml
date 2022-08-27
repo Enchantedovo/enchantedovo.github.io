@@ -667,112 +667,6 @@ Overall the consumption of the world’s resources is undergoing a dangerous rat
       </tags>
   </entry>
   <entry>
-    <title>NLP基础</title>
-    <url>/2021/02/12/nlp1/</url>
-    <content><![CDATA[<blockquote>
-<p>参考书籍：</p>
-<ul>
-<li>《自然语言处理理论与实战》</li>
-<li>《Python 自然语言处理》</li>
-<li>《Python 自然语言处理实战：核心技术与算法》</li>
-</ul>
-</blockquote>
-<h2 id="NLP基本概念">NLP基本概念</h2>
-<h3 id="什么是NLP">什么是NLP</h3>
-<p>NLP定义：自然语言处理，用计算机处理、理解以及运行的人类语言（如中文、英文等）</p>
-<p>NLP分类：</p>
-<ul>
-<li>自然语言理解
-<ul>
-<li>音系学：语法中发讯的系统化组织</li>
-<li>词态学：研究单词构成及相互关系</li>
-<li>句法学：给定文本哪部分是语法正确的</li>
-<li>语义句法学：给定文本的含义是什么？</li>
-<li>语法学：文本的目的是什么？</li>
-</ul>
-</li>
-<li>自然语言处理
-<ul>
-<li>自然语言文本</li>
-</ul>
-</li>
-</ul>
-<p>NLP的研究任务</p>
-<ul>
-<li>机器翻译：计算机具备将一种语言<strong>翻译成另一种语言</strong>的能力</li>
-<li>情感分析：计算机能够判断用户评论<strong>是否积极</strong></li>
-<li>智能问答：计算机能够正确<strong>回答输入的问题</strong></li>
-<li>文摘生成：计算机能够准确<strong>归纳、总结并产生文本摘要</strong></li>
-<li>文本分类：计算机能够采集各种文章，进行<strong>主题分析</strong>，从而进行<strong>自动分类</strong></li>
-<li>舆论分析：计算机能够<strong>判断目前舆论的导向</strong></li>
-<li>知识图谱：知识点相互连接而成的<strong>语义网络</strong></li>
-</ul>
-<h2 id="NLP常用术语">NLP常用术语</h2>
-<ul>
-<li>分词（segment）
-<ul>
-<li>将句子分成独立的有意义的语言成分（词）</li>
-</ul>
-</li>
-<li>词性标注（part-of-speech tagging）
-<ul>
-<li>对词的词性进行标注（例：动词、名词、形容词）</li>
-</ul>
-</li>
-<li>命名实体识别（NER, Named Entity Recognition）
-<ul>
-<li>从文本中识别具有特定类别的实体（例：人名、地名、机构名等）</li>
-</ul>
-</li>
-<li>句法分析（syntax parsing）
-<ul>
-<li>分析句子各个成分的依赖关系（例：主从关系），最后可生成句法分析树</li>
-</ul>
-</li>
-<li>指代消解（anaphora resolution）
-<ul>
-<li>代词指代</li>
-</ul>
-</li>
-<li>情感识别（emotion recognition）
-<ul>
-<li>本质是分类问题，经常应用在舆情分析等领域，可分为两类（正面、负面）或者三类（+中性）</li>
-</ul>
-</li>
-<li>纠错（correction）
-<ul>
-<li>在搜索技术和输入法中利用很多，具体做法可以根据N-Gram、字典树等等方法</li>
-</ul>
-</li>
-<li>问答系统（QA system）
-<ul>
-<li>类似机器人的人工智能系统</li>
-</ul>
-</li>
-</ul>
-<h2 id="语料库">语料库</h2>
-<ul>
-<li>中文维基百科</li>
-<li>搜狗新闻语料库</li>
-<li>IMDB情感分析语料库</li>
-<li>等</li>
-</ul>
-<h2 id="三个层次">三个层次</h2>
-<ul>
-<li>词法分析</li>
-<li>句法分析</li>
-<li>语义分析</li>
-</ul>
-]]></content>
-      <categories>
-        <category>自然语言处理</category>
-      </categories>
-      <tags>
-        <tag>自然语言处理</tag>
-        <tag>python</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Hexo搭建博客</title>
     <url>/2021/01/31/build-blog/</url>
     <content><![CDATA[<h2 id="准备工作">准备工作</h2>
@@ -884,6 +778,112 @@ Overall the consumption of the world’s resources is undergoing a dangerous rat
       <tags>
         <tag>Hexo</tag>
         <tag>Markdown</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>NLP基础</title>
+    <url>/2021/02/12/nlp1/</url>
+    <content><![CDATA[<blockquote>
+<p>参考书籍：</p>
+<ul>
+<li>《自然语言处理理论与实战》</li>
+<li>《Python 自然语言处理》</li>
+<li>《Python 自然语言处理实战：核心技术与算法》</li>
+</ul>
+</blockquote>
+<h2 id="NLP基本概念">NLP基本概念</h2>
+<h3 id="什么是NLP">什么是NLP</h3>
+<p>NLP定义：自然语言处理，用计算机处理、理解以及运行的人类语言（如中文、英文等）</p>
+<p>NLP分类：</p>
+<ul>
+<li>自然语言理解
+<ul>
+<li>音系学：语法中发讯的系统化组织</li>
+<li>词态学：研究单词构成及相互关系</li>
+<li>句法学：给定文本哪部分是语法正确的</li>
+<li>语义句法学：给定文本的含义是什么？</li>
+<li>语法学：文本的目的是什么？</li>
+</ul>
+</li>
+<li>自然语言处理
+<ul>
+<li>自然语言文本</li>
+</ul>
+</li>
+</ul>
+<p>NLP的研究任务</p>
+<ul>
+<li>机器翻译：计算机具备将一种语言<strong>翻译成另一种语言</strong>的能力</li>
+<li>情感分析：计算机能够判断用户评论<strong>是否积极</strong></li>
+<li>智能问答：计算机能够正确<strong>回答输入的问题</strong></li>
+<li>文摘生成：计算机能够准确<strong>归纳、总结并产生文本摘要</strong></li>
+<li>文本分类：计算机能够采集各种文章，进行<strong>主题分析</strong>，从而进行<strong>自动分类</strong></li>
+<li>舆论分析：计算机能够<strong>判断目前舆论的导向</strong></li>
+<li>知识图谱：知识点相互连接而成的<strong>语义网络</strong></li>
+</ul>
+<h2 id="NLP常用术语">NLP常用术语</h2>
+<ul>
+<li>分词（segment）
+<ul>
+<li>将句子分成独立的有意义的语言成分（词）</li>
+</ul>
+</li>
+<li>词性标注（part-of-speech tagging）
+<ul>
+<li>对词的词性进行标注（例：动词、名词、形容词）</li>
+</ul>
+</li>
+<li>命名实体识别（NER, Named Entity Recognition）
+<ul>
+<li>从文本中识别具有特定类别的实体（例：人名、地名、机构名等）</li>
+</ul>
+</li>
+<li>句法分析（syntax parsing）
+<ul>
+<li>分析句子各个成分的依赖关系（例：主从关系），最后可生成句法分析树</li>
+</ul>
+</li>
+<li>指代消解（anaphora resolution）
+<ul>
+<li>代词指代</li>
+</ul>
+</li>
+<li>情感识别（emotion recognition）
+<ul>
+<li>本质是分类问题，经常应用在舆情分析等领域，可分为两类（正面、负面）或者三类（+中性）</li>
+</ul>
+</li>
+<li>纠错（correction）
+<ul>
+<li>在搜索技术和输入法中利用很多，具体做法可以根据N-Gram、字典树等等方法</li>
+</ul>
+</li>
+<li>问答系统（QA system）
+<ul>
+<li>类似机器人的人工智能系统</li>
+</ul>
+</li>
+</ul>
+<h2 id="语料库">语料库</h2>
+<ul>
+<li>中文维基百科</li>
+<li>搜狗新闻语料库</li>
+<li>IMDB情感分析语料库</li>
+<li>等</li>
+</ul>
+<h2 id="三个层次">三个层次</h2>
+<ul>
+<li>词法分析</li>
+<li>句法分析</li>
+<li>语义分析</li>
+</ul>
+]]></content>
+      <categories>
+        <category>自然语言处理</category>
+      </categories>
+      <tags>
+        <tag>自然语言处理</tag>
+        <tag>python</tag>
       </tags>
   </entry>
   <entry>
