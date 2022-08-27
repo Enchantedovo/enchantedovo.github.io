@@ -1,0 +1,27 @@
+- class_name: 友情链接
+  class_desc: 一起学习吧♪(･ω･)ﾉ
+  link_list:
+    - name: zhouzhou
+      link: https://zhouzhou.ink/
+      # avatar: https://d33wubrfki0l68.cloudfront.net/6657ba50e702d84afb32fe846bed54fba1a77add/827ae/logo.svg
+      # descr: 快速、简单且强大的网站框架
+
+    - name: Qing's Blog
+      link: https://www.qingbo1011.top/
+
+
+- class_name: 网站
+  class_desc: 收藏夹吃灰的网站(bushi)
+  link_list:
+    - name: Hexo
+      link: https://hexo.io/zh-tw/
+      avatar: https://d33wubrfki0l68.cloudfront.net/6657ba50e702d84afb32fe846bed54fba1a77add/827ae/logo.svg
+      descr: 快速、简单且强大的网站框架
+    - name: Webgradients
+      link: https://webgradients.com/
+      avatar: https://webgradients.com/img/other/logos/webgradients_logo.png
+      descr: 渐进色仓库
+    - name: Aigei
+      link: https://www.aigei.com/
+      avatar: https://cdn-sqn.aigei.com/assets/site/img/icon/favicon.ico
+      descr: 素材下载网站
