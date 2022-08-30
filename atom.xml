@@ -6,7 +6,7 @@
   <link href="https://enchantedovo.cn/atom.xml" rel="self"/>
   
   <link href="https://enchantedovo.cn/"/>
-  <updated>2021-02-16T08:08:58.722Z</updated>
+  <updated>2022-08-30T11:52:51.791Z</updated>
   <id>https://enchantedovo.cn/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>操作系统高级教程课堂笔记1</title>
+    <link href="https://enchantedovo.cn/2022/08/30/OS-LearningNotes1/"/>
+    <id>https://enchantedovo.cn/2022/08/30/OS-LearningNotes1/</id>
+    <published>2022-08-30T07:05:26.000Z</published>
+    <updated>2022-08-30T11:52:51.791Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><ul><li>源码阅读工具：Source Insight</li><li>关键字:<ul><li>内核Kernel</li><li>特权级</li><li>授权</li></ul></li><li>主要内容：本节课主要探讨了Linux内核，老师从逻辑推理的角度带大家体会什么是内核，为什么需要内核。</li></ul></blockquote><h1>授权</h1><h2 id="授权的概念">授权的概念</h2><p><strong><u>未经授权，不得访问其他用户的资源。</u></strong></p><h2 id="探讨">探讨</h2><h3 id="问题一：未经许可，用户是否能访问外设（IO）中自己的资源？">问题一：未经许可，用户是否能访问外设（IO）中自己的资源？</h3><ul><li>答案：不可以。</li><li>原因：IO物理端口只有一个，而用户程序具有不确定性（可能会做一些坏事），如果开放端口，可能会无法控制。</li><li>解决办法：若用户非要访问（IO指令/MMIO），则用特权级拦住。<ul><li>特权级：CPU剥夺了应用程序访问外设的能力。</li></ul></li></ul><h3 id="问题二：而自己的资源，应该要能访问的，那怎么办？">问题二：而自己的资源，应该要能访问的，那怎么办？</h3><ul><li>用户进程是不确定的，并且它应该是不确定的，没有理由要求它确定</li><li>由<strong>一组确定的代码</strong>来访问自己的资源————<strong><u>内核</u></strong></li></ul><h1>特权级</h1><h2 id="特权级的概念">特权级的概念</h2><p>在linux系统中特权级别分为0，1，2，3一共四个级别，0最大 ，3最小。</p><ul><li>一般内核代码运行在0特权级；</li><li>驱动、虚拟机等运行在1，2特权级；</li><li>而我们自己写的程序一般运行在3特权级，也就是最低级别。</li></ul><h2 id="探讨-2">探讨</h2><h3 id="用户程序指令（（3特权））为什么不能访问0特权的数据？">用户程序指令（（3特权））为什么不能访问0特权的数据？</h3><ul><li>答：因为用户程序指令具有不确定性。</li></ul><h3 id="0特权能否直接跳到3特权？">0特权能否直接跳到3特权？</h3><ul><li>答：不允许，若此时0特权跳转过去后仍保持全态，那么应用程序就会直接变为kernel。</li></ul>]]></content>
+    
+    
+    <summary type="html">国科大杨力祥《操作系统高级教程》课堂笔记1 —— 为什么需要内核</summary>
+    
+    
+    
+    <category term="操作系统高级教程课堂笔记" scheme="https://enchantedovo.cn/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E9%AB%98%E7%BA%A7%E6%95%99%E7%A8%8B%E8%AF%BE%E5%A0%82%E7%AC%94%E8%AE%B0/"/>
+    
+    
+    <category term="操作系统" scheme="https://enchantedovo.cn/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
+    
+    <category term="Linux Kernel" scheme="https://enchantedovo.cn/tags/Linux-Kernel/"/>
+    
+    <category term="特权级" scheme="https://enchantedovo.cn/tags/%E7%89%B9%E6%9D%83%E7%BA%A7/"/>
+    
+    <category term="授权" scheme="https://enchantedovo.cn/tags/%E6%8E%88%E6%9D%83/"/>
+    
+  </entry>
   
   <entry>
     <title>雅思写作Task2</title>
@@ -84,11 +111,11 @@
   </entry>
   
   <entry>
-    <title>PTA习题2.7</title>
-    <link href="https://enchantedovo.cn/2021/04/20/PTA%E4%B9%A0%E9%A2%982.7/"/>
-    <id>https://enchantedovo.cn/2021/04/20/PTA%E4%B9%A0%E9%A2%982.7/</id>
+    <title>PTA习题2-7</title>
+    <link href="https://enchantedovo.cn/2021/04/20/PTA%E4%B9%A0%E9%A2%982-7/"/>
+    <id>https://enchantedovo.cn/2021/04/20/PTA%E4%B9%A0%E9%A2%982-7/</id>
     <published>2021-04-20T15:59:22.000Z</published>
-    <updated>2021-05-13T14:41:27.421Z</updated>
+    <updated>2022-08-30T07:05:03.771Z</updated>
     
     <content type="html"><![CDATA[<h1>弹球距离</h1><p>设有一个球从高度为h米的地方落下，碰到地面后又弹到高度为原来p倍的位置，然后又落下，再弹起，再落下…。请编写函数求初始高度为h的球下落后到基本停下来（高度小于给定阈值TOL）时在空中所经过的路程总和。</p><p>函数接口定义：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">double dist( double h, double p );</span><br></pre></td></tr></table></figure><p>其中h是球的初始高度，p是球弹起高度与弹起前落下高度的比值；函数dist要返回球下落后到基本停下来时在空中所经过的路程总和。注意：当弹起的高度小于裁判程序定义的常数TOL时，弹起的距离不计算在内。</p><p>裁判测试程序样例：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line">#define TOL 1E-2</span><br><span class="line"></span><br><span class="line">double dist( double h, double p );</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    double h, p, d;</span><br><span class="line">    scanf(&quot;%lf %lf&quot;, &amp;h, &amp;p);</span><br><span class="line">    d &#x3D; dist(h, p);</span><br><span class="line">    printf(&quot;%.6f\n&quot;, d);</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;* 你的代码将被嵌在这里 *&#x2F;</span><br><span class="line"></span><br></pre></td></tr></table></figure><p>输入样例：<br><code>1.0 0.4</code><br>输出样例：<br><code>2.319680</code></p><p><strong>递归实现</strong></p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">double dist( double h, double p )&#123;</span><br><span class="line">    if(p*h&lt;TOL) return h;</span><br><span class="line">    else return h+h*p+dist(h*p,p);&#x2F;&#x2F;重复的</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p><strong>非递归实现</strong></p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">double dist( double h, double p )&#x2F;&#x2F;右一个注意点两次触地时走过的距离为 h+2*h*p</span><br><span class="line">&#123;</span><br><span class="line">    double mix&#x3D;h*p;</span><br><span class="line">    double sum &#x3D; h;&#x2F;&#x2F;第一次落下走过的距离是h</span><br><span class="line">    while(mix&gt;&#x3D;TOL)</span><br><span class="line">    &#123;</span><br><span class="line">        sum+&#x3D; 2*mix;&#x2F;&#x2F;第二次落下走过的是 h+2*h*p，依次类推</span><br><span class="line">        mix &#x3D; mix*p;</span><br><span class="line">    &#125;</span><br><span class="line">    return sum;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
     
