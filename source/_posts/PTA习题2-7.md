@@ -1,5 +1,5 @@
 ---
-title: PTA习题2.7 
+title: PTA习题2-7 
 date: 2021-04-20 23:59:22
 tags:
  - PTA
