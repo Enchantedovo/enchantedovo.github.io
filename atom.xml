@@ -65,7 +65,7 @@
     <link href="https://enchantedovo.cn/2022/09/01/AdvancedAI-LearningNotes1/"/>
     <id>https://enchantedovo.cn/2022/09/01/AdvancedAI-LearningNotes1/</id>
     <published>2022-09-01T15:03:53.000Z</published>
-    <updated>2022-09-03T07:58:17.566Z</updated>
+    <updated>2022-09-03T11:34:14.554Z</updated>
     
     <content type="html"><![CDATA[<blockquote><p>三节课讲述的东西太多，这里仅记录相对来说稍重要的部分。</p></blockquote><h1>图灵测试</h1><h2 id="什么是图灵测试">什么是图灵测试</h2><p>测试者与被测试者（一个人和一台机器）隔开的情况下，通过一些装置（如键盘）向被测试者随意提问。进行多次测试后，如果机器让平均每个参与者做出超过30%的误判，那么这台机器就通过了测试，并被认为具有人类智能。</p><blockquote><p>图灵问题：Can Machine Think？（思考）</p></blockquote><h2 id="质疑">质疑</h2><ul><li>图灵测试是不可构造的：“完全不接触”环境难以构建</li><li>图灵测试不可重现的：问题是开放的，答案正确性判断是主观的</li><li>图灵测试无法进行数学分析：只是一种操作式测试，缺少形式化描述</li></ul><h1>人工智能三大学派</h1><h2 id="符号主义">符号主义</h2><ul><li>认为“人的认知基元是符号（语言文字），认知过程即符号操作过程”</li><li>认为人工智能的<strong>核心是知识表示、知识推理和知识运用</strong></li><li>衍生出：逻辑、专家系统、知识库、<strong>知识图谱</strong></li></ul><h2 id="联结主义">联结主义</h2><ul><li>又称<strong>仿生</strong>学派或生理学派</li><li>认为人的思维基元是神经元，而不是符号处理过程</li><li>原理：神经网络及神经网络间的连接机制和学习算法</li><li>衍生出：<strong>人工神经网络</strong>，认知科学、类脑计算</li></ul><h2 id="行为主义">行为主义</h2><ul><li>又称进化主义或<strong>控制论学派</strong></li><li>主张<strong>利用机器对环境作用后的响应或反馈为原型</strong>来实现智能化</li><li>衍生出：动态规划、<strong>强化学习</strong>，多智能体</li></ul><h1>课程蓝图</h1><img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/01/AdvancedAI-LearningNotes1/p.png" class title="p">]]></content>
     
