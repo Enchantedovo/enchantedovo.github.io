@@ -7,7 +7,7 @@ tags:
 categories:
   - 网络协议安全课堂笔记
 description: 国科大《网络协议安全》课堂笔记1 —— 网络协议安全基础
-cover: https://i.postimg.cc/YS2RydVF/src-http-17960627-s21i-faiusr-com-4-ABUIABAEGAAg09i-W6-QUou-LHwz-QEw6-Ac4sw-Q-png-refer-http-17960627.webp
+cover: https://s3.bmp.ovh/imgs/2022/09/03/532c30c044da0f35.jpg
 ---
 
 > 知识背景：

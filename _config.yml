@@ -8,8 +8,8 @@ subtitle: ''
 description: '———— 🦋的个人博客'
 keywords:
 author: HattieHD
-language: zh-cn
-timezone: ''
+language: zh-CN
+timezone: Asia/Shanghai
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://example.com/child' and root as '/child/'

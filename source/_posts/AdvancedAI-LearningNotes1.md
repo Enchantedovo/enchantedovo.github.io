@@ -6,7 +6,7 @@ tags:
 categories:
   - 高级人工智能课堂笔记
 description: 国科大《高级人工智能》课堂笔记1 —— 人工智能概述
-cover: https://i.postimg.cc/NM4sDf3Y/src-http-images-shobserver-com-news-690-390-2021-7-8-298e6ac3898644cbab1322705eac8c15-jpeg-refer-h.webp
+cover: https://s3.bmp.ovh/imgs/2022/09/03/f51220518329aecb.jpg
 ---
 
 > 三节课讲述的东西太多，这里仅记录相对来说稍重要的部分。
