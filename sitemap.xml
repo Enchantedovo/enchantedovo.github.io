@@ -162,13 +162,6 @@
   </url>
   
   <url>
-    <loc>https://enchantedovo.cn/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/</loc>
-    <lastmod>2022-09-03</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://enchantedovo.cn/tags/%E9%9B%85%E6%80%9D%E5%86%99%E4%BD%9C/</loc>
     <lastmod>2022-09-03</lastmod>
     <changefreq>weekly</changefreq>
@@ -177,6 +170,13 @@
   
   <url>
     <loc>https://enchantedovo.cn/tags/%E8%8B%B1%E8%AF%AD/</loc>
+    <lastmod>2022-09-03</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://enchantedovo.cn/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/</loc>
     <lastmod>2022-09-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -290,14 +290,14 @@
   </url>
   
   <url>
-    <loc>https://enchantedovo.cn/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E8%AF%BE%E5%A0%82%E7%AC%94%E8%AE%B0/</loc>
+    <loc>https://enchantedovo.cn/categories/%E9%9B%85%E6%80%9D/</loc>
     <lastmod>2022-09-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://enchantedovo.cn/categories/%E9%9B%85%E6%80%9D/</loc>
+    <loc>https://enchantedovo.cn/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E8%AF%BE%E5%A0%82%E7%AC%94%E8%AE%B0/</loc>
     <lastmod>2022-09-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
