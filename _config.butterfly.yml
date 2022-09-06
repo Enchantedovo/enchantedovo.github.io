@@ -619,7 +619,7 @@ subtitle:
   # 開頭不允許轉義字元，如需要，請把整個句子用雙引號包住
   # 如果關閉打字效果，subtitle只會顯示sub的第一行文字
   sub: 
-    - 三千弱水凭槎渡&#44;万里青山抱月登.
+    - 步履不停
     - Unstoppable Today
 
 # Loading Animation (加載動畫)

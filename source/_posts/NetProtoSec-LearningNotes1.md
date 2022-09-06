@@ -12,7 +12,7 @@ cover: https://s3.bmp.ovh/imgs/2022/09/03/532c30c044da0f35.jpg
 
 > 知识背景：
 > - 计算机网络
-> - 部分密码学知识[密码学教程（P2-P5）](https://www.bilibili.com/video/BV1vq4y1R7Yt?is_story_h5=false&p=1&share_from=ugc&share_medium=android&share_plat=android&share_session_id=9e54e092-697a-4e52-b1db-99433ded35b8&share_source=WEIXIN&share_tag=s_i&timestamp=1660828486&unique_k=5oAWIQa)
+> - 部分密码学知识[密码学教程（P5-P12）](https://www.bilibili.com/video/BV1vq4y1R7Yt?is_story_h5=false&p=1&share_from=ugc&share_medium=android&share_plat=android&share_session_id=9e54e092-697a-4e52-b1db-99433ded35b8&share_source=WEIXIN&share_tag=s_i&timestamp=1660828486&unique_k=5oAWIQa)
 
 
 # 网络协议结构
