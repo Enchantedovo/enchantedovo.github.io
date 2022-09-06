@@ -6,7 +6,7 @@
   <link href="https://enchantedovo.cn/atom.xml" rel="self"/>
   
   <link href="https://enchantedovo.cn/"/>
-  <updated>2022-09-03T07:58:21.305Z</updated>
+  <updated>2022-09-06T07:45:40.425Z</updated>
   <id>https://enchantedovo.cn/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>从开机加电到执行main函数之前的过程</title>
+    <link href="https://enchantedovo.cn/2022/09/06/OS-LearningNotes2/"/>
+    <id>https://enchantedovo.cn/2022/09/06/OS-LearningNotes2/</id>
+    <published>2022-09-06T06:07:10.000Z</published>
+    <updated>2022-09-06T07:45:40.425Z</updated>
+    
+    <content type="html"><![CDATA[<h1>引言</h1><p>从开机加电到执行main函数之前，主要分为以下三个部分：</p><ul><li>启动BIOS，准备实模式下的中断向量表和中断服务程序</li><li>从启动盘加载操作系统程序到内存<ul><li>bootsect程序（扇区 -&gt; 主机内存）</li><li>setup程序（设置内核运行所需的机器系统数据）</li><li>head程序（保护模式，内存分页）</li></ul></li><li>为执行32位的main函数做过渡</li></ul><h1>启动BIOS</h1><ul><li>CPU的硬件都设置为加电进入实模式</li><li>BIOS程序被固化在ROM中，由硬件方式执行：加电瞬间，CS:IP指向BIOS程序的入口地址（0xFFFF0）</li><li><h2 id="BIOS检测显卡、内存……，并且在内存中建立中断向量表和中断服务程序">BIOS检测显卡、内存……，并且<strong>在内存中建立中断向量表和中断服务程序</strong></h2></li></ul><blockquote><ul><li>ROM:只读存储器，断电之后仍能保存信息</li><li>0x00400 = 4*(16^2)字节 = 4*256字节 = 1024字节 = 1KB</li></ul></blockquote>]]></content>
+    
+    
+    <summary type="html">国科大杨力祥《操作系统高级教程》课堂笔记2 —— 开机加电后的过程</summary>
+    
+    
+    
+    <category term="操作系统高级教程课堂笔记" scheme="https://enchantedovo.cn/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E9%AB%98%E7%BA%A7%E6%95%99%E7%A8%8B%E8%AF%BE%E5%A0%82%E7%AC%94%E8%AE%B0/"/>
+    
+    
+    <category term="操作系统" scheme="https://enchantedovo.cn/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
+    
+    <category term="Linux Kernel" scheme="https://enchantedovo.cn/tags/Linux-Kernel/"/>
+    
+    <category term="BIOS" scheme="https://enchantedovo.cn/tags/BIOS/"/>
+    
+  </entry>
   
   <entry>
     <title>计算机网络（课程）概述</title>

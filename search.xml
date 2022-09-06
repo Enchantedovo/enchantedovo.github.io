@@ -1325,4 +1325,44 @@ Overall the consumption of the world’s resources is undergoing a dangerous rat
         <tag>可视化</tag>
       </tags>
   </entry>
+  <entry>
+    <title>从开机加电到执行main函数之前的过程</title>
+    <url>/2022/09/06/OS-LearningNotes2/</url>
+    <content><![CDATA[<h1>引言</h1>
+<p>从开机加电到执行main函数之前，主要分为以下三个部分：</p>
+<ul>
+<li>启动BIOS，准备实模式下的中断向量表和中断服务程序</li>
+<li>从启动盘加载操作系统程序到内存
+<ul>
+<li>bootsect程序（扇区 -&gt; 主机内存）</li>
+<li>setup程序（设置内核运行所需的机器系统数据）</li>
+<li>head程序（保护模式，内存分页）</li>
+</ul>
+</li>
+<li>为执行32位的main函数做过渡</li>
+</ul>
+<h1>启动BIOS</h1>
+<ul>
+<li>CPU的硬件都设置为加电进入实模式</li>
+<li>BIOS程序被固化在ROM中，由硬件方式执行：加电瞬间，CS:IP指向BIOS程序的入口地址（0xFFFF0）</li>
+<li>
+<h2 id="BIOS检测显卡、内存……，并且在内存中建立中断向量表和中断服务程序">BIOS检测显卡、内存……，并且<strong>在内存中建立中断向量表和中断服务程序</strong></h2>
+</li>
+</ul>
+<blockquote>
+<ul>
+<li>ROM:只读存储器，断电之后仍能保存信息</li>
+<li>0x00400 = 4*(16^2)字节 = 4*256字节 = 1024字节 = 1KB</li>
+</ul>
+</blockquote>
+]]></content>
+      <categories>
+        <category>操作系统高级教程课堂笔记</category>
+      </categories>
+      <tags>
+        <tag>操作系统</tag>
+        <tag>Linux Kernel</tag>
+        <tag>BIOS</tag>
+      </tags>
+  </entry>
 </search>
