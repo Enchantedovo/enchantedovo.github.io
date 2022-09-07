@@ -42,27 +42,10 @@
 <img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/01/AdvancedAI-LearningNotes1/p.png" class title="p">
 ]]></content>
       <categories>
-        <category>高级人工智能课堂笔记</category>
+        <category>高级人工智能学习笔记</category>
       </categories>
       <tags>
         <tag>人工智能</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>计算机网络（课程）概述</title>
-    <url>/2022/09/03/ComputerNet-LearningNotes1/</url>
-    <content><![CDATA[<blockquote>
-<p>第一节课讲的课程绪论，本文仅记录课程大纲</p>
-</blockquote>
-<h1>课程大纲</h1>
-<p>如图：</p>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/03/ComputerNet-LearningNotes1/p1.png" class title="p1">
-]]></content>
-      <categories>
-        <category>计算机网络课堂笔记</category>
-      </categories>
-      <tags>
-        <tag>计算机网络</tag>
       </tags>
   </entry>
   <entry>
@@ -603,6 +586,75 @@ Overall the consumption of the world’s resources is undergoing a dangerous rat
       </tags>
   </entry>
   <entry>
+    <title>LC旋转数组</title>
+    <url>/2021/05/20/LC%E6%97%8B%E8%BD%AC%E6%95%B0%E7%BB%84/</url>
+    <content><![CDATA[<h1>旋转数组</h1>
+<p>给定一个数组，将数组中的元素向右移动 k 个位置，其中 k 是非负数。</p>
+<blockquote>
+<p><strong>示例 1:</strong></p>
+<ul>
+<li>输入: nums = [1,2,3,4,5,6,7], k = 3</li>
+<li>输出: [5,6,7,1,2,3,4]</li>
+<li>解释:
+<ul>
+<li>向右旋转 1 步: [7,1,2,3,4,5,6]</li>
+<li>向右旋转 2 步: [6,7,1,2,3,4,5]</li>
+<li>向右旋转 3 步: [5,6,7,1,2,3,4]</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<blockquote>
+<p><strong>示例 2:</strong></p>
+<ul>
+<li>输入：nums = [-1,-100,3,99], k = 2</li>
+<li>输出：[3,99,-1,-100]</li>
+<li>解释:
+<ul>
+<li>向右旋转 1 步: [99,-1,-100,3]</li>
+<li>向右旋转 2 步: [3,99,-1,-100]</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<h2 id="方法一：傻瓜方法">方法一：傻瓜方法</h2>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">rotate</span><span class="params">(<span class="keyword">int</span>* nums, <span class="keyword">int</span> numsSize, <span class="keyword">int</span> k)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> length = numsSize;</span><br><span class="line">    <span class="keyword">int</span> <span class="built_in">list</span>[length];</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;length;i++)&#123;</span><br><span class="line">        <span class="built_in">list</span>[i]=nums[i];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;length;j++)&#123;</span><br><span class="line">        nums[(j+k)%length]=<span class="built_in">list</span>[j];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="方法二：旋转旋转旋转">方法二：旋转旋转旋转</h2>
+<p>举个例子：</p>
+<blockquote>
+<p>nums = [1,2,3,4,5,6,7], k = 3</p>
+<ol>
+<li>[7,6,5,4,3,2,1] (整个数组旋转)</li>
+<li>[[5,6,7],[1,2,3,4]]</li>
+</ol>
+</blockquote>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">rotate</span><span class="params">(<span class="keyword">int</span>* nums, <span class="keyword">int</span> numsSize, <span class="keyword">int</span> k)</span></span>&#123;</span><br><span class="line">    <span class="comment">//先旋转整个数组-》旋转前一部分-》旋转后一部分</span></span><br><span class="line">    k=k%numsSize;</span><br><span class="line">    reverse(nums,<span class="number">0</span>,numsSize<span class="number">-1</span>);</span><br><span class="line">    reverse(nums,<span class="number">0</span>,k<span class="number">-1</span>);</span><br><span class="line">    reverse(nums,k,numsSize<span class="number">-1</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">reverse</span><span class="params">(<span class="keyword">int</span>* nums, <span class="keyword">int</span> start, <span class="keyword">int</span> end)</span></span>&#123;</span><br><span class="line">    <span class="keyword">while</span>(start&lt;end)&#123;</span><br><span class="line">        <span class="keyword">int</span> tmp = nums[start];</span><br><span class="line">        nums[start++]=nums[end];</span><br><span class="line">        nums[end--]=tmp;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>刷题</category>
+      </categories>
+      <tags>
+        <tag>LC</tag>
+        <tag>数组</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>计算机网络（课程）概述</title>
+    <url>/2022/09/03/ComputerNet-LearningNotes1/</url>
+    <content><![CDATA[<blockquote>
+<p>第一节课讲的课程绪论，本文仅记录课程大纲</p>
+</blockquote>
+<h1>课程大纲</h1>
+<p>如图：</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/03/ComputerNet-LearningNotes1/p1.png" class title="p1">
+]]></content>
+      <categories>
+        <category>计算机网络学习笔记</category>
+      </categories>
+      <tags>
+        <tag>计算机网络</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>网络协议安全基础</title>
     <url>/2022/09/01/NetProtoSec-LearningNotes1/</url>
     <content><![CDATA[<blockquote>
@@ -747,11 +799,117 @@ Overall the consumption of the world’s resources is undergoing a dangerous rat
 <h2 id="网络层次分类">网络层次分类</h2>
 <img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/01/NetProtoSec-LearningNotes1/p7.png" class title="p7">]]></content>
       <categories>
-        <category>网络协议安全课堂笔记</category>
+        <category>网络协议安全学习笔记</category>
       </categories>
       <tags>
         <tag>网络协议</tag>
         <tag>网络安全</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>从开机加电到执行main函数之前的过程</title>
+    <url>/2022/09/06/OS-LearningNotes2/</url>
+    <content><![CDATA[<blockquote>
+<p>参考用书：《Linux内核设计的艺术》</p>
+<p>题外话：由于疫情，国科大现在实行线下上网课的形式。本节课就是大家全部到教室，然后老师共享屏幕来教学的，虽然互动减少了，但是还是干货满满。本周主要的笔记是记在电子版书上，下周可能会考虑整个思维导图，或许思路会更清晰。总之，开学前两周，先摸索一下学习方式。</p>
+</blockquote>
+<h1>引言</h1>
+<p>从开机加电到执行main函数之前，主要分为以下三个部分：</p>
+<ol>
+<li>启动BIOS，准备实模式下的中断向量表和中断服务程序</li>
+<li>从启动盘加载操作系统程序到内存：
+<ul>
+<li>bootsect程序（扇区 -&gt; 主机内存）</li>
+<li>setup程序（设置内核运行所需的机器系统数据）</li>
+<li>head程序（保护模式，内存分页）</li>
+</ul>
+</li>
+<li>为执行32位的main函数做过渡</li>
+</ol>
+<h1>启动BIOS</h1>
+<ol>
+<li>CPU的硬件都设置为加电进入实模式</li>
+<li>BIOS程序被固化在ROM中，由<strong>硬件方式</strong>执行：加电瞬间，CS:IP指向BIOS程序的入口地址（0xFFFF0）</li>
+<li>BIOS检测显卡、内存······，并且<strong>在内存中建立中断向量表和中断服务程序</strong></li>
+</ol>
+<blockquote>
+<p>补充知识：</p>
+<ul>
+<li>ROM：只读存储器，断电之后仍能保存信息</li>
+<li>0x00400 = 4*(16^2)字节 = 4*256字节 = 1024字节 = 1KB</li>
+</ul>
+</blockquote>
+<h1>加载操作系统内核程序</h1>
+<h2 id="加载第一部分内核代码——引导程序bootsect">加载第一部分内核代码——引导程序bootsect</h2>
+<p><strong>理解</strong>： bootsect中sect是section的缩写，代表软盘。整个bootsect程序就是<strong>将内核程序从软盘加载到主机内存</strong>的过程。<br>
+<strong>过程</strong>：</p>
+<ol>
+<li>CPU接收到一个int 0x19中断</li>
+<li>对应中断服务程序把软盘中第一扇区的程序（512B）加载到内存的指定位置（0x07C00）</li>
+</ol>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/06/OS-LearningNotes2/p1.png" class title="p1">
+<blockquote>
+<p>冷知识：0x07C00来自Intel第一台个人电脑8088芯片，为了保持兼容，以后的CPU都保留此地址</p>
+</blockquote>
+<h2 id="加载第二部分内核代码——setup">加载第二部分内核代码——setup</h2>
+<p>BIOS将引导程序bootsect载入内存后，现在需要将第二批、第三批程序陆续加载到内存中。</p>
+<p><strong>1.bootsect对内存的规划</strong><br>
+为了实现上述操作，bootsect首要工作就是先规划内存。如图，bootsect程序对后续操作涉及的内存位置进行了设置：</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/06/OS-LearningNotes2/p2.png" class title="p2">
+<p><strong>2.复制bootsect</strong><br>
+接下来，bootsect将自身复制至内存0x90000（INITSEG）处：</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/06/OS-LearningNotes2/p3.png" class title="p3">
+<p><strong>过程</strong>：一遍执行，一边复制<br>
+<strong>目的</strong>：复制完后，就能根据自己的需要规划内存，程序可以执行更复杂的数据运算类指令了</p>
+<p><strong>3.将setup程序加载到内存中</strong><br>
+通过BIOS提供的int 0x13中断向量指向的中断服务程序，将软盘第二扇区开始的4个扇区（即setup.s对应程序）加载到内存中（SETUPSEG）。</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/06/OS-LearningNotes2/p4.png" class title="p4">
+<p>此时，操作系统已经从软盘中加载了5个扇区的代码。bootsect程序执行完后，setup程序就要开始工作了。</p>
+<h2 id="加载第三部分内核代码——system模块">加载第三部分内核代码——system模块</h2>
+<p><strong>1.bootsect载入系统模块</strong><br>
+接下来，bootsect程序进行第三批程序的载入工作。首先，bootsect借助BIOS中断int 0x13，将240个扇区的system<strong>系统模块加载进内存</strong>。至此，整个操作系统的代码已全部加载至内存。bootsect还需要再确认一下根设备号，然后其工作就结束了！</p>
+<blockquote>
+<p>补充：Linux0.11要求系统必须存在一个根文件系统，这里的文件系统☞配套文件系统格式的设备，如一张格式化好的软盘</p>
+</blockquote>
+<p><strong>2.setup程序提取机器系统数据</strong><br>
+setup程序现在开始执行。首先，它利用BIOS中断服务程序从设备上提取内核所需要运行的机器系统数据（光标位置、显示页面等），并加载在内存中。<br>
+<strong>注意</strong>：BIOS提取的机器系统数据将覆盖bootsect程序所在部分区域，这提高了内存的利用率。<br>
+到此为止，内核已全部加载完成。接下来，系统将通过已加载到内存的代码，实现<strong>从实模式到保护模式的转变</strong>，使得Linux真正成为“现代”操作系统！</p>
+<h1>向32位模式转变</h1>
+<p>本节，操作系统执行的操作包括打开32位的寻址空间、打开保护模式、建立保护模式下的中断响应机制等与保护模式相关的工作、建立内存分页机制，最后最好调用main函数的准备。</p>
+<h2 id="关闭中断，移动system">关闭中断，移动system</h2>
+<p>首先<strong>关闭中断</strong>，即将CPU的标志寄存器（EFLAGS）的中断允许标志（IF）置0。</p>
+<blockquote>
+<p>补充：</p>
+<ul>
+<li>EFLAGS相当于总开关</li>
+<li>这里的关闭中断并不意味着没有中断了，其实是仍会存在中断，只是不再响应处理而已</li>
+</ul>
+</blockquote>
+<p>接下来，setup程序<strong>将位于0x10000的内核程序复制至内存起始地址0x00000处</strong>，将BIOS中断向量表和BIOS数据区完全覆盖。</p>
+<h2 id="设置中断描述符表和全集描述符表">设置中断描述符表和全集描述符表</h2>
+<p>setup程序<strong>对中断描述符表寄存器（IDTR）和全局描述符表寄存器（GDTR）进行初始化设置</strong>。</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/06/OS-LearningNotes2/p5.png" class title="p5">
+<blockquote>
+<p>补充知识：<br>
+GDT：全局描述符表，是存放段寄存器内容（段描述符）的数组，可以理解为进程总目录表<br>
+GDTR：GDT基地址寄存器，是GDT的入口<br>
+IDT：中断描述符表，保护模式下所有中断服务程序的入口地址，相当于实模式下的中断向量表<br>
+IDTR：IDT基地址寄存器，是IDT的入口</p>
+</blockquote>
+<h2 id="打开A20，实现32位寻址">打开A20，实现32位寻址</h2>
+<blockquote>
+<p>寻址：CPU能使用多大空间的内存</p>
+</blockquote>
+<h2 id="为保护模式下执行head-s做准备">为保护模式下执行head.s做准备</h2>
+]]></content>
+      <categories>
+        <category>操作系统高级教程学习笔记</category>
+      </categories>
+      <tags>
+        <tag>操作系统</tag>
+        <tag>Linux Kernel</tag>
+        <tag>BIOS</tag>
       </tags>
   </entry>
   <entry>
@@ -844,65 +1002,13 @@ Overall the consumption of the world’s resources is undergoing a dangerous rat
 </ul>
 ]]></content>
       <categories>
-        <category>操作系统高级教程课堂笔记</category>
+        <category>操作系统高级教程学习笔记</category>
       </categories>
       <tags>
         <tag>操作系统</tag>
         <tag>Linux Kernel</tag>
         <tag>特权级</tag>
         <tag>授权</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>LC旋转数组</title>
-    <url>/2021/05/20/LC%E6%97%8B%E8%BD%AC%E6%95%B0%E7%BB%84/</url>
-    <content><![CDATA[<h1>旋转数组</h1>
-<p>给定一个数组，将数组中的元素向右移动 k 个位置，其中 k 是非负数。</p>
-<blockquote>
-<p><strong>示例 1:</strong></p>
-<ul>
-<li>输入: nums = [1,2,3,4,5,6,7], k = 3</li>
-<li>输出: [5,6,7,1,2,3,4]</li>
-<li>解释:
-<ul>
-<li>向右旋转 1 步: [7,1,2,3,4,5,6]</li>
-<li>向右旋转 2 步: [6,7,1,2,3,4,5]</li>
-<li>向右旋转 3 步: [5,6,7,1,2,3,4]</li>
-</ul>
-</li>
-</ul>
-</blockquote>
-<blockquote>
-<p><strong>示例 2:</strong></p>
-<ul>
-<li>输入：nums = [-1,-100,3,99], k = 2</li>
-<li>输出：[3,99,-1,-100]</li>
-<li>解释:
-<ul>
-<li>向右旋转 1 步: [99,-1,-100,3]</li>
-<li>向右旋转 2 步: [3,99,-1,-100]</li>
-</ul>
-</li>
-</ul>
-</blockquote>
-<h2 id="方法一：傻瓜方法">方法一：傻瓜方法</h2>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">rotate</span><span class="params">(<span class="keyword">int</span>* nums, <span class="keyword">int</span> numsSize, <span class="keyword">int</span> k)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> length = numsSize;</span><br><span class="line">    <span class="keyword">int</span> <span class="built_in">list</span>[length];</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;length;i++)&#123;</span><br><span class="line">        <span class="built_in">list</span>[i]=nums[i];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;length;j++)&#123;</span><br><span class="line">        nums[(j+k)%length]=<span class="built_in">list</span>[j];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="方法二：旋转旋转旋转">方法二：旋转旋转旋转</h2>
-<p>举个例子：</p>
-<blockquote>
-<p>nums = [1,2,3,4,5,6,7], k = 3</p>
-<ol>
-<li>[7,6,5,4,3,2,1] (整个数组旋转)</li>
-<li>[[5,6,7],[1,2,3,4]]</li>
-</ol>
-</blockquote>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">rotate</span><span class="params">(<span class="keyword">int</span>* nums, <span class="keyword">int</span> numsSize, <span class="keyword">int</span> k)</span></span>&#123;</span><br><span class="line">    <span class="comment">//先旋转整个数组-》旋转前一部分-》旋转后一部分</span></span><br><span class="line">    k=k%numsSize;</span><br><span class="line">    reverse(nums,<span class="number">0</span>,numsSize<span class="number">-1</span>);</span><br><span class="line">    reverse(nums,<span class="number">0</span>,k<span class="number">-1</span>);</span><br><span class="line">    reverse(nums,k,numsSize<span class="number">-1</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">reverse</span><span class="params">(<span class="keyword">int</span>* nums, <span class="keyword">int</span> start, <span class="keyword">int</span> end)</span></span>&#123;</span><br><span class="line">    <span class="keyword">while</span>(start&lt;end)&#123;</span><br><span class="line">        <span class="keyword">int</span> tmp = nums[start];</span><br><span class="line">        nums[start++]=nums[end];</span><br><span class="line">        nums[end--]=tmp;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>刷题</category>
-      </categories>
-      <tags>
-        <tag>LC</tag>
-        <tag>数组</tag>
       </tags>
   </entry>
   <entry>
@@ -1326,43 +1432,64 @@ Overall the consumption of the world’s resources is undergoing a dangerous rat
       </tags>
   </entry>
   <entry>
-    <title>从开机加电到执行main函数之前的过程</title>
-    <url>/2022/09/06/OS-LearningNotes2/</url>
-    <content><![CDATA[<h1>引言</h1>
-<p>从开机加电到执行main函数之前，主要分为以下三个部分：</p>
-<ul>
-<li>启动BIOS，准备实模式下的中断向量表和中断服务程序</li>
-<li>从启动盘加载操作系统程序到内存
-<ul>
-<li>bootsect程序（扇区 -&gt; 主机内存）</li>
-<li>setup程序（设置内核运行所需的机器系统数据）</li>
-<li>head程序（保护模式，内存分页）</li>
-</ul>
-</li>
-<li>为执行32位的main函数做过渡</li>
-</ul>
-<h1>启动BIOS</h1>
-<ul>
-<li>CPU的硬件都设置为加电进入实模式</li>
-<li>BIOS程序被固化在ROM中，由硬件方式执行：加电瞬间，CS:IP指向BIOS程序的入口地址（0xFFFF0）</li>
-<li>
-<h2 id="BIOS检测显卡、内存……，并且在内存中建立中断向量表和中断服务程序">BIOS检测显卡、内存……，并且<strong>在内存中建立中断向量表和中断服务程序</strong></h2>
-</li>
-</ul>
-<blockquote>
-<ul>
-<li>ROM:只读存储器，断电之后仍能保存信息</li>
-<li>0x00400 = 4*(16^2)字节 = 4*256字节 = 1024字节 = 1KB</li>
-</ul>
+    <title>主机和端口扫描</title>
+    <url>/2022/09/07/NetProtoSec-LearningNotes2/</url>
+    <content><![CDATA[<blockquote>
+<p>实验环境：Kali+Wireshark+Nmap<br>
+Kali：是一个基于Debian的Linux发行版，预装了许多渗透测试软件，是一个很酷的“黑客操作系统”<br>
+Wireshark：是一个网络封包分析软件，功能是截取网络封包，并尽可能显示出最为详细的网络封包资料。Wireshark使用WinPCAP作为接口，直接与网卡进行数据报文交换<br>
+Nmap：即Network Mapper，是Linux下的网络扫描和嗅探工具包</p>
 </blockquote>
+<h1>实验内容</h1>
+<p>1.在Nmap中，使用nmap –sP xx指令实现主机扫描，用wireshark抓取扫描过程中的ARP请求和响应报文；通过ping指令发起ICMP扫描，用wireshark抓取扫描过程中的ICMP报文。<br>
+2.在Nmap中，使用nmap –sS xx指令实现端口扫描，用wireshark抓取扫描过程中的TCP报文。</p>
+<h1>kali网络配置</h1>
+<p>由于我使用的是校园网，因此我这里使用NAT模式。</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/07/NetProtoSec-LearningNotes2/p1.png" class title="p1"> 
+<p>1.查看主机地址</p>
+<p>首先通过<code>win</code>+<code>R</code>输入cmd打开终端，然后通过<code>ipconfig</code>查看自己主机的ip地址，网关，网段（我这里选择VMnet8）。</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/07/NetProtoSec-LearningNotes2/p2.png" class title="p2"> 
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">IPv4 地址: 192.168.253.1</span><br><span class="line">子网掩码: 255.255.255.0</span><br></pre></td></tr></table></figure>
+<p>2.修改/etc/network/interfaces文件<br>
+然后，通过<code>vim /etc/network/interfaces</code>，设置静态IP：<br>
+address：把ip地址设置为自己主机网段中的一个，如：我的主机ip是192.168.253.1，这里设为192.168.253.36<br>
+gateway：在其中加上自己主机的网关，如：192.168.253.2<br>
+netmask：子网掩码照抄自己主机的，如：255.255.255.0</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">auto eth0</span><br><span class="line">iface eth0 inet static</span><br><span class="line">address 192.168.253.36</span><br><span class="line">netmask 255.255.255.0</span><br><span class="line">gateway 192.168.253.2</span><br></pre></td></tr></table></figure>
+<p>3.修改dns<br>
+<code>vim /etc/resolv.conf</code>添加几个常用DNS：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">domain localdomain</span><br><span class="line">search localdomain</span><br><span class="line">nameserver 8.8.8.8</span><br><span class="line">nameserver 114.114.114.114</span><br><span class="line">nameserver 192.168.253.2</span><br></pre></td></tr></table></figure>
+<p>4.重启网络</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">systemctl restart networking</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>或者</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;etc&#x2F;init.d&#x2F;networking restart</span><br></pre></td></tr></table></figure>
+<p>5.测试<br>
+输入<code>ifconfig -a</code>查看ip：</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/07/NetProtoSec-LearningNotes2/p3.png" class title="p3"> 
+<h1>主机扫描</h1>
+<blockquote>
+<p>开两个虚拟机：192.168.253.36 + 192.168.253.37<br>
+主机发现有时候也叫做ping扫描，有以下选项：<br>
+-sL(列表扫描)：它仅仅列出指定网络上的每台主机，不发送任何报文到目标主机<br>
+-sP(Ping扫描)：该选项告诉Nmap仅仅进行ping扫描(主机发现)，然后打印出对扫描做出响应的那些主机<br>
+-P0(无ping)：完全跳过Nmap发现阶段<br>
+-PS/PA/PU/PE/ARP[portlist]：使用TCP SYN/ACK、UDP、ICMP ECHO、ARP方式进行发现</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">nmap -P 192.168.253.1/24</span><br></pre></td></tr></table></figure>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/07/NetProtoSec-LearningNotes2/p4.png" class title="p4"> 
+<p>wireshark抓取ARP请求和响应报文：</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/07/NetProtoSec-LearningNotes2/p5.png" class title="p5">
+<p>ping命令发起ICMP扫描，wireshark抓取ICMP报文：</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/07/NetProtoSec-LearningNotes2/p6.png" class title="p6">
+<h1>端口扫描</h1>
 ]]></content>
       <categories>
-        <category>操作系统高级教程课堂笔记</category>
+        <category>网络协议安全学习笔记</category>
       </categories>
       <tags>
-        <tag>操作系统</tag>
-        <tag>Linux Kernel</tag>
-        <tag>BIOS</tag>
+        <tag>网络安全</tag>
+        <tag>Wireshark</tag>
+        <tag>Nmap</tag>
       </tags>
   </entry>
 </search>

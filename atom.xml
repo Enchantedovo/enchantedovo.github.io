@@ -6,7 +6,7 @@
   <link href="https://enchantedovo.cn/atom.xml" rel="self"/>
   
   <link href="https://enchantedovo.cn/"/>
-  <updated>2022-09-06T07:45:40.425Z</updated>
+  <updated>2022-09-07T15:30:18.938Z</updated>
   <id>https://enchantedovo.cn/</id>
   
   <author>
@@ -17,20 +17,45 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>主机和端口扫描</title>
+    <link href="https://enchantedovo.cn/2022/09/07/NetProtoSec-LearningNotes2/"/>
+    <id>https://enchantedovo.cn/2022/09/07/NetProtoSec-LearningNotes2/</id>
+    <published>2022-09-07T11:51:56.000Z</published>
+    <updated>2022-09-07T15:30:18.938Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p>实验环境：Kali+Wireshark+Nmap<br>Kali：是一个基于Debian的Linux发行版，预装了许多渗透测试软件，是一个很酷的“黑客操作系统”<br>Wireshark：是一个网络封包分析软件，功能是截取网络封包，并尽可能显示出最为详细的网络封包资料。Wireshark使用WinPCAP作为接口，直接与网卡进行数据报文交换<br>Nmap：即Network Mapper，是Linux下的网络扫描和嗅探工具包</p></blockquote><h1>实验内容</h1><p>1.在Nmap中，使用nmap –sP xx指令实现主机扫描，用wireshark抓取扫描过程中的ARP请求和响应报文；通过ping指令发起ICMP扫描，用wireshark抓取扫描过程中的ICMP报文。<br>2.在Nmap中，使用nmap –sS xx指令实现端口扫描，用wireshark抓取扫描过程中的TCP报文。</p><h1>kali网络配置</h1><p>由于我使用的是校园网，因此我这里使用NAT模式。</p><img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/07/NetProtoSec-LearningNotes2/p1.png" class title="p1"> <p>1.查看主机地址</p><p>首先通过<code>win</code>+<code>R</code>输入cmd打开终端，然后通过<code>ipconfig</code>查看自己主机的ip地址，网关，网段（我这里选择VMnet8）。</p><img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/07/NetProtoSec-LearningNotes2/p2.png" class title="p2"> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">IPv4 地址: 192.168.253.1</span><br><span class="line">子网掩码: 255.255.255.0</span><br></pre></td></tr></table></figure><p>2.修改/etc/network/interfaces文件<br>然后，通过<code>vim /etc/network/interfaces</code>，设置静态IP：<br>address：把ip地址设置为自己主机网段中的一个，如：我的主机ip是192.168.253.1，这里设为192.168.253.36<br>gateway：在其中加上自己主机的网关，如：192.168.253.2<br>netmask：子网掩码照抄自己主机的，如：255.255.255.0</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">auto eth0</span><br><span class="line">iface eth0 inet static</span><br><span class="line">address 192.168.253.36</span><br><span class="line">netmask 255.255.255.0</span><br><span class="line">gateway 192.168.253.2</span><br></pre></td></tr></table></figure><p>3.修改dns<br><code>vim /etc/resolv.conf</code>添加几个常用DNS：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">domain localdomain</span><br><span class="line">search localdomain</span><br><span class="line">nameserver 8.8.8.8</span><br><span class="line">nameserver 114.114.114.114</span><br><span class="line">nameserver 192.168.253.2</span><br></pre></td></tr></table></figure><p>4.重启网络</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">systemctl restart networking</span><br><span class="line"></span><br></pre></td></tr></table></figure><p>或者</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;etc&#x2F;init.d&#x2F;networking restart</span><br></pre></td></tr></table></figure><p>5.测试<br>输入<code>ifconfig -a</code>查看ip：</p><img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/07/NetProtoSec-LearningNotes2/p3.png" class title="p3"> <h1>主机扫描</h1><blockquote><p>开两个虚拟机：192.168.253.36 + 192.168.253.37<br>主机发现有时候也叫做ping扫描，有以下选项：<br>-sL(列表扫描)：它仅仅列出指定网络上的每台主机，不发送任何报文到目标主机<br>-sP(Ping扫描)：该选项告诉Nmap仅仅进行ping扫描(主机发现)，然后打印出对扫描做出响应的那些主机<br>-P0(无ping)：完全跳过Nmap发现阶段<br>-PS/PA/PU/PE/ARP[portlist]：使用TCP SYN/ACK、UDP、ICMP ECHO、ARP方式进行发现</p></blockquote><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nmap -P 192.168.253.1/24</span><br></pre></td></tr></table></figure><img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/07/NetProtoSec-LearningNotes2/p4.png" class title="p4"> <p>wireshark抓取ARP请求和响应报文：</p><img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/07/NetProtoSec-LearningNotes2/p5.png" class title="p5"><p>ping命令发起ICMP扫描，wireshark抓取ICMP报文：</p><img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/07/NetProtoSec-LearningNotes2/p6.png" class title="p6"><h1>端口扫描</h1>]]></content>
+    
+    
+    <summary type="html">国科大《网络协议安全》实验1 —— 主机和端口扫描</summary>
+    
+    
+    
+    <category term="网络协议安全学习笔记" scheme="https://enchantedovo.cn/categories/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE%E5%AE%89%E5%85%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+    
+    <category term="网络安全" scheme="https://enchantedovo.cn/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/"/>
+    
+    <category term="Wireshark" scheme="https://enchantedovo.cn/tags/Wireshark/"/>
+    
+    <category term="Nmap" scheme="https://enchantedovo.cn/tags/Nmap/"/>
+    
+  </entry>
+  
+  <entry>
     <title>从开机加电到执行main函数之前的过程</title>
     <link href="https://enchantedovo.cn/2022/09/06/OS-LearningNotes2/"/>
     <id>https://enchantedovo.cn/2022/09/06/OS-LearningNotes2/</id>
     <published>2022-09-06T06:07:10.000Z</published>
-    <updated>2022-09-06T07:45:40.425Z</updated>
+    <updated>2022-09-07T11:54:54.013Z</updated>
     
-    <content type="html"><![CDATA[<h1>引言</h1><p>从开机加电到执行main函数之前，主要分为以下三个部分：</p><ul><li>启动BIOS，准备实模式下的中断向量表和中断服务程序</li><li>从启动盘加载操作系统程序到内存<ul><li>bootsect程序（扇区 -&gt; 主机内存）</li><li>setup程序（设置内核运行所需的机器系统数据）</li><li>head程序（保护模式，内存分页）</li></ul></li><li>为执行32位的main函数做过渡</li></ul><h1>启动BIOS</h1><ul><li>CPU的硬件都设置为加电进入实模式</li><li>BIOS程序被固化在ROM中，由硬件方式执行：加电瞬间，CS:IP指向BIOS程序的入口地址（0xFFFF0）</li><li><h2 id="BIOS检测显卡、内存……，并且在内存中建立中断向量表和中断服务程序">BIOS检测显卡、内存……，并且<strong>在内存中建立中断向量表和中断服务程序</strong></h2></li></ul><blockquote><ul><li>ROM:只读存储器，断电之后仍能保存信息</li><li>0x00400 = 4*(16^2)字节 = 4*256字节 = 1024字节 = 1KB</li></ul></blockquote>]]></content>
-    
-    
-    <summary type="html">国科大杨力祥《操作系统高级教程》课堂笔记2 —— 开机加电后的过程</summary>
+    <content type="html"><![CDATA[<blockquote><p>参考用书：《Linux内核设计的艺术》</p><p>题外话：由于疫情，国科大现在实行线下上网课的形式。本节课就是大家全部到教室，然后老师共享屏幕来教学的，虽然互动减少了，但是还是干货满满。本周主要的笔记是记在电子版书上，下周可能会考虑整个思维导图，或许思路会更清晰。总之，开学前两周，先摸索一下学习方式。</p></blockquote><h1>引言</h1><p>从开机加电到执行main函数之前，主要分为以下三个部分：</p><ol><li>启动BIOS，准备实模式下的中断向量表和中断服务程序</li><li>从启动盘加载操作系统程序到内存：<ul><li>bootsect程序（扇区 -&gt; 主机内存）</li><li>setup程序（设置内核运行所需的机器系统数据）</li><li>head程序（保护模式，内存分页）</li></ul></li><li>为执行32位的main函数做过渡</li></ol><h1>启动BIOS</h1><ol><li>CPU的硬件都设置为加电进入实模式</li><li>BIOS程序被固化在ROM中，由<strong>硬件方式</strong>执行：加电瞬间，CS:IP指向BIOS程序的入口地址（0xFFFF0）</li><li>BIOS检测显卡、内存······，并且<strong>在内存中建立中断向量表和中断服务程序</strong></li></ol><blockquote><p>补充知识：</p><ul><li>ROM：只读存储器，断电之后仍能保存信息</li><li>0x00400 = 4*(16^2)字节 = 4*256字节 = 1024字节 = 1KB</li></ul></blockquote><h1>加载操作系统内核程序</h1><h2 id="加载第一部分内核代码——引导程序bootsect">加载第一部分内核代码——引导程序bootsect</h2><p><strong>理解</strong>： bootsect中sect是section的缩写，代表软盘。整个bootsect程序就是<strong>将内核程序从软盘加载到主机内存</strong>的过程。<br><strong>过程</strong>：</p><ol><li>CPU接收到一个int 0x19中断</li><li>对应中断服务程序把软盘中第一扇区的程序（512B）加载到内存的指定位置（0x07C00）</li></ol><img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/06/OS-LearningNotes2/p1.png" class title="p1"><blockquote><p>冷知识：0x07C00来自Intel第一台个人电脑8088芯片，为了保持兼容，以后的CPU都保留此地址</p></blockquote><h2 id="加载第二部分内核代码——setup">加载第二部分内核代码——setup</h2><p>BIOS将引导程序bootsect载入内存后，现在需要将第二批、第三批程序陆续加载到内存中。</p><p><strong>1.bootsect对内存的规划</strong><br>为了实现上述操作，bootsect首要工作就是先规划内存。如图，bootsect程序对后续操作涉及的内存位置进行了设置：</p><img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/06/OS-LearningNotes2/p2.png" class title="p2"><p><strong>2.复制bootsect</strong><br>接下来，bootsect将自身复制至内存0x90000（INITSEG）处：</p><img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/06/OS-LearningNotes2/p3.png" class title="p3"><p><strong>过程</strong>：一遍执行，一边复制<br><strong>目的</strong>：复制完后，就能根据自己的需要规划内存，程序可以执行更复杂的数据运算类指令了</p><p><strong>3.将setup程序加载到内存中</strong><br>通过BIOS提供的int 0x13中断向量指向的中断服务程序，将软盘第二扇区开始的4个扇区（即setup.s对应程序）加载到内存中（SETUPSEG）。</p><img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/06/OS-LearningNotes2/p4.png" class title="p4"><p>此时，操作系统已经从软盘中加载了5个扇区的代码。bootsect程序执行完后，setup程序就要开始工作了。</p><h2 id="加载第三部分内核代码——system模块">加载第三部分内核代码——system模块</h2><p><strong>1.bootsect载入系统模块</strong><br>接下来，bootsect程序进行第三批程序的载入工作。首先，bootsect借助BIOS中断int 0x13，将240个扇区的system<strong>系统模块加载进内存</strong>。至此，整个操作系统的代码已全部加载至内存。bootsect还需要再确认一下根设备号，然后其工作就结束了！</p><blockquote><p>补充：Linux0.11要求系统必须存在一个根文件系统，这里的文件系统☞配套文件系统格式的设备，如一张格式化好的软盘</p></blockquote><p><strong>2.setup程序提取机器系统数据</strong><br>setup程序现在开始执行。首先，它利用BIOS中断服务程序从设备上提取内核所需要运行的机器系统数据（光标位置、显示页面等），并加载在内存中。<br><strong>注意</strong>：BIOS提取的机器系统数据将覆盖bootsect程序所在部分区域，这提高了内存的利用率。<br>到此为止，内核已全部加载完成。接下来，系统将通过已加载到内存的代码，实现<strong>从实模式到保护模式的转变</strong>，使得Linux真正成为“现代”操作系统！</p><h1>向32位模式转变</h1><p>本节，操作系统执行的操作包括打开32位的寻址空间、打开保护模式、建立保护模式下的中断响应机制等与保护模式相关的工作、建立内存分页机制，最后最好调用main函数的准备。</p><h2 id="关闭中断，移动system">关闭中断，移动system</h2><p>首先<strong>关闭中断</strong>，即将CPU的标志寄存器（EFLAGS）的中断允许标志（IF）置0。</p><blockquote><p>补充：</p><ul><li>EFLAGS相当于总开关</li><li>这里的关闭中断并不意味着没有中断了，其实是仍会存在中断，只是不再响应处理而已</li></ul></blockquote><p>接下来，setup程序<strong>将位于0x10000的内核程序复制至内存起始地址0x00000处</strong>，将BIOS中断向量表和BIOS数据区完全覆盖。</p><h2 id="设置中断描述符表和全集描述符表">设置中断描述符表和全集描述符表</h2><p>setup程序<strong>对中断描述符表寄存器（IDTR）和全局描述符表寄存器（GDTR）进行初始化设置</strong>。</p><img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/06/OS-LearningNotes2/p5.png" class title="p5"><blockquote><p>补充知识：<br>GDT：全局描述符表，是存放段寄存器内容（段描述符）的数组，可以理解为进程总目录表<br>GDTR：GDT基地址寄存器，是GDT的入口<br>IDT：中断描述符表，保护模式下所有中断服务程序的入口地址，相当于实模式下的中断向量表<br>IDTR：IDT基地址寄存器，是IDT的入口</p></blockquote><h2 id="打开A20，实现32位寻址">打开A20，实现32位寻址</h2><blockquote><p>寻址：CPU能使用多大空间的内存</p></blockquote><h2 id="为保护模式下执行head-s做准备">为保护模式下执行head.s做准备</h2>]]></content>
     
     
+    <summary type="html">国科大杨力祥《操作系统高级教程》课堂笔记3 —— 开机加电后的过程</summary>
     
-    <category term="操作系统高级教程课堂笔记" scheme="https://enchantedovo.cn/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E9%AB%98%E7%BA%A7%E6%95%99%E7%A8%8B%E8%AF%BE%E5%A0%82%E7%AC%94%E8%AE%B0/"/>
+    
+    
+    <category term="操作系统高级教程学习笔记" scheme="https://enchantedovo.cn/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E9%AB%98%E7%BA%A7%E6%95%99%E7%A8%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     
     
     <category term="操作系统" scheme="https://enchantedovo.cn/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
@@ -46,7 +71,7 @@
     <link href="https://enchantedovo.cn/2022/09/03/ComputerNet-LearningNotes1/"/>
     <id>https://enchantedovo.cn/2022/09/03/ComputerNet-LearningNotes1/</id>
     <published>2022-09-03T06:59:04.000Z</published>
-    <updated>2022-09-03T07:58:21.305Z</updated>
+    <updated>2022-09-07T11:54:36.756Z</updated>
     
     <content type="html"><![CDATA[<blockquote><p>第一节课讲的课程绪论，本文仅记录课程大纲</p></blockquote><h1>课程大纲</h1><p>如图：</p><img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/03/ComputerNet-LearningNotes1/p1.png" class title="p1">]]></content>
     
@@ -55,7 +80,7 @@
     
     
     
-    <category term="计算机网络课堂笔记" scheme="https://enchantedovo.cn/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E8%AF%BE%E5%A0%82%E7%AC%94%E8%AE%B0/"/>
+    <category term="计算机网络学习笔记" scheme="https://enchantedovo.cn/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     
     
     <category term="计算机网络" scheme="https://enchantedovo.cn/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"/>
@@ -67,7 +92,7 @@
     <link href="https://enchantedovo.cn/2022/09/01/NetProtoSec-LearningNotes1/"/>
     <id>https://enchantedovo.cn/2022/09/01/NetProtoSec-LearningNotes1/</id>
     <published>2022-09-01T15:16:37.000Z</published>
-    <updated>2022-09-04T03:06:41.966Z</updated>
+    <updated>2022-09-07T11:54:32.147Z</updated>
     
     <content type="html"><![CDATA[<blockquote><p>知识背景：</p><ul><li>计算机网络</li><li>部分密码学知识<a href="https://www.bilibili.com/video/BV1vq4y1R7Yt?is_story_h5=false&amp;p=1&amp;share_from=ugc&amp;share_medium=android&amp;share_plat=android&amp;share_session_id=9e54e092-697a-4e52-b1db-99433ded35b8&amp;share_source=WEIXIN&amp;share_tag=s_i&amp;timestamp=1660828486&amp;unique_k=5oAWIQa">密码学教程（P5-P12）</a></li></ul></blockquote><h1>网络协议结构</h1><h2 id="TCP-IP协议">TCP/IP协议</h2><h3 id="局域网LAN与广域网WAN">局域网LAN与广域网WAN</h3><h4 id="LAN">LAN</h4><ul><li>特点：距离小、延迟小</li><li>构建LAN设备：线缆、网卡、集线器（已不用）、交换机、路由器</li></ul><blockquote><p>举例：校园网</p></blockquote><h4 id="WAN">WAN</h4><ul><li>定义：在大范围区域内提供数据通信服务，主要用于互联局域网</li><li>结构：<strong>末端系统</strong>+<strong>通信系统（中间链路）</strong><ul><li><strong>通信系统</strong>工作在<strong>物理层＋数据链路层</strong></li></ul></li><li>交换模式：<ul><li><strong>电路交换</strong>：带宽固定</li><li><strong>分组交换</strong>：多路复用</li></ul></li></ul><h3 id="OSI参考模型">OSI参考模型</h3><h4 id="七层功能">七层功能</h4><img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/01/NetProtoSec-LearningNotes1/p1.png" class title="p1"><h4 id="数据通信">数据通信</h4><p>数据通信两个原则：</p><ul><li><strong>对等通信</strong>：每一层使用自己的协议</li><li><strong>数据封装</strong>：封装指网络节点（node）将要传送的<strong>数据用特定的协议头打包</strong></li></ul><img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/01/NetProtoSec-LearningNotes1/p2.png" class title="p2"><blockquote><p>提问：为何这里的路由器只画了三层？<br>回答：从端到端通信的角度，路由器不需要工作在4、5层。但是我们需要知道，路由器也有高层协议（RIP/OSFP协议）。</p></blockquote><h3 id="TCP-IP协议栈">TCP/IP协议栈</h3><h4 id="与OSI对应关系">与OSI对应关系</h4><img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/01/NetProtoSec-LearningNotes1/p3.png" class title="p3"><h4 id="TCP-IP的封装">TCP/IP的封装</h4><img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/01/NetProtoSec-LearningNotes1/p4.png" class title="p4"><h4 id="各层功能">各层功能</h4><ul><li>应用层</li><li>传输层：提供端到端（端口号区分）连接、流量控制（窗口机制）、可靠性（序列号和确认技术实现）<ul><li>TCP：可靠，面向连接<ul><li>三次握手+四次挥手</li></ul></li><li>UDP：无连接通信，可靠性由上层负责</li></ul></li><li>网络层：寻址和路由选择<ul><li>IP协议：IP协议和路由协议协同工作寻找最优路径。不关心报文内容，提供无连接的、不可靠的服务。</li><li>ARP协议：IP协议 -&gt; MAC地址</li><li>ICMP协议：定义了网络层控制和传递消息的功能</li><li>RARP、IGMP</li></ul></li></ul><img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/01/NetProtoSec-LearningNotes1/p5.png" class title="p5"><h4 id="思考：手机LTE与电脑WiFi通信？">思考：手机LTE与电脑WiFi通信？</h4><img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/01/NetProtoSec-LearningNotes1/p6.png" class title="p6"><ul><li>手机 -&gt; 网关：通过承载网（下面的IP是在承载网上寻址）</li><li>手机网络相当于是一个大二层网络，能够全球通信</li></ul><h2 id="TCP-IP协议族的安全性">TCP/IP协议族的安全性</h2><h3 id="因特网存在的问题">因特网存在的问题</h3><ul><li>资源共享与分组交换<ul><li>IP地址的可见性</li><li>分组交换的方式导致：攻击数据包在被判断恶意前都会被转发到受害者（查找吓下一跳时不会判断是否恶意，容易被DoS攻击）</li></ul></li><li>认证与可追踪性<ul><li>Internet没有认证机制 —&gt; IP欺骗（路由表项只根据目的IP，不会看源IP）</li><li>路由器无数据追踪功能</li></ul></li><li>尽力而为 -&gt; DoS攻击</li><li>匿名与隐私：IP -&gt; 地址，身份 -&gt; ?</li><li>全球网络基础设置不提供可靠性、安全性保证</li></ul><h3 id="设计新的协议栈">设计新的协议栈</h3><ul><li>不能暴露IP</li><li>路由决策</li><li>认证</li><li>路由器可溯源（路由历史记录）</li><li>QoS/流量控制</li><li>身份标识</li></ul><h1>网络协议安全威胁分类</h1><h2 id="网络漏洞分类">网络漏洞分类</h2><ul><li>基于<strong>头部</strong><ul><li>头部某个域使用了无效值</li><li>TCP的FLAG误用攻击</li></ul></li><li>基于<strong>协议</strong><ul><li>不按顺序发送数据包</li><li>发送太快/太慢：DoS攻击</li><li>没发送数据包：SYN雪崩式攻击</li></ul></li><li>基于<strong>验证</strong><ul><li>非法访问接入点</li><li>IPv4地址欺骗</li><li>DNS欺骗</li></ul></li><li>基于<strong>流量</strong><ul><li>雪崩流量：ping一个广播地址</li><li>数据包<strong>嗅探</strong>:DoS攻击</li></ul></li></ul><h2 id="网络层次分类">网络层次分类</h2><img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/01/NetProtoSec-LearningNotes1/p7.png" class title="p7">]]></content>
     
@@ -76,7 +101,7 @@
     
     
     
-    <category term="网络协议安全课堂笔记" scheme="https://enchantedovo.cn/categories/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE%E5%AE%89%E5%85%A8%E8%AF%BE%E5%A0%82%E7%AC%94%E8%AE%B0/"/>
+    <category term="网络协议安全学习笔记" scheme="https://enchantedovo.cn/categories/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE%E5%AE%89%E5%85%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     
     
     <category term="网络协议" scheme="https://enchantedovo.cn/tags/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/"/>
@@ -90,7 +115,7 @@
     <link href="https://enchantedovo.cn/2022/09/01/AdvancedAI-LearningNotes1/"/>
     <id>https://enchantedovo.cn/2022/09/01/AdvancedAI-LearningNotes1/</id>
     <published>2022-09-01T15:03:53.000Z</published>
-    <updated>2022-09-03T11:44:25.714Z</updated>
+    <updated>2022-09-07T11:54:42.818Z</updated>
     
     <content type="html"><![CDATA[<blockquote><p>三节课讲述的东西太多，这里仅记录相对来说稍重要的部分。</p></blockquote><h1>图灵测试</h1><h2 id="什么是图灵测试">什么是图灵测试</h2><p>测试者与被测试者（一个人和一台机器）隔开的情况下，通过一些装置（如键盘）向被测试者随意提问。进行多次测试后，如果机器让平均每个参与者做出超过30%的误判，那么这台机器就通过了测试，并被认为具有人类智能。</p><blockquote><p>图灵问题：Can Machine Think？（思考）</p></blockquote><h2 id="质疑">质疑</h2><ul><li>图灵测试是不可构造的：“完全不接触”环境难以构建</li><li>图灵测试不可重现的：问题是开放的，答案正确性判断是主观的</li><li>图灵测试无法进行数学分析：只是一种操作式测试，缺少形式化描述</li></ul><h1>人工智能三大学派</h1><h2 id="符号主义">符号主义</h2><ul><li>认为“人的认知基元是符号（语言文字），认知过程即符号操作过程”</li><li>认为人工智能的<strong>核心是知识表示、知识推理和知识运用</strong></li><li>衍生出：逻辑、专家系统、知识库、<strong>知识图谱</strong></li></ul><h2 id="联结主义">联结主义</h2><ul><li>又称<strong>仿生</strong>学派或生理学派</li><li>认为人的思维基元是神经元，而不是符号处理过程</li><li>原理：神经网络及神经网络间的连接机制和学习算法</li><li>衍生出：<strong>人工神经网络</strong>，认知科学、类脑计算</li></ul><h2 id="行为主义">行为主义</h2><ul><li>又称进化主义或<strong>控制论学派</strong></li><li>主张<strong>利用机器对环境作用后的响应或反馈为原型</strong>来实现智能化</li><li>衍生出：动态规划、<strong>强化学习</strong>，多智能体</li></ul><h1>课程蓝图</h1><img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/01/AdvancedAI-LearningNotes1/p.png" class title="p">]]></content>
     
@@ -99,7 +124,7 @@
     
     
     
-    <category term="高级人工智能课堂笔记" scheme="https://enchantedovo.cn/categories/%E9%AB%98%E7%BA%A7%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E8%AF%BE%E5%A0%82%E7%AC%94%E8%AE%B0/"/>
+    <category term="高级人工智能学习笔记" scheme="https://enchantedovo.cn/categories/%E9%AB%98%E7%BA%A7%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     
     
     <category term="人工智能" scheme="https://enchantedovo.cn/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
@@ -111,7 +136,7 @@
     <link href="https://enchantedovo.cn/2022/08/30/OS-LearningNotes1/"/>
     <id>https://enchantedovo.cn/2022/08/30/OS-LearningNotes1/</id>
     <published>2022-08-30T07:05:26.000Z</published>
-    <updated>2022-09-01T15:18:12.406Z</updated>
+    <updated>2022-09-07T11:54:47.482Z</updated>
     
     <content type="html"><![CDATA[<blockquote><ul><li>源码阅读工具：Source Insight</li><li>关键字:<ul><li>内核Kernel</li><li>特权级</li><li>授权</li></ul></li><li>主要内容：本节课主要探讨了Linux内核，老师从逻辑推理的角度带大家体会什么是内核，为什么需要内核。</li></ul></blockquote><h1>授权</h1><h2 id="观点：未经授权，不得访问其他用户的资源">观点：未经授权，不得访问其他用户的资源</h2><blockquote><p>访问自己的资源，总是授权的。</p></blockquote><h2 id="探讨">探讨</h2><h3 id="问题：未经许可，用户是否能访问外设（IO）中自己的资源？">问题：未经许可，用户是否能访问外设（IO）中自己的资源？</h3><ul><li>答案：不可以。</li><li>原因：IO物理端口只有一个，而用户程序具有不确定性（可能会做一些坏事），如果开放端口，可能会无法控制。</li><li>解决办法：若用户非要访问（IO指令/MMIO），则用特权级拦住。<ul><li>特权级：CPU剥夺了应用程序访问外设的能力。</li></ul></li></ul><h3 id="问题：而自己的资源，应该要能访问的，那怎么办？">问题：而自己的资源，应该要能访问的，那怎么办？</h3><ul><li>因为：用户进程是不确定的，并且它应该是不确定的，没有理由要求它确定。</li><li>由<strong>一组确定的程序</strong>来访问自己的资源————即<strong>内核</strong>。</li></ul><h1>特权级</h1><h2 id="特权级的概念">特权级的概念</h2><p>在linux系统中特权级别分为0，1，2，3一共四个级别，0最大 ，3最小。</p><ul><li>一般内核代码运行在0特权级；</li><li>驱动、虚拟机等运行在1，2特权级；</li><li>而我们自己写的程序一般运行在3特权级，也就是最低级别。</li></ul><h2 id="探讨-2">探讨</h2><h3 id="用户程序指令（3特权）为什么不能访问0特权的数据？">用户程序指令（3特权）为什么不能访问0特权的数据？</h3><p>答：因为用户程序指令具有不确定性。</p><h3 id="0特权能否直接跳到3特权？">0特权能否直接跳到3特权？</h3><p>答：不允许，若此时0特权跳转过去后仍保持全态，那么应用程序就会直接变为kernel。</p><h1>接续访问机制</h1><p><strong>接续访问机制</strong>：用户发起 -&gt; 内核接续（IO行为） -&gt; 交付用户</p><h2 id="观点：内核的工作，是用户进程访问行为的延续">观点：内核的工作，是用户进程访问行为的延续</h2><h2 id="观点：内核需要结构化，提供一组自洽的、一致的syscall">观点：内核需要结构化，提供一组自洽的、一致的syscall</h2><h2 id="提问：既然未经授权，不得访问其他用户的资源。那所谓授权，又是给谁的？">提问：既然未经授权，不得访问其他用户的资源。那所谓授权，又是给谁的？</h2><p>思考：</p><ul><li>给用户？同一个用户，有可能可以读A文件，而B文件不行；</li><li>给资源？同一份资源，有可能用户1可以读，而用户2不行。</li></ul><p>答：给&quot;访问&quot;：一般是三元组（用户，操作，资源）。即<strong>一次授权对应一次访问</strong></p><h2 id="提问：从用户发起到内核接续，也即不确定行为到确定行为，如何实现？">提问：从用户发起到内核接续，也即不确定行为到确定行为，如何实现？</h2><p>答：1. 反转状态；2. 要求转移指令确定的落点：（1）限制用户进程的跳转指令；（2）限制用户进程的跳转落点.</p><blockquote><p>补充：以RISC-V为例，（1）只能是ecall指令；（2）只能是mtvec，中断向量基址，该值由OS内核指定。</p></blockquote><h2 id="观点：接续访问机制的重要保障：用户态和内核态之间有面-墙">观点：接续访问机制的重要保障：用户态和内核态之间有面&quot;墙&quot;</h2><p>墙是由某些硬件机制创建的。</p><blockquote><p>以RISCV为例：CSR寄存器组和CSR指令（CSR：Control and Status Registers）。</p></blockquote><h2 id="提问：既然内核可以用某些硬件机制建墙，那用户岂不是也可以用它来拆墙？">提问：既然内核可以用某些硬件机制建墙，那用户岂不是也可以用它来拆墙？</h2><h3 id="通俗版解答">通俗版解答</h3><ul><li>机器上电，操作系统先来，先建好墙，完事了把拆墙工具收到墙内。</li><li>用户想要拆墙，就要先进到墙内；</li><li>想要进到墙内，就要先拆墙。</li></ul><blockquote><p>以RISCV为例：<br>想要从U模式变到M模式，就必须使用CSR指令修改CSR寄存器组；<br>想要使用CSR指令修改CSR寄存器组，就必须已经处于M模式，否则机器报异常。</p></blockquote><h3 id="学术版解答">学术版解答</h3><ul><li>用时间的不可逆性来建构空间的各项异性；</li><li>互为必要条件。</li></ul>]]></content>
     
@@ -120,7 +145,7 @@
     
     
     
-    <category term="操作系统高级教程课堂笔记" scheme="https://enchantedovo.cn/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E9%AB%98%E7%BA%A7%E6%95%99%E7%A8%8B%E8%AF%BE%E5%A0%82%E7%AC%94%E8%AE%B0/"/>
+    <category term="操作系统高级教程学习笔记" scheme="https://enchantedovo.cn/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E9%AB%98%E7%BA%A7%E6%95%99%E7%A8%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     
     
     <category term="操作系统" scheme="https://enchantedovo.cn/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
@@ -249,7 +274,7 @@
     <link href="https://enchantedovo.cn/2021/02/12/nlp1/"/>
     <id>https://enchantedovo.cn/2021/02/12/nlp1/</id>
     <published>2021-02-12T12:21:32.000Z</published>
-    <updated>2021-02-12T13:09:38.393Z</updated>
+    <updated>2022-09-07T11:45:52.281Z</updated>
     
     <content type="html"><![CDATA[<blockquote><p>参考书籍：</p><ul><li>《自然语言处理理论与实战》</li><li>《Python 自然语言处理》</li><li>《Python 自然语言处理实战：核心技术与算法》</li></ul></blockquote><h2 id="NLP基本概念">NLP基本概念</h2><h3 id="什么是NLP">什么是NLP</h3><p>NLP定义：自然语言处理，用计算机处理、理解以及运行的人类语言（如中文、英文等）</p><p>NLP分类：</p><ul><li>自然语言理解<ul><li>音系学：语法中发讯的系统化组织</li><li>词态学：研究单词构成及相互关系</li><li>句法学：给定文本哪部分是语法正确的</li><li>语义句法学：给定文本的含义是什么？</li><li>语法学：文本的目的是什么？</li></ul></li><li>自然语言处理<ul><li>自然语言文本</li></ul></li></ul><p>NLP的研究任务</p><ul><li>机器翻译：计算机具备将一种语言<strong>翻译成另一种语言</strong>的能力</li><li>情感分析：计算机能够判断用户评论<strong>是否积极</strong></li><li>智能问答：计算机能够正确<strong>回答输入的问题</strong></li><li>文摘生成：计算机能够准确<strong>归纳、总结并产生文本摘要</strong></li><li>文本分类：计算机能够采集各种文章，进行<strong>主题分析</strong>，从而进行<strong>自动分类</strong></li><li>舆论分析：计算机能够<strong>判断目前舆论的导向</strong></li><li>知识图谱：知识点相互连接而成的<strong>语义网络</strong></li></ul><h2 id="NLP常用术语">NLP常用术语</h2><ul><li>分词（segment）<ul><li>将句子分成独立的有意义的语言成分（词）</li></ul></li><li>词性标注（part-of-speech tagging）<ul><li>对词的词性进行标注（例：动词、名词、形容词）</li></ul></li><li>命名实体识别（NER, Named Entity Recognition）<ul><li>从文本中识别具有特定类别的实体（例：人名、地名、机构名等）</li></ul></li><li>句法分析（syntax parsing）<ul><li>分析句子各个成分的依赖关系（例：主从关系），最后可生成句法分析树</li></ul></li><li>指代消解（anaphora resolution）<ul><li>代词指代</li></ul></li><li>情感识别（emotion recognition）<ul><li>本质是分类问题，经常应用在舆情分析等领域，可分为两类（正面、负面）或者三类（+中性）</li></ul></li><li>纠错（correction）<ul><li>在搜索技术和输入法中利用很多，具体做法可以根据N-Gram、字典树等等方法</li></ul></li><li>问答系统（QA system）<ul><li>类似机器人的人工智能系统</li></ul></li></ul><h2 id="语料库">语料库</h2><ul><li>中文维基百科</li><li>搜狗新闻语料库</li><li>IMDB情感分析语料库</li><li>等</li></ul><h2 id="三个层次">三个层次</h2><ul><li>词法分析</li><li>句法分析</li><li>语义分析</li></ul>]]></content>
     
