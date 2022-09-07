@@ -4,7 +4,7 @@ date: 2022-09-03 14:59:04
 tags: 
   - 计算机网络
 categories:
-  - 计算机网络课堂笔记
+  - 计算机网络学习笔记
 description: 国科大《计算机网络》课堂笔记1 —— 网络（课程）概述
 cover: https://s2.loli.net/2022/09/03/KzbDPOZ7jStqkr5.webp
 ---

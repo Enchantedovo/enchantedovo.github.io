@@ -5,7 +5,7 @@ tags:
   - 网络协议
   - 网络安全
 categories:
-  - 网络协议安全课堂笔记
+  - 网络协议安全学习笔记
 description: 国科大《网络协议安全》课堂笔记1 —— 网络协议安全基础
 cover: https://s3.bmp.ovh/imgs/2022/09/03/532c30c044da0f35.jpg
 ---
