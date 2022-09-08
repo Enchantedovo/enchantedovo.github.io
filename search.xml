@@ -49,6 +49,23 @@
       </tags>
   </entry>
   <entry>
+    <title>计算机网络（课程）概述</title>
+    <url>/2022/09/03/ComputerNet-LearningNotes1/</url>
+    <content><![CDATA[<blockquote>
+<p>第一节课讲的课程绪论，本文仅记录课程大纲</p>
+</blockquote>
+<h1>课程大纲</h1>
+<p>如图：</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/03/ComputerNet-LearningNotes1/p1.png" class title="p1">
+]]></content>
+      <categories>
+        <category>计算机网络学习笔记</category>
+      </categories>
+      <tags>
+        <tag>计算机网络</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>雅思写作Task1</title>
     <url>/2021/02/12/IELTS1/</url>
     <content><![CDATA[<h2 id="小作文基本了解">小作文基本了解</h2>
@@ -638,23 +655,6 @@ Overall the consumption of the world’s resources is undergoing a dangerous rat
       </tags>
   </entry>
   <entry>
-    <title>计算机网络（课程）概述</title>
-    <url>/2022/09/03/ComputerNet-LearningNotes1/</url>
-    <content><![CDATA[<blockquote>
-<p>第一节课讲的课程绪论，本文仅记录课程大纲</p>
-</blockquote>
-<h1>课程大纲</h1>
-<p>如图：</p>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/03/ComputerNet-LearningNotes1/p1.png" class title="p1">
-]]></content>
-      <categories>
-        <category>计算机网络学习笔记</category>
-      </categories>
-      <tags>
-        <tag>计算机网络</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>网络协议安全基础</title>
     <url>/2022/09/01/NetProtoSec-LearningNotes1/</url>
     <content><![CDATA[<blockquote>
@@ -807,6 +807,299 @@ Overall the consumption of the world’s resources is undergoing a dangerous rat
       </tags>
   </entry>
   <entry>
+    <title>主机和端口扫描</title>
+    <url>/2022/09/07/NetProtoSec-LearningNotes2/</url>
+    <content><![CDATA[<blockquote>
+<p>实验环境：Kali+Wireshark+Nmap</p>
+<ul>
+<li>Kali：是一个基于Debian的Linux发行版，预装了许多渗透测试软件，是一个很酷的“黑客操作系统”；</li>
+<li>Wireshark：是一个网络封包分析软件，功能是截取网络封包，并尽可能显示出最为详细的网络封包资料。Wireshark使用WinPCAP作为接口，直接与网卡进行数据报文交换；</li>
+<li>Nmap：即Network Mapper，是Linux下的网络扫描和嗅探工具包。</li>
+</ul>
+</blockquote>
+<h1>实验内容</h1>
+<p>1.在Nmap中，使用nmap –sP xx指令实现主机扫描，用wireshark抓取扫描过程中的ARP请求和响应报文；通过ping指令发起ICMP扫描，用wireshark抓取扫描过程中的ICMP报文；</p>
+<p>2.在Nmap中，使用nmap –sS xx指令实现端口扫描，用wireshark抓取扫描过程中的TCP报文。</p>
+<h1>kali网络配置</h1>
+<p>由于我使用的是校园网，因此我这里使用NAT模式。</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/07/NetProtoSec-LearningNotes2/p1.png" class title="p1"> 
+<h2 id="1-查看主机地址">1.查看主机地址</h2>
+<p>首先通过<code>win</code>+<code>R</code>输入cmd打开终端，然后通过<code>ipconfig</code>查看自己主机的ip地址，网关，网段（我这里选择VMnet8）。</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/07/NetProtoSec-LearningNotes2/p2.png" class title="p2"> 
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">IPv4 地址: 192.168.253.1</span><br><span class="line">子网掩码: 255.255.255.0</span><br></pre></td></tr></table></figure>
+<h2 id="2-修改-etc-network-interfaces文件">2.修改/etc/network/interfaces文件</h2>
+<p>然后，通过<code>vim /etc/network/interfaces</code>，设置静态IP：<br>
+address：把ip地址设置为自己主机网段中的一个，如：我的主机ip是192.168.253.1，这里设为192.168.253.36<br>
+gateway：在其中加上自己主机的网关，如：192.168.253.2<br>
+netmask：子网掩码照抄自己主机的，如：255.255.255.0</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">auto eth0</span><br><span class="line">iface eth0 inet static</span><br><span class="line">address 192.168.253.36</span><br><span class="line">netmask 255.255.255.0</span><br><span class="line">gateway 192.168.253.2</span><br></pre></td></tr></table></figure>
+<h2 id="3-修改dns">3.修改dns</h2>
+<p><code>vim /etc/resolv.conf</code>添加几个常用DNS：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">domain localdomain</span><br><span class="line">search localdomain</span><br><span class="line">nameserver 8.8.8.8</span><br><span class="line">nameserver 114.114.114.114</span><br><span class="line">nameserver 192.168.253.2</span><br></pre></td></tr></table></figure>
+<h2 id="4-重启网络">4.重启网络</h2>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">systemctl restart networking</span><br></pre></td></tr></table></figure>
+<p>或者</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;etc&#x2F;init.d&#x2F;networking restart</span><br></pre></td></tr></table></figure>
+<h2 id="5-测试">5.测试</h2>
+<p>输入<code>ifconfig -a</code>查看ip：</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/07/NetProtoSec-LearningNotes2/p3.png" class title="p3"> 
+<h2 id="nmap参数速查">nmap参数速查</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">命令</th>
+<th style="text-align:center">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">nmap IP</td>
+<td style="text-align:center">扫描IP</td>
+</tr>
+<tr>
+<td style="text-align:center">nmap -v IP</td>
+<td style="text-align:center">加强扫描</td>
+</tr>
+<tr>
+<td style="text-align:center">nmap IP1 IP2 …</td>
+<td style="text-align:center">扫描多IP</td>
+</tr>
+<tr>
+<td style="text-align:center">nmap a.b.c.*</td>
+<td style="text-align:center">扫描整个子网</td>
+</tr>
+<tr>
+<td style="text-align:center">nmap a.b.c.x,y,…</td>
+<td style="text-align:center">扫描多子网地址</td>
+</tr>
+<tr>
+<td style="text-align:center">nmap -iL xxx.txt</td>
+<td style="text-align:center">根据文件扫描多IP</td>
+</tr>
+<tr>
+<td style="text-align:center">nmap a.b.c.x-y</td>
+<td style="text-align:center">扫描子网IP范围</td>
+</tr>
+<tr>
+<td style="text-align:center">nmap a.b.c.* --exclude IP</td>
+<td style="text-align:center">排除指定IP扫描整个子网</td>
+</tr>
+<tr>
+<td style="text-align:center">nmap -A IP</td>
+<td style="text-align:center">全面的系统扫描,包括操作系统探测、版本探测、脚本扫描、路径跟踪</td>
+</tr>
+<tr>
+<td style="text-align:center">nmap -O IP</td>
+<td style="text-align:center">探测操作系统</td>
+</tr>
+<tr>
+<td style="text-align:center">nmap -sA/-PN IP</td>
+<td style="text-align:center">探测防火墙</td>
+</tr>
+<tr>
+<td style="text-align:center">nmap -sP a.b.c.*</td>
+<td style="text-align:center">探测在线主机</td>
+</tr>
+<tr>
+<td style="text-align:center">nmap -F IP</td>
+<td style="text-align:center">快速扫描</td>
+</tr>
+<tr>
+<td style="text-align:center">nmap -r IP</td>
+<td style="text-align:center">按顺序扫描</td>
+</tr>
+<tr>
+<td style="text-align:center">nmap -iflist</td>
+<td style="text-align:center">显示接口和路由信息</td>
+</tr>
+<tr>
+<td style="text-align:center">nmap -p n1,n2… IP</td>
+<td style="text-align:center">扫描指定端口</td>
+</tr>
+<tr>
+<td style="text-align:center">nmap -p T:n1,n2… IP</td>
+<td style="text-align:center">扫描TCP端口</td>
+</tr>
+<tr>
+<td style="text-align:center">nmap -sU n1,n2… IP</td>
+<td style="text-align:center">扫描UDP端口</td>
+</tr>
+<tr>
+<td style="text-align:center">nmap -sV IP</td>
+<td style="text-align:center">查看服务的版本</td>
+</tr>
+<tr>
+<td style="text-align:center">nmap -PS IP</td>
+<td style="text-align:center">TCP ACK扫描</td>
+</tr>
+<tr>
+<td style="text-align:center">nmap -PA IP</td>
+<td style="text-align:center">TCP SYN扫描</td>
+</tr>
+<tr>
+<td style="text-align:center">nmap -sS IP</td>
+<td style="text-align:center">隐蔽扫描</td>
+</tr>
+<tr>
+<td style="text-align:center">nmap -sN IP</td>
+<td style="text-align:center">TCP空扫描欺骗防火墙</td>
+</tr>
+</tbody>
+</table>
+<h1>主机扫描</h1>
+<blockquote>
+<p>开两个虚拟机：192.168.253.36 + 192.168.253.37</p>
+</blockquote>
+<h2 id="主机扫描参数">主机扫描参数</h2>
+<p>主机发现有时候也叫做ping扫描，有以下选项：<br>
+<code>-sL</code>（列表扫描）：它仅仅列出指定网络上的每台主机，不发送任何报文到目标主机；<br>
+<code>-sP</code>（Ping扫描）：该选项告诉Nmap仅仅进行ping扫描（主机发现），然后打印出对扫描做出响应的那些主机；Nmap会发一个ICMP ECHO请求和一个TCP报文到目标端口；<br>
+<code>-Pn</code>（无ping）：无Ping扫描通常用于防火墙禁止Ping的情况下，完全跳过Nmap发现阶段，且对目标主机进行端口扫描；<br>
+<code>-PS</code>（TCP SYN ping）：该选项发送了一个设置了SYN标志位的空TCP报文，需要root权限；<br>
+<code>-PA</code>（TCP ACK ping）：它与TCP SYN Ping扫描类似，不同的只是设置的TCP报文的标志位是ACK；<br>
+<code>-PU</code>（UDP  ping）：发送一个空的UDP报文到指定端口，很少用；<br>
+<code>-PE/PP/PM</code>（ICMP ECHO/时间戳/地址掩码Ping）；<br>
+<code>-ARP</code>（ARP ping）：该选项通常在扫描局域网时使用，在内网中使用ARP Ping是非常有效的。</p>
+<h2 id="实验过程">实验过程</h2>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">nmap -P 192.168.253.1/24</span><br></pre></td></tr></table></figure>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/07/NetProtoSec-LearningNotes2/p4.png" class title="p4"> 
+<p>wireshark抓取ARP请求和响应报文：</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/07/NetProtoSec-LearningNotes2/p5.png" class title="p5">
+<p>ping命令发起ICMP扫描，wireshark抓取ICMP报文：</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/07/NetProtoSec-LearningNotes2/p6.png" class title="p6">
+<h1>端口扫描</h1>
+<h2 id="端口扫描基础">端口扫描基础</h2>
+<h3 id="端口状态">端口状态</h3>
+<p>Nmap所识别的6个端口状态：</p>
+<ul>
+<li><code>Opend</code>：端口开启；</li>
+<li><code>Closed</code>： 端口关闭；</li>
+<li><code>Filtered</code>：端口被过滤，数据没有到达主机，返回的结果为空，数据被防火墙拦截了；</li>
+<li><code>Unfiltered</code>：未被过滤，数据有到达主机，但是不能识别端口的当前状态；</li>
+<li><code>Open|filtered</code>：开放或者被过滤，端口没有返回值，主要发生在UDP、IP、FIN、NULL和X mas扫描中；</li>
+<li><code>Closed|filtered</code>：关闭或者被过滤，只发生在IP ID idle扫描。</li>
+</ul>
+<h3 id="命令参数">命令参数</h3>
+<p>-<code>sS</code>（TCP SYN扫描）：半开扫描，很少有系统能把它记入系统日志。不过，需要Root权限；<br>
+-<code>sT</code>（TCP connect()扫描）:当SYN扫描不能用时，CP Connect()扫描就是默认的TCP扫描；<br>
+-<code>sN/-sF/-sX</code>（TCP Null/FIN/Xmas扫描）:能躲过一些无状态防火墙和报文过滤路由器；<br>
+-<code>p</code>：指定范围性扫描端口；<br>
+-<code>v</code>：详细信息。</p>
+<h2 id="实验过程-2">实验过程</h2>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">┌──(root㉿kali)-[~]</span><br><span class="line">└─<span class="comment"># nmap -sS 192.168.253.1</span></span><br><span class="line">Starting Nmap 7.92 ( https://nmap.org ) at 2022-09-07 22:42 EDT</span><br><span class="line">Nmap scan report <span class="keyword">for</span> 192.168.253.1</span><br><span class="line">Host is up (0.00019s latency).</span><br><span class="line">Not shown: 996 filtered tcp ports (no-response)</span><br><span class="line">PORT     STATE SERVICE</span><br><span class="line">135/tcp  open  msrpc</span><br><span class="line">139/tcp  open  netbios-ssn</span><br><span class="line">445/tcp  open  microsoft-ds</span><br><span class="line">4001/tcp open  newoak</span><br><span class="line">MAC Address: 00:50:56:C0:00:08 (VMware)</span><br><span class="line"></span><br><span class="line">Nmap <span class="keyword">done</span>: 1 IP address (1 host up) scanned <span class="keyword">in</span> 4.70 seconds</span><br></pre></td></tr></table></figure>
+<p>打开wireshark抓取tcp包，可看到：</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/07/NetProtoSec-LearningNotes2/p7.png" class title="p7">
+<p>扫描主机的135和139端口已经回发数据了。</p>
+]]></content>
+      <categories>
+        <category>网络协议安全学习笔记</category>
+      </categories>
+      <tags>
+        <tag>网络安全</tag>
+        <tag>Wireshark</tag>
+        <tag>Nmap</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>操作系统的“公理化”</title>
+    <url>/2022/08/30/OS-LearningNotes1/</url>
+    <content><![CDATA[<blockquote>
+<ul>
+<li>源码阅读工具：Source Insight</li>
+<li>关键字:
+<ul>
+<li>内核Kernel</li>
+<li>特权级</li>
+<li>授权</li>
+</ul>
+</li>
+<li>主要内容：本节课主要探讨了Linux内核，老师从逻辑推理的角度带大家体会什么是内核，为什么需要内核。</li>
+</ul>
+</blockquote>
+<h1>授权</h1>
+<h2 id="观点：未经授权，不得访问其他用户的资源">观点：未经授权，不得访问其他用户的资源</h2>
+<blockquote>
+<p>访问自己的资源，总是授权的。</p>
+</blockquote>
+<h2 id="探讨">探讨</h2>
+<h3 id="问题：未经许可，用户是否能访问外设（IO）中自己的资源？">问题：未经许可，用户是否能访问外设（IO）中自己的资源？</h3>
+<ul>
+<li>答案：不可以。</li>
+<li>原因：IO物理端口只有一个，而用户程序具有不确定性（可能会做一些坏事），如果开放端口，可能会无法控制。</li>
+<li>解决办法：若用户非要访问（IO指令/MMIO），则用特权级拦住。
+<ul>
+<li>特权级：CPU剥夺了应用程序访问外设的能力。</li>
+</ul>
+</li>
+</ul>
+<h3 id="问题：而自己的资源，应该要能访问的，那怎么办？">问题：而自己的资源，应该要能访问的，那怎么办？</h3>
+<ul>
+<li>因为：用户进程是不确定的，并且它应该是不确定的，没有理由要求它确定。</li>
+<li>由<strong>一组确定的程序</strong>来访问自己的资源————即<strong>内核</strong>。</li>
+</ul>
+<h1>特权级</h1>
+<h2 id="特权级的概念">特权级的概念</h2>
+<p>在linux系统中特权级别分为0，1，2，3一共四个级别，0最大 ，3最小。</p>
+<ul>
+<li>一般内核代码运行在0特权级；</li>
+<li>驱动、虚拟机等运行在1，2特权级；</li>
+<li>而我们自己写的程序一般运行在3特权级，也就是最低级别。</li>
+</ul>
+<h2 id="探讨-2">探讨</h2>
+<h3 id="用户程序指令（3特权）为什么不能访问0特权的数据？">用户程序指令（3特权）为什么不能访问0特权的数据？</h3>
+<p>答：因为用户程序指令具有不确定性。</p>
+<h3 id="0特权能否直接跳到3特权？">0特权能否直接跳到3特权？</h3>
+<p>答：不允许，若此时0特权跳转过去后仍保持全态，那么应用程序就会直接变为kernel。</p>
+<h1>接续访问机制</h1>
+<p><strong>接续访问机制</strong>：用户发起 -&gt; 内核接续（IO行为） -&gt; 交付用户</p>
+<h2 id="观点：内核的工作，是用户进程访问行为的延续">观点：内核的工作，是用户进程访问行为的延续</h2>
+<h2 id="观点：内核需要结构化，提供一组自洽的、一致的syscall">观点：内核需要结构化，提供一组自洽的、一致的syscall</h2>
+<h2 id="提问：既然未经授权，不得访问其他用户的资源。那所谓授权，又是给谁的？">提问：既然未经授权，不得访问其他用户的资源。那所谓授权，又是给谁的？</h2>
+<p>思考：</p>
+<ul>
+<li>给用户？同一个用户，有可能可以读A文件，而B文件不行；</li>
+<li>给资源？同一份资源，有可能用户1可以读，而用户2不行。</li>
+</ul>
+<p>答：给&quot;访问&quot;：一般是三元组（用户，操作，资源）。即<strong>一次授权对应一次访问</strong></p>
+<h2 id="提问：从用户发起到内核接续，也即不确定行为到确定行为，如何实现？">提问：从用户发起到内核接续，也即不确定行为到确定行为，如何实现？</h2>
+<p>答：1. 反转状态；2. 要求转移指令确定的落点：（1）限制用户进程的跳转指令；（2）限制用户进程的跳转落点.</p>
+<blockquote>
+<p>补充：以RISC-V为例，（1）只能是ecall指令；（2）只能是mtvec，中断向量基址，该值由OS内核指定。</p>
+</blockquote>
+<h2 id="观点：接续访问机制的重要保障：用户态和内核态之间有面-墙">观点：接续访问机制的重要保障：用户态和内核态之间有面&quot;墙&quot;</h2>
+<p>墙是由某些硬件机制创建的。</p>
+<blockquote>
+<p>以RISCV为例：CSR寄存器组和CSR指令（CSR：Control and Status Registers）。</p>
+</blockquote>
+<h2 id="提问：既然内核可以用某些硬件机制建墙，那用户岂不是也可以用它来拆墙？">提问：既然内核可以用某些硬件机制建墙，那用户岂不是也可以用它来拆墙？</h2>
+<h3 id="通俗版解答">通俗版解答</h3>
+<ul>
+<li>机器上电，操作系统先来，先建好墙，完事了把拆墙工具收到墙内。</li>
+<li>用户想要拆墙，就要先进到墙内；</li>
+<li>想要进到墙内，就要先拆墙。</li>
+</ul>
+<blockquote>
+<p>以RISCV为例：<br>
+想要从U模式变到M模式，就必须使用CSR指令修改CSR寄存器组；<br>
+想要使用CSR指令修改CSR寄存器组，就必须已经处于M模式，否则机器报异常。</p>
+</blockquote>
+<h3 id="学术版解答">学术版解答</h3>
+<ul>
+<li>用时间的不可逆性来建构空间的各项异性；</li>
+<li>互为必要条件。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>操作系统高级教程学习笔记</category>
+      </categories>
+      <tags>
+        <tag>操作系统</tag>
+        <tag>Linux Kernel</tag>
+        <tag>特权级</tag>
+        <tag>授权</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>从开机加电到执行main函数之前的过程</title>
     <url>/2022/09/06/OS-LearningNotes2/</url>
     <content><![CDATA[<blockquote>
@@ -913,130 +1206,6 @@ IDTR：IDT基地址寄存器，是IDT的入口</p>
       </tags>
   </entry>
   <entry>
-    <title>操作系统的“公理化”</title>
-    <url>/2022/08/30/OS-LearningNotes1/</url>
-    <content><![CDATA[<blockquote>
-<ul>
-<li>源码阅读工具：Source Insight</li>
-<li>关键字:
-<ul>
-<li>内核Kernel</li>
-<li>特权级</li>
-<li>授权</li>
-</ul>
-</li>
-<li>主要内容：本节课主要探讨了Linux内核，老师从逻辑推理的角度带大家体会什么是内核，为什么需要内核。</li>
-</ul>
-</blockquote>
-<h1>授权</h1>
-<h2 id="观点：未经授权，不得访问其他用户的资源">观点：未经授权，不得访问其他用户的资源</h2>
-<blockquote>
-<p>访问自己的资源，总是授权的。</p>
-</blockquote>
-<h2 id="探讨">探讨</h2>
-<h3 id="问题：未经许可，用户是否能访问外设（IO）中自己的资源？">问题：未经许可，用户是否能访问外设（IO）中自己的资源？</h3>
-<ul>
-<li>答案：不可以。</li>
-<li>原因：IO物理端口只有一个，而用户程序具有不确定性（可能会做一些坏事），如果开放端口，可能会无法控制。</li>
-<li>解决办法：若用户非要访问（IO指令/MMIO），则用特权级拦住。
-<ul>
-<li>特权级：CPU剥夺了应用程序访问外设的能力。</li>
-</ul>
-</li>
-</ul>
-<h3 id="问题：而自己的资源，应该要能访问的，那怎么办？">问题：而自己的资源，应该要能访问的，那怎么办？</h3>
-<ul>
-<li>因为：用户进程是不确定的，并且它应该是不确定的，没有理由要求它确定。</li>
-<li>由<strong>一组确定的程序</strong>来访问自己的资源————即<strong>内核</strong>。</li>
-</ul>
-<h1>特权级</h1>
-<h2 id="特权级的概念">特权级的概念</h2>
-<p>在linux系统中特权级别分为0，1，2，3一共四个级别，0最大 ，3最小。</p>
-<ul>
-<li>一般内核代码运行在0特权级；</li>
-<li>驱动、虚拟机等运行在1，2特权级；</li>
-<li>而我们自己写的程序一般运行在3特权级，也就是最低级别。</li>
-</ul>
-<h2 id="探讨-2">探讨</h2>
-<h3 id="用户程序指令（3特权）为什么不能访问0特权的数据？">用户程序指令（3特权）为什么不能访问0特权的数据？</h3>
-<p>答：因为用户程序指令具有不确定性。</p>
-<h3 id="0特权能否直接跳到3特权？">0特权能否直接跳到3特权？</h3>
-<p>答：不允许，若此时0特权跳转过去后仍保持全态，那么应用程序就会直接变为kernel。</p>
-<h1>接续访问机制</h1>
-<p><strong>接续访问机制</strong>：用户发起 -&gt; 内核接续（IO行为） -&gt; 交付用户</p>
-<h2 id="观点：内核的工作，是用户进程访问行为的延续">观点：内核的工作，是用户进程访问行为的延续</h2>
-<h2 id="观点：内核需要结构化，提供一组自洽的、一致的syscall">观点：内核需要结构化，提供一组自洽的、一致的syscall</h2>
-<h2 id="提问：既然未经授权，不得访问其他用户的资源。那所谓授权，又是给谁的？">提问：既然未经授权，不得访问其他用户的资源。那所谓授权，又是给谁的？</h2>
-<p>思考：</p>
-<ul>
-<li>给用户？同一个用户，有可能可以读A文件，而B文件不行；</li>
-<li>给资源？同一份资源，有可能用户1可以读，而用户2不行。</li>
-</ul>
-<p>答：给&quot;访问&quot;：一般是三元组（用户，操作，资源）。即<strong>一次授权对应一次访问</strong></p>
-<h2 id="提问：从用户发起到内核接续，也即不确定行为到确定行为，如何实现？">提问：从用户发起到内核接续，也即不确定行为到确定行为，如何实现？</h2>
-<p>答：1. 反转状态；2. 要求转移指令确定的落点：（1）限制用户进程的跳转指令；（2）限制用户进程的跳转落点.</p>
-<blockquote>
-<p>补充：以RISC-V为例，（1）只能是ecall指令；（2）只能是mtvec，中断向量基址，该值由OS内核指定。</p>
-</blockquote>
-<h2 id="观点：接续访问机制的重要保障：用户态和内核态之间有面-墙">观点：接续访问机制的重要保障：用户态和内核态之间有面&quot;墙&quot;</h2>
-<p>墙是由某些硬件机制创建的。</p>
-<blockquote>
-<p>以RISCV为例：CSR寄存器组和CSR指令（CSR：Control and Status Registers）。</p>
-</blockquote>
-<h2 id="提问：既然内核可以用某些硬件机制建墙，那用户岂不是也可以用它来拆墙？">提问：既然内核可以用某些硬件机制建墙，那用户岂不是也可以用它来拆墙？</h2>
-<h3 id="通俗版解答">通俗版解答</h3>
-<ul>
-<li>机器上电，操作系统先来，先建好墙，完事了把拆墙工具收到墙内。</li>
-<li>用户想要拆墙，就要先进到墙内；</li>
-<li>想要进到墙内，就要先拆墙。</li>
-</ul>
-<blockquote>
-<p>以RISCV为例：<br>
-想要从U模式变到M模式，就必须使用CSR指令修改CSR寄存器组；<br>
-想要使用CSR指令修改CSR寄存器组，就必须已经处于M模式，否则机器报异常。</p>
-</blockquote>
-<h3 id="学术版解答">学术版解答</h3>
-<ul>
-<li>用时间的不可逆性来建构空间的各项异性；</li>
-<li>互为必要条件。</li>
-</ul>
-]]></content>
-      <categories>
-        <category>操作系统高级教程学习笔记</category>
-      </categories>
-      <tags>
-        <tag>操作系统</tag>
-        <tag>Linux Kernel</tag>
-        <tag>特权级</tag>
-        <tag>授权</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>PTA习题2-7</title>
-    <url>/2021/04/20/PTA%E4%B9%A0%E9%A2%982-7/</url>
-    <content><![CDATA[<h1>弹球距离</h1>
-<p>设有一个球从高度为h米的地方落下，碰到地面后又弹到高度为原来p倍的位置，然后又落下，再弹起，再落下…。请编写函数求初始高度为h的球下落后到基本停下来（高度小于给定阈值TOL）时在空中所经过的路程总和。</p>
-<p>函数接口定义：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">double dist( double h, double p );</span><br></pre></td></tr></table></figure>
-<p>其中h是球的初始高度，p是球弹起高度与弹起前落下高度的比值；函数dist要返回球下落后到基本停下来时在空中所经过的路程总和。注意：当弹起的高度小于裁判程序定义的常数TOL时，弹起的距离不计算在内。</p>
-<p>裁判测试程序样例：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line">#define TOL 1E-2</span><br><span class="line"></span><br><span class="line">double dist( double h, double p );</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    double h, p, d;</span><br><span class="line">    scanf(&quot;%lf %lf&quot;, &amp;h, &amp;p);</span><br><span class="line">    d &#x3D; dist(h, p);</span><br><span class="line">    printf(&quot;%.6f\n&quot;, d);</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;* 你的代码将被嵌在这里 *&#x2F;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>输入样例：<br>
-<code>1.0 0.4</code><br>
-输出样例：<br>
-<code>2.319680</code></p>
-<p><strong>递归实现</strong></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">double dist( double h, double p )&#123;</span><br><span class="line">    if(p*h&lt;TOL) return h;</span><br><span class="line">    else return h+h*p+dist(h*p,p);&#x2F;&#x2F;重复的</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><strong>非递归实现</strong></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">double dist( double h, double p )&#x2F;&#x2F;右一个注意点两次触地时走过的距离为 h+2*h*p</span><br><span class="line">&#123;</span><br><span class="line">    double mix&#x3D;h*p;</span><br><span class="line">    double sum &#x3D; h;&#x2F;&#x2F;第一次落下走过的距离是h</span><br><span class="line">    while(mix&gt;&#x3D;TOL)</span><br><span class="line">    &#123;</span><br><span class="line">        sum+&#x3D; 2*mix;&#x2F;&#x2F;第二次落下走过的是 h+2*h*p，依次类推</span><br><span class="line">        mix &#x3D; mix*p;</span><br><span class="line">    &#125;</span><br><span class="line">    return sum;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>刷题</category>
-      </categories>
-      <tags>
-        <tag>PTA</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>PTA习题7-1</title>
     <url>/2021/05/13/PTA%E4%B9%A0%E9%A2%987-1/</url>
     <content><![CDATA[<h1>7-1 最大子列和问题</h1>
@@ -1081,6 +1250,31 @@ IDTR：IDT基地址寄存器，是IDT的入口</p>
 <img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2021/05/13/PTA%E4%B9%A0%E9%A2%987-1/img.png" class title="img">
 <p>我们只要计算出：以分割点为起点向左的最大连续序列和、以分割点为起点向右的最大连续序列和，这两个结果的和就是第三种情况的答案。因为已知起点，所以这两个结果都能在O(N)的时间复杂度能算出来。</p>
 <figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">//N是数组长度，num是待计算的数组，放在全局区是因为可以开很大的数组</span></span><br><span class="line"><span class="keyword">int</span> N, num[<span class="number">16777216</span>];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">solve</span><span class="params">(<span class="keyword">int</span> left, <span class="keyword">int</span> right)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">//序列长度为1时</span></span><br><span class="line">    <span class="keyword">if</span>(left == right)</span><br><span class="line">        <span class="keyword">return</span> num[left];</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//划分为两个规模更小的问题</span></span><br><span class="line">    <span class="keyword">int</span> mid = left + right &gt;&gt; <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">int</span> lans = solve(left, mid);</span><br><span class="line">    <span class="keyword">int</span> rans = solve(mid + <span class="number">1</span>, right);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//横跨分割点的情况</span></span><br><span class="line">    <span class="keyword">int</span> sum = <span class="number">0</span>, lmax = num[mid], rmax = num[mid + <span class="number">1</span>];</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = mid; i &gt;= left; i--) &#123;</span><br><span class="line">        sum += num[i];</span><br><span class="line">        <span class="keyword">if</span>(sum &gt; lmax) lmax = sum;</span><br><span class="line">    &#125;</span><br><span class="line">    sum = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = mid + <span class="number">1</span>; i &lt;= right; i++) &#123;</span><br><span class="line">        sum += num[i];</span><br><span class="line">        <span class="keyword">if</span>(sum &gt; rmax) rmax = sum;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//答案是三种情况的最大值</span></span><br><span class="line">    <span class="keyword">int</span> ans = lmax + rmax;</span><br><span class="line">    <span class="keyword">if</span>(lans &gt; ans) ans = lans;</span><br><span class="line">    <span class="keyword">if</span>(rans &gt; ans) ans = rans;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> ans;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">//输入数据</span></span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;N);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= N; i++)</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;num[i]);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, solve(<span class="number">1</span>, N));</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>刷题</category>
+      </categories>
+      <tags>
+        <tag>PTA</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>PTA习题2-7</title>
+    <url>/2021/04/20/PTA%E4%B9%A0%E9%A2%982-7/</url>
+    <content><![CDATA[<h1>弹球距离</h1>
+<p>设有一个球从高度为h米的地方落下，碰到地面后又弹到高度为原来p倍的位置，然后又落下，再弹起，再落下…。请编写函数求初始高度为h的球下落后到基本停下来（高度小于给定阈值TOL）时在空中所经过的路程总和。</p>
+<p>函数接口定义：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">double dist( double h, double p );</span><br></pre></td></tr></table></figure>
+<p>其中h是球的初始高度，p是球弹起高度与弹起前落下高度的比值；函数dist要返回球下落后到基本停下来时在空中所经过的路程总和。注意：当弹起的高度小于裁判程序定义的常数TOL时，弹起的距离不计算在内。</p>
+<p>裁判测试程序样例：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line">#define TOL 1E-2</span><br><span class="line"></span><br><span class="line">double dist( double h, double p );</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    double h, p, d;</span><br><span class="line">    scanf(&quot;%lf %lf&quot;, &amp;h, &amp;p);</span><br><span class="line">    d &#x3D; dist(h, p);</span><br><span class="line">    printf(&quot;%.6f\n&quot;, d);</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;* 你的代码将被嵌在这里 *&#x2F;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>输入样例：<br>
+<code>1.0 0.4</code><br>
+输出样例：<br>
+<code>2.319680</code></p>
+<p><strong>递归实现</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">double dist( double h, double p )&#123;</span><br><span class="line">    if(p*h&lt;TOL) return h;</span><br><span class="line">    else return h+h*p+dist(h*p,p);&#x2F;&#x2F;重复的</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>非递归实现</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">double dist( double h, double p )&#x2F;&#x2F;右一个注意点两次触地时走过的距离为 h+2*h*p</span><br><span class="line">&#123;</span><br><span class="line">    double mix&#x3D;h*p;</span><br><span class="line">    double sum &#x3D; h;&#x2F;&#x2F;第一次落下走过的距离是h</span><br><span class="line">    while(mix&gt;&#x3D;TOL)</span><br><span class="line">    &#123;</span><br><span class="line">        sum+&#x3D; 2*mix;&#x2F;&#x2F;第二次落下走过的是 h+2*h*p，依次类推</span><br><span class="line">        mix &#x3D; mix*p;</span><br><span class="line">    &#125;</span><br><span class="line">    return sum;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
       <categories>
         <category>刷题</category>
       </categories>
@@ -1429,67 +1623,6 @@ IDTR：IDT基地址寄存器，是IDT的入口</p>
       <tags>
         <tag>python</tag>
         <tag>可视化</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>主机和端口扫描</title>
-    <url>/2022/09/07/NetProtoSec-LearningNotes2/</url>
-    <content><![CDATA[<blockquote>
-<p>实验环境：Kali+Wireshark+Nmap<br>
-Kali：是一个基于Debian的Linux发行版，预装了许多渗透测试软件，是一个很酷的“黑客操作系统”<br>
-Wireshark：是一个网络封包分析软件，功能是截取网络封包，并尽可能显示出最为详细的网络封包资料。Wireshark使用WinPCAP作为接口，直接与网卡进行数据报文交换<br>
-Nmap：即Network Mapper，是Linux下的网络扫描和嗅探工具包</p>
-</blockquote>
-<h1>实验内容</h1>
-<p>1.在Nmap中，使用nmap –sP xx指令实现主机扫描，用wireshark抓取扫描过程中的ARP请求和响应报文；通过ping指令发起ICMP扫描，用wireshark抓取扫描过程中的ICMP报文。<br>
-2.在Nmap中，使用nmap –sS xx指令实现端口扫描，用wireshark抓取扫描过程中的TCP报文。</p>
-<h1>kali网络配置</h1>
-<p>由于我使用的是校园网，因此我这里使用NAT模式。</p>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/07/NetProtoSec-LearningNotes2/p1.png" class title="p1"> 
-<p>1.查看主机地址</p>
-<p>首先通过<code>win</code>+<code>R</code>输入cmd打开终端，然后通过<code>ipconfig</code>查看自己主机的ip地址，网关，网段（我这里选择VMnet8）。</p>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/07/NetProtoSec-LearningNotes2/p2.png" class title="p2"> 
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">IPv4 地址: 192.168.253.1</span><br><span class="line">子网掩码: 255.255.255.0</span><br></pre></td></tr></table></figure>
-<p>2.修改/etc/network/interfaces文件<br>
-然后，通过<code>vim /etc/network/interfaces</code>，设置静态IP：<br>
-address：把ip地址设置为自己主机网段中的一个，如：我的主机ip是192.168.253.1，这里设为192.168.253.36<br>
-gateway：在其中加上自己主机的网关，如：192.168.253.2<br>
-netmask：子网掩码照抄自己主机的，如：255.255.255.0</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">auto eth0</span><br><span class="line">iface eth0 inet static</span><br><span class="line">address 192.168.253.36</span><br><span class="line">netmask 255.255.255.0</span><br><span class="line">gateway 192.168.253.2</span><br></pre></td></tr></table></figure>
-<p>3.修改dns<br>
-<code>vim /etc/resolv.conf</code>添加几个常用DNS：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">domain localdomain</span><br><span class="line">search localdomain</span><br><span class="line">nameserver 8.8.8.8</span><br><span class="line">nameserver 114.114.114.114</span><br><span class="line">nameserver 192.168.253.2</span><br></pre></td></tr></table></figure>
-<p>4.重启网络</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">systemctl restart networking</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>或者</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;etc&#x2F;init.d&#x2F;networking restart</span><br></pre></td></tr></table></figure>
-<p>5.测试<br>
-输入<code>ifconfig -a</code>查看ip：</p>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/07/NetProtoSec-LearningNotes2/p3.png" class title="p3"> 
-<h1>主机扫描</h1>
-<blockquote>
-<p>开两个虚拟机：192.168.253.36 + 192.168.253.37<br>
-主机发现有时候也叫做ping扫描，有以下选项：<br>
--sL(列表扫描)：它仅仅列出指定网络上的每台主机，不发送任何报文到目标主机<br>
--sP(Ping扫描)：该选项告诉Nmap仅仅进行ping扫描(主机发现)，然后打印出对扫描做出响应的那些主机<br>
--P0(无ping)：完全跳过Nmap发现阶段<br>
--PS/PA/PU/PE/ARP[portlist]：使用TCP SYN/ACK、UDP、ICMP ECHO、ARP方式进行发现</p>
-</blockquote>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">nmap -P 192.168.253.1/24</span><br></pre></td></tr></table></figure>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/07/NetProtoSec-LearningNotes2/p4.png" class title="p4"> 
-<p>wireshark抓取ARP请求和响应报文：</p>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/07/NetProtoSec-LearningNotes2/p5.png" class title="p5">
-<p>ping命令发起ICMP扫描，wireshark抓取ICMP报文：</p>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/07/NetProtoSec-LearningNotes2/p6.png" class title="p6">
-<h1>端口扫描</h1>
-]]></content>
-      <categories>
-        <category>网络协议安全学习笔记</category>
-      </categories>
-      <tags>
-        <tag>网络安全</tag>
-        <tag>Wireshark</tag>
-        <tag>Nmap</tag>
       </tags>
   </entry>
 </search>
