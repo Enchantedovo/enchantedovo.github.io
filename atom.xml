@@ -6,7 +6,7 @@
   <link href="https://enchantedovo.cn/atom.xml" rel="self"/>
   
   <link href="https://enchantedovo.cn/"/>
-  <updated>2022-09-08T02:49:25.972Z</updated>
+  <updated>2022-09-09T13:36:04.274Z</updated>
   <id>https://enchantedovo.cn/</id>
   
   <author>
@@ -15,6 +15,27 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>网络与系统安全随记</title>
+    <link href="https://enchantedovo.cn/2022/09/09/NetSysSec-LearningNotes/"/>
+    <id>https://enchantedovo.cn/2022/09/09/NetSysSec-LearningNotes/</id>
+    <published>2022-09-09T11:06:26.000Z</published>
+    <updated>2022-09-09T13:36:04.274Z</updated>
+    
+    <content type="html"><![CDATA[<h1>20220909</h1><img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/09/NetSysSec-LearningNotes/p1.png" class title="p1"> ]]></content>
+    
+    
+    <summary type="html">网络与系统安全课堂随记</summary>
+    
+    
+    
+    <category term="网络与系统安全" scheme="https://enchantedovo.cn/categories/%E7%BD%91%E7%BB%9C%E4%B8%8E%E7%B3%BB%E7%BB%9F%E5%AE%89%E5%85%A8/"/>
+    
+    
+    <category term="网络与系统安全" scheme="https://enchantedovo.cn/tags/%E7%BD%91%E7%BB%9C%E4%B8%8E%E7%B3%BB%E7%BB%9F%E5%AE%89%E5%85%A8/"/>
+    
+  </entry>
   
   <entry>
     <title>主机和端口扫描</title>
