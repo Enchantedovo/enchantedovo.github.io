@@ -1001,6 +1001,19 @@ netmask：子网掩码照抄自己主机的，如：255.255.255.0</p>
       </tags>
   </entry>
   <entry>
+    <title>网络与系统安全随记</title>
+    <url>/2022/09/09/NetSysSec-LearningNotes/</url>
+    <content><![CDATA[<h1>20220909</h1>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/09/NetSysSec-LearningNotes/p1.png" class title="p1"> 
+]]></content>
+      <categories>
+        <category>网络与系统安全</category>
+      </categories>
+      <tags>
+        <tag>网络与系统安全</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>操作系统的“公理化”</title>
     <url>/2022/08/30/OS-LearningNotes1/</url>
     <content><![CDATA[<blockquote>
@@ -1194,8 +1207,51 @@ IDTR：IDT基地址寄存器，是IDT的入口</p>
 <blockquote>
 <p>寻址：CPU能使用多大空间的内存</p>
 </blockquote>
+<p>打开A20，意味CPU可以进行32位寻址，最大寻址空间为4GB，内存条范围由0~0xFFFFF扩展为0~0xFFFFFFFF。</p>
+<blockquote>
+<p>2^32 = 4*2^30 = 4GB；2^32 = 16^8 = 0xFFFFFFFF</p>
+</blockquote>
 <h2 id="为保护模式下执行head-s做准备">为保护模式下执行head.s做准备</h2>
-]]></content>
+<p><strong>1.setup程序对可编程中断控制器重新编程</strong><br>
+若不对其重新编程，一些Intel保留作为内部的中断和异常中断将被覆盖。</p>
+<p><strong>2.设置CPU为保护模式</strong><br>
+setup程序将CR0寄存器第0位(PE)置1，即设置CPU为保护模式。</p>
+<p><strong>3.跳转到head程序</strong><br>
+通过<code>jmpi  0, 8</code>，从setup跳转到head程序。需要把这里的<code>8</code>看成二进制<code>1000</code>：</p>
+<ul>
+<li>0:段内偏移</li>
+<li>8:段选择符
+<ul>
+<li>二进制1000
+<ul>
+<li>最后两位(00)：内核特权级
+<ul>
+<li>倒第三位(0)：代表GDT</li>
+<li>第一位(1)：GDT项号为第2项(从0开始)</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="head-s开始执行">head.s开始执行</h2>
+<h3 id="执行过程的整体策略">执行过程的整体策略</h3>
+<p><strong>1.head程序的加载</strong><br>
+head.s先汇编成目标代码，c语言内核程序编译成目标代码，然后链接成system模块。</p>
+<p><strong>2.head程序创建了内核分页机制</strong><br>
+在0x000000创建页目录表、页表、页表缓冲区、GDT、IDT，并将head执行完的代码所占内存空间覆盖。这也意味着head将自己废弃，main函数开始执行。</p>
+<h3 id="步骤">步骤</h3>
+<p>1._pg_dir标识内核分页机制完成后的内核起始位置，head程序从这里建立页目录表，为分页机制做准备；<br>
+2.head正式执行，将CS的用法转为保护模式（CS作为代码段选择符），<code>jump 0,8</code>使CS和GDT第2项关联，并使代码段基址指向0x000000;<br>
+3.DS、ES、FS和GS（都是段选择子）的值都置为<code>0x10</code>，这里的<code>0x10</code>也看成二进制<code>00010000</code>，其中：</p>
+<ul>
+<li>最后两位（00）：内存特权级；</li>
+<li>倒数第三位（0）：代表GDT；</li>
+<li>第4、5位两位（10）：GDT的2项（从0开始），即第3项。</li>
+</ul>
+<p>（<strong>重要：理解每一位代表的东西</strong>）</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/06/OS-LearningNotes2/p6.png" class title="p6">]]></content>
       <categories>
         <category>操作系统高级教程学习笔记</category>
       </categories>
@@ -1623,19 +1679,6 @@ IDTR：IDT基地址寄存器，是IDT的入口</p>
       <tags>
         <tag>python</tag>
         <tag>可视化</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>网络与系统安全随记</title>
-    <url>/2022/09/09/NetSysSec-LearningNotes/</url>
-    <content><![CDATA[<h1>20220909</h1>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/09/NetSysSec-LearningNotes/p1.png" class title="p1"> 
-]]></content>
-      <categories>
-        <category>网络与系统安全</category>
-      </categories>
-      <tags>
-        <tag>网络与系统安全</tag>
       </tags>
   </entry>
 </search>
