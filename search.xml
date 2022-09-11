@@ -49,15 +49,17 @@
       </tags>
   </entry>
   <entry>
-    <title>计算机网络（课程）概述</title>
+    <title>计算机网络（课程）导图</title>
     <url>/2022/09/03/ComputerNet-LearningNotes1/</url>
     <content><![CDATA[<blockquote>
-<p>第一节课讲的课程绪论，本文仅记录课程大纲</p>
+<p>概念性的东西，暂时只做导图</p>
 </blockquote>
-<h1>课程大纲</h1>
+<h1>网络（课程）概述</h1>
 <p>如图：</p>
 <img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/03/ComputerNet-LearningNotes1/p1.png" class title="p1">
-]]></content>
+<h1>网络基础：网络模型与直连网络</h1>
+<p>如图：</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/03/ComputerNet-LearningNotes1/p2.png" class title="p2">]]></content>
       <categories>
         <category>计算机网络学习笔记</category>
       </categories>
