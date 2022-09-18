@@ -23,6 +23,9 @@ cover: https://s3.bmp.ovh/imgs/2022/08/30/57e6003529c041b7.webp
     - head程序（保护模式，内存分页）
 3. 为执行32位的main函数做过渡
 
+整体思维导图：
+{% asset_img xmind.png ximd %}
+
 # 启动BIOS
 1. CPU的硬件都设置为加电进入实模式
 2. BIOS程序被固化在ROM中，由**硬件方式**执行：加电瞬间，CS:IP指向BIOS程序的入口地址（0xFFFF0）
@@ -136,3 +139,4 @@ head.s先汇编成目标代码，c语言内核程序编译成目标代码，然�
 
 （**重要：理解每一位代表的东西**）
 {% asset_img p6.png p6 %}
+
