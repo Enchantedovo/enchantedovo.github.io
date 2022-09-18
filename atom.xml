@@ -6,7 +6,7 @@
   <link href="https://enchantedovo.cn/atom.xml" rel="self"/>
   
   <link href="https://enchantedovo.cn/"/>
-  <updated>2022-09-09T13:37:36.281Z</updated>
+  <updated>2022-09-18T09:05:52.473Z</updated>
   <id>https://enchantedovo.cn/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>链路层协议安全</title>
+    <link href="https://enchantedovo.cn/2022/09/18/NetProtoSec-LearningNotes3/"/>
+    <id>https://enchantedovo.cn/2022/09/18/NetProtoSec-LearningNotes3/</id>
+    <published>2022-09-18T09:01:19.000Z</published>
+    <updated>2022-09-18T09:05:52.473Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p>本节分为三个部分：</p><ul><li>有线网络协议安全</li><li>无线网络协议安全</li><li>VLAN安全</li></ul></blockquote><h1>链路层协议安全</h1><h2 id="有线网络协议安全">有线网络协议安全</h2><img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/18/NetProtoSec-LearningNotes3/p1.png" class title="p1"><h2 id="无线网络协议安全">无线网络协议安全</h2><img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/18/NetProtoSec-LearningNotes3/p2.png" class title="p2"><h2 id="VLAN安全">VLAN安全</h2><p>占坑</p>]]></content>
+    
+    
+    <summary type="html">国科大《网络协议安全》链路层协议安全学习记录</summary>
+    
+    
+    
+    <category term="网络协议安全学习笔记" scheme="https://enchantedovo.cn/categories/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE%E5%AE%89%E5%85%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+    
+    <category term="网络协议" scheme="https://enchantedovo.cn/tags/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/"/>
+    
+    <category term="网络安全" scheme="https://enchantedovo.cn/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/"/>
+    
+  </entry>
   
   <entry>
     <title>网络与系统安全随记</title>
