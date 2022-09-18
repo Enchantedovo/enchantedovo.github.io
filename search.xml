@@ -36,7 +36,7 @@
 <ul>
 <li>又称进化主义或<strong>控制论学派</strong></li>
 <li>主张<strong>利用机器对环境作用后的响应或反馈为原型</strong>来实现智能化</li>
-<li>衍生出：动态规划、<strong>强化学习</strong>，多智能体</li>
+<li>衍生出：动态规划、<strong>强化学习</strong>、多智能体</li>
 </ul>
 <h1>课程蓝图</h1>
 <img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/01/AdvancedAI-LearningNotes1/p.png" class title="p">
@@ -59,7 +59,8 @@
 <img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/03/ComputerNet-LearningNotes1/p1.png" class title="p1">
 <h1>网络基础：网络模型与直连网络</h1>
 <p>如图：</p>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/03/ComputerNet-LearningNotes1/p2.png" class title="p2">]]></content>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/03/ComputerNet-LearningNotes1/p2.png" class title="p2">
+]]></content>
       <categories>
         <category>计算机网络学习笔记</category>
       </categories>
@@ -809,6 +810,19 @@ Overall the consumption of the world’s resources is undergoing a dangerous rat
       </tags>
   </entry>
   <entry>
+    <title>网络与系统安全随记</title>
+    <url>/2022/09/09/NetSysSec-LearningNotes/</url>
+    <content><![CDATA[<h1>20220909</h1>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/09/NetSysSec-LearningNotes/p1.png" class title="p1"> 
+]]></content>
+      <categories>
+        <category>网络与系统安全</category>
+      </categories>
+      <tags>
+        <tag>网络与系统安全</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>主机和端口扫描</title>
     <url>/2022/09/07/NetProtoSec-LearningNotes2/</url>
     <content><![CDATA[<blockquote>
@@ -1003,19 +1017,6 @@ netmask：子网掩码照抄自己主机的，如：255.255.255.0</p>
       </tags>
   </entry>
   <entry>
-    <title>网络与系统安全随记</title>
-    <url>/2022/09/09/NetSysSec-LearningNotes/</url>
-    <content><![CDATA[<h1>20220909</h1>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/09/NetSysSec-LearningNotes/p1.png" class title="p1"> 
-]]></content>
-      <categories>
-        <category>网络与系统安全</category>
-      </categories>
-      <tags>
-        <tag>网络与系统安全</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>操作系统的“公理化”</title>
     <url>/2022/08/30/OS-LearningNotes1/</url>
     <content><![CDATA[<blockquote>
@@ -1134,6 +1135,8 @@ netmask：子网掩码照抄自己主机的，如：255.255.255.0</p>
 </li>
 <li>为执行32位的main函数做过渡</li>
 </ol>
+<p>整体思维导图：</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/06/OS-LearningNotes2/xmind.png" class title="ximd">
 <h1>启动BIOS</h1>
 <ol>
 <li>CPU的硬件都设置为加电进入实模式</li>
@@ -1253,7 +1256,8 @@ head.s先汇编成目标代码，c语言内核程序编译成目标代码，然�
 <li>第4、5位两位（10）：GDT的2项（从0开始），即第3项。</li>
 </ul>
 <p>（<strong>重要：理解每一位代表的东西</strong>）</p>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/06/OS-LearningNotes2/p6.png" class title="p6">]]></content>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/06/OS-LearningNotes2/p6.png" class title="p6">
+]]></content>
       <categories>
         <category>操作系统高级教程学习笔记</category>
       </categories>
@@ -1308,31 +1312,6 @@ head.s先汇编成目标代码，c语言内核程序编译成目标代码，然�
 <img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2021/05/13/PTA%E4%B9%A0%E9%A2%987-1/img.png" class title="img">
 <p>我们只要计算出：以分割点为起点向左的最大连续序列和、以分割点为起点向右的最大连续序列和，这两个结果的和就是第三种情况的答案。因为已知起点，所以这两个结果都能在O(N)的时间复杂度能算出来。</p>
 <figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">//N是数组长度，num是待计算的数组，放在全局区是因为可以开很大的数组</span></span><br><span class="line"><span class="keyword">int</span> N, num[<span class="number">16777216</span>];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">solve</span><span class="params">(<span class="keyword">int</span> left, <span class="keyword">int</span> right)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">//序列长度为1时</span></span><br><span class="line">    <span class="keyword">if</span>(left == right)</span><br><span class="line">        <span class="keyword">return</span> num[left];</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//划分为两个规模更小的问题</span></span><br><span class="line">    <span class="keyword">int</span> mid = left + right &gt;&gt; <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">int</span> lans = solve(left, mid);</span><br><span class="line">    <span class="keyword">int</span> rans = solve(mid + <span class="number">1</span>, right);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//横跨分割点的情况</span></span><br><span class="line">    <span class="keyword">int</span> sum = <span class="number">0</span>, lmax = num[mid], rmax = num[mid + <span class="number">1</span>];</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = mid; i &gt;= left; i--) &#123;</span><br><span class="line">        sum += num[i];</span><br><span class="line">        <span class="keyword">if</span>(sum &gt; lmax) lmax = sum;</span><br><span class="line">    &#125;</span><br><span class="line">    sum = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = mid + <span class="number">1</span>; i &lt;= right; i++) &#123;</span><br><span class="line">        sum += num[i];</span><br><span class="line">        <span class="keyword">if</span>(sum &gt; rmax) rmax = sum;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//答案是三种情况的最大值</span></span><br><span class="line">    <span class="keyword">int</span> ans = lmax + rmax;</span><br><span class="line">    <span class="keyword">if</span>(lans &gt; ans) ans = lans;</span><br><span class="line">    <span class="keyword">if</span>(rans &gt; ans) ans = rans;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> ans;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">//输入数据</span></span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;N);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= N; i++)</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;num[i]);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, solve(<span class="number">1</span>, N));</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>刷题</category>
-      </categories>
-      <tags>
-        <tag>PTA</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>PTA习题2-7</title>
-    <url>/2021/04/20/PTA%E4%B9%A0%E9%A2%982-7/</url>
-    <content><![CDATA[<h1>弹球距离</h1>
-<p>设有一个球从高度为h米的地方落下，碰到地面后又弹到高度为原来p倍的位置，然后又落下，再弹起，再落下…。请编写函数求初始高度为h的球下落后到基本停下来（高度小于给定阈值TOL）时在空中所经过的路程总和。</p>
-<p>函数接口定义：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">double dist( double h, double p );</span><br></pre></td></tr></table></figure>
-<p>其中h是球的初始高度，p是球弹起高度与弹起前落下高度的比值；函数dist要返回球下落后到基本停下来时在空中所经过的路程总和。注意：当弹起的高度小于裁判程序定义的常数TOL时，弹起的距离不计算在内。</p>
-<p>裁判测试程序样例：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line">#define TOL 1E-2</span><br><span class="line"></span><br><span class="line">double dist( double h, double p );</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    double h, p, d;</span><br><span class="line">    scanf(&quot;%lf %lf&quot;, &amp;h, &amp;p);</span><br><span class="line">    d &#x3D; dist(h, p);</span><br><span class="line">    printf(&quot;%.6f\n&quot;, d);</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;* 你的代码将被嵌在这里 *&#x2F;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>输入样例：<br>
-<code>1.0 0.4</code><br>
-输出样例：<br>
-<code>2.319680</code></p>
-<p><strong>递归实现</strong></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">double dist( double h, double p )&#123;</span><br><span class="line">    if(p*h&lt;TOL) return h;</span><br><span class="line">    else return h+h*p+dist(h*p,p);&#x2F;&#x2F;重复的</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><strong>非递归实现</strong></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">double dist( double h, double p )&#x2F;&#x2F;右一个注意点两次触地时走过的距离为 h+2*h*p</span><br><span class="line">&#123;</span><br><span class="line">    double mix&#x3D;h*p;</span><br><span class="line">    double sum &#x3D; h;&#x2F;&#x2F;第一次落下走过的距离是h</span><br><span class="line">    while(mix&gt;&#x3D;TOL)</span><br><span class="line">    &#123;</span><br><span class="line">        sum+&#x3D; 2*mix;&#x2F;&#x2F;第二次落下走过的是 h+2*h*p，依次类推</span><br><span class="line">        mix &#x3D; mix*p;</span><br><span class="line">    &#125;</span><br><span class="line">    return sum;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
       <categories>
         <category>刷题</category>
       </categories>
@@ -1558,6 +1537,31 @@ head.s先汇编成目标代码，c语言内核程序编译成目标代码，然�
       <tags>
         <tag>自然语言处理</tag>
         <tag>python</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>PTA习题2-7</title>
+    <url>/2021/04/20/PTA%E4%B9%A0%E9%A2%982-7/</url>
+    <content><![CDATA[<h1>弹球距离</h1>
+<p>设有一个球从高度为h米的地方落下，碰到地面后又弹到高度为原来p倍的位置，然后又落下，再弹起，再落下…。请编写函数求初始高度为h的球下落后到基本停下来（高度小于给定阈值TOL）时在空中所经过的路程总和。</p>
+<p>函数接口定义：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">double dist( double h, double p );</span><br></pre></td></tr></table></figure>
+<p>其中h是球的初始高度，p是球弹起高度与弹起前落下高度的比值；函数dist要返回球下落后到基本停下来时在空中所经过的路程总和。注意：当弹起的高度小于裁判程序定义的常数TOL时，弹起的距离不计算在内。</p>
+<p>裁判测试程序样例：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line">#define TOL 1E-2</span><br><span class="line"></span><br><span class="line">double dist( double h, double p );</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    double h, p, d;</span><br><span class="line">    scanf(&quot;%lf %lf&quot;, &amp;h, &amp;p);</span><br><span class="line">    d &#x3D; dist(h, p);</span><br><span class="line">    printf(&quot;%.6f\n&quot;, d);</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;* 你的代码将被嵌在这里 *&#x2F;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>输入样例：<br>
+<code>1.0 0.4</code><br>
+输出样例：<br>
+<code>2.319680</code></p>
+<p><strong>递归实现</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">double dist( double h, double p )&#123;</span><br><span class="line">    if(p*h&lt;TOL) return h;</span><br><span class="line">    else return h+h*p+dist(h*p,p);&#x2F;&#x2F;重复的</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>非递归实现</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">double dist( double h, double p )&#x2F;&#x2F;右一个注意点两次触地时走过的距离为 h+2*h*p</span><br><span class="line">&#123;</span><br><span class="line">    double mix&#x3D;h*p;</span><br><span class="line">    double sum &#x3D; h;&#x2F;&#x2F;第一次落下走过的距离是h</span><br><span class="line">    while(mix&gt;&#x3D;TOL)</span><br><span class="line">    &#123;</span><br><span class="line">        sum+&#x3D; 2*mix;&#x2F;&#x2F;第二次落下走过的是 h+2*h*p，依次类推</span><br><span class="line">        mix &#x3D; mix*p;</span><br><span class="line">    &#125;</span><br><span class="line">    return sum;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>刷题</category>
+      </categories>
+      <tags>
+        <tag>PTA</tag>
       </tags>
   </entry>
   <entry>
