@@ -69,58 +69,6 @@
       </tags>
   </entry>
   <entry>
-    <title>LC旋转数组</title>
-    <url>/2021/05/20/LC%E6%97%8B%E8%BD%AC%E6%95%B0%E7%BB%84/</url>
-    <content><![CDATA[<h1>旋转数组</h1>
-<p>给定一个数组，将数组中的元素向右移动 k 个位置，其中 k 是非负数。</p>
-<blockquote>
-<p><strong>示例 1:</strong></p>
-<ul>
-<li>输入: nums = [1,2,3,4,5,6,7], k = 3</li>
-<li>输出: [5,6,7,1,2,3,4]</li>
-<li>解释:
-<ul>
-<li>向右旋转 1 步: [7,1,2,3,4,5,6]</li>
-<li>向右旋转 2 步: [6,7,1,2,3,4,5]</li>
-<li>向右旋转 3 步: [5,6,7,1,2,3,4]</li>
-</ul>
-</li>
-</ul>
-</blockquote>
-<blockquote>
-<p><strong>示例 2:</strong></p>
-<ul>
-<li>输入：nums = [-1,-100,3,99], k = 2</li>
-<li>输出：[3,99,-1,-100]</li>
-<li>解释:
-<ul>
-<li>向右旋转 1 步: [99,-1,-100,3]</li>
-<li>向右旋转 2 步: [3,99,-1,-100]</li>
-</ul>
-</li>
-</ul>
-</blockquote>
-<h2 id="方法一：傻瓜方法">方法一：傻瓜方法</h2>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">rotate</span><span class="params">(<span class="keyword">int</span>* nums, <span class="keyword">int</span> numsSize, <span class="keyword">int</span> k)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> length = numsSize;</span><br><span class="line">    <span class="keyword">int</span> <span class="built_in">list</span>[length];</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;length;i++)&#123;</span><br><span class="line">        <span class="built_in">list</span>[i]=nums[i];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;length;j++)&#123;</span><br><span class="line">        nums[(j+k)%length]=<span class="built_in">list</span>[j];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="方法二：旋转旋转旋转">方法二：旋转旋转旋转</h2>
-<p>举个例子：</p>
-<blockquote>
-<p>nums = [1,2,3,4,5,6,7], k = 3</p>
-<ol>
-<li>[7,6,5,4,3,2,1] (整个数组旋转)</li>
-<li>[[5,6,7],[1,2,3,4]]</li>
-</ol>
-</blockquote>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">rotate</span><span class="params">(<span class="keyword">int</span>* nums, <span class="keyword">int</span> numsSize, <span class="keyword">int</span> k)</span></span>&#123;</span><br><span class="line">    <span class="comment">//先旋转整个数组-》旋转前一部分-》旋转后一部分</span></span><br><span class="line">    k=k%numsSize;</span><br><span class="line">    reverse(nums,<span class="number">0</span>,numsSize<span class="number">-1</span>);</span><br><span class="line">    reverse(nums,<span class="number">0</span>,k<span class="number">-1</span>);</span><br><span class="line">    reverse(nums,k,numsSize<span class="number">-1</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">reverse</span><span class="params">(<span class="keyword">int</span>* nums, <span class="keyword">int</span> start, <span class="keyword">int</span> end)</span></span>&#123;</span><br><span class="line">    <span class="keyword">while</span>(start&lt;end)&#123;</span><br><span class="line">        <span class="keyword">int</span> tmp = nums[start];</span><br><span class="line">        nums[start++]=nums[end];</span><br><span class="line">        nums[end--]=tmp;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>刷题</category>
-      </categories>
-      <tags>
-        <tag>LC</tag>
-        <tag>数组</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>雅思写作Task1</title>
     <url>/2021/02/12/IELTS1/</url>
     <content><![CDATA[<h2 id="小作文基本了解">小作文基本了解</h2>
@@ -658,6 +606,58 @@ Overall the consumption of the world’s resources is undergoing a dangerous rat
       </tags>
   </entry>
   <entry>
+    <title>LC旋转数组</title>
+    <url>/2021/05/20/LC%E6%97%8B%E8%BD%AC%E6%95%B0%E7%BB%84/</url>
+    <content><![CDATA[<h1>旋转数组</h1>
+<p>给定一个数组，将数组中的元素向右移动 k 个位置，其中 k 是非负数。</p>
+<blockquote>
+<p><strong>示例 1:</strong></p>
+<ul>
+<li>输入: nums = [1,2,3,4,5,6,7], k = 3</li>
+<li>输出: [5,6,7,1,2,3,4]</li>
+<li>解释:
+<ul>
+<li>向右旋转 1 步: [7,1,2,3,4,5,6]</li>
+<li>向右旋转 2 步: [6,7,1,2,3,4,5]</li>
+<li>向右旋转 3 步: [5,6,7,1,2,3,4]</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<blockquote>
+<p><strong>示例 2:</strong></p>
+<ul>
+<li>输入：nums = [-1,-100,3,99], k = 2</li>
+<li>输出：[3,99,-1,-100]</li>
+<li>解释:
+<ul>
+<li>向右旋转 1 步: [99,-1,-100,3]</li>
+<li>向右旋转 2 步: [3,99,-1,-100]</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<h2 id="方法一：傻瓜方法">方法一：傻瓜方法</h2>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">rotate</span><span class="params">(<span class="keyword">int</span>* nums, <span class="keyword">int</span> numsSize, <span class="keyword">int</span> k)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> length = numsSize;</span><br><span class="line">    <span class="keyword">int</span> <span class="built_in">list</span>[length];</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;length;i++)&#123;</span><br><span class="line">        <span class="built_in">list</span>[i]=nums[i];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;length;j++)&#123;</span><br><span class="line">        nums[(j+k)%length]=<span class="built_in">list</span>[j];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="方法二：旋转旋转旋转">方法二：旋转旋转旋转</h2>
+<p>举个例子：</p>
+<blockquote>
+<p>nums = [1,2,3,4,5,6,7], k = 3</p>
+<ol>
+<li>[7,6,5,4,3,2,1] (整个数组旋转)</li>
+<li>[[5,6,7],[1,2,3,4]]</li>
+</ol>
+</blockquote>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">rotate</span><span class="params">(<span class="keyword">int</span>* nums, <span class="keyword">int</span> numsSize, <span class="keyword">int</span> k)</span></span>&#123;</span><br><span class="line">    <span class="comment">//先旋转整个数组-》旋转前一部分-》旋转后一部分</span></span><br><span class="line">    k=k%numsSize;</span><br><span class="line">    reverse(nums,<span class="number">0</span>,numsSize<span class="number">-1</span>);</span><br><span class="line">    reverse(nums,<span class="number">0</span>,k<span class="number">-1</span>);</span><br><span class="line">    reverse(nums,k,numsSize<span class="number">-1</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">reverse</span><span class="params">(<span class="keyword">int</span>* nums, <span class="keyword">int</span> start, <span class="keyword">int</span> end)</span></span>&#123;</span><br><span class="line">    <span class="keyword">while</span>(start&lt;end)&#123;</span><br><span class="line">        <span class="keyword">int</span> tmp = nums[start];</span><br><span class="line">        nums[start++]=nums[end];</span><br><span class="line">        nums[end--]=tmp;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>刷题</category>
+      </categories>
+      <tags>
+        <tag>LC</tag>
+        <tag>数组</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>网络协议安全基础</title>
     <url>/2022/09/01/NetProtoSec-LearningNotes1/</url>
     <content><![CDATA[<blockquote>
@@ -801,6 +801,33 @@ Overall the consumption of the world’s resources is undergoing a dangerous rat
 </ul>
 <h2 id="网络层次分类">网络层次分类</h2>
 <img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/01/NetProtoSec-LearningNotes1/p7.png" class title="p7">]]></content>
+      <categories>
+        <category>网络协议安全学习笔记</category>
+      </categories>
+      <tags>
+        <tag>网络协议</tag>
+        <tag>网络安全</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>链路层协议安全</title>
+    <url>/2022/09/18/NetProtoSec-LearningNotes3/</url>
+    <content><![CDATA[<blockquote>
+<p>本节分为三个部分：</p>
+<ul>
+<li>有线网络协议安全</li>
+<li>无线网络协议安全</li>
+<li>VLAN安全</li>
+</ul>
+</blockquote>
+<h1>链路层协议安全</h1>
+<h2 id="有线网络协议安全">有线网络协议安全</h2>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/18/NetProtoSec-LearningNotes3/p1.png" class title="p1">
+<h2 id="无线网络协议安全">无线网络协议安全</h2>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/18/NetProtoSec-LearningNotes3/p2.png" class title="p2">
+<h2 id="VLAN安全">VLAN安全</h2>
+<p>占坑</p>
+]]></content>
       <categories>
         <category>网络协议安全学习笔记</category>
       </categories>
@@ -1004,33 +1031,6 @@ netmask：子网掩码照抄自己主机的，如：255.255.255.0</p>
       </tags>
   </entry>
   <entry>
-    <title>链路层协议安全</title>
-    <url>/2022/09/18/NetProtoSec-LearningNotes3/</url>
-    <content><![CDATA[<blockquote>
-<p>本节分为三个部分：</p>
-<ul>
-<li>有线网络协议安全</li>
-<li>无线网络协议安全</li>
-<li>VLAN安全</li>
-</ul>
-</blockquote>
-<h1>链路层协议安全</h1>
-<h2 id="有线网络协议安全">有线网络协议安全</h2>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/18/NetProtoSec-LearningNotes3/p1.png" class title="p1">
-<h2 id="无线网络协议安全">无线网络协议安全</h2>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/18/NetProtoSec-LearningNotes3/p2.png" class title="p2">
-<h2 id="VLAN安全">VLAN安全</h2>
-<p>占坑</p>
-]]></content>
-      <categories>
-        <category>网络协议安全学习笔记</category>
-      </categories>
-      <tags>
-        <tag>网络协议</tag>
-        <tag>网络安全</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>网络与系统安全随记</title>
     <url>/2022/09/09/NetSysSec-LearningNotes/</url>
     <content><![CDATA[<h1>20220909</h1>
@@ -1163,7 +1163,7 @@ netmask：子网掩码照抄自己主机的，如：255.255.255.0</p>
 <li>为执行32位的main函数做过渡</li>
 </ol>
 <p>整体思维导图：</p>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/06/OS-LearningNotes2/xmind.png" class title="ximd">
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/06/OS-LearningNotes2/xmind.png" class title="xmind">
 <h1>启动BIOS</h1>
 <ol>
 <li>CPU的硬件都设置为加电进入实模式</li>
@@ -1372,6 +1372,61 @@ head.s先汇编成目标代码，c语言内核程序编译成目标代码，然�
       </tags>
   </entry>
   <entry>
+    <title>设备环境初始化及激活进程0</title>
+    <url>/2022/10/01/OS-LearningNotes4/</url>
+    <content><![CDATA[<h1>引言</h1>
+<h2 id="设置根设备、硬盘">设置根设备、硬盘</h2>
+<p>用<code>bootsect.s</code>中写入机器系统数据的信息设置软盘为根设备，并设置内核中的硬盘信息。</p>
+<h2 id="规划物理内存格局">规划物理内存格局</h2>
+<p>设置内存中除内核代码和数据之外三部分的位置和大小：</p>
+<ul>
+<li>主内存区：进程代码运行的空间；</li>
+<li>缓冲区：主机与外设（块设备）交换数据的中转站；</li>
+<li>虚拟盘区：可选，可将外设数据先复制至虚拟盘区，然后加以使用。</li>
+</ul>
+<blockquote>
+<p>注：&lt;&lt;12或&gt;&gt;12相当于乘或除以4KB——页</p>
+</blockquote>
+<h2 id="设置虚拟盘空间并初始化">设置虚拟盘空间并初始化</h2>
+<p>设定内存16MB，虚拟盘2MB（缓冲区末端2MB设为虚拟盘）。调用<code>rd_init()</code>函数，对虚拟盘设置：<br>
+将虚拟盘请求项处理函数<code>do_rd_request</code>与 请求项处理函数控制结构<code>blk_dev[7]</code>第二项挂钩，意味着内核能通过调用<code>do_rd_request</code>函数处理与虚拟盘相关的请求项操作。</p>
+<h2 id="内存管理结构-mem-map-初始化">内存管理结构 mem_map 初始化</h2>
+<p>调用<code>mem_init()</code>函数，通过<code>mem_map[]</code>对 1MB (内核所在区域)以上的内存分页进行管理，记录一个页面的使用次数</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/01/OS-LearningNotes4/p1.png" class title="p1">
+<h2 id="异常处理类中断服务程序挂接">异常处理类中断服务程序挂接</h2>
+<p><code>trap_init()</code>函数将中断、异常处理的服务程序与IDT进行挂接，逐步重建中断服务体系。</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/01/OS-LearningNotes4/p2.png" class title="p2">
+<p>其中，还需要拼接中断描述符：</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/01/OS-LearningNotes4/p3.png" class title="p3">
+<h2 id="初始化块设备请求项结构">初始化块设备请求项结构</h2>
+<p>linux外设分为块设备（硬盘、软盘）和字符设备（键盘、黑屏命令行显示器），进程想与块设备进行沟通，必须经过主机内存的缓冲区。<br>
+请求项管理结构<code>request[32]</code>就是操作系统管理缓冲区与块设备逻辑块读写关系的数据结构。操作系统决定缓冲块与块设备间的读写操作，并把需要操作的缓冲块记录在请求项中，得到读写块设备操作指令后，只根据请求项中的记录决定要处理哪个设备的哪个逻辑块。</p>
+<p>初始化：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">request[i].dev&#x3D;-1; &#x2F;&#x2F;请求项未对应哪个设备</span><br><span class="line">request[i].next&#x3D;NULL; &#x2F;&#x2F;还未形成请求项队列</span><br></pre></td></tr></table></figure>
+<h2 id="与人机交互界面相关外设中断服务程序挂接">与人机交互界面相关外设中断服务程序挂接</h2>
+<p>对串行口、显示器、键盘、开机启动时间设置，以及与此相关的中断服务程序与IDT挂接。</p>
+<h2 id="初始化0进程（重要）">初始化0进程（重要）</h2>
+<p>大致过程如下，都由<code>sched_init()</code>函数实现：</p>
+<ol>
+<li>初始化进程0
+<ul>
+<li>将进程0的task_struct中LDT、TSS与GDT挂接</li>
+<li>初始化GDT、task[64]以及与进程调度相关寄存器</li>
+</ul>
+</li>
+<li>时钟中断设置 —&gt; 多进程轮转</li>
+<li>系统调用：通过set_system_gate将system_call与IDT挂接（特权3，set_trap_gate为特权0）</li>
+</ol>
+]]></content>
+      <categories>
+        <category>操作系统高级教程学习笔记</category>
+      </categories>
+      <tags>
+        <tag>操作系统</tag>
+        <tag>Linux Kernel</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>PTA习题2-7</title>
     <url>/2021/04/20/PTA%E4%B9%A0%E9%A2%982-7/</url>
     <content><![CDATA[<h1>弹球距离</h1>
@@ -1563,112 +1618,6 @@ head.s先汇编成目标代码，c语言内核程序编译成目标代码，然�
       </tags>
   </entry>
   <entry>
-    <title>NLP基础</title>
-    <url>/2021/02/12/nlp1/</url>
-    <content><![CDATA[<blockquote>
-<p>参考书籍：</p>
-<ul>
-<li>《自然语言处理理论与实战》</li>
-<li>《Python 自然语言处理》</li>
-<li>《Python 自然语言处理实战：核心技术与算法》</li>
-</ul>
-</blockquote>
-<h2 id="NLP基本概念">NLP基本概念</h2>
-<h3 id="什么是NLP">什么是NLP</h3>
-<p>NLP定义：自然语言处理，用计算机处理、理解以及运行的人类语言（如中文、英文等）</p>
-<p>NLP分类：</p>
-<ul>
-<li>自然语言理解
-<ul>
-<li>音系学：语法中发讯的系统化组织</li>
-<li>词态学：研究单词构成及相互关系</li>
-<li>句法学：给定文本哪部分是语法正确的</li>
-<li>语义句法学：给定文本的含义是什么？</li>
-<li>语法学：文本的目的是什么？</li>
-</ul>
-</li>
-<li>自然语言处理
-<ul>
-<li>自然语言文本</li>
-</ul>
-</li>
-</ul>
-<p>NLP的研究任务</p>
-<ul>
-<li>机器翻译：计算机具备将一种语言<strong>翻译成另一种语言</strong>的能力</li>
-<li>情感分析：计算机能够判断用户评论<strong>是否积极</strong></li>
-<li>智能问答：计算机能够正确<strong>回答输入的问题</strong></li>
-<li>文摘生成：计算机能够准确<strong>归纳、总结并产生文本摘要</strong></li>
-<li>文本分类：计算机能够采集各种文章，进行<strong>主题分析</strong>，从而进行<strong>自动分类</strong></li>
-<li>舆论分析：计算机能够<strong>判断目前舆论的导向</strong></li>
-<li>知识图谱：知识点相互连接而成的<strong>语义网络</strong></li>
-</ul>
-<h2 id="NLP常用术语">NLP常用术语</h2>
-<ul>
-<li>分词（segment）
-<ul>
-<li>将句子分成独立的有意义的语言成分（词）</li>
-</ul>
-</li>
-<li>词性标注（part-of-speech tagging）
-<ul>
-<li>对词的词性进行标注（例：动词、名词、形容词）</li>
-</ul>
-</li>
-<li>命名实体识别（NER, Named Entity Recognition）
-<ul>
-<li>从文本中识别具有特定类别的实体（例：人名、地名、机构名等）</li>
-</ul>
-</li>
-<li>句法分析（syntax parsing）
-<ul>
-<li>分析句子各个成分的依赖关系（例：主从关系），最后可生成句法分析树</li>
-</ul>
-</li>
-<li>指代消解（anaphora resolution）
-<ul>
-<li>代词指代</li>
-</ul>
-</li>
-<li>情感识别（emotion recognition）
-<ul>
-<li>本质是分类问题，经常应用在舆情分析等领域，可分为两类（正面、负面）或者三类（+中性）</li>
-</ul>
-</li>
-<li>纠错（correction）
-<ul>
-<li>在搜索技术和输入法中利用很多，具体做法可以根据N-Gram、字典树等等方法</li>
-</ul>
-</li>
-<li>问答系统（QA system）
-<ul>
-<li>类似机器人的人工智能系统</li>
-</ul>
-</li>
-</ul>
-<h2 id="语料库">语料库</h2>
-<ul>
-<li>中文维基百科</li>
-<li>搜狗新闻语料库</li>
-<li>IMDB情感分析语料库</li>
-<li>等</li>
-</ul>
-<h2 id="三个层次">三个层次</h2>
-<ul>
-<li>词法分析</li>
-<li>句法分析</li>
-<li>语义分析</li>
-</ul>
-]]></content>
-      <categories>
-        <category>自然语言处理</category>
-      </categories>
-      <tags>
-        <tag>自然语言处理</tag>
-        <tag>python</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>seaborn</title>
     <url>/2021/02/03/seaborn/</url>
     <content><![CDATA[<h2 id="seaborn简介">seaborn简介</h2>
@@ -1789,6 +1738,112 @@ head.s先汇编成目标代码，c语言内核程序编译成目标代码，然�
       <tags>
         <tag>python</tag>
         <tag>可视化</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>NLP基础</title>
+    <url>/2021/02/12/nlp1/</url>
+    <content><![CDATA[<blockquote>
+<p>参考书籍：</p>
+<ul>
+<li>《自然语言处理理论与实战》</li>
+<li>《Python 自然语言处理》</li>
+<li>《Python 自然语言处理实战：核心技术与算法》</li>
+</ul>
+</blockquote>
+<h2 id="NLP基本概念">NLP基本概念</h2>
+<h3 id="什么是NLP">什么是NLP</h3>
+<p>NLP定义：自然语言处理，用计算机处理、理解以及运行的人类语言（如中文、英文等）</p>
+<p>NLP分类：</p>
+<ul>
+<li>自然语言理解
+<ul>
+<li>音系学：语法中发讯的系统化组织</li>
+<li>词态学：研究单词构成及相互关系</li>
+<li>句法学：给定文本哪部分是语法正确的</li>
+<li>语义句法学：给定文本的含义是什么？</li>
+<li>语法学：文本的目的是什么？</li>
+</ul>
+</li>
+<li>自然语言处理
+<ul>
+<li>自然语言文本</li>
+</ul>
+</li>
+</ul>
+<p>NLP的研究任务</p>
+<ul>
+<li>机器翻译：计算机具备将一种语言<strong>翻译成另一种语言</strong>的能力</li>
+<li>情感分析：计算机能够判断用户评论<strong>是否积极</strong></li>
+<li>智能问答：计算机能够正确<strong>回答输入的问题</strong></li>
+<li>文摘生成：计算机能够准确<strong>归纳、总结并产生文本摘要</strong></li>
+<li>文本分类：计算机能够采集各种文章，进行<strong>主题分析</strong>，从而进行<strong>自动分类</strong></li>
+<li>舆论分析：计算机能够<strong>判断目前舆论的导向</strong></li>
+<li>知识图谱：知识点相互连接而成的<strong>语义网络</strong></li>
+</ul>
+<h2 id="NLP常用术语">NLP常用术语</h2>
+<ul>
+<li>分词（segment）
+<ul>
+<li>将句子分成独立的有意义的语言成分（词）</li>
+</ul>
+</li>
+<li>词性标注（part-of-speech tagging）
+<ul>
+<li>对词的词性进行标注（例：动词、名词、形容词）</li>
+</ul>
+</li>
+<li>命名实体识别（NER, Named Entity Recognition）
+<ul>
+<li>从文本中识别具有特定类别的实体（例：人名、地名、机构名等）</li>
+</ul>
+</li>
+<li>句法分析（syntax parsing）
+<ul>
+<li>分析句子各个成分的依赖关系（例：主从关系），最后可生成句法分析树</li>
+</ul>
+</li>
+<li>指代消解（anaphora resolution）
+<ul>
+<li>代词指代</li>
+</ul>
+</li>
+<li>情感识别（emotion recognition）
+<ul>
+<li>本质是分类问题，经常应用在舆情分析等领域，可分为两类（正面、负面）或者三类（+中性）</li>
+</ul>
+</li>
+<li>纠错（correction）
+<ul>
+<li>在搜索技术和输入法中利用很多，具体做法可以根据N-Gram、字典树等等方法</li>
+</ul>
+</li>
+<li>问答系统（QA system）
+<ul>
+<li>类似机器人的人工智能系统</li>
+</ul>
+</li>
+</ul>
+<h2 id="语料库">语料库</h2>
+<ul>
+<li>中文维基百科</li>
+<li>搜狗新闻语料库</li>
+<li>IMDB情感分析语料库</li>
+<li>等</li>
+</ul>
+<h2 id="三个层次">三个层次</h2>
+<ul>
+<li>词法分析</li>
+<li>句法分析</li>
+<li>语义分析</li>
+</ul>
+]]></content>
+      <categories>
+        <category>自然语言处理</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>自然语言处理</tag>
       </tags>
   </entry>
 </search>
