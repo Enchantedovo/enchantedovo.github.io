@@ -49,26 +49,6 @@
       </tags>
   </entry>
   <entry>
-    <title>计算机网络（课程）导图</title>
-    <url>/2022/09/03/ComputerNet-LearningNotes1/</url>
-    <content><![CDATA[<blockquote>
-<p>概念性的东西，暂时只做导图</p>
-</blockquote>
-<h1>网络（课程）概述</h1>
-<p>如图：</p>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/03/ComputerNet-LearningNotes1/p1.png" class title="p1">
-<h1>网络基础：网络模型与直连网络</h1>
-<p>如图：</p>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/03/ComputerNet-LearningNotes1/p2.png" class title="p2">
-]]></content>
-      <categories>
-        <category>计算机网络学习笔记</category>
-      </categories>
-      <tags>
-        <tag>计算机网络</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>雅思写作Task1</title>
     <url>/2021/02/12/IELTS1/</url>
     <content><![CDATA[<h2 id="小作文基本了解">小作文基本了解</h2>
@@ -810,240 +790,6 @@ Overall the consumption of the world’s resources is undergoing a dangerous rat
       </tags>
   </entry>
   <entry>
-    <title>链路层协议安全</title>
-    <url>/2022/09/18/NetProtoSec-LearningNotes3/</url>
-    <content><![CDATA[<blockquote>
-<p>本节分为三个部分：</p>
-<ul>
-<li>有线网络协议安全</li>
-<li>无线网络协议安全</li>
-<li>VLAN安全</li>
-</ul>
-</blockquote>
-<h1>链路层协议安全</h1>
-<h2 id="有线网络协议安全">有线网络协议安全</h2>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/18/NetProtoSec-LearningNotes3/p1.png" class title="p1">
-<h2 id="无线网络协议安全">无线网络协议安全</h2>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/18/NetProtoSec-LearningNotes3/p2.png" class title="p2">
-<h2 id="VLAN安全">VLAN安全</h2>
-<p>占坑</p>
-]]></content>
-      <categories>
-        <category>网络协议安全学习笔记</category>
-      </categories>
-      <tags>
-        <tag>网络协议</tag>
-        <tag>网络安全</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>主机和端口扫描</title>
-    <url>/2022/09/07/NetProtoSec-LearningNotes2/</url>
-    <content><![CDATA[<blockquote>
-<p>实验环境：Kali+Wireshark+Nmap</p>
-<ul>
-<li>Kali：是一个基于Debian的Linux发行版，预装了许多渗透测试软件，是一个很酷的“黑客操作系统”；</li>
-<li>Wireshark：是一个网络封包分析软件，功能是截取网络封包，并尽可能显示出最为详细的网络封包资料。Wireshark使用WinPCAP作为接口，直接与网卡进行数据报文交换；</li>
-<li>Nmap：即Network Mapper，是Linux下的网络扫描和嗅探工具包。</li>
-</ul>
-</blockquote>
-<h1>实验内容</h1>
-<p>1.在Nmap中，使用nmap –sP xx指令实现主机扫描，用wireshark抓取扫描过程中的ARP请求和响应报文；通过ping指令发起ICMP扫描，用wireshark抓取扫描过程中的ICMP报文；</p>
-<p>2.在Nmap中，使用nmap –sS xx指令实现端口扫描，用wireshark抓取扫描过程中的TCP报文。</p>
-<h1>kali网络配置</h1>
-<p>由于我使用的是校园网，因此我这里使用NAT模式。</p>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/07/NetProtoSec-LearningNotes2/p1.png" class title="p1"> 
-<h2 id="1-查看主机地址">1.查看主机地址</h2>
-<p>首先通过<code>win</code>+<code>R</code>输入cmd打开终端，然后通过<code>ipconfig</code>查看自己主机的ip地址，网关，网段（我这里选择VMnet8）。</p>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/07/NetProtoSec-LearningNotes2/p2.png" class title="p2"> 
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">IPv4 地址: 192.168.253.1</span><br><span class="line">子网掩码: 255.255.255.0</span><br></pre></td></tr></table></figure>
-<h2 id="2-修改-etc-network-interfaces文件">2.修改/etc/network/interfaces文件</h2>
-<p>然后，通过<code>vim /etc/network/interfaces</code>，设置静态IP：<br>
-address：把ip地址设置为自己主机网段中的一个，如：我的主机ip是192.168.253.1，这里设为192.168.253.36<br>
-gateway：在其中加上自己主机的网关，如：192.168.253.2<br>
-netmask：子网掩码照抄自己主机的，如：255.255.255.0</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">auto eth0</span><br><span class="line">iface eth0 inet static</span><br><span class="line">address 192.168.253.36</span><br><span class="line">netmask 255.255.255.0</span><br><span class="line">gateway 192.168.253.2</span><br></pre></td></tr></table></figure>
-<h2 id="3-修改dns">3.修改dns</h2>
-<p><code>vim /etc/resolv.conf</code>添加几个常用DNS：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">domain localdomain</span><br><span class="line">search localdomain</span><br><span class="line">nameserver 8.8.8.8</span><br><span class="line">nameserver 114.114.114.114</span><br><span class="line">nameserver 192.168.253.2</span><br></pre></td></tr></table></figure>
-<h2 id="4-重启网络">4.重启网络</h2>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">systemctl restart networking</span><br></pre></td></tr></table></figure>
-<p>或者</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;etc&#x2F;init.d&#x2F;networking restart</span><br></pre></td></tr></table></figure>
-<h2 id="5-测试">5.测试</h2>
-<p>输入<code>ifconfig -a</code>查看ip：</p>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/07/NetProtoSec-LearningNotes2/p3.png" class title="p3"> 
-<h2 id="nmap参数速查">nmap参数速查</h2>
-<table>
-<thead>
-<tr>
-<th style="text-align:center">命令</th>
-<th style="text-align:center">描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">nmap IP</td>
-<td style="text-align:center">扫描IP</td>
-</tr>
-<tr>
-<td style="text-align:center">nmap -v IP</td>
-<td style="text-align:center">加强扫描</td>
-</tr>
-<tr>
-<td style="text-align:center">nmap IP1 IP2 …</td>
-<td style="text-align:center">扫描多IP</td>
-</tr>
-<tr>
-<td style="text-align:center">nmap a.b.c.*</td>
-<td style="text-align:center">扫描整个子网</td>
-</tr>
-<tr>
-<td style="text-align:center">nmap a.b.c.x,y,…</td>
-<td style="text-align:center">扫描多子网地址</td>
-</tr>
-<tr>
-<td style="text-align:center">nmap -iL xxx.txt</td>
-<td style="text-align:center">根据文件扫描多IP</td>
-</tr>
-<tr>
-<td style="text-align:center">nmap a.b.c.x-y</td>
-<td style="text-align:center">扫描子网IP范围</td>
-</tr>
-<tr>
-<td style="text-align:center">nmap a.b.c.* --exclude IP</td>
-<td style="text-align:center">排除指定IP扫描整个子网</td>
-</tr>
-<tr>
-<td style="text-align:center">nmap -A IP</td>
-<td style="text-align:center">全面的系统扫描,包括操作系统探测、版本探测、脚本扫描、路径跟踪</td>
-</tr>
-<tr>
-<td style="text-align:center">nmap -O IP</td>
-<td style="text-align:center">探测操作系统</td>
-</tr>
-<tr>
-<td style="text-align:center">nmap -sA/-PN IP</td>
-<td style="text-align:center">探测防火墙</td>
-</tr>
-<tr>
-<td style="text-align:center">nmap -sP a.b.c.*</td>
-<td style="text-align:center">探测在线主机</td>
-</tr>
-<tr>
-<td style="text-align:center">nmap -F IP</td>
-<td style="text-align:center">快速扫描</td>
-</tr>
-<tr>
-<td style="text-align:center">nmap -r IP</td>
-<td style="text-align:center">按顺序扫描</td>
-</tr>
-<tr>
-<td style="text-align:center">nmap -iflist</td>
-<td style="text-align:center">显示接口和路由信息</td>
-</tr>
-<tr>
-<td style="text-align:center">nmap -p n1,n2… IP</td>
-<td style="text-align:center">扫描指定端口</td>
-</tr>
-<tr>
-<td style="text-align:center">nmap -p T:n1,n2… IP</td>
-<td style="text-align:center">扫描TCP端口</td>
-</tr>
-<tr>
-<td style="text-align:center">nmap -sU n1,n2… IP</td>
-<td style="text-align:center">扫描UDP端口</td>
-</tr>
-<tr>
-<td style="text-align:center">nmap -sV IP</td>
-<td style="text-align:center">查看服务的版本</td>
-</tr>
-<tr>
-<td style="text-align:center">nmap -PS IP</td>
-<td style="text-align:center">TCP ACK扫描</td>
-</tr>
-<tr>
-<td style="text-align:center">nmap -PA IP</td>
-<td style="text-align:center">TCP SYN扫描</td>
-</tr>
-<tr>
-<td style="text-align:center">nmap -sS IP</td>
-<td style="text-align:center">隐蔽扫描</td>
-</tr>
-<tr>
-<td style="text-align:center">nmap -sN IP</td>
-<td style="text-align:center">TCP空扫描欺骗防火墙</td>
-</tr>
-</tbody>
-</table>
-<h1>主机扫描</h1>
-<blockquote>
-<p>开两个虚拟机：192.168.253.36 + 192.168.253.37</p>
-</blockquote>
-<h2 id="主机扫描参数">主机扫描参数</h2>
-<p>主机发现有时候也叫做ping扫描，有以下选项：<br>
-<code>-sL</code>（列表扫描）：它仅仅列出指定网络上的每台主机，不发送任何报文到目标主机；<br>
-<code>-sP</code>（Ping扫描）：该选项告诉Nmap仅仅进行ping扫描（主机发现），然后打印出对扫描做出响应的那些主机；Nmap会发一个ICMP ECHO请求和一个TCP报文到目标端口；<br>
-<code>-Pn</code>（无ping）：无Ping扫描通常用于防火墙禁止Ping的情况下，完全跳过Nmap发现阶段，且对目标主机进行端口扫描；<br>
-<code>-PS</code>（TCP SYN ping）：该选项发送了一个设置了SYN标志位的空TCP报文，需要root权限；<br>
-<code>-PA</code>（TCP ACK ping）：它与TCP SYN Ping扫描类似，不同的只是设置的TCP报文的标志位是ACK；<br>
-<code>-PU</code>（UDP  ping）：发送一个空的UDP报文到指定端口，很少用；<br>
-<code>-PE/PP/PM</code>（ICMP ECHO/时间戳/地址掩码Ping）；<br>
-<code>-ARP</code>（ARP ping）：该选项通常在扫描局域网时使用，在内网中使用ARP Ping是非常有效的。</p>
-<h2 id="实验过程">实验过程</h2>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">nmap -P 192.168.253.1/24</span><br></pre></td></tr></table></figure>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/07/NetProtoSec-LearningNotes2/p4.png" class title="p4"> 
-<p>wireshark抓取ARP请求和响应报文：</p>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/07/NetProtoSec-LearningNotes2/p5.png" class title="p5">
-<p>ping命令发起ICMP扫描，wireshark抓取ICMP报文：</p>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/07/NetProtoSec-LearningNotes2/p6.png" class title="p6">
-<h1>端口扫描</h1>
-<h2 id="端口扫描基础">端口扫描基础</h2>
-<h3 id="端口状态">端口状态</h3>
-<p>Nmap所识别的6个端口状态：</p>
-<ul>
-<li><code>Opend</code>：端口开启；</li>
-<li><code>Closed</code>： 端口关闭；</li>
-<li><code>Filtered</code>：端口被过滤，数据没有到达主机，返回的结果为空，数据被防火墙拦截了；</li>
-<li><code>Unfiltered</code>：未被过滤，数据有到达主机，但是不能识别端口的当前状态；</li>
-<li><code>Open|filtered</code>：开放或者被过滤，端口没有返回值，主要发生在UDP、IP、FIN、NULL和X mas扫描中；</li>
-<li><code>Closed|filtered</code>：关闭或者被过滤，只发生在IP ID idle扫描。</li>
-</ul>
-<h3 id="命令参数">命令参数</h3>
-<p>-<code>sS</code>（TCP SYN扫描）：半开扫描，很少有系统能把它记入系统日志。不过，需要Root权限；<br>
--<code>sT</code>（TCP connect()扫描）:当SYN扫描不能用时，CP Connect()扫描就是默认的TCP扫描；<br>
--<code>sN/-sF/-sX</code>（TCP Null/FIN/Xmas扫描）:能躲过一些无状态防火墙和报文过滤路由器；<br>
--<code>p</code>：指定范围性扫描端口；<br>
--<code>v</code>：详细信息。</p>
-<h2 id="实验过程-2">实验过程</h2>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">┌──(root㉿kali)-[~]</span><br><span class="line">└─<span class="comment"># nmap -sS 192.168.253.1</span></span><br><span class="line">Starting Nmap 7.92 ( https://nmap.org ) at 2022-09-07 22:42 EDT</span><br><span class="line">Nmap scan report <span class="keyword">for</span> 192.168.253.1</span><br><span class="line">Host is up (0.00019s latency).</span><br><span class="line">Not shown: 996 filtered tcp ports (no-response)</span><br><span class="line">PORT     STATE SERVICE</span><br><span class="line">135/tcp  open  msrpc</span><br><span class="line">139/tcp  open  netbios-ssn</span><br><span class="line">445/tcp  open  microsoft-ds</span><br><span class="line">4001/tcp open  newoak</span><br><span class="line">MAC Address: 00:50:56:C0:00:08 (VMware)</span><br><span class="line"></span><br><span class="line">Nmap <span class="keyword">done</span>: 1 IP address (1 host up) scanned <span class="keyword">in</span> 4.70 seconds</span><br></pre></td></tr></table></figure>
-<p>打开wireshark抓取tcp包，可看到：</p>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/07/NetProtoSec-LearningNotes2/p7.png" class title="p7">
-<p>扫描主机的135和139端口已经回发数据了。</p>
-]]></content>
-      <categories>
-        <category>网络协议安全学习笔记</category>
-      </categories>
-      <tags>
-        <tag>网络安全</tag>
-        <tag>Wireshark</tag>
-        <tag>Nmap</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>网络与系统安全随记</title>
-    <url>/2022/09/09/NetSysSec-LearningNotes/</url>
-    <content><![CDATA[<h1>20220909</h1>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/09/NetSysSec-LearningNotes/p1.png" class title="p1"> 
-]]></content>
-      <categories>
-        <category>网络与系统安全</category>
-      </categories>
-      <tags>
-        <tag>网络与系统安全</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>操作系统的“公理化”</title>
     <url>/2022/08/30/OS-LearningNotes1/</url>
     <content><![CDATA[<blockquote>
@@ -1315,18 +1061,19 @@ head.s先汇编成目标代码，c语言内核程序编译成目标代码，然�
       </tags>
   </entry>
   <entry>
-    <title>补充知识：内存分段、分页的理解</title>
+    <title>补充知识整理</title>
     <url>/2022/09/20/OS-LearningNotes3/</url>
-    <content><![CDATA[<blockquote>
+    <content><![CDATA[<h1>分段和分页</h1>
+<blockquote>
 <p>起因是上《操作系统高级教程》时，突然发现对这块的知识已经混沌了，所以重新总结下。<br>
 参考：<br>
 <a href="https://blog.csdn.net/yzy1103203312/article/details/78529067">https://blog.csdn.net/yzy1103203312/article/details/78529067</a><br>
 <a href="https://blog.csdn.net/qq_32740495/article/details/102924136">https://blog.csdn.net/qq_32740495/article/details/102924136</a></p>
 </blockquote>
-<h1>为何需要分段</h1>
+<h2 id="为何需要分段">为何需要分段</h2>
 <p>在8086处理器诞生之前，内存寻址方式就是直接访问物理地址（实模式）。8086处理器为了寻址1M的内存空间，把<strong>地址总线扩展到了20位</strong>。但是，ALU的宽度只有16位，即ALU不能计算20位的地址。为了解决这个问题，从而引入了<strong>分段机制</strong>。</p>
-<h1>IA32框架的内存寻址</h1>
-<h2 id="三类地址">三类地址</h2>
+<h2 id="IA32框架的内存寻址">IA32框架的内存寻址</h2>
+<h3 id="三类地址">三类地址</h3>
 <p>IA32的三类地址如下：</p>
 <ul>
 <li><strong>逻辑地址</strong>：<strong>机器语言指令</strong>用这类地址指定<strong>一个操作数的地址或一条指令的地址</strong>，最原始的地址就是逻辑地址。</li>
@@ -1336,7 +1083,7 @@ head.s先汇编成目标代码，c语言内核程序编译成目标代码，然�
 <blockquote>
 <p><strong>地址空间</strong>：操作系统给每个进程用的一段连续的虚拟内存空间。这个地址范围不是真实的，是虚拟地址的范围，有时甚至会超过实际物理内存的大小。</p>
 </blockquote>
-<h2 id="三类地址的转化">三类地址的转化</h2>
+<h3 id="三类地址的转化">三类地址的转化</h3>
 <p>以上3类地址通过MMU（内存管理单元）来进行转换。其中MMU处理时包含2个过程，分段和分页。在这里简单的说明下具体过程：</p>
 <ol>
 <li>当一条<strong>机器指令</strong>给出一个地址时，这时候的地址便是<strong>逻辑地址</strong>；</li>
@@ -1344,8 +1091,8 @@ head.s先汇编成目标代码，c语言内核程序编译成目标代码，然�
 <li>有了线性地址之后，再通过<strong>分页单元</strong>得到<strong>实际的物理地址</strong>。<br>
 <img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="https://img-blog.csdnimg.cn/76d5c9e629654292b413216ab1ed2c4a.png" alt="在这里插入图片描述"></li>
 </ol>
-<h1>分段</h1>
-<h2 id="硬件中的分段">硬件中的分段</h2>
+<h2 id="分段">分段</h2>
+<h3 id="硬件中的分段">硬件中的分段</h3>
 <p>段是虚拟地址空间的基本单位，分段机制必须把虚拟地址空间的一个地址转换为线性地址空间的一个线性地址。<br>
 为了实现这种映射，仅仅用段寄存器来确定一个基地址是不够的，至少还得描述段的长度，并且还需要段的一些其他信息，比如访问权之类。所以，这里需要的是一个数据结构——段描述符，它包括三个方面的内容：</p>
 <ul>
@@ -1355,13 +1102,62 @@ head.s先汇编成目标代码，c语言内核程序编译成目标代码，然�
 </ul>
 <p>多个段描述符组成的表称为段描述符表。</p>
 <p>逻辑地址的段寄存器中的值提供<strong>段描述符</strong>，然后从段描述符中得到<strong>段基址</strong>和<strong>段界限</strong>，然后<strong>加上逻辑地址的偏移量</strong>，就得到了线性地址，线性地址通过分页机制得到物理地址。</p>
-<h2 id="Linux的分段">Linux的分段</h2>
+<h3 id="Linux的分段">Linux的分段</h3>
 <p>为了支持分段，8086处理器设置了四个段寄存器：CS, DS, SS, ES。每个段寄存器都是16位的，都包含着相应段的基址。访存指令中的地址也是16位的，但是，在送入地址总线之前，CPU先把它与某个段寄存器内的值按以下方式相加：</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">实际物理地址 &#x3D; （段寄存器地址 &lt;&lt; 4） + （指令访存地址）</span><br></pre></td></tr></table></figure>
 <p>这四个段寄存器的段首地址均是0，也就是说，段首地址+逻辑地址=线性地址，这个公式里面的段首地址为0，也就意味着在linux中，<strong>逻辑地址=线性地址</strong>，这就是linux的分段技术。</p>
-<h1>分页</h1>
+<h2 id="分页">分页</h2>
 <p>对于物理内存，分页单元把它分为固定长度的页框（page frame），每一个页框包含一个页（page）。对于虚拟地址空间，也把它分为一个个的页。为了访问每一个物理页，需要有一个页表，记录每个物理页的起始地址，简单说通过页表就可以将一个虚拟内存中的页与具体的物理页一一对应起来。虚拟地址可以分为两部分，页号和页内偏移，页号为页表的索引，得到页的基地址后，加上偏移地址就可以得到具体的物理地址。</p>
 <p>以32位环境为例，<strong>虚拟地址空间为4G</strong>，一般<strong>一页为4KB</strong>，这样4G内存可以分为1M个页，由于<strong>每个页表项需要4个字节</strong>来描述，因此一共需要4M的存储空间，因为每个进程都有自己的页表，所以1个进程就需要4M的存储空间。</p>
+<h1>特权级CPL、DPL和RPL</h1>
+<h2 id="相关概念">相关概念</h2>
+<p>x86 处理器中，提供了4个特权级别：0，1，2，3。数字越小，特权级别越高！一般来说，操作系统是的重要性、可靠性是最高的，需要运行在0特权级；应用程序工作在最上层，来源广泛、可靠性最低，工作在3特权级别。中间的1和2两个特权级别，一般很少使用。这几个个特权级均由两位（bit）组成，可以表示0～3共4个等级。</p>
+<p>在处理器中，有3个相关的术语与特权级密切相关：</p>
+<ul>
+<li>CPL：<strong>当前进程</strong>的权限级别（Current Privilege Level），是当前<strong>正在执行的代码所在的段</strong>的特权级，存在于cs寄存器的低两位。</li>
+<li>RPL: 说明的是<strong>进程对段访问的请求权限</strong>（Request Privilege Level），是对于段选择子而言的，每个段选择子有自己的RPL，它说明的是进程对段访问的请求权限，有点像函数参数。而且<strong>RPL对每个段来说不是固定的</strong>，两次访问同一段时的RPL可以不同。RPL可能会削弱CPL的作用，例如当前CPL=0的进程要访问一个数据段，它把段选择符中的RPL设为3，这样虽然它是0特权，但对该段仍然只有特权为3的访问权限。</li>
+<li>DPL: 存储在段描述符中，规定<strong>访问该段的权限级别</strong>(Descriptor Privilege Level)，每个段的DPL固定。当进程访问一个段时，需要进程特权级检查，一般要求 DPL &gt;= max {CPL, RPL}</li>
+</ul>
+<p>在保护模式下，cpu利用cpl/rpl/dpl对程序的<strong>访问操作</strong>进行特权级检查，数据段和代码段的特权级检查规则有所不同。</p>
+<h2 id="对数据段和堆栈段访问时的特权级控制：">对数据段和堆栈段访问时的特权级控制：</h2>
+<p>要求访问数据段或堆栈段的程序的CPL ≤ 待访问的数据段或堆栈段的DPL，同时选择子的 RPL ≤ 待访问的数据段或堆栈段的 DPL。即程序访问数据段或堆栈段要遵循一个准则：<strong>只有相同或更高特权级的代码才能访问相应的数据段</strong>。这里，RPL可能会削弱CPL的作用，访问数据段或堆栈段时，默认用CPU和RPL中的最小特权级去访问数据段，所以max {CPL, RPL} ≤ DPL，否则访问失败。</p>
+<h2 id="对代码段访问的特权级控制（代码执行权的特权转移）：">对代码段访问的特权级控制（代码执行权的特权转移）：</h2>
+<p>一些“定律”：</p>
+<ul>
+<li>所有的程序转跳，CPU都不会把段选择子的RPL赋给转跳后程序的CS.RPL.</li>
+<li>转跳后程序的CPL(CS.RPL)只会有下面的2种可能：
+<ul>
+<li>转跳后程序的CPL(CS.RPL) = 转跳前程序的CPL(CS.RPL)</li>
+<li>转跳后程序的CPL(CS.RPL) =　转跳后程序的CodeDescriptor.DPL</li>
+</ul>
+</li>
+<li>CPU不允许程序向低特权级跳转（认为低特权级的代码不可靠，有风险）</li>
+<li>只有一种方式能够使特权级发生改变，call + 调用门 + 非一致代码段，且当前cpl大于目标段dpl，且特权级只能向上跳转。</li>
+</ul>
+<h1>GDT TSS IDT LDT</h1>
+<h2 id="回顾Linux寻址">回顾Linux寻址</h2>
+<p>Linux中的寻址: logical addr --&gt; linear addr --&gt; physical addr<br>
+第一个转换是通过GDT的分段机制,第二个转换是通过分页机制。CPU使用logical addr, CPU中的MMU部件使用physical addr。比如一个程序编译后，代码段的指令地址是0x08048888，这就是logical addr，CPU就取这个地址。GDT是一个表，用来实现logical addr–&gt; linear addr的转化，也就是分段思想的实现。gdtr寄存器指向GDT在内存中的首地址，用CS,DS中的内容做为index，这个index的学名叫segment selector。</p>
+<p>CS：在保护模式下的段选择器,我们一直都只把它看做一个段描述符的“索引号”，用来在 GDT (全局描述描述符表) 中查找一个段描述符。<br>
+用户程序拥有自己私有的描述符表 LDT(Local Descriptor Table),并且拥有自己的特权级别(总不能让用户程序与操作系统一样,工作在非常高的 0 特权级别)。</p>
+<p>正如处理器中有一个寄存器 GDTR，保存着 GDT 的开始地址和长度；处理器中还有一个寄存器 LDTR，存储着当前正在执行的那个应用程序的 LDT 开始地址和长度。</p>
+<h3 id="GDT">GDT</h3>
+<p>在Protected Mode下，对一个段的描述则包括3方面因素：【Base Address, Limit, Access】，它们加在一起被放在一个64-bit长的数据结构中，被称为段描述符。但是，无法通过16-bit长度的段寄存器来直接引用64-bit的段描述符。解决的方法就是把这些长度为64-bit的段描述符放入一个数组中，而将段寄存器中的值作为下标索引来间接引用（事实上，是将段寄存器中的高13 -bit的内容作为索引）。这个全局的数组就是GDT。</p>
+<h3 id="LDT">LDT</h3>
+<p>除了GDT之外，IA-32还允许程序员构建与GDT类似的数据结构，它们被称作LDT（Local Descriptor Table，局部描述符表），但与GDT不同的是，LDT在系统中可以存在多个，并且从LDT的名字可以得知，LDT不是全局可见的，它们只对引用它们的任务可见，每个任务最多可以拥有一个LDT。另外，每一个LDT自身作为一个段存在，它们的段描述符被放在GDT中。</p>
+<p>由于每个进程都有自己的一套程序段、数据段、堆栈段，有了局部描述符表则可以将每个进程的程序段、数据段、堆栈段封装在一起，只要改变LDTR就可以实现对不同进程的段进行访问。</p>
+<h3 id="段选择子是什么？">段选择子是什么？</h3>
+<p>保护模式下，处理器提供段寄存器，处理器提供了6个段寄存器来保存段描述符。这些段寄存器称为cs、ss、ds、es、fs和gs。每个段寄存器都由可见部分和不可见部分组成，当段选择子（可见部分）被加载至段寄存器时，处理器也通过段选择子所指向的段描述符获取了这个段的不可见部分。</p>
+<p>段选择子段选择符为16位，描述段的一些信息，它不是直接指向段，指向在GDT或LDT中的段描述符。它的高13位作为被引用的段描述符在GDT/LDT中的下标索引，bit 2用来指定被引用段描述符被放在GDT中还是到LDT中，bit 0和bit 1是RPL——请求特权等级，被用来做保护目的。</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/20/OS-LearningNotes3/p1.png" class title="p1">
+<p>段选择子包括三部分：描述符索引（index）、TI、请求特权级（RPL）。它的index（描述符索引）部分表示<strong>所需要的段描述符在描述符表的位置</strong>，由这个位置再根据在GDTR中存储的描述符表基址就可以找到相应的描述符。然后用描述符表中的段基址加上逻辑地址（SEL:OFFSET）的OFFSET就可以转换成线性地址，段选择子中的TI值只有一位0或1，0代表选择子是在GDT选择，1代表选择子是在LDT选择。请求特权级（RPL）则代表选择子的特权级，共有4个特权级（0级、1级、2级、3级）。</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/20/OS-LearningNotes3/p2.png" class title="p2">
+<h3 id="TSS-任务状态段">TSS: 任务状态段</h3>
+<p>顾名思义，任务状态段就是用来存储和恢复任务的状态信息。</p>
+<p>经常听到一个术语:任务上下文。<br>
+TSS是一个特殊的段。在Linux中，CPU从系统态切换到用户态时，会用到TSS里面的ss0和esp0。每个CPU只维护一个TSS。TR寄存器指向这个TSS，切换时里面的ss0和esp0会有改变。相应有一个TSSD放在GDT中，是GDT的一个表项。</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/20/OS-LearningNotes3/p3.png" class title="p3">
+<p>可以看到：任务寄存器中可见部分的段选择符加载TSS描述符的段选择符，访问GDT中TSS描述符，通过TSS描述符访问TSS。同时TSS描述符中的基址和界限字段的值又加载到任务寄存器的不可见部分的基址和界限字段，这样做的目的是下次访问该TSS时可以不用通过GDT中的TSS描述符访问TSS，而是直接通过缓存在任务寄存器中的基址和界限字段访问TSS，加快了系统对TSS的访问。</p>
 ]]></content>
       <categories>
         <category>操作系统高级教程学习笔记</category>
@@ -1369,6 +1165,19 @@ head.s先汇编成目标代码，c语言内核程序编译成目标代码，然�
       <tags>
         <tag>操作系统</tag>
         <tag>Linux Kernel</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>网络与系统安全随记</title>
+    <url>/2022/09/09/NetSysSec-LearningNotes/</url>
+    <content><![CDATA[<h1>20220909</h1>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/09/NetSysSec-LearningNotes/p1.png" class title="p1"> 
+]]></content>
+      <categories>
+        <category>网络与系统安全</category>
+      </categories>
+      <tags>
+        <tag>网络与系统安全</tag>
       </tags>
   </entry>
   <entry>
@@ -1417,6 +1226,16 @@ head.s先汇编成目标代码，c语言内核程序编译成目标代码，然�
 <li>时钟中断设置 —&gt; 多进程轮转</li>
 <li>系统调用：通过set_system_gate将system_call与IDT挂接（特权3，set_trap_gate为特权0）</li>
 </ol>
+<h3 id="初始化进程0">初始化进程0</h3>
+<p>首先在GDT中初始化进程0所占的4、5项，即初始化TSS0（任务状态段）和LDT0（局部描述符）。</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/01/OS-LearningNotes4/p4.png" class title="p4">
+<p>另外，需要拼接对应的段描述符：</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/01/OS-LearningNotes4/p5.png" class title="p5">
+<p>然后还需要通过INIT_TASK指针初始化进程0的task_struct（内核栈）。每个进程都有自己的用户栈和内核栈（跑内核代码时用这个）。</p>
+<h3 id="设置时钟中断">设置时钟中断</h3>
+<p>时钟中断是进程0及其他由它创建的进程轮转的基础。</p>
+<h3 id="设置系统调用总入口">设置系统调用总入口</h3>
+<p>将系统调用函数 system_call 与 int 0x80 中断描述符表挂接。</p>
 ]]></content>
       <categories>
         <category>操作系统高级教程学习笔记</category>
@@ -1501,6 +1320,32 @@ head.s先汇编成目标代码，c语言内核程序编译成目标代码，然�
       </categories>
       <tags>
         <tag>PTA</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>链路层协议安全</title>
+    <url>/2022/09/18/NetProtoSec-LearningNotes3/</url>
+    <content><![CDATA[<blockquote>
+<p>本节分为三个部分：</p>
+<ul>
+<li>有线网络协议安全</li>
+<li>无线网络协议安全</li>
+<li>VLAN安全</li>
+</ul>
+</blockquote>
+<h1>链路层协议安全</h1>
+<h2 id="有线网络协议安全">有线网络协议安全</h2>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/18/NetProtoSec-LearningNotes3/p1.png" class title="p1">
+<h2 id="无线网络协议安全">无线网络协议安全</h2>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/18/NetProtoSec-LearningNotes3/p2.png" class title="p2">
+<h2 id="VLAN安全">VLAN安全</h2>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/18/NetProtoSec-LearningNotes3/p3.png" class title="p3">]]></content>
+      <categories>
+        <category>网络协议安全学习笔记</category>
+      </categories>
+      <tags>
+        <tag>网络协议</tag>
+        <tag>网络安全</tag>
       </tags>
   </entry>
   <entry>
@@ -1615,6 +1460,112 @@ head.s先汇编成目标代码，c语言内核程序编译成目标代码，然�
       <tags>
         <tag>Hexo</tag>
         <tag>Markdown</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>NLP基础</title>
+    <url>/2021/02/12/nlp1/</url>
+    <content><![CDATA[<blockquote>
+<p>参考书籍：</p>
+<ul>
+<li>《自然语言处理理论与实战》</li>
+<li>《Python 自然语言处理》</li>
+<li>《Python 自然语言处理实战：核心技术与算法》</li>
+</ul>
+</blockquote>
+<h2 id="NLP基本概念">NLP基本概念</h2>
+<h3 id="什么是NLP">什么是NLP</h3>
+<p>NLP定义：自然语言处理，用计算机处理、理解以及运行的人类语言（如中文、英文等）</p>
+<p>NLP分类：</p>
+<ul>
+<li>自然语言理解
+<ul>
+<li>音系学：语法中发讯的系统化组织</li>
+<li>词态学：研究单词构成及相互关系</li>
+<li>句法学：给定文本哪部分是语法正确的</li>
+<li>语义句法学：给定文本的含义是什么？</li>
+<li>语法学：文本的目的是什么？</li>
+</ul>
+</li>
+<li>自然语言处理
+<ul>
+<li>自然语言文本</li>
+</ul>
+</li>
+</ul>
+<p>NLP的研究任务</p>
+<ul>
+<li>机器翻译：计算机具备将一种语言<strong>翻译成另一种语言</strong>的能力</li>
+<li>情感分析：计算机能够判断用户评论<strong>是否积极</strong></li>
+<li>智能问答：计算机能够正确<strong>回答输入的问题</strong></li>
+<li>文摘生成：计算机能够准确<strong>归纳、总结并产生文本摘要</strong></li>
+<li>文本分类：计算机能够采集各种文章，进行<strong>主题分析</strong>，从而进行<strong>自动分类</strong></li>
+<li>舆论分析：计算机能够<strong>判断目前舆论的导向</strong></li>
+<li>知识图谱：知识点相互连接而成的<strong>语义网络</strong></li>
+</ul>
+<h2 id="NLP常用术语">NLP常用术语</h2>
+<ul>
+<li>分词（segment）
+<ul>
+<li>将句子分成独立的有意义的语言成分（词）</li>
+</ul>
+</li>
+<li>词性标注（part-of-speech tagging）
+<ul>
+<li>对词的词性进行标注（例：动词、名词、形容词）</li>
+</ul>
+</li>
+<li>命名实体识别（NER, Named Entity Recognition）
+<ul>
+<li>从文本中识别具有特定类别的实体（例：人名、地名、机构名等）</li>
+</ul>
+</li>
+<li>句法分析（syntax parsing）
+<ul>
+<li>分析句子各个成分的依赖关系（例：主从关系），最后可生成句法分析树</li>
+</ul>
+</li>
+<li>指代消解（anaphora resolution）
+<ul>
+<li>代词指代</li>
+</ul>
+</li>
+<li>情感识别（emotion recognition）
+<ul>
+<li>本质是分类问题，经常应用在舆情分析等领域，可分为两类（正面、负面）或者三类（+中性）</li>
+</ul>
+</li>
+<li>纠错（correction）
+<ul>
+<li>在搜索技术和输入法中利用很多，具体做法可以根据N-Gram、字典树等等方法</li>
+</ul>
+</li>
+<li>问答系统（QA system）
+<ul>
+<li>类似机器人的人工智能系统</li>
+</ul>
+</li>
+</ul>
+<h2 id="语料库">语料库</h2>
+<ul>
+<li>中文维基百科</li>
+<li>搜狗新闻语料库</li>
+<li>IMDB情感分析语料库</li>
+<li>等</li>
+</ul>
+<h2 id="三个层次">三个层次</h2>
+<ul>
+<li>词法分析</li>
+<li>句法分析</li>
+<li>语义分析</li>
+</ul>
+]]></content>
+      <categories>
+        <category>自然语言处理</category>
+      </categories>
+      <tags>
+        <tag>自然语言处理</tag>
+        <tag>python</tag>
       </tags>
   </entry>
   <entry>
@@ -1741,109 +1692,217 @@ head.s先汇编成目标代码，c语言内核程序编译成目标代码，然�
       </tags>
   </entry>
   <entry>
-    <title>NLP基础</title>
-    <url>/2021/02/12/nlp1/</url>
+    <title>计算机网络（课程）导图</title>
+    <url>/2022/09/03/ComputerNet-LearningNotes1/</url>
     <content><![CDATA[<blockquote>
-<p>参考书籍：</p>
-<ul>
-<li>《自然语言处理理论与实战》</li>
-<li>《Python 自然语言处理》</li>
-<li>《Python 自然语言处理实战：核心技术与算法》</li>
-</ul>
+<p>概念性的东西，暂时只做导图</p>
 </blockquote>
-<h2 id="NLP基本概念">NLP基本概念</h2>
-<h3 id="什么是NLP">什么是NLP</h3>
-<p>NLP定义：自然语言处理，用计算机处理、理解以及运行的人类语言（如中文、英文等）</p>
-<p>NLP分类：</p>
-<ul>
-<li>自然语言理解
-<ul>
-<li>音系学：语法中发讯的系统化组织</li>
-<li>词态学：研究单词构成及相互关系</li>
-<li>句法学：给定文本哪部分是语法正确的</li>
-<li>语义句法学：给定文本的含义是什么？</li>
-<li>语法学：文本的目的是什么？</li>
-</ul>
-</li>
-<li>自然语言处理
-<ul>
-<li>自然语言文本</li>
-</ul>
-</li>
-</ul>
-<p>NLP的研究任务</p>
-<ul>
-<li>机器翻译：计算机具备将一种语言<strong>翻译成另一种语言</strong>的能力</li>
-<li>情感分析：计算机能够判断用户评论<strong>是否积极</strong></li>
-<li>智能问答：计算机能够正确<strong>回答输入的问题</strong></li>
-<li>文摘生成：计算机能够准确<strong>归纳、总结并产生文本摘要</strong></li>
-<li>文本分类：计算机能够采集各种文章，进行<strong>主题分析</strong>，从而进行<strong>自动分类</strong></li>
-<li>舆论分析：计算机能够<strong>判断目前舆论的导向</strong></li>
-<li>知识图谱：知识点相互连接而成的<strong>语义网络</strong></li>
-</ul>
-<h2 id="NLP常用术语">NLP常用术语</h2>
-<ul>
-<li>分词（segment）
-<ul>
-<li>将句子分成独立的有意义的语言成分（词）</li>
-</ul>
-</li>
-<li>词性标注（part-of-speech tagging）
-<ul>
-<li>对词的词性进行标注（例：动词、名词、形容词）</li>
-</ul>
-</li>
-<li>命名实体识别（NER, Named Entity Recognition）
-<ul>
-<li>从文本中识别具有特定类别的实体（例：人名、地名、机构名等）</li>
-</ul>
-</li>
-<li>句法分析（syntax parsing）
-<ul>
-<li>分析句子各个成分的依赖关系（例：主从关系），最后可生成句法分析树</li>
-</ul>
-</li>
-<li>指代消解（anaphora resolution）
-<ul>
-<li>代词指代</li>
-</ul>
-</li>
-<li>情感识别（emotion recognition）
-<ul>
-<li>本质是分类问题，经常应用在舆情分析等领域，可分为两类（正面、负面）或者三类（+中性）</li>
-</ul>
-</li>
-<li>纠错（correction）
-<ul>
-<li>在搜索技术和输入法中利用很多，具体做法可以根据N-Gram、字典树等等方法</li>
-</ul>
-</li>
-<li>问答系统（QA system）
-<ul>
-<li>类似机器人的人工智能系统</li>
-</ul>
-</li>
-</ul>
-<h2 id="语料库">语料库</h2>
-<ul>
-<li>中文维基百科</li>
-<li>搜狗新闻语料库</li>
-<li>IMDB情感分析语料库</li>
-<li>等</li>
-</ul>
-<h2 id="三个层次">三个层次</h2>
-<ul>
-<li>词法分析</li>
-<li>句法分析</li>
-<li>语义分析</li>
-</ul>
+<h1>网络（课程）概述</h1>
+<p>如图：</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/03/ComputerNet-LearningNotes1/p1.png" class title="p1">
+<h1>网络基础：网络模型与直连网络</h1>
+<p>如图：</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/03/ComputerNet-LearningNotes1/p2.png" class title="p2">
 ]]></content>
       <categories>
-        <category>自然语言处理</category>
+        <category>计算机网络学习笔记</category>
       </categories>
       <tags>
-        <tag>python</tag>
-        <tag>自然语言处理</tag>
+        <tag>计算机网络</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>主机和端口扫描</title>
+    <url>/2022/09/07/NetProtoSec-LearningNotes2/</url>
+    <content><![CDATA[<blockquote>
+<p>实验环境：Kali+Wireshark+Nmap</p>
+<ul>
+<li>Kali：是一个基于Debian的Linux发行版，预装了许多渗透测试软件，是一个很酷的“黑客操作系统”；</li>
+<li>Wireshark：是一个网络封包分析软件，功能是截取网络封包，并尽可能显示出最为详细的网络封包资料。Wireshark使用WinPCAP作为接口，直接与网卡进行数据报文交换；</li>
+<li>Nmap：即Network Mapper，是Linux下的网络扫描和嗅探工具包。</li>
+</ul>
+</blockquote>
+<h1>实验内容</h1>
+<p>1.在Nmap中，使用nmap –sP xx指令实现主机扫描，用wireshark抓取扫描过程中的ARP请求和响应报文；通过ping指令发起ICMP扫描，用wireshark抓取扫描过程中的ICMP报文；</p>
+<p>2.在Nmap中，使用nmap –sS xx指令实现端口扫描，用wireshark抓取扫描过程中的TCP报文。</p>
+<h1>kali网络配置</h1>
+<p>由于我使用的是校园网，因此我这里使用NAT模式。</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/07/NetProtoSec-LearningNotes2/p1.png" class title="p1"> 
+<h2 id="1-查看主机地址">1.查看主机地址</h2>
+<p>首先通过<code>win</code>+<code>R</code>输入cmd打开终端，然后通过<code>ipconfig</code>查看自己主机的ip地址，网关，网段（我这里选择VMnet8）。</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/07/NetProtoSec-LearningNotes2/p2.png" class title="p2"> 
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">IPv4 地址: 192.168.253.1</span><br><span class="line">子网掩码: 255.255.255.0</span><br></pre></td></tr></table></figure>
+<h2 id="2-修改-etc-network-interfaces文件">2.修改/etc/network/interfaces文件</h2>
+<p>然后，通过<code>vim /etc/network/interfaces</code>，设置静态IP：<br>
+address：把ip地址设置为自己主机网段中的一个，如：我的主机ip是192.168.253.1，这里设为192.168.253.36<br>
+gateway：在其中加上自己主机的网关，如：192.168.253.2<br>
+netmask：子网掩码照抄自己主机的，如：255.255.255.0</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">auto eth0</span><br><span class="line">iface eth0 inet static</span><br><span class="line">address 192.168.253.36</span><br><span class="line">netmask 255.255.255.0</span><br><span class="line">gateway 192.168.253.2</span><br></pre></td></tr></table></figure>
+<h2 id="3-修改dns">3.修改dns</h2>
+<p><code>vim /etc/resolv.conf</code>添加几个常用DNS：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">domain localdomain</span><br><span class="line">search localdomain</span><br><span class="line">nameserver 8.8.8.8</span><br><span class="line">nameserver 114.114.114.114</span><br><span class="line">nameserver 192.168.253.2</span><br></pre></td></tr></table></figure>
+<h2 id="4-重启网络">4.重启网络</h2>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">systemctl restart networking</span><br></pre></td></tr></table></figure>
+<p>或者</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;etc&#x2F;init.d&#x2F;networking restart</span><br></pre></td></tr></table></figure>
+<h2 id="5-测试">5.测试</h2>
+<p>输入<code>ifconfig -a</code>查看ip：</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/07/NetProtoSec-LearningNotes2/p3.png" class title="p3"> 
+<h2 id="nmap参数速查">nmap参数速查</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">命令</th>
+<th style="text-align:center">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">nmap IP</td>
+<td style="text-align:center">扫描IP</td>
+</tr>
+<tr>
+<td style="text-align:center">nmap -v IP</td>
+<td style="text-align:center">加强扫描</td>
+</tr>
+<tr>
+<td style="text-align:center">nmap IP1 IP2 …</td>
+<td style="text-align:center">扫描多IP</td>
+</tr>
+<tr>
+<td style="text-align:center">nmap a.b.c.*</td>
+<td style="text-align:center">扫描整个子网</td>
+</tr>
+<tr>
+<td style="text-align:center">nmap a.b.c.x,y,…</td>
+<td style="text-align:center">扫描多子网地址</td>
+</tr>
+<tr>
+<td style="text-align:center">nmap -iL xxx.txt</td>
+<td style="text-align:center">根据文件扫描多IP</td>
+</tr>
+<tr>
+<td style="text-align:center">nmap a.b.c.x-y</td>
+<td style="text-align:center">扫描子网IP范围</td>
+</tr>
+<tr>
+<td style="text-align:center">nmap a.b.c.* --exclude IP</td>
+<td style="text-align:center">排除指定IP扫描整个子网</td>
+</tr>
+<tr>
+<td style="text-align:center">nmap -A IP</td>
+<td style="text-align:center">全面的系统扫描,包括操作系统探测、版本探测、脚本扫描、路径跟踪</td>
+</tr>
+<tr>
+<td style="text-align:center">nmap -O IP</td>
+<td style="text-align:center">探测操作系统</td>
+</tr>
+<tr>
+<td style="text-align:center">nmap -sA/-PN IP</td>
+<td style="text-align:center">探测防火墙</td>
+</tr>
+<tr>
+<td style="text-align:center">nmap -sP a.b.c.*</td>
+<td style="text-align:center">探测在线主机</td>
+</tr>
+<tr>
+<td style="text-align:center">nmap -F IP</td>
+<td style="text-align:center">快速扫描</td>
+</tr>
+<tr>
+<td style="text-align:center">nmap -r IP</td>
+<td style="text-align:center">按顺序扫描</td>
+</tr>
+<tr>
+<td style="text-align:center">nmap -iflist</td>
+<td style="text-align:center">显示接口和路由信息</td>
+</tr>
+<tr>
+<td style="text-align:center">nmap -p n1,n2… IP</td>
+<td style="text-align:center">扫描指定端口</td>
+</tr>
+<tr>
+<td style="text-align:center">nmap -p T:n1,n2… IP</td>
+<td style="text-align:center">扫描TCP端口</td>
+</tr>
+<tr>
+<td style="text-align:center">nmap -sU n1,n2… IP</td>
+<td style="text-align:center">扫描UDP端口</td>
+</tr>
+<tr>
+<td style="text-align:center">nmap -sV IP</td>
+<td style="text-align:center">查看服务的版本</td>
+</tr>
+<tr>
+<td style="text-align:center">nmap -PS IP</td>
+<td style="text-align:center">TCP ACK扫描</td>
+</tr>
+<tr>
+<td style="text-align:center">nmap -PA IP</td>
+<td style="text-align:center">TCP SYN扫描</td>
+</tr>
+<tr>
+<td style="text-align:center">nmap -sS IP</td>
+<td style="text-align:center">隐蔽扫描</td>
+</tr>
+<tr>
+<td style="text-align:center">nmap -sN IP</td>
+<td style="text-align:center">TCP空扫描欺骗防火墙</td>
+</tr>
+</tbody>
+</table>
+<h1>主机扫描</h1>
+<blockquote>
+<p>开两个虚拟机：192.168.253.36 + 192.168.253.37</p>
+</blockquote>
+<h2 id="主机扫描参数">主机扫描参数</h2>
+<p>主机发现有时候也叫做ping扫描，有以下选项：<br>
+<code>-sL</code>（列表扫描）：它仅仅列出指定网络上的每台主机，不发送任何报文到目标主机；<br>
+<code>-sP</code>（Ping扫描）：该选项告诉Nmap仅仅进行ping扫描（主机发现），然后打印出对扫描做出响应的那些主机；Nmap会发一个ICMP ECHO请求和一个TCP报文到目标端口；<br>
+<code>-Pn</code>（无ping）：无Ping扫描通常用于防火墙禁止Ping的情况下，完全跳过Nmap发现阶段，且对目标主机进行端口扫描；<br>
+<code>-PS</code>（TCP SYN ping）：该选项发送了一个设置了SYN标志位的空TCP报文，需要root权限；<br>
+<code>-PA</code>（TCP ACK ping）：它与TCP SYN Ping扫描类似，不同的只是设置的TCP报文的标志位是ACK；<br>
+<code>-PU</code>（UDP  ping）：发送一个空的UDP报文到指定端口，很少用；<br>
+<code>-PE/PP/PM</code>（ICMP ECHO/时间戳/地址掩码Ping）；<br>
+<code>-ARP</code>（ARP ping）：该选项通常在扫描局域网时使用，在内网中使用ARP Ping是非常有效的。</p>
+<h2 id="实验过程">实验过程</h2>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">nmap -P 192.168.253.1/24</span><br></pre></td></tr></table></figure>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/07/NetProtoSec-LearningNotes2/p4.png" class title="p4"> 
+<p>wireshark抓取ARP请求和响应报文：</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/07/NetProtoSec-LearningNotes2/p5.png" class title="p5">
+<p>ping命令发起ICMP扫描，wireshark抓取ICMP报文：</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/07/NetProtoSec-LearningNotes2/p6.png" class title="p6">
+<h1>端口扫描</h1>
+<h2 id="端口扫描基础">端口扫描基础</h2>
+<h3 id="端口状态">端口状态</h3>
+<p>Nmap所识别的6个端口状态：</p>
+<ul>
+<li><code>Opend</code>：端口开启；</li>
+<li><code>Closed</code>： 端口关闭；</li>
+<li><code>Filtered</code>：端口被过滤，数据没有到达主机，返回的结果为空，数据被防火墙拦截了；</li>
+<li><code>Unfiltered</code>：未被过滤，数据有到达主机，但是不能识别端口的当前状态；</li>
+<li><code>Open|filtered</code>：开放或者被过滤，端口没有返回值，主要发生在UDP、IP、FIN、NULL和X mas扫描中；</li>
+<li><code>Closed|filtered</code>：关闭或者被过滤，只发生在IP ID idle扫描。</li>
+</ul>
+<h3 id="命令参数">命令参数</h3>
+<p>-<code>sS</code>（TCP SYN扫描）：半开扫描，很少有系统能把它记入系统日志。不过，需要Root权限；<br>
+-<code>sT</code>（TCP connect()扫描）:当SYN扫描不能用时，CP Connect()扫描就是默认的TCP扫描；<br>
+-<code>sN/-sF/-sX</code>（TCP Null/FIN/Xmas扫描）:能躲过一些无状态防火墙和报文过滤路由器；<br>
+-<code>p</code>：指定范围性扫描端口；<br>
+-<code>v</code>：详细信息。</p>
+<h2 id="实验过程-2">实验过程</h2>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">┌──(root㉿kali)-[~]</span><br><span class="line">└─<span class="comment"># nmap -sS 192.168.253.1</span></span><br><span class="line">Starting Nmap 7.92 ( https://nmap.org ) at 2022-09-07 22:42 EDT</span><br><span class="line">Nmap scan report <span class="keyword">for</span> 192.168.253.1</span><br><span class="line">Host is up (0.00019s latency).</span><br><span class="line">Not shown: 996 filtered tcp ports (no-response)</span><br><span class="line">PORT     STATE SERVICE</span><br><span class="line">135/tcp  open  msrpc</span><br><span class="line">139/tcp  open  netbios-ssn</span><br><span class="line">445/tcp  open  microsoft-ds</span><br><span class="line">4001/tcp open  newoak</span><br><span class="line">MAC Address: 00:50:56:C0:00:08 (VMware)</span><br><span class="line"></span><br><span class="line">Nmap <span class="keyword">done</span>: 1 IP address (1 host up) scanned <span class="keyword">in</span> 4.70 seconds</span><br></pre></td></tr></table></figure>
+<p>打开wireshark抓取tcp包，可看到：</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/07/NetProtoSec-LearningNotes2/p7.png" class title="p7">
+<p>扫描主机的135和139端口已经回发数据了。</p>
+]]></content>
+      <categories>
+        <category>网络协议安全学习笔记</category>
+      </categories>
+      <tags>
+        <tag>网络安全</tag>
+        <tag>Wireshark</tag>
+        <tag>Nmap</tag>
       </tags>
   </entry>
 </search>
