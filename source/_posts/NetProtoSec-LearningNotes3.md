@@ -23,4 +23,4 @@ cover: https://s3.bmp.ovh/imgs/2022/09/03/532c30c044da0f35.jpg
 {% asset_img p2.png p2 %}
 
 ## VLAN安全
-占坑
+{% asset_img p3.png p3 %}

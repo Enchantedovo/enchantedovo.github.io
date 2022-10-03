@@ -6,7 +6,7 @@ tags:
   - Linux Kernel
   - BIOS
 categories: 操作系统高级教程学习笔记
-description: 国科大杨力祥《操作系统高级教程》课堂笔记3 —— 开机加电后的过程
+description: 国科大杨力祥《操作系统高级教程》课堂笔记2 —— 开机加电后的过程
 cover: https://s3.bmp.ovh/imgs/2022/08/30/57e6003529c041b7.webp
 ---
 
@@ -24,7 +24,7 @@ cover: https://s3.bmp.ovh/imgs/2022/08/30/57e6003529c041b7.webp
 3. 为执行32位的main函数做过渡
 
 整体思维导图：
-{% asset_img xmind.png ximd %}
+{% asset_img xmind.png xmind %}
 
 # 启动BIOS
 1. CPU的硬件都设置为加电进入实模式
