@@ -6,7 +6,7 @@
   <link href="https://enchantedovo.cn/atom.xml" rel="self"/>
   
   <link href="https://enchantedovo.cn/"/>
-  <updated>2022-10-02T11:53:35.271Z</updated>
+  <updated>2022-10-03T12:06:16.596Z</updated>
   <id>https://enchantedovo.cn/</id>
   
   <author>
@@ -15,6 +15,69 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>AdvancedAI-LearningNotes3</title>
+    <link href="https://enchantedovo.cn/2022/10/03/AdvancedAI-LearningNotes4/"/>
+    <id>https://enchantedovo.cn/2022/10/03/AdvancedAI-LearningNotes4/</id>
+    <published>2022-10-03T06:58:20.000Z</published>
+    <updated>2022-10-03T12:06:16.596Z</updated>
+    
+    <content type="html"><![CDATA[<p>占坑</p><h1>一、玻尔兹曼机系列</h1><h2 id="Hopfield">Hopfield</h2><p>Hopfield网络是反馈类型，其神经元的结构功能在网络中的地位是一样的。其学习是基于灌输式学习，即网络的权值不是通过训练出来的，而是按照一定规则计算出来的，<strong>将求解的问题转换成优化问题的能量函数，网络的稳定状态是优化问题的解，其权值一旦确定就不再改变了</strong>。</p><p>简单的来讲就是，Hopfield网络的主要功能是联想记忆。既然如此，首先应该让网络实现“记忆”，我们需要一些数据，然后训练网络，训完练完成之后，可以得到一组可用的权值信息，形成网络的“记忆”功能。当输入数据不完整时，根据训练得到的权重去运算，得到一个稳定的输出状态，这就是联想功能。</p><p>【BM与Hopfield有一定共性，看一下有助理解。】</p><img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/03/AdvancedAI-LearningNotes4/p1.png" class title="p1"><h2 id="BM（玻尔兹曼机）">BM（玻尔兹曼机）</h2><p>离散Hopfield神经网络+模拟退火+隐单元=Boltzman机</p><p>Boltzmann机结合多层前馈神经网络和离散Hopfield网络在网络结构、学习算法和动态运行机制方面的优点。它是建立在离散Hopfield网基础上的，具有学习能力，它在神经元状态变化中引入了统计概率，网络的平衡状态服从Boltzmann分布，能够通过一个模拟退火过程寻求最优解。不过，其训练时间比BP网络要长。</p><img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/03/AdvancedAI-LearningNotes4/p3.png" class title="p3"><p>原理：<br>1.上文提到Hopfield神经元的结构功能在网络中的地位是一样的,BM中一部分神经元与外部相连接，可以起到网络的输入输出作用，或者严格的说可以受到外部条件的约束，另一部分神经元不与外部相连，因而属于隐单元（相对于外部）。<br>2.每个神经元只有1/0两个状态：状态为1代表神经元处于激活(连接)状态，0表示非激活（断开）状态。</p><h2 id="RBM（受限玻尔兹曼机）">RBM（受限玻尔兹曼机）</h2><p>RBM是BM的一个变体，层间全连接，层内无连接，网络中的神经元是随机神经元。限定模型必须为二分图，学习的目标是极大似然。</p><img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/03/AdvancedAI-LearningNotes4/p2.png" class title="p2"><h2 id="DBN（深度置信网络）">DBN（深度置信网络）</h2><p>DBN模型由若干个RBM堆叠而成，通过非监督的预学习和监督微调训练参数。<br>训练时通过从底到高逐层训练这些RBM来实现：</p><p>1.底部RBM以原始输入数据训练；<br>2.将底部RBM抽取的特征作为顶部RBM的输入训练；<br>3.过程（1）和（2）可以重复训练所需的尽可能多的参数。</p><img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/03/AdvancedAI-LearningNotes4/p4.png" class title="p4"><h1>CNN卷积神经网络</h1><p>（三、GAN对抗网络）<br>四、RNN及其变种<br>RNN<br>LSTM<br>GRU<br>BRNN<br>DRNNs</p>]]></content>
+    
+    
+    <summary type="html">国科大《高级人工智能》笔记3 —— 深度学习</summary>
+    
+    
+    
+    <category term="高级人工智能学习笔记" scheme="https://enchantedovo.cn/categories/%E9%AB%98%E7%BA%A7%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+    
+    <category term="人工智能" scheme="https://enchantedovo.cn/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>搜索算法</title>
+    <link href="https://enchantedovo.cn/2022/10/03/AdvancedAI-LearningNotes2/"/>
+    <id>https://enchantedovo.cn/2022/10/03/AdvancedAI-LearningNotes2/</id>
+    <published>2022-10-03T06:12:20.000Z</published>
+    <updated>2022-10-03T09:54:12.124Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p>内容杂且多，老师讲的也一言难尽，用的吴恩达的PPT，也没有用全，跳着讲，公式也不解释清楚变量，推导也不推，照着ppt念，太难了QAQ<br>这里仅记录较为重要的部分</p></blockquote><h1>一些概念</h1><img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/03/AdvancedAI-LearningNotes2/p1.png" class title="p1"> <h1>无信息搜索</h1><p>无信息搜索也被称为盲目搜索，意味着该搜索策略没有超出问题定义提供的状态之外的附加信息。所有能做的就是生成后继节点。</p><h2 id="深度优先搜索DFS">深度优先搜索DFS</h2><p><strong>描述</strong>：每一次将深度最深的那个节点进行优先探索，若不是终点，则将其拓展并将它的子节点纳入边缘空间，若是边缘空间中所有的节点都是同一个深度，那么就探索最左边的那个节点<br><strong>优点</strong>：机器每次只需要探索最深的那个点，而且边缘空间中的节点也不会太多，不会占用太多的内存<br><strong>缺点</strong>：无法保证完备性和最优性，比较耗费时间</p><h2 id="广度优先搜索BFS">广度优先搜索BFS</h2><p><strong>描述</strong>：与深度搜索不同的是它每次拓展的是边缘空间节点中最浅的那个节点，都是同一个深度的话就拓展最左边的那个节点<br><strong>优点</strong>：具备完备性<br><strong>缺点</strong>：占用内存，而且也不具备最优性</p><h2 id="DFS和BFS比较">DFS和BFS比较</h2><h2 id="迭代深入搜索">迭代深入搜索</h2><p><strong>特点</strong>：同时结合深度优先于广度优先的优点<br><strong>描述</strong>：预先设定一个探索的层数，然后在这个层数以内采用深度优先算法，当在这个层数里面都没有找到终点的话，然后就对这个层数进行拓展，允许进行更深一层的探索<br><strong>优点</strong>：结合FDFS空间优势+BFS时间优势<br><strong>缺点</strong>：可能会造成一定的浪费冗余</p><h2 id="代价敏感搜索">代价敏感搜索</h2><p><strong>特点</strong>：算法开始关注了路程中的代价问题，两个节点之间的代价不再等效处理</p><h2 id="代价一致搜索">代价一致搜索</h2><p><strong>特点</strong>：代价敏感搜索的一种，一致代价搜索总是扩展路径消耗最小的节点N。N点的路径消耗等于前一节点N-1的路径消耗加上N-1到N节点的路径消耗</p><h1>启发式搜索</h1><p>启发式：对每个状态估计到最近目标的距离</p><h2 id="贪婪搜索">贪婪搜索</h2><p><strong>策略</strong>：扩展你认为最接近目标状态的节点，只使用启发函数来评价节点<br><strong>缺点</strong>：只考虑了后半段的距离而没有考虑前面的距离，不能满足最优性</p><h2 id="A-算法（重要）">A*算法（重要）</h2><h2 id="算法介绍">算法介绍</h2><p><strong>特点</strong>：结合贪婪搜索与代价一致搜索<br><strong>策略</strong>：将代价函数g(n)与启发函数h(n)简单相加，得到一个新的函数f(n)，这个函数就是A*算法判断路径的标准<br><strong>估价函数</strong>：f(n)=g(n)+h(n)，其中：g(n)是到达n节点已花费的代价；f(n)是当前节点到目标节点最小代价路径的估计值（greedy）<br><strong>存在问题</strong>：当启发函数h大于实际耗散时，启发函数失效</p><h3 id="可采纳性">可采纳性</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0 ≤ h(n)≤ h*(n)</span><br></pre></td></tr></table></figure><p>其中：h*(n) 是从 n 结点到目标结点的最优路径的真实代价，当启发式函数 h(n) 满足以上不等式的时候，我们称该 h(n) 是可采纳的 (admissible) ，即：没有过高估计某点到目标点的花费。</p><h3 id="mark-证明A-树搜索的最优性（重要）-mark"><mark>证明A* 树搜索的最优性（重要）</mark></h3><img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/03/AdvancedAI-LearningNotes2/p2.png" class title="p2"> <h3 id="A-算法其他性质">A*算法其他性质</h3><p>Open表中任一具有f(n)&lt;=f*(S0)的节点n，都被A*算法作为扩展节点</p><h3 id="最优条件">最优条件</h3><ul><li>树A*算法最优条件：可采纳性（h(n)&lt;=h*(n)）</li><li>图A*算法最优条件：一致性（f(n)沿着路径非递减）</li></ul><h2 id="A-图搜索">A*图搜索</h2><h3 id="主要思想">主要思想</h3><p>可采纳性：h(A)&lt;=h*(A)真实<br>一致性：沿路径的节点f(n)值单调递增   h(A)&lt;=cost(A to C)+h©</p><h3 id="最优性">最优性</h3><h4 id="条件">条件</h4><p>一致性：</p><ul><li>A*算法扩展节点，f值单调增</li><li>对于每个状态S，到达S最优的节点先于次优的节点扩展</li></ul><h4 id="证明">证明</h4><img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/03/AdvancedAI-LearningNotes2/p3.png" class title="p3"> <h2 id="mark-传教士和野人问题的A-搜索-mark"><mark>传教士和野人问题的A*搜索</mark></h2><img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/03/AdvancedAI-LearningNotes2/p4.png" class title="p4"><p><strong>变量解释</strong>：<br>M-左岸传教士数目<br>C-左岸野人数目<br>B-左岸是否有船<br>Pcm-有c个传教士，m个野人从左岸到右岸<br>Qcm-有c个传教士，m个野人从右岸到左岸</p><p><strong>问题有解所必须的特性</strong></p><ul><li>M&gt;=C且（3-M)&gt;=(3-C)&lt;==&gt;M=C</li><li>或者M=0,M=3</li></ul><p><strong>安全状态(以左岸为例)</strong>：</p><ul><li>传教士与野人的数目相等；</li><li>传教士都在左岸；</li><li>传教士都不在左岸。</li></ul><p><strong>完全状态图</strong>：<br>（不满足约束的不在图内）</p><img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/03/AdvancedAI-LearningNotes2/p5.png" class title="p5"><blockquote><p>参考: <a href="https://blog.csdn.net/qq_41296039/article/details/122442921?spm=1001.2014.3001.5501">https://blog.csdn.net/qq_41296039/article/details/122442921?spm=1001.2014.3001.5501</a></p></blockquote><h1>局部搜索</h1><p>爬山法：任意位置开始，可能是局部最优解；<br>模拟退火搜索：引入随机因素，避免局部极大；<br>遗传算法：适应度函数，每步保留N个最好状态。</p><h1>其他</h1><ul><li>未知梯度时，用蚁群算法/粒子群算法；</li><li>贪婪最优搜索不是完备的。</li></ul>]]></content>
+    
+    
+    <summary type="html">国科大《高级人工智能》笔记2 —— 搜索算法</summary>
+    
+    
+    
+    <category term="高级人工智能学习笔记" scheme="https://enchantedovo.cn/categories/%E9%AB%98%E7%BA%A7%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+    
+    <category term="人工智能" scheme="https://enchantedovo.cn/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>人工神经网络</title>
+    <link href="https://enchantedovo.cn/2022/10/03/AdvancedAI-LearningNotes3/"/>
+    <id>https://enchantedovo.cn/2022/10/03/AdvancedAI-LearningNotes3/</id>
+    <published>2022-10-03T02:26:08.000Z</published>
+    <updated>2022-10-03T11:27:23.461Z</updated>
+    
+    <content type="html"><![CDATA[<h1>标题一</h1><p>占坑</p><h2 id="标题二">标题二</h2><!--  -->]]></content>
+    
+    
+    <summary type="html">国科大《高级人工智能》笔记2 —— 人工神经网络</summary>
+    
+    
+    
+    <category term="高级人工智能学习笔记" scheme="https://enchantedovo.cn/categories/%E9%AB%98%E7%BA%A7%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+    
+    <category term="人工智能" scheme="https://enchantedovo.cn/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
+    
+  </entry>
   
   <entry>
     <title>设备环境初始化及激活进程0</title>
@@ -402,29 +465,6 @@
     <category term="python" scheme="https://enchantedovo.cn/tags/python/"/>
     
     <category term="可视化" scheme="https://enchantedovo.cn/tags/%E5%8F%AF%E8%A7%86%E5%8C%96/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Hexo搭建博客</title>
-    <link href="https://enchantedovo.cn/2021/01/31/build-blog/"/>
-    <id>https://enchantedovo.cn/2021/01/31/build-blog/</id>
-    <published>2021-01-31T04:16:12.000Z</published>
-    <updated>2021-02-02T14:08:35.325Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="准备工作">准备工作</h2><h3 id="预备知识">预备知识</h3><ul><li>有一个GitHub账号，没有的话去注册一个；</li><li>安装了node.js、npm，并了解相关基础知识；</li><li>安装了git for windows（或者其它git客户端）</li></ul><h3 id="本文所使用环境">本文所使用环境</h3><ul><li>Windows8.1</li><li>node.js@5.5.0</li><li>git@1.9.2</li><li>hexo@3.2.2</li></ul><h2 id="搭建GitHub博客">搭建GitHub博客</h2><h3 id="安装hexo">安装hexo</h3><p>先创建一个文件夹blog，然后cd到这个文件夹下（或者在这个文件夹下直接右键git bash打开）。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g hexo-cli</span><br></pre></td></tr></table></figure><p>接下来初始化一下hexo</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo init myblog</span><br></pre></td></tr></table></figure><p>这个myblog可以自己取什么名字都行，然后</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> myblog //进入这个myblog文件夹</span><br><span class="line">npm install</span><br></pre></td></tr></table></figure><p>新建完成后，指定文件夹目录下有：</p><ul><li>node_modules: 依赖包</li><li>public：存放生成的页面</li><li>scaffolds：生成文章的一些模板</li><li>source：用来存放你的文章</li><li>themes：主题</li><li>_config.yml: 博客的配置文件</li></ul><p>打开hexo的服务：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo g</span><br><span class="line">hexo server</span><br></pre></td></tr></table></figure><p>在浏览器输入localhost:4000就可以看到生成的博客了。<br>使用<code>ctrl+c</code>可以把服务关掉。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo deploy</span><br></pre></td></tr></table></figure><h3 id="将hexo部署到GitHub">将hexo部署到GitHub</h3><h4 id="新建仓库">新建仓库</h4><p>新建一个名为你的<code>用户名.github.io</code>的仓库</p><h4 id="将hexo和GitHub关联起来">将hexo和GitHub关联起来</h4><p>也就是将hexo生成的文章部署到GitHub上，打开站点配置文件 _config.yml，翻到最后，修改为：</p><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">deploy:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">git</span></span><br><span class="line">  <span class="attr">repo:</span> <span class="string">https://github.com/YourgithubName/YourgithubName.github.io.git</span></span><br><span class="line">  <span class="attr">branch:</span> <span class="string">master</span></span><br></pre></td></tr></table></figure><p>这个时候需要先安装deploy-git ，也就是部署的命令,这样才能用命令部署到GitHub。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure><h4 id="hexo相关命令">hexo相关命令</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo generate</span><br><span class="line">hexo deploy</span><br></pre></td></tr></table></figure><p>其中：</p><ul><li>hexo clean清除了你之前生成的东西，也可以不加。</li><li>hexo generate 顾名思义，生成静态文章，可以用 hexo g缩写</li><li>hexo deploy 部署文章，可以用hexo d缩写</li></ul><p>然后，可以在http://yourname.github.io 这个网站看到自己的博客了！！</p><blockquote><p>有兴趣还可以自己购买域名哦！</p></blockquote><h2 id="使用buttfly主题">使用buttfly主题</h2><h3 id="使用butterfly主题（稳定版）配置">使用butterfly主题（稳定版）配置</h3><h4 id="clone主题">clone主题</h4><p>在博客根目录里：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> -b master https://github.com/jerryc127/hexo-theme-butterfly.git themes/butterfly</span><br></pre></td></tr></table></figure><h4 id="应用主题">应用主题</h4><p>修改站点配置文件<code>_config.yml</code>，把主题改为butterfly：</p><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">theme:</span> <span class="string">butterfly</span></span><br></pre></td></tr></table></figure><h4 id="安装插件">安装插件</h4><p>载安装 pug 以及 stylus 的渲染器：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-renderer-pug hexo-renderer-stylus --save</span><br></pre></td></tr></table></figure><h4 id="配置">配置</h4><p>把主题文件夹中的 <code>_config.yml</code> 复製到 Hexo 根目录里，同时重新命名为 <code>_config.butterfly.yml</code>。</p><p>以后只需要在 <code>_config.butterfly.yml</code>进行配置就行。</p><p>Hexo会自动合併主题中的<code>_config.yml</code>和 <code>_config.butterfly.yml</code>里的配置，如果存在同名配置，会使用<code>_config.butterfly.yml</code>的配置，其优先度较高。</p><h3 id="相关魔改">相关魔改</h3><p>参考：[<a href="https://butterfly.js.org">https://butterfly.js.org</a>]</p><h2 id="使用Hexo">使用Hexo</h2><p>常用hexo命令：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">hexo new <span class="string">&quot;postName&quot;</span> <span class="comment">#新建文章</span></span><br><span class="line">hexo new page <span class="string">&quot;pageName&quot;</span> <span class="comment">#新建页面(菜单中的跳转页面)</span></span><br><span class="line">hexo generate <span class="comment">#生成静态页面至public目录</span></span><br><span class="line">hexo server <span class="comment">#开启预览访问端口（默认端口4000，&#x27;ctrl + c&#x27;关闭server）</span></span><br><span class="line">hexo deploy <span class="comment">#部署到GitHub</span></span><br><span class="line">hexo <span class="built_in">help</span>  <span class="comment"># 查看帮助</span></span><br><span class="line">hexo version  <span class="comment">#查看Hexo的版本</span></span><br></pre></td></tr></table></figure><p>部署文件需要三步</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hexo c</span><br><span class="line">hexo g</span><br><span class="line">hexo d</span><br></pre></td></tr></table></figure><h2 id="markdown使用图片">markdown使用图片</h2><h3 id="安装图片插件hexo-asset-image">安装图片插件hexo-asset-image</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install https://github.com/CodeFalling/hexo-asset-image --save</span><br></pre></td></tr></table></figure><blockquote><p>由于hexo3版本后对很多插件支持有问题，hexo-asset-image插件在处理data.permalink链接时出现路径错误，因此<code>npm install hexo-asset-image --save</code>使用会出现错误</p></blockquote><h3 id="修改配置文件">修改配置文件</h3><p>在<code>_config.yml</code>配置文件中，修改为</p><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">post_asset_folder:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure><p>然后新建一篇文章</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo new post <span class="built_in">test</span></span><br></pre></td></tr></table></figure><p>这个时候会出现一个 <code>test.md</code> 和 <code>test</code> 文件夹，在文件夹中加入相关照片</p><p><img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2021/01/31/build-blog/addimg.png" alt="addimg"></p><p>然后就可以在文章中引用了</p><figure class="highlight md"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 方法一： --&gt;</span><br><span class="line">![<span class="string">img</span>](<span class="link">test/img.png</span>)</span><br><span class="line">&lt;!-- 方法二 --&gt;</span><br><span class="line">&#123;% asset<span class="emphasis">_img addimg.png This is an test image %&#125;</span></span><br></pre></td></tr></table></figure><p>重新编译一下，然后启动服务。</p><h2 id="添加本地搜索功能">添加本地搜索功能</h2><h3 id="安装hexo-generator-searchdb插件">安装hexo-generator-searchdb插件</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-generator-searchdb --save</span><br></pre></td></tr></table></figure><h3 id="修改站点配置文件-config-yml">修改站点配置文件<code>_config.yml</code></h3><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">search:</span></span><br><span class="line">  <span class="attr">path:</span> <span class="string">search.xml</span></span><br><span class="line">  <span class="attr">field:</span> <span class="string">post</span></span><br><span class="line">  <span class="attr">format:</span> <span class="string">html</span></span><br><span class="line">  <span class="attr">limit:</span> <span class="number">10000</span></span><br></pre></td></tr></table></figure><h3 id="修改主题配置文件-config-butterfly-yml">修改主题配置文件<code>_config.butterfly.yml</code></h3><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">local_search:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure><p>修改完上述的配置之后，就可以看到网站菜单上面多了一个搜索按钮，点击就可以进行搜索了。</p>]]></content>
-    
-    
-    <summary type="html">搭建博客试水(〃&#39;▽&#39;〃)</summary>
-    
-    
-    
-    <category term="其他" scheme="https://enchantedovo.cn/categories/%E5%85%B6%E4%BB%96/"/>
-    
-    
-    <category term="Hexo" scheme="https://enchantedovo.cn/tags/Hexo/"/>
-    
-    <category term="Markdown" scheme="https://enchantedovo.cn/tags/Markdown/"/>
     
   </entry>
   

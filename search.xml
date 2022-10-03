@@ -1960,4 +1960,169 @@ TSS是一个特殊的段。在Linux中，CPU从系统态切换到用户态时，
         <tag>可视化</tag>
       </tags>
   </entry>
+  <entry>
+    <title>搜索算法</title>
+    <url>/2022/10/03/AdvancedAI-LearningNotes2/</url>
+    <content><![CDATA[<blockquote>
+<p>内容杂且多，老师讲的也一言难尽，用的吴恩达的PPT，也没有用全，跳着讲，公式也不解释清楚变量，推导也不推，照着ppt念，太难了QAQ<br>
+这里仅记录较为重要的部分</p>
+</blockquote>
+<h1>一些概念</h1>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/03/AdvancedAI-LearningNotes2/p1.png" class title="p1"> 
+<h1>无信息搜索</h1>
+<p>无信息搜索也被称为盲目搜索，意味着该搜索策略没有超出问题定义提供的状态之外的附加信息。所有能做的就是生成后继节点。</p>
+<h2 id="深度优先搜索DFS">深度优先搜索DFS</h2>
+<p><strong>描述</strong>：每一次将深度最深的那个节点进行优先探索，若不是终点，则将其拓展并将它的子节点纳入边缘空间，若是边缘空间中所有的节点都是同一个深度，那么就探索最左边的那个节点<br>
+<strong>优点</strong>：机器每次只需要探索最深的那个点，而且边缘空间中的节点也不会太多，不会占用太多的内存<br>
+<strong>缺点</strong>：无法保证完备性和最优性，比较耗费时间</p>
+<h2 id="广度优先搜索BFS">广度优先搜索BFS</h2>
+<p><strong>描述</strong>：与深度搜索不同的是它每次拓展的是边缘空间节点中最浅的那个节点，都是同一个深度的话就拓展最左边的那个节点<br>
+<strong>优点</strong>：具备完备性<br>
+<strong>缺点</strong>：占用内存，而且也不具备最优性</p>
+<h2 id="DFS和BFS比较">DFS和BFS比较</h2>
+<h2 id="迭代深入搜索">迭代深入搜索</h2>
+<p><strong>特点</strong>：同时结合深度优先于广度优先的优点<br>
+<strong>描述</strong>：预先设定一个探索的层数，然后在这个层数以内采用深度优先算法，当在这个层数里面都没有找到终点的话，然后就对这个层数进行拓展，允许进行更深一层的探索<br>
+<strong>优点</strong>：结合FDFS空间优势+BFS时间优势<br>
+<strong>缺点</strong>：可能会造成一定的浪费冗余</p>
+<h2 id="代价敏感搜索">代价敏感搜索</h2>
+<p><strong>特点</strong>：算法开始关注了路程中的代价问题，两个节点之间的代价不再等效处理</p>
+<h2 id="代价一致搜索">代价一致搜索</h2>
+<p><strong>特点</strong>：代价敏感搜索的一种，一致代价搜索总是扩展路径消耗最小的节点N。N点的路径消耗等于前一节点N-1的路径消耗加上N-1到N节点的路径消耗</p>
+<h1>启发式搜索</h1>
+<p>启发式：对每个状态估计到最近目标的距离</p>
+<h2 id="贪婪搜索">贪婪搜索</h2>
+<p><strong>策略</strong>：扩展你认为最接近目标状态的节点，只使用启发函数来评价节点<br>
+<strong>缺点</strong>：只考虑了后半段的距离而没有考虑前面的距离，不能满足最优性</p>
+<h2 id="A-算法（重要）">A*算法（重要）</h2>
+<h2 id="算法介绍">算法介绍</h2>
+<p><strong>特点</strong>：结合贪婪搜索与代价一致搜索<br>
+<strong>策略</strong>：将代价函数g(n)与启发函数h(n)简单相加，得到一个新的函数f(n)，这个函数就是A*算法判断路径的标准<br>
+<strong>估价函数</strong>：f(n)=g(n)+h(n)，其中：g(n)是到达n节点已花费的代价；f(n)是当前节点到目标节点最小代价路径的估计值（greedy）<br>
+<strong>存在问题</strong>：当启发函数h大于实际耗散时，启发函数失效</p>
+<h3 id="可采纳性">可采纳性</h3>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">0 ≤ h(n)≤ h*(n)</span><br></pre></td></tr></table></figure>
+<p>其中：h*(n) 是从 n 结点到目标结点的最优路径的真实代价，当启发式函数 h(n) 满足以上不等式的时候，我们称该 h(n) 是可采纳的 (admissible) ，即：没有过高估计某点到目标点的花费。</p>
+<h3 id="mark-证明A-树搜索的最优性（重要）-mark"><mark>证明A* 树搜索的最优性（重要）</mark></h3>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/03/AdvancedAI-LearningNotes2/p2.png" class title="p2"> 
+<h3 id="A-算法其他性质">A*算法其他性质</h3>
+<p>Open表中任一具有f(n)&lt;=f*(S0)的节点n，都被A*算法作为扩展节点</p>
+<h3 id="最优条件">最优条件</h3>
+<ul>
+<li>树A*算法最优条件：可采纳性（h(n)&lt;=h*(n)）</li>
+<li>图A*算法最优条件：一致性（f(n)沿着路径非递减）</li>
+</ul>
+<h2 id="A-图搜索">A*图搜索</h2>
+<h3 id="主要思想">主要思想</h3>
+<p>可采纳性：h(A)&lt;=h*(A)真实<br>
+一致性：沿路径的节点f(n)值单调递增   h(A)&lt;=cost(A to C)+h©</p>
+<h3 id="最优性">最优性</h3>
+<h4 id="条件">条件</h4>
+<p>一致性：</p>
+<ul>
+<li>A*算法扩展节点，f值单调增</li>
+<li>对于每个状态S，到达S最优的节点先于次优的节点扩展</li>
+</ul>
+<h4 id="证明">证明</h4>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/03/AdvancedAI-LearningNotes2/p3.png" class title="p3"> 
+<h2 id="mark-传教士和野人问题的A-搜索-mark"><mark>传教士和野人问题的A*搜索</mark></h2>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/03/AdvancedAI-LearningNotes2/p4.png" class title="p4">
+<p><strong>变量解释</strong>：<br>
+M-左岸传教士数目<br>
+C-左岸野人数目<br>
+B-左岸是否有船<br>
+Pcm-有c个传教士，m个野人从左岸到右岸<br>
+Qcm-有c个传教士，m个野人从右岸到左岸</p>
+<p><strong>问题有解所必须的特性</strong></p>
+<ul>
+<li>M&gt;=C且（3-M)&gt;=(3-C)&lt;==&gt;M=C</li>
+<li>或者M=0,M=3</li>
+</ul>
+<p><strong>安全状态(以左岸为例)</strong>：</p>
+<ul>
+<li>传教士与野人的数目相等；</li>
+<li>传教士都在左岸；</li>
+<li>传教士都不在左岸。</li>
+</ul>
+<p><strong>完全状态图</strong>：<br>
+（不满足约束的不在图内）</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/03/AdvancedAI-LearningNotes2/p5.png" class title="p5">
+<blockquote>
+<p>参考: <a href="https://blog.csdn.net/qq_41296039/article/details/122442921?spm=1001.2014.3001.5501">https://blog.csdn.net/qq_41296039/article/details/122442921?spm=1001.2014.3001.5501</a></p>
+</blockquote>
+<h1>局部搜索</h1>
+<p>爬山法：任意位置开始，可能是局部最优解；<br>
+模拟退火搜索：引入随机因素，避免局部极大；<br>
+遗传算法：适应度函数，每步保留N个最好状态。</p>
+<h1>其他</h1>
+<ul>
+<li>未知梯度时，用蚁群算法/粒子群算法；</li>
+<li>贪婪最优搜索不是完备的。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>高级人工智能学习笔记</category>
+      </categories>
+      <tags>
+        <tag>人工智能</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>人工神经网络</title>
+    <url>/2022/10/03/AdvancedAI-LearningNotes3/</url>
+    <content><![CDATA[<h1>标题一</h1>
+<p>占坑</p>
+<h2 id="标题二">标题二</h2>
+<!--  -->
+]]></content>
+      <categories>
+        <category>高级人工智能学习笔记</category>
+      </categories>
+      <tags>
+        <tag>人工智能</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>AdvancedAI-LearningNotes3</title>
+    <url>/2022/10/03/AdvancedAI-LearningNotes4/</url>
+    <content><![CDATA[<p>占坑</p>
+<h1>一、玻尔兹曼机系列</h1>
+<h2 id="Hopfield">Hopfield</h2>
+<p>Hopfield网络是反馈类型，其神经元的结构功能在网络中的地位是一样的。其学习是基于灌输式学习，即网络的权值不是通过训练出来的，而是按照一定规则计算出来的，<strong>将求解的问题转换成优化问题的能量函数，网络的稳定状态是优化问题的解，其权值一旦确定就不再改变了</strong>。</p>
+<p>简单的来讲就是，Hopfield网络的主要功能是联想记忆。既然如此，首先应该让网络实现“记忆”，我们需要一些数据，然后训练网络，训完练完成之后，可以得到一组可用的权值信息，形成网络的“记忆”功能。当输入数据不完整时，根据训练得到的权重去运算，得到一个稳定的输出状态，这就是联想功能。</p>
+<p>【BM与Hopfield有一定共性，看一下有助理解。】</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/03/AdvancedAI-LearningNotes4/p1.png" class title="p1">
+<h2 id="BM（玻尔兹曼机）">BM（玻尔兹曼机）</h2>
+<p>离散Hopfield神经网络+模拟退火+隐单元=Boltzman机</p>
+<p>Boltzmann机结合多层前馈神经网络和离散Hopfield网络在网络结构、学习算法和动态运行机制方面的优点。它是建立在离散Hopfield网基础上的，具有学习能力，它在神经元状态变化中引入了统计概率，网络的平衡状态服从Boltzmann分布，能够通过一个模拟退火过程寻求最优解。不过，其训练时间比BP网络要长。</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/03/AdvancedAI-LearningNotes4/p3.png" class title="p3">
+<p>原理：<br>
+1.上文提到Hopfield神经元的结构功能在网络中的地位是一样的,BM中一部分神经元与外部相连接，可以起到网络的输入输出作用，或者严格的说可以受到外部条件的约束，另一部分神经元不与外部相连，因而属于隐单元（相对于外部）。<br>
+2.每个神经元只有1/0两个状态：状态为1代表神经元处于激活(连接)状态，0表示非激活（断开）状态。</p>
+<h2 id="RBM（受限玻尔兹曼机）">RBM（受限玻尔兹曼机）</h2>
+<p>RBM是BM的一个变体，层间全连接，层内无连接，网络中的神经元是随机神经元。限定模型必须为二分图，学习的目标是极大似然。</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/03/AdvancedAI-LearningNotes4/p2.png" class title="p2">
+<h2 id="DBN（深度置信网络）">DBN（深度置信网络）</h2>
+<p>DBN模型由若干个RBM堆叠而成，通过非监督的预学习和监督微调训练参数。<br>
+训练时通过从底到高逐层训练这些RBM来实现：</p>
+<p>1.底部RBM以原始输入数据训练；<br>
+2.将底部RBM抽取的特征作为顶部RBM的输入训练；<br>
+3.过程（1）和（2）可以重复训练所需的尽可能多的参数。</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/03/AdvancedAI-LearningNotes4/p4.png" class title="p4">
+<h1>CNN卷积神经网络</h1>
+<p>（三、GAN对抗网络）<br>
+四、RNN及其变种<br>
+RNN<br>
+LSTM<br>
+GRU<br>
+BRNN<br>
+DRNNs</p>
+]]></content>
+      <categories>
+        <category>高级人工智能学习笔记</category>
+      </categories>
+      <tags>
+        <tag>人工智能</tag>
+      </tags>
+  </entry>
 </search>
