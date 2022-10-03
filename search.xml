@@ -1962,13 +1962,13 @@ TSS是一个特殊的段。在Linux中，CPU从系统态切换到用户态时，
   </entry>
   <entry>
     <title>搜索算法</title>
-    <url>/2022/10/03/AdvancedAI-LearningNotes2/</url>
+    <url>/2022/10/02/AdvancedAI-LearningNotes2/</url>
     <content><![CDATA[<blockquote>
 <p>内容杂且多，老师讲的也一言难尽，用的吴恩达的PPT，也没有用全，跳着讲，公式也不解释清楚变量，推导也不推，照着ppt念，太难了QAQ<br>
 这里仅记录较为重要的部分</p>
 </blockquote>
 <h1>一些概念</h1>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/03/AdvancedAI-LearningNotes2/p1.png" class title="p1"> 
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/02/AdvancedAI-LearningNotes2/p1.png" class title="p1"> 
 <h1>无信息搜索</h1>
 <p>无信息搜索也被称为盲目搜索，意味着该搜索策略没有超出问题定义提供的状态之外的附加信息。所有能做的就是生成后继节点。</p>
 <h2 id="深度优先搜索DFS">深度优先搜索DFS</h2>
@@ -2004,7 +2004,7 @@ TSS是一个特殊的段。在Linux中，CPU从系统态切换到用户态时，
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">0 ≤ h(n)≤ h*(n)</span><br></pre></td></tr></table></figure>
 <p>其中：h*(n) 是从 n 结点到目标结点的最优路径的真实代价，当启发式函数 h(n) 满足以上不等式的时候，我们称该 h(n) 是可采纳的 (admissible) ，即：没有过高估计某点到目标点的花费。</p>
 <h3 id="mark-证明A-树搜索的最优性（重要）-mark"><mark>证明A* 树搜索的最优性（重要）</mark></h3>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/03/AdvancedAI-LearningNotes2/p2.png" class title="p2"> 
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/02/AdvancedAI-LearningNotes2/p2.png" class title="p2"> 
 <h3 id="A-算法其他性质">A*算法其他性质</h3>
 <p>Open表中任一具有f(n)&lt;=f*(S0)的节点n，都被A*算法作为扩展节点</p>
 <h3 id="最优条件">最优条件</h3>
@@ -2024,9 +2024,9 @@ TSS是一个特殊的段。在Linux中，CPU从系统态切换到用户态时，
 <li>对于每个状态S，到达S最优的节点先于次优的节点扩展</li>
 </ul>
 <h4 id="证明">证明</h4>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/03/AdvancedAI-LearningNotes2/p3.png" class title="p3"> 
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/02/AdvancedAI-LearningNotes2/p3.png" class title="p3"> 
 <h2 id="mark-传教士和野人问题的A-搜索-mark"><mark>传教士和野人问题的A*搜索</mark></h2>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/03/AdvancedAI-LearningNotes2/p4.png" class title="p4">
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/02/AdvancedAI-LearningNotes2/p4.png" class title="p4">
 <p><strong>变量解释</strong>：<br>
 M-左岸传教士数目<br>
 C-左岸野人数目<br>
@@ -2046,14 +2046,16 @@ Qcm-有c个传教士，m个野人从右岸到左岸</p>
 </ul>
 <p><strong>完全状态图</strong>：<br>
 （不满足约束的不在图内）</p>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/03/AdvancedAI-LearningNotes2/p5.png" class title="p5">
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/02/AdvancedAI-LearningNotes2/p5.png" class title="p5">
 <blockquote>
 <p>参考: <a href="https://blog.csdn.net/qq_41296039/article/details/122442921?spm=1001.2014.3001.5501">https://blog.csdn.net/qq_41296039/article/details/122442921?spm=1001.2014.3001.5501</a></p>
 </blockquote>
 <h1>局部搜索</h1>
-<p>爬山法：任意位置开始，可能是局部最优解；<br>
-模拟退火搜索：引入随机因素，避免局部极大；<br>
-遗传算法：适应度函数，每步保留N个最好状态。</p>
+<ul>
+<li>爬山法：任意位置开始，可能是局部最优解；</li>
+<li>模拟退火搜索：引入随机因素，避免局部极大；</li>
+<li>遗传算法：适应度函数，每步保留N个最好状态。</li>
+</ul>
 <h1>其他</h1>
 <ul>
 <li>未知梯度时，用蚁群算法/粒子群算法；</li>
@@ -2083,10 +2085,9 @@ Qcm-有c个传教士，m个野人从右岸到左岸</p>
       </tags>
   </entry>
   <entry>
-    <title>AdvancedAI-LearningNotes3</title>
+    <title>深度学习</title>
     <url>/2022/10/03/AdvancedAI-LearningNotes4/</url>
-    <content><![CDATA[<p>占坑</p>
-<h1>一、玻尔兹曼机系列</h1>
+    <content><![CDATA[<h1>一、玻尔兹曼机系列</h1>
 <h2 id="Hopfield">Hopfield</h2>
 <p>Hopfield网络是反馈类型，其神经元的结构功能在网络中的地位是一样的。其学习是基于灌输式学习，即网络的权值不是通过训练出来的，而是按照一定规则计算出来的，<strong>将求解的问题转换成优化问题的能量函数，网络的稳定状态是优化问题的解，其权值一旦确定就不再改变了</strong>。</p>
 <p>简单的来讲就是，Hopfield网络的主要功能是联想记忆。既然如此，首先应该让网络实现“记忆”，我们需要一些数据，然后训练网络，训完练完成之后，可以得到一组可用的权值信息，形成网络的“记忆”功能。当输入数据不完整时，根据训练得到的权重去运算，得到一个稳定的输出状态，这就是联想功能。</p>
@@ -2110,9 +2111,9 @@ Qcm-有c个传教士，m个野人从右岸到左岸</p>
 3.过程（1）和（2）可以重复训练所需的尽可能多的参数。</p>
 <img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/03/AdvancedAI-LearningNotes4/p4.png" class title="p4">
 <h1>CNN卷积神经网络</h1>
-<p>（三、GAN对抗网络）<br>
-四、RNN及其变种<br>
-RNN<br>
+<p>（三、GAN对抗网络）</p>
+<h1>RNN及其变种</h1>
+<p>RNN<br>
 LSTM<br>
 GRU<br>
 BRNN<br>
