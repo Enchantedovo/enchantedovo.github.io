@@ -49,6 +49,26 @@
       </tags>
   </entry>
   <entry>
+    <title>计算机网络（课程）导图</title>
+    <url>/2022/09/03/ComputerNet-LearningNotes1/</url>
+    <content><![CDATA[<blockquote>
+<p>概念性的东西，暂时只做导图</p>
+</blockquote>
+<h1>网络（课程）概述</h1>
+<p>如图：</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/03/ComputerNet-LearningNotes1/p1.png" class title="p1">
+<h1>网络基础：网络模型与直连网络</h1>
+<p>如图：</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/03/ComputerNet-LearningNotes1/p2.png" class title="p2">
+]]></content>
+      <categories>
+        <category>计算机网络学习笔记</category>
+      </categories>
+      <tags>
+        <tag>计算机网络</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>雅思写作Task1</title>
     <url>/2021/02/12/IELTS1/</url>
     <content><![CDATA[<h2 id="小作文基本了解">小作文基本了解</h2>
@@ -586,58 +606,6 @@ Overall the consumption of the world’s resources is undergoing a dangerous rat
       </tags>
   </entry>
   <entry>
-    <title>LC旋转数组</title>
-    <url>/2021/05/20/LC%E6%97%8B%E8%BD%AC%E6%95%B0%E7%BB%84/</url>
-    <content><![CDATA[<h1>旋转数组</h1>
-<p>给定一个数组，将数组中的元素向右移动 k 个位置，其中 k 是非负数。</p>
-<blockquote>
-<p><strong>示例 1:</strong></p>
-<ul>
-<li>输入: nums = [1,2,3,4,5,6,7], k = 3</li>
-<li>输出: [5,6,7,1,2,3,4]</li>
-<li>解释:
-<ul>
-<li>向右旋转 1 步: [7,1,2,3,4,5,6]</li>
-<li>向右旋转 2 步: [6,7,1,2,3,4,5]</li>
-<li>向右旋转 3 步: [5,6,7,1,2,3,4]</li>
-</ul>
-</li>
-</ul>
-</blockquote>
-<blockquote>
-<p><strong>示例 2:</strong></p>
-<ul>
-<li>输入：nums = [-1,-100,3,99], k = 2</li>
-<li>输出：[3,99,-1,-100]</li>
-<li>解释:
-<ul>
-<li>向右旋转 1 步: [99,-1,-100,3]</li>
-<li>向右旋转 2 步: [3,99,-1,-100]</li>
-</ul>
-</li>
-</ul>
-</blockquote>
-<h2 id="方法一：傻瓜方法">方法一：傻瓜方法</h2>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">rotate</span><span class="params">(<span class="keyword">int</span>* nums, <span class="keyword">int</span> numsSize, <span class="keyword">int</span> k)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> length = numsSize;</span><br><span class="line">    <span class="keyword">int</span> <span class="built_in">list</span>[length];</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;length;i++)&#123;</span><br><span class="line">        <span class="built_in">list</span>[i]=nums[i];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;length;j++)&#123;</span><br><span class="line">        nums[(j+k)%length]=<span class="built_in">list</span>[j];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="方法二：旋转旋转旋转">方法二：旋转旋转旋转</h2>
-<p>举个例子：</p>
-<blockquote>
-<p>nums = [1,2,3,4,5,6,7], k = 3</p>
-<ol>
-<li>[7,6,5,4,3,2,1] (整个数组旋转)</li>
-<li>[[5,6,7],[1,2,3,4]]</li>
-</ol>
-</blockquote>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">rotate</span><span class="params">(<span class="keyword">int</span>* nums, <span class="keyword">int</span> numsSize, <span class="keyword">int</span> k)</span></span>&#123;</span><br><span class="line">    <span class="comment">//先旋转整个数组-》旋转前一部分-》旋转后一部分</span></span><br><span class="line">    k=k%numsSize;</span><br><span class="line">    reverse(nums,<span class="number">0</span>,numsSize<span class="number">-1</span>);</span><br><span class="line">    reverse(nums,<span class="number">0</span>,k<span class="number">-1</span>);</span><br><span class="line">    reverse(nums,k,numsSize<span class="number">-1</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">reverse</span><span class="params">(<span class="keyword">int</span>* nums, <span class="keyword">int</span> start, <span class="keyword">int</span> end)</span></span>&#123;</span><br><span class="line">    <span class="keyword">while</span>(start&lt;end)&#123;</span><br><span class="line">        <span class="keyword">int</span> tmp = nums[start];</span><br><span class="line">        nums[start++]=nums[end];</span><br><span class="line">        nums[end--]=tmp;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>刷题</category>
-      </categories>
-      <tags>
-        <tag>LC</tag>
-        <tag>数组</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>网络协议安全基础</title>
     <url>/2022/09/01/NetProtoSec-LearningNotes1/</url>
     <content><![CDATA[<blockquote>
@@ -787,6 +755,346 @@ Overall the consumption of the world’s resources is undergoing a dangerous rat
       <tags>
         <tag>网络协议</tag>
         <tag>网络安全</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>LC旋转数组</title>
+    <url>/2021/05/20/LC%E6%97%8B%E8%BD%AC%E6%95%B0%E7%BB%84/</url>
+    <content><![CDATA[<h1>旋转数组</h1>
+<p>给定一个数组，将数组中的元素向右移动 k 个位置，其中 k 是非负数。</p>
+<blockquote>
+<p><strong>示例 1:</strong></p>
+<ul>
+<li>输入: nums = [1,2,3,4,5,6,7], k = 3</li>
+<li>输出: [5,6,7,1,2,3,4]</li>
+<li>解释:
+<ul>
+<li>向右旋转 1 步: [7,1,2,3,4,5,6]</li>
+<li>向右旋转 2 步: [6,7,1,2,3,4,5]</li>
+<li>向右旋转 3 步: [5,6,7,1,2,3,4]</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<blockquote>
+<p><strong>示例 2:</strong></p>
+<ul>
+<li>输入：nums = [-1,-100,3,99], k = 2</li>
+<li>输出：[3,99,-1,-100]</li>
+<li>解释:
+<ul>
+<li>向右旋转 1 步: [99,-1,-100,3]</li>
+<li>向右旋转 2 步: [3,99,-1,-100]</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<h2 id="方法一：傻瓜方法">方法一：傻瓜方法</h2>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">rotate</span><span class="params">(<span class="keyword">int</span>* nums, <span class="keyword">int</span> numsSize, <span class="keyword">int</span> k)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> length = numsSize;</span><br><span class="line">    <span class="keyword">int</span> <span class="built_in">list</span>[length];</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;length;i++)&#123;</span><br><span class="line">        <span class="built_in">list</span>[i]=nums[i];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;length;j++)&#123;</span><br><span class="line">        nums[(j+k)%length]=<span class="built_in">list</span>[j];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="方法二：旋转旋转旋转">方法二：旋转旋转旋转</h2>
+<p>举个例子：</p>
+<blockquote>
+<p>nums = [1,2,3,4,5,6,7], k = 3</p>
+<ol>
+<li>[7,6,5,4,3,2,1] (整个数组旋转)</li>
+<li>[[5,6,7],[1,2,3,4]]</li>
+</ol>
+</blockquote>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">rotate</span><span class="params">(<span class="keyword">int</span>* nums, <span class="keyword">int</span> numsSize, <span class="keyword">int</span> k)</span></span>&#123;</span><br><span class="line">    <span class="comment">//先旋转整个数组-》旋转前一部分-》旋转后一部分</span></span><br><span class="line">    k=k%numsSize;</span><br><span class="line">    reverse(nums,<span class="number">0</span>,numsSize<span class="number">-1</span>);</span><br><span class="line">    reverse(nums,<span class="number">0</span>,k<span class="number">-1</span>);</span><br><span class="line">    reverse(nums,k,numsSize<span class="number">-1</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">reverse</span><span class="params">(<span class="keyword">int</span>* nums, <span class="keyword">int</span> start, <span class="keyword">int</span> end)</span></span>&#123;</span><br><span class="line">    <span class="keyword">while</span>(start&lt;end)&#123;</span><br><span class="line">        <span class="keyword">int</span> tmp = nums[start];</span><br><span class="line">        nums[start++]=nums[end];</span><br><span class="line">        nums[end--]=tmp;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>刷题</category>
+      </categories>
+      <tags>
+        <tag>LC</tag>
+        <tag>数组</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>主机和端口扫描</title>
+    <url>/2022/09/07/NetProtoSec-LearningNotes2/</url>
+    <content><![CDATA[<blockquote>
+<p>实验环境：Kali+Wireshark+Nmap</p>
+<ul>
+<li>Kali：是一个基于Debian的Linux发行版，预装了许多渗透测试软件，是一个很酷的“黑客操作系统”；</li>
+<li>Wireshark：是一个网络封包分析软件，功能是截取网络封包，并尽可能显示出最为详细的网络封包资料。Wireshark使用WinPCAP作为接口，直接与网卡进行数据报文交换；</li>
+<li>Nmap：即Network Mapper，是Linux下的网络扫描和嗅探工具包。</li>
+</ul>
+</blockquote>
+<h1>实验内容</h1>
+<p>1.在Nmap中，使用nmap –sP xx指令实现主机扫描，用wireshark抓取扫描过程中的ARP请求和响应报文；通过ping指令发起ICMP扫描，用wireshark抓取扫描过程中的ICMP报文；</p>
+<p>2.在Nmap中，使用nmap –sS xx指令实现端口扫描，用wireshark抓取扫描过程中的TCP报文。</p>
+<h1>kali网络配置</h1>
+<p>由于我使用的是校园网，因此我这里使用NAT模式。</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/07/NetProtoSec-LearningNotes2/p1.png" class title="p1"> 
+<h2 id="1-查看主机地址">1.查看主机地址</h2>
+<p>首先通过<code>win</code>+<code>R</code>输入cmd打开终端，然后通过<code>ipconfig</code>查看自己主机的ip地址，网关，网段（我这里选择VMnet8）。</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/07/NetProtoSec-LearningNotes2/p2.png" class title="p2"> 
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">IPv4 地址: 192.168.253.1</span><br><span class="line">子网掩码: 255.255.255.0</span><br></pre></td></tr></table></figure>
+<h2 id="2-修改-etc-network-interfaces文件">2.修改/etc/network/interfaces文件</h2>
+<p>然后，通过<code>vim /etc/network/interfaces</code>，设置静态IP：<br>
+address：把ip地址设置为自己主机网段中的一个，如：我的主机ip是192.168.253.1，这里设为192.168.253.36<br>
+gateway：在其中加上自己主机的网关，如：192.168.253.2<br>
+netmask：子网掩码照抄自己主机的，如：255.255.255.0</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">auto eth0</span><br><span class="line">iface eth0 inet static</span><br><span class="line">address 192.168.253.36</span><br><span class="line">netmask 255.255.255.0</span><br><span class="line">gateway 192.168.253.2</span><br></pre></td></tr></table></figure>
+<h2 id="3-修改dns">3.修改dns</h2>
+<p><code>vim /etc/resolv.conf</code>添加几个常用DNS：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">domain localdomain</span><br><span class="line">search localdomain</span><br><span class="line">nameserver 8.8.8.8</span><br><span class="line">nameserver 114.114.114.114</span><br><span class="line">nameserver 192.168.253.2</span><br></pre></td></tr></table></figure>
+<h2 id="4-重启网络">4.重启网络</h2>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">systemctl restart networking</span><br></pre></td></tr></table></figure>
+<p>或者</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;etc&#x2F;init.d&#x2F;networking restart</span><br></pre></td></tr></table></figure>
+<h2 id="5-测试">5.测试</h2>
+<p>输入<code>ifconfig -a</code>查看ip：</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/07/NetProtoSec-LearningNotes2/p3.png" class title="p3"> 
+<h2 id="nmap参数速查">nmap参数速查</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">命令</th>
+<th style="text-align:center">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">nmap IP</td>
+<td style="text-align:center">扫描IP</td>
+</tr>
+<tr>
+<td style="text-align:center">nmap -v IP</td>
+<td style="text-align:center">加强扫描</td>
+</tr>
+<tr>
+<td style="text-align:center">nmap IP1 IP2 …</td>
+<td style="text-align:center">扫描多IP</td>
+</tr>
+<tr>
+<td style="text-align:center">nmap a.b.c.*</td>
+<td style="text-align:center">扫描整个子网</td>
+</tr>
+<tr>
+<td style="text-align:center">nmap a.b.c.x,y,…</td>
+<td style="text-align:center">扫描多子网地址</td>
+</tr>
+<tr>
+<td style="text-align:center">nmap -iL xxx.txt</td>
+<td style="text-align:center">根据文件扫描多IP</td>
+</tr>
+<tr>
+<td style="text-align:center">nmap a.b.c.x-y</td>
+<td style="text-align:center">扫描子网IP范围</td>
+</tr>
+<tr>
+<td style="text-align:center">nmap a.b.c.* --exclude IP</td>
+<td style="text-align:center">排除指定IP扫描整个子网</td>
+</tr>
+<tr>
+<td style="text-align:center">nmap -A IP</td>
+<td style="text-align:center">全面的系统扫描,包括操作系统探测、版本探测、脚本扫描、路径跟踪</td>
+</tr>
+<tr>
+<td style="text-align:center">nmap -O IP</td>
+<td style="text-align:center">探测操作系统</td>
+</tr>
+<tr>
+<td style="text-align:center">nmap -sA/-PN IP</td>
+<td style="text-align:center">探测防火墙</td>
+</tr>
+<tr>
+<td style="text-align:center">nmap -sP a.b.c.*</td>
+<td style="text-align:center">探测在线主机</td>
+</tr>
+<tr>
+<td style="text-align:center">nmap -F IP</td>
+<td style="text-align:center">快速扫描</td>
+</tr>
+<tr>
+<td style="text-align:center">nmap -r IP</td>
+<td style="text-align:center">按顺序扫描</td>
+</tr>
+<tr>
+<td style="text-align:center">nmap -iflist</td>
+<td style="text-align:center">显示接口和路由信息</td>
+</tr>
+<tr>
+<td style="text-align:center">nmap -p n1,n2… IP</td>
+<td style="text-align:center">扫描指定端口</td>
+</tr>
+<tr>
+<td style="text-align:center">nmap -p T:n1,n2… IP</td>
+<td style="text-align:center">扫描TCP端口</td>
+</tr>
+<tr>
+<td style="text-align:center">nmap -sU n1,n2… IP</td>
+<td style="text-align:center">扫描UDP端口</td>
+</tr>
+<tr>
+<td style="text-align:center">nmap -sV IP</td>
+<td style="text-align:center">查看服务的版本</td>
+</tr>
+<tr>
+<td style="text-align:center">nmap -PS IP</td>
+<td style="text-align:center">TCP ACK扫描</td>
+</tr>
+<tr>
+<td style="text-align:center">nmap -PA IP</td>
+<td style="text-align:center">TCP SYN扫描</td>
+</tr>
+<tr>
+<td style="text-align:center">nmap -sS IP</td>
+<td style="text-align:center">隐蔽扫描</td>
+</tr>
+<tr>
+<td style="text-align:center">nmap -sN IP</td>
+<td style="text-align:center">TCP空扫描欺骗防火墙</td>
+</tr>
+</tbody>
+</table>
+<h1>主机扫描</h1>
+<blockquote>
+<p>开两个虚拟机：192.168.253.36 + 192.168.253.37</p>
+</blockquote>
+<h2 id="主机扫描参数">主机扫描参数</h2>
+<p>主机发现有时候也叫做ping扫描，有以下选项：<br>
+<code>-sL</code>（列表扫描）：它仅仅列出指定网络上的每台主机，不发送任何报文到目标主机；<br>
+<code>-sP</code>（Ping扫描）：该选项告诉Nmap仅仅进行ping扫描（主机发现），然后打印出对扫描做出响应的那些主机；Nmap会发一个ICMP ECHO请求和一个TCP报文到目标端口；<br>
+<code>-Pn</code>（无ping）：无Ping扫描通常用于防火墙禁止Ping的情况下，完全跳过Nmap发现阶段，且对目标主机进行端口扫描；<br>
+<code>-PS</code>（TCP SYN ping）：该选项发送了一个设置了SYN标志位的空TCP报文，需要root权限；<br>
+<code>-PA</code>（TCP ACK ping）：它与TCP SYN Ping扫描类似，不同的只是设置的TCP报文的标志位是ACK；<br>
+<code>-PU</code>（UDP  ping）：发送一个空的UDP报文到指定端口，很少用；<br>
+<code>-PE/PP/PM</code>（ICMP ECHO/时间戳/地址掩码Ping）；<br>
+<code>-ARP</code>（ARP ping）：该选项通常在扫描局域网时使用，在内网中使用ARP Ping是非常有效的。</p>
+<h2 id="实验过程">实验过程</h2>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">nmap -P 192.168.253.1/24</span><br></pre></td></tr></table></figure>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/07/NetProtoSec-LearningNotes2/p4.png" class title="p4"> 
+<p>wireshark抓取ARP请求和响应报文：</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/07/NetProtoSec-LearningNotes2/p5.png" class title="p5">
+<p>ping命令发起ICMP扫描，wireshark抓取ICMP报文：</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/07/NetProtoSec-LearningNotes2/p6.png" class title="p6">
+<h1>端口扫描</h1>
+<h2 id="端口扫描基础">端口扫描基础</h2>
+<h3 id="端口状态">端口状态</h3>
+<p>Nmap所识别的6个端口状态：</p>
+<ul>
+<li><code>Opend</code>：端口开启；</li>
+<li><code>Closed</code>： 端口关闭；</li>
+<li><code>Filtered</code>：端口被过滤，数据没有到达主机，返回的结果为空，数据被防火墙拦截了；</li>
+<li><code>Unfiltered</code>：未被过滤，数据有到达主机，但是不能识别端口的当前状态；</li>
+<li><code>Open|filtered</code>：开放或者被过滤，端口没有返回值，主要发生在UDP、IP、FIN、NULL和X mas扫描中；</li>
+<li><code>Closed|filtered</code>：关闭或者被过滤，只发生在IP ID idle扫描。</li>
+</ul>
+<h3 id="命令参数">命令参数</h3>
+<p>-<code>sS</code>（TCP SYN扫描）：半开扫描，很少有系统能把它记入系统日志。不过，需要Root权限；<br>
+-<code>sT</code>（TCP connect()扫描）:当SYN扫描不能用时，CP Connect()扫描就是默认的TCP扫描；<br>
+-<code>sN/-sF/-sX</code>（TCP Null/FIN/Xmas扫描）:能躲过一些无状态防火墙和报文过滤路由器；<br>
+-<code>p</code>：指定范围性扫描端口；<br>
+-<code>v</code>：详细信息。</p>
+<h2 id="实验过程-2">实验过程</h2>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">┌──(root㉿kali)-[~]</span><br><span class="line">└─<span class="comment"># nmap -sS 192.168.253.1</span></span><br><span class="line">Starting Nmap 7.92 ( https://nmap.org ) at 2022-09-07 22:42 EDT</span><br><span class="line">Nmap scan report <span class="keyword">for</span> 192.168.253.1</span><br><span class="line">Host is up (0.00019s latency).</span><br><span class="line">Not shown: 996 filtered tcp ports (no-response)</span><br><span class="line">PORT     STATE SERVICE</span><br><span class="line">135/tcp  open  msrpc</span><br><span class="line">139/tcp  open  netbios-ssn</span><br><span class="line">445/tcp  open  microsoft-ds</span><br><span class="line">4001/tcp open  newoak</span><br><span class="line">MAC Address: 00:50:56:C0:00:08 (VMware)</span><br><span class="line"></span><br><span class="line">Nmap <span class="keyword">done</span>: 1 IP address (1 host up) scanned <span class="keyword">in</span> 4.70 seconds</span><br></pre></td></tr></table></figure>
+<p>打开wireshark抓取tcp包，可看到：</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/07/NetProtoSec-LearningNotes2/p7.png" class title="p7">
+<p>扫描主机的135和139端口已经回发数据了。</p>
+]]></content>
+      <categories>
+        <category>网络协议安全学习笔记</category>
+      </categories>
+      <tags>
+        <tag>网络安全</tag>
+        <tag>Wireshark</tag>
+        <tag>Nmap</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>链路层协议安全</title>
+    <url>/2022/09/18/NetProtoSec-LearningNotes3/</url>
+    <content><![CDATA[<blockquote>
+<p>本节分为三个部分：</p>
+<ul>
+<li>有线网络协议安全</li>
+<li>无线网络协议安全</li>
+<li>VLAN安全</li>
+</ul>
+</blockquote>
+<h1>链路层协议安全</h1>
+<h2 id="有线网络协议安全">有线网络协议安全</h2>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/18/NetProtoSec-LearningNotes3/p1.png" class title="p1">
+<h2 id="无线网络协议安全">无线网络协议安全</h2>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/18/NetProtoSec-LearningNotes3/p2.png" class title="p2">
+<h2 id="VLAN安全">VLAN安全</h2>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/18/NetProtoSec-LearningNotes3/p3.png" class title="p3">
+<h3 id="特点">特点</h3>
+<p>VLAN与传统LAN相比，具有以下特点：</p>
+<ul>
+<li>隔离广播域</li>
+<li>创建虚拟工作组，超越传统网络的工作方式，减少改变的代价，安全性⬆，健壮性⬆</li>
+</ul>
+<p>VLAN的划分方法有以下几种：</p>
+<ul>
+<li>基于端口（静态）</li>
+<li>基于MAC（动态）</li>
+<li>基于协议</li>
+<li>基于子网</li>
+</ul>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/18/NetProtoSec-LearningNotes3/p4.png" class title="p4">
+<h3 id="三层交换机">三层交换机</h3>
+<p>不同VLAN的信息必须通过三层路由处理才能转发到端口上。</p>
+<h4 id="二层交换机与路由器">二层交换机与路由器</h4>
+<p>二层交换机：数据交换靠硬件，但不能处理不同子网(包括VLAN)间数据交换；<br>
+路由器：主要功能是路由转发，通过软件实现，所以转发效率低。</p>
+<h4 id="三层交换技术">三层交换技术</h4>
+<p>三层交换技术其实就是：二层交换技术+三层转发技术。它能做到<strong>一次路由，多次转发</strong>，对于数据包转发等规律性的过程由硬件高速实现，而像路由信息更新、路由表维护、路由计算等功能，由软件实现。</p>
+<h4 id="工作过程">工作过程</h4>
+<p>1.第一个包过来（包目的MAC是自己，交给IP层，发现IP地址不是自己），硬件转发表无表项，交给路由进程处理，查找下一跳IP，通过ARP得到MAC；<br>
+2.转发时：修改IP包ttl；修改原mac；建立硬件转发表；<br>
+3.下一包，直接查看硬件转发表直接转发，而不会经过路由表查询。</p>
+<h3 id="链路类型">链路类型</h3>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/18/NetProtoSec-LearningNotes3/p5.png" class title="p5">
+<p>1.干道链路<br>
+可以承载多个不同VLAN数据，用于交换机间、交换机与路由器间的互连，<strong>它不属于任何一个具体VLAN</strong>。所有在干道链路上传输的帧都是打上标记的帧。</p>
+<p>2.接入链路<br>
+用于连接主机和交换机的链路，接入链路属于某一个特定的端口，这个端口属于一个并且只能是一个VLAN。</p>
+<h3 id="帧在网络通信中的变化">帧在网络通信中的变化</h3>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/18/NetProtoSec-LearningNotes3/p6.png" class title="p6">
+<h3 id="本征VLAN">本征VLAN</h3>
+<p>相当于默认VLAN，可以在Trunk链路上指定一个Native VLAN。Access端口只属于一个VLAN，所以它的缺省ID就是它所在的VLAN，不用设置；Trunk端口属于多个VLAN， 所以需要设置缺省VLAN ID，缺省情况下为VLAN 1。<br>
+来自Native VLAN的数据帧通过Trunk链路时不重新封装，以原有的帧传输（不重新打标签）。</p>
+<h3 id="转发原则-由交换机实现">转发原则(由交换机实现)</h3>
+<h4 id="Access-Link">Access-Link</h4>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/18/NetProtoSec-LearningNotes3/p7.png" class title="p7">
+<h4 id="Trunk-Link">Trunk-Link</h4>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/18/NetProtoSec-LearningNotes3/p8.png" class title="p8">
+<h3 id="VLAN安全威胁">VLAN安全威胁</h3>
+<h4 id="双标签跳跃攻击">双标签跳跃攻击</h4>
+<p>原理：构造含有双层标签的帧，其外层标记为Trunk链路的 Native VLAN 号，交换机trunk端口发送帧时，将外层标签去掉<br>
+缺点：只能单项攻击<br>
+防范：native VLAN设置为一个不存在的VLAN</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/18/NetProtoSec-LearningNotes3/p9.png" class title="p9">
+<h4 id="DTP跳跃攻击">DTP跳跃攻击</h4>
+<p>DTP：有设备主动向接口发起协议，接口将形成Trunk，该链路可以双向传输任何VLAN数据<br>
+特点：可双向访问，绕过防火墙</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/18/NetProtoSec-LearningNotes3/p10.png" class title="p10">
+<h4 id="VPT攻击">VPT攻击</h4>
+<p>原理：VLAN信息的同步是通过VTP通告来实现的， VTP通告只能在Trunk链路上传输（因此交换机之间的Trunk链路必须成功配置了Trunk）<br>
+思路：攻击者发送高的Revision的VTP通告，就能把网络中的VLAN信息覆盖了</p>
+]]></content>
+      <categories>
+        <category>网络协议安全学习笔记</category>
+      </categories>
+      <tags>
+        <tag>网络协议</tag>
+        <tag>网络安全</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>网络与系统安全随记</title>
+    <url>/2022/09/09/NetSysSec-LearningNotes/</url>
+    <content><![CDATA[<h1>20220909</h1>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/09/NetSysSec-LearningNotes/p1.png" class title="p1"> 
+]]></content>
+      <categories>
+        <category>网络与系统安全</category>
+      </categories>
+      <tags>
+        <tag>网络与系统安全</tag>
       </tags>
   </entry>
   <entry>
@@ -1168,19 +1476,6 @@ TSS是一个特殊的段。在Linux中，CPU从系统态切换到用户态时，
       </tags>
   </entry>
   <entry>
-    <title>网络与系统安全随记</title>
-    <url>/2022/09/09/NetSysSec-LearningNotes/</url>
-    <content><![CDATA[<h1>20220909</h1>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/09/NetSysSec-LearningNotes/p1.png" class title="p1"> 
-]]></content>
-      <categories>
-        <category>网络与系统安全</category>
-      </categories>
-      <tags>
-        <tag>网络与系统安全</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>设备环境初始化及激活进程0</title>
     <url>/2022/10/01/OS-LearningNotes4/</url>
     <content><![CDATA[<h1>引言</h1>
@@ -1320,32 +1615,6 @@ TSS是一个特殊的段。在Linux中，CPU从系统态切换到用户态时，
       </categories>
       <tags>
         <tag>PTA</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>链路层协议安全</title>
-    <url>/2022/09/18/NetProtoSec-LearningNotes3/</url>
-    <content><![CDATA[<blockquote>
-<p>本节分为三个部分：</p>
-<ul>
-<li>有线网络协议安全</li>
-<li>无线网络协议安全</li>
-<li>VLAN安全</li>
-</ul>
-</blockquote>
-<h1>链路层协议安全</h1>
-<h2 id="有线网络协议安全">有线网络协议安全</h2>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/18/NetProtoSec-LearningNotes3/p1.png" class title="p1">
-<h2 id="无线网络协议安全">无线网络协议安全</h2>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/18/NetProtoSec-LearningNotes3/p2.png" class title="p2">
-<h2 id="VLAN安全">VLAN安全</h2>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/18/NetProtoSec-LearningNotes3/p3.png" class title="p3">]]></content>
-      <categories>
-        <category>网络协议安全学习笔记</category>
-      </categories>
-      <tags>
-        <tag>网络协议</tag>
-        <tag>网络安全</tag>
       </tags>
   </entry>
   <entry>
@@ -1689,220 +1958,6 @@ TSS是一个特殊的段。在Linux中，CPU从系统态切换到用户态时，
       <tags>
         <tag>python</tag>
         <tag>可视化</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>计算机网络（课程）导图</title>
-    <url>/2022/09/03/ComputerNet-LearningNotes1/</url>
-    <content><![CDATA[<blockquote>
-<p>概念性的东西，暂时只做导图</p>
-</blockquote>
-<h1>网络（课程）概述</h1>
-<p>如图：</p>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/03/ComputerNet-LearningNotes1/p1.png" class title="p1">
-<h1>网络基础：网络模型与直连网络</h1>
-<p>如图：</p>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/03/ComputerNet-LearningNotes1/p2.png" class title="p2">
-]]></content>
-      <categories>
-        <category>计算机网络学习笔记</category>
-      </categories>
-      <tags>
-        <tag>计算机网络</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>主机和端口扫描</title>
-    <url>/2022/09/07/NetProtoSec-LearningNotes2/</url>
-    <content><![CDATA[<blockquote>
-<p>实验环境：Kali+Wireshark+Nmap</p>
-<ul>
-<li>Kali：是一个基于Debian的Linux发行版，预装了许多渗透测试软件，是一个很酷的“黑客操作系统”；</li>
-<li>Wireshark：是一个网络封包分析软件，功能是截取网络封包，并尽可能显示出最为详细的网络封包资料。Wireshark使用WinPCAP作为接口，直接与网卡进行数据报文交换；</li>
-<li>Nmap：即Network Mapper，是Linux下的网络扫描和嗅探工具包。</li>
-</ul>
-</blockquote>
-<h1>实验内容</h1>
-<p>1.在Nmap中，使用nmap –sP xx指令实现主机扫描，用wireshark抓取扫描过程中的ARP请求和响应报文；通过ping指令发起ICMP扫描，用wireshark抓取扫描过程中的ICMP报文；</p>
-<p>2.在Nmap中，使用nmap –sS xx指令实现端口扫描，用wireshark抓取扫描过程中的TCP报文。</p>
-<h1>kali网络配置</h1>
-<p>由于我使用的是校园网，因此我这里使用NAT模式。</p>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/07/NetProtoSec-LearningNotes2/p1.png" class title="p1"> 
-<h2 id="1-查看主机地址">1.查看主机地址</h2>
-<p>首先通过<code>win</code>+<code>R</code>输入cmd打开终端，然后通过<code>ipconfig</code>查看自己主机的ip地址，网关，网段（我这里选择VMnet8）。</p>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/07/NetProtoSec-LearningNotes2/p2.png" class title="p2"> 
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">IPv4 地址: 192.168.253.1</span><br><span class="line">子网掩码: 255.255.255.0</span><br></pre></td></tr></table></figure>
-<h2 id="2-修改-etc-network-interfaces文件">2.修改/etc/network/interfaces文件</h2>
-<p>然后，通过<code>vim /etc/network/interfaces</code>，设置静态IP：<br>
-address：把ip地址设置为自己主机网段中的一个，如：我的主机ip是192.168.253.1，这里设为192.168.253.36<br>
-gateway：在其中加上自己主机的网关，如：192.168.253.2<br>
-netmask：子网掩码照抄自己主机的，如：255.255.255.0</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">auto eth0</span><br><span class="line">iface eth0 inet static</span><br><span class="line">address 192.168.253.36</span><br><span class="line">netmask 255.255.255.0</span><br><span class="line">gateway 192.168.253.2</span><br></pre></td></tr></table></figure>
-<h2 id="3-修改dns">3.修改dns</h2>
-<p><code>vim /etc/resolv.conf</code>添加几个常用DNS：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">domain localdomain</span><br><span class="line">search localdomain</span><br><span class="line">nameserver 8.8.8.8</span><br><span class="line">nameserver 114.114.114.114</span><br><span class="line">nameserver 192.168.253.2</span><br></pre></td></tr></table></figure>
-<h2 id="4-重启网络">4.重启网络</h2>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">systemctl restart networking</span><br></pre></td></tr></table></figure>
-<p>或者</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;etc&#x2F;init.d&#x2F;networking restart</span><br></pre></td></tr></table></figure>
-<h2 id="5-测试">5.测试</h2>
-<p>输入<code>ifconfig -a</code>查看ip：</p>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/07/NetProtoSec-LearningNotes2/p3.png" class title="p3"> 
-<h2 id="nmap参数速查">nmap参数速查</h2>
-<table>
-<thead>
-<tr>
-<th style="text-align:center">命令</th>
-<th style="text-align:center">描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">nmap IP</td>
-<td style="text-align:center">扫描IP</td>
-</tr>
-<tr>
-<td style="text-align:center">nmap -v IP</td>
-<td style="text-align:center">加强扫描</td>
-</tr>
-<tr>
-<td style="text-align:center">nmap IP1 IP2 …</td>
-<td style="text-align:center">扫描多IP</td>
-</tr>
-<tr>
-<td style="text-align:center">nmap a.b.c.*</td>
-<td style="text-align:center">扫描整个子网</td>
-</tr>
-<tr>
-<td style="text-align:center">nmap a.b.c.x,y,…</td>
-<td style="text-align:center">扫描多子网地址</td>
-</tr>
-<tr>
-<td style="text-align:center">nmap -iL xxx.txt</td>
-<td style="text-align:center">根据文件扫描多IP</td>
-</tr>
-<tr>
-<td style="text-align:center">nmap a.b.c.x-y</td>
-<td style="text-align:center">扫描子网IP范围</td>
-</tr>
-<tr>
-<td style="text-align:center">nmap a.b.c.* --exclude IP</td>
-<td style="text-align:center">排除指定IP扫描整个子网</td>
-</tr>
-<tr>
-<td style="text-align:center">nmap -A IP</td>
-<td style="text-align:center">全面的系统扫描,包括操作系统探测、版本探测、脚本扫描、路径跟踪</td>
-</tr>
-<tr>
-<td style="text-align:center">nmap -O IP</td>
-<td style="text-align:center">探测操作系统</td>
-</tr>
-<tr>
-<td style="text-align:center">nmap -sA/-PN IP</td>
-<td style="text-align:center">探测防火墙</td>
-</tr>
-<tr>
-<td style="text-align:center">nmap -sP a.b.c.*</td>
-<td style="text-align:center">探测在线主机</td>
-</tr>
-<tr>
-<td style="text-align:center">nmap -F IP</td>
-<td style="text-align:center">快速扫描</td>
-</tr>
-<tr>
-<td style="text-align:center">nmap -r IP</td>
-<td style="text-align:center">按顺序扫描</td>
-</tr>
-<tr>
-<td style="text-align:center">nmap -iflist</td>
-<td style="text-align:center">显示接口和路由信息</td>
-</tr>
-<tr>
-<td style="text-align:center">nmap -p n1,n2… IP</td>
-<td style="text-align:center">扫描指定端口</td>
-</tr>
-<tr>
-<td style="text-align:center">nmap -p T:n1,n2… IP</td>
-<td style="text-align:center">扫描TCP端口</td>
-</tr>
-<tr>
-<td style="text-align:center">nmap -sU n1,n2… IP</td>
-<td style="text-align:center">扫描UDP端口</td>
-</tr>
-<tr>
-<td style="text-align:center">nmap -sV IP</td>
-<td style="text-align:center">查看服务的版本</td>
-</tr>
-<tr>
-<td style="text-align:center">nmap -PS IP</td>
-<td style="text-align:center">TCP ACK扫描</td>
-</tr>
-<tr>
-<td style="text-align:center">nmap -PA IP</td>
-<td style="text-align:center">TCP SYN扫描</td>
-</tr>
-<tr>
-<td style="text-align:center">nmap -sS IP</td>
-<td style="text-align:center">隐蔽扫描</td>
-</tr>
-<tr>
-<td style="text-align:center">nmap -sN IP</td>
-<td style="text-align:center">TCP空扫描欺骗防火墙</td>
-</tr>
-</tbody>
-</table>
-<h1>主机扫描</h1>
-<blockquote>
-<p>开两个虚拟机：192.168.253.36 + 192.168.253.37</p>
-</blockquote>
-<h2 id="主机扫描参数">主机扫描参数</h2>
-<p>主机发现有时候也叫做ping扫描，有以下选项：<br>
-<code>-sL</code>（列表扫描）：它仅仅列出指定网络上的每台主机，不发送任何报文到目标主机；<br>
-<code>-sP</code>（Ping扫描）：该选项告诉Nmap仅仅进行ping扫描（主机发现），然后打印出对扫描做出响应的那些主机；Nmap会发一个ICMP ECHO请求和一个TCP报文到目标端口；<br>
-<code>-Pn</code>（无ping）：无Ping扫描通常用于防火墙禁止Ping的情况下，完全跳过Nmap发现阶段，且对目标主机进行端口扫描；<br>
-<code>-PS</code>（TCP SYN ping）：该选项发送了一个设置了SYN标志位的空TCP报文，需要root权限；<br>
-<code>-PA</code>（TCP ACK ping）：它与TCP SYN Ping扫描类似，不同的只是设置的TCP报文的标志位是ACK；<br>
-<code>-PU</code>（UDP  ping）：发送一个空的UDP报文到指定端口，很少用；<br>
-<code>-PE/PP/PM</code>（ICMP ECHO/时间戳/地址掩码Ping）；<br>
-<code>-ARP</code>（ARP ping）：该选项通常在扫描局域网时使用，在内网中使用ARP Ping是非常有效的。</p>
-<h2 id="实验过程">实验过程</h2>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">nmap -P 192.168.253.1/24</span><br></pre></td></tr></table></figure>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/07/NetProtoSec-LearningNotes2/p4.png" class title="p4"> 
-<p>wireshark抓取ARP请求和响应报文：</p>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/07/NetProtoSec-LearningNotes2/p5.png" class title="p5">
-<p>ping命令发起ICMP扫描，wireshark抓取ICMP报文：</p>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/07/NetProtoSec-LearningNotes2/p6.png" class title="p6">
-<h1>端口扫描</h1>
-<h2 id="端口扫描基础">端口扫描基础</h2>
-<h3 id="端口状态">端口状态</h3>
-<p>Nmap所识别的6个端口状态：</p>
-<ul>
-<li><code>Opend</code>：端口开启；</li>
-<li><code>Closed</code>： 端口关闭；</li>
-<li><code>Filtered</code>：端口被过滤，数据没有到达主机，返回的结果为空，数据被防火墙拦截了；</li>
-<li><code>Unfiltered</code>：未被过滤，数据有到达主机，但是不能识别端口的当前状态；</li>
-<li><code>Open|filtered</code>：开放或者被过滤，端口没有返回值，主要发生在UDP、IP、FIN、NULL和X mas扫描中；</li>
-<li><code>Closed|filtered</code>：关闭或者被过滤，只发生在IP ID idle扫描。</li>
-</ul>
-<h3 id="命令参数">命令参数</h3>
-<p>-<code>sS</code>（TCP SYN扫描）：半开扫描，很少有系统能把它记入系统日志。不过，需要Root权限；<br>
--<code>sT</code>（TCP connect()扫描）:当SYN扫描不能用时，CP Connect()扫描就是默认的TCP扫描；<br>
--<code>sN/-sF/-sX</code>（TCP Null/FIN/Xmas扫描）:能躲过一些无状态防火墙和报文过滤路由器；<br>
--<code>p</code>：指定范围性扫描端口；<br>
--<code>v</code>：详细信息。</p>
-<h2 id="实验过程-2">实验过程</h2>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">┌──(root㉿kali)-[~]</span><br><span class="line">└─<span class="comment"># nmap -sS 192.168.253.1</span></span><br><span class="line">Starting Nmap 7.92 ( https://nmap.org ) at 2022-09-07 22:42 EDT</span><br><span class="line">Nmap scan report <span class="keyword">for</span> 192.168.253.1</span><br><span class="line">Host is up (0.00019s latency).</span><br><span class="line">Not shown: 996 filtered tcp ports (no-response)</span><br><span class="line">PORT     STATE SERVICE</span><br><span class="line">135/tcp  open  msrpc</span><br><span class="line">139/tcp  open  netbios-ssn</span><br><span class="line">445/tcp  open  microsoft-ds</span><br><span class="line">4001/tcp open  newoak</span><br><span class="line">MAC Address: 00:50:56:C0:00:08 (VMware)</span><br><span class="line"></span><br><span class="line">Nmap <span class="keyword">done</span>: 1 IP address (1 host up) scanned <span class="keyword">in</span> 4.70 seconds</span><br></pre></td></tr></table></figure>
-<p>打开wireshark抓取tcp包，可看到：</p>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/07/NetProtoSec-LearningNotes2/p7.png" class title="p7">
-<p>扫描主机的135和139端口已经回发数据了。</p>
-]]></content>
-      <categories>
-        <category>网络协议安全学习笔记</category>
-      </categories>
-      <tags>
-        <tag>网络安全</tag>
-        <tag>Wireshark</tag>
-        <tag>Nmap</tag>
       </tags>
   </entry>
 </search>
