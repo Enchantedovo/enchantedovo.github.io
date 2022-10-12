@@ -1,6 +1,276 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>搜索算法</title>
+    <url>/2022/10/02/AdvancedAI-LearningNotes2/</url>
+    <content><![CDATA[<blockquote>
+<p>内容杂且多，老师讲的也一言难尽，用的吴恩达的PPT，也没有用全，跳着讲，公式也不解释清楚变量，推导也不推，照着ppt念，太难了QAQ<br>
+这里仅记录较为重要的部分</p>
+</blockquote>
+<h1>一些概念</h1>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/02/AdvancedAI-LearningNotes2/p1.png" class title="p1"> 
+<h1>无信息搜索</h1>
+<p>无信息搜索也被称为盲目搜索，意味着该搜索策略没有超出问题定义提供的状态之外的附加信息。所有能做的就是生成后继节点。</p>
+<h2 id="深度优先搜索DFS">深度优先搜索DFS</h2>
+<p><strong>描述</strong>：每一次将深度最深的那个节点进行优先探索，若不是终点，则将其拓展并将它的子节点纳入边缘空间，若是边缘空间中所有的节点都是同一个深度，那么就探索最左边的那个节点<br>
+<strong>优点</strong>：机器每次只需要探索最深的那个点，而且边缘空间中的节点也不会太多，不会占用太多的内存<br>
+<strong>缺点</strong>：无法保证完备性和最优性，比较耗费时间</p>
+<h2 id="广度优先搜索BFS">广度优先搜索BFS</h2>
+<p><strong>描述</strong>：与深度搜索不同的是它每次拓展的是边缘空间节点中最浅的那个节点，都是同一个深度的话就拓展最左边的那个节点<br>
+<strong>优点</strong>：具备完备性<br>
+<strong>缺点</strong>：占用内存，而且也不具备最优性</p>
+<h2 id="DFS和BFS比较">DFS和BFS比较</h2>
+<h2 id="迭代深入搜索">迭代深入搜索</h2>
+<p><strong>特点</strong>：同时结合深度优先于广度优先的优点<br>
+<strong>描述</strong>：预先设定一个探索的层数，然后在这个层数以内采用深度优先算法，当在这个层数里面都没有找到终点的话，然后就对这个层数进行拓展，允许进行更深一层的探索<br>
+<strong>优点</strong>：结合FDFS空间优势+BFS时间优势<br>
+<strong>缺点</strong>：可能会造成一定的浪费冗余</p>
+<h2 id="代价敏感搜索">代价敏感搜索</h2>
+<p><strong>特点</strong>：算法开始关注了路程中的代价问题，两个节点之间的代价不再等效处理</p>
+<h2 id="代价一致搜索">代价一致搜索</h2>
+<p><strong>特点</strong>：代价敏感搜索的一种，一致代价搜索总是扩展路径消耗最小的节点N。N点的路径消耗等于前一节点N-1的路径消耗加上N-1到N节点的路径消耗</p>
+<h1>启发式搜索</h1>
+<p>启发式：对每个状态估计到最近目标的距离</p>
+<h2 id="贪婪搜索">贪婪搜索</h2>
+<p><strong>策略</strong>：扩展你认为最接近目标状态的节点，只使用启发函数来评价节点<br>
+<strong>缺点</strong>：只考虑了后半段的距离而没有考虑前面的距离，不能满足最优性</p>
+<h2 id="A-算法（重要）">A*算法（重要）</h2>
+<h2 id="算法介绍">算法介绍</h2>
+<p><strong>特点</strong>：结合贪婪搜索与代价一致搜索<br>
+<strong>策略</strong>：将代价函数g(n)与启发函数h(n)简单相加，得到一个新的函数f(n)，这个函数就是A*算法判断路径的标准<br>
+<strong>估价函数</strong>：f(n)=g(n)+h(n)，其中：g(n)是到达n节点已花费的代价；f(n)是当前节点到目标节点最小代价路径的估计值（greedy）<br>
+<strong>存在问题</strong>：当启发函数h大于实际耗散时，启发函数失效</p>
+<h3 id="可采纳性">可采纳性</h3>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">0 ≤ h(n)≤ h*(n)</span><br></pre></td></tr></table></figure>
+<p>其中：h*(n) 是从 n 结点到目标结点的最优路径的真实代价，当启发式函数 h(n) 满足以上不等式的时候，我们称该 h(n) 是可采纳的 (admissible) ，即：没有过高估计某点到目标点的花费。</p>
+<h3 id="mark-证明A-树搜索的最优性（重要）-mark"><mark>证明A* 树搜索的最优性（重要）</mark></h3>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/02/AdvancedAI-LearningNotes2/p2.png" class title="p2"> 
+<h3 id="A-算法其他性质">A*算法其他性质</h3>
+<p>Open表中任一具有f(n)&lt;=f*(S0)的节点n，都被A*算法作为扩展节点</p>
+<h3 id="最优条件">最优条件</h3>
+<ul>
+<li>树A*算法最优条件：可采纳性（h(n)&lt;=h*(n)）</li>
+<li>图A*算法最优条件：一致性（f(n)沿着路径非递减）</li>
+</ul>
+<h2 id="A-图搜索">A*图搜索</h2>
+<h3 id="主要思想">主要思想</h3>
+<p>可采纳性：h(A)&lt;=h*(A)真实<br>
+一致性：沿路径的节点f(n)值单调递增   h(A)&lt;=cost(A to C)+h©</p>
+<h3 id="最优性">最优性</h3>
+<h4 id="条件">条件</h4>
+<p>一致性：</p>
+<ul>
+<li>A*算法扩展节点，f值单调增</li>
+<li>对于每个状态S，到达S最优的节点先于次优的节点扩展</li>
+</ul>
+<h4 id="证明">证明</h4>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/02/AdvancedAI-LearningNotes2/p3.png" class title="p3"> 
+<h2 id="mark-传教士和野人问题的A-搜索-mark"><mark>传教士和野人问题的A*搜索</mark></h2>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/02/AdvancedAI-LearningNotes2/p4.png" class title="p4">
+<p><strong>变量解释</strong>：<br>
+M-左岸传教士数目<br>
+C-左岸野人数目<br>
+B-左岸是否有船<br>
+Pcm-有c个传教士，m个野人从左岸到右岸<br>
+Qcm-有c个传教士，m个野人从右岸到左岸</p>
+<p><strong>问题有解所必须的特性</strong></p>
+<ul>
+<li>M&gt;=C且（3-M)&gt;=(3-C)&lt;==&gt;M=C</li>
+<li>或者M=0,M=3</li>
+</ul>
+<p><strong>安全状态(以左岸为例)</strong>：</p>
+<ul>
+<li>传教士与野人的数目相等；</li>
+<li>传教士都在左岸；</li>
+<li>传教士都不在左岸。</li>
+</ul>
+<p><strong>完全状态图</strong>：<br>
+（不满足约束的不在图内）</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/02/AdvancedAI-LearningNotes2/p5.png" class title="p5">
+<blockquote>
+<p>参考: <a href="https://blog.csdn.net/qq_41296039/article/details/122442921?spm=1001.2014.3001.5501">https://blog.csdn.net/qq_41296039/article/details/122442921?spm=1001.2014.3001.5501</a></p>
+</blockquote>
+<h1>局部搜索</h1>
+<ul>
+<li>爬山法：任意位置开始，可能是局部最优解；</li>
+<li>模拟退火搜索：引入随机因素，避免局部极大；</li>
+<li>遗传算法：适应度函数，每步保留N个最好状态。</li>
+</ul>
+<h1>其他</h1>
+<ul>
+<li>未知梯度时，用蚁群算法/粒子群算法；</li>
+<li>贪婪最优搜索不是完备的。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>高级人工智能学习笔记</category>
+      </categories>
+      <tags>
+        <tag>人工智能</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>人工神经网络</title>
+    <url>/2022/10/03/AdvancedAI-LearningNotes3/</url>
+    <content><![CDATA[<h1>人工神经网络ANN</h1>
+<h2 id="结构">结构</h2>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/03/AdvancedAI-LearningNotes3/p1.png" class title="p1">
+<h2 id="学习规则">学习规则</h2>
+<ul>
+<li>能量最小（ENERGY MINIMIZATION）</li>
+<li>对人工神经网络，需要确定合适的能量定义；可以使用数学上的优化技术来发现如何改变神经元间的联接权重。</li>
+</ul>
+<h1>多层感知机</h1>
+<p>多层感知机是ANN的一种。指具有至少三层节点，输入层，一些中间层和输出层的神经网络。给定层中的每个节点都连接到相邻层中的每个节点。输入层接收数据，中间层计算数据，输出层输出结果。</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/03/AdvancedAI-LearningNotes3/p2.png" class title="p2">
+<h2 id="特点">特点</h2>
+<p>多层感知机特性：</p>
+<ul>
+<li>多层感知机层间神经元全连接；</li>
+<li>Can represent AND, OR, NOT, etc., but not XOR；</li>
+<li>若训练数据集是线性可分的，则感知机模型收敛。</li>
+</ul>
+<h2 id="感知机存在的问题">感知机存在的问题</h2>
+<ul>
+<li>噪声（线性不可分）</li>
+<li>泛化性</li>
+</ul>
+<h3 id="单层感知机不可解决异或问题">单层感知机不可解决异或问题</h3>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/03/AdvancedAI-LearningNotes3/p4.png" class title="p4">
+<blockquote>
+<p>传送门[<a href="https://blog.csdn.net/buracag_mc/article/details/89254808?utm_medium=distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromMachineLearnPai2~default-2.nonecase&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromMachineLearnPai2~default-2.nonecase">https://blog.csdn.net/buracag_mc/article/details/89254808?utm_medium=distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromMachineLearnPai2~default-2.nonecase&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromMachineLearnPai2~default-2.nonecase</a>]</p>
+</blockquote>
+<h1>权重学习算法：BP算法</h1>
+<h2 id="介绍">介绍</h2>
+<p>BP算法全称叫作误差反向传播(error Back Propagation，或者也叫作误差逆传播)算法。其算法基本思想为：将输出误差以某种形式反传给各层所有的单元，各层按本层误差修<br>
+正各单元连接权值。【有监督学习，采用梯度下降法调参】</p>
+<h3 id="特点-2">特点</h3>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/03/AdvancedAI-LearningNotes3/p3.png" class title="p3">
+<h2 id="BP遇到的困难，为什么会出现梯度消失">BP遇到的困难，为什么会出现梯度消失</h2>
+<h3 id="困难">困难</h3>
+<ul>
+<li>梯度消失，梯度爆炸</li>
+<li>局部极小</li>
+<li>只能用于标注数据</li>
+</ul>
+<h3 id="why梯度消失">why梯度消失</h3>
+<p>因为BP算法采用链式法则，从后层向前层传递信息时，若每层神经元对上一层神经元偏导乘以w均小于1，多次链式法则,多级导数权值相乘结果会越来越小，导致loss传递到越前方越小。</p>
+]]></content>
+      <categories>
+        <category>高级人工智能学习笔记</category>
+      </categories>
+      <tags>
+        <tag>人工智能</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>深度学习</title>
+    <url>/2022/10/03/AdvancedAI-LearningNotes4/</url>
+    <content><![CDATA[<h1>一、玻尔兹曼机系列</h1>
+<h2 id="Hopfield">Hopfield</h2>
+<p>Hopfield网络是反馈类型，其神经元的结构功能在网络中的地位是一样的。其学习是基于灌输式学习，即网络的权值不是通过训练出来的，而是按照一定规则计算出来的，<strong>将求解的问题转换成优化问题的能量函数，网络的稳定状态是优化问题的解，其权值一旦确定就不再改变了</strong>。</p>
+<p>简单的来讲就是，Hopfield网络的主要功能是联想记忆。既然如此，首先应该让网络实现“记忆”，我们需要一些数据，然后训练网络，训完练完成之后，可以得到一组可用的权值信息，形成网络的“记忆”功能。当输入数据不完整时，根据训练得到的权重去运算，得到一个稳定的输出状态，这就是联想功能。</p>
+<p>【BM与Hopfield有一定共性，看一下有助理解。】</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/03/AdvancedAI-LearningNotes4/p1.png" class title="p1">
+<h2 id="BM（玻尔兹曼机）">BM（玻尔兹曼机）</h2>
+<p>离散Hopfield神经网络+模拟退火+隐单元=Boltzman机</p>
+<p>Boltzmann机结合多层前馈神经网络和离散Hopfield网络在网络结构、学习算法和动态运行机制方面的优点。它是建立在离散Hopfield网基础上的，具有学习能力，它在神经元状态变化中引入了统计概率，网络的平衡状态服从Boltzmann分布，能够通过一个模拟退火过程寻求最优解。不过，其训练时间比BP网络要长。</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/03/AdvancedAI-LearningNotes4/p3.png" class title="p3">
+<p>原理：<br>
+1.上文提到Hopfield神经元的结构功能在网络中的地位是一样的,BM中一部分神经元与外部相连接，可以起到网络的输入输出作用，或者严格的说可以受到外部条件的约束，另一部分神经元不与外部相连，因而属于隐单元（相对于外部）。<br>
+2.每个神经元只有1/0两个状态：状态为1代表神经元处于激活(连接)状态，0表示非激活（断开）状态。</p>
+<h2 id="RBM（受限玻尔兹曼机）">RBM（受限玻尔兹曼机）</h2>
+<p>RBM是BM的一个变体，层间全连接，层内无连接，网络中的神经元是随机神经元。限定模型必须为二分图，学习的目标是极大似然。</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/03/AdvancedAI-LearningNotes4/p2.png" class title="p2">
+<h2 id="DBN（深度置信网络）">DBN（深度置信网络）</h2>
+<p>DBN模型由若干个RBM堆叠而成，通过非监督的预学习和监督微调训练参数。<br>
+训练时通过从底到高逐层训练这些RBM来实现：</p>
+<p>1.底部RBM以原始输入数据训练；<br>
+2.将底部RBM抽取的特征作为顶部RBM的输入训练；<br>
+3.过程（1）和（2）可以重复训练所需的尽可能多的参数。</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/03/AdvancedAI-LearningNotes4/p4.png" class title="p4">
+<h1>CNN卷积神经网络</h1>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/03/AdvancedAI-LearningNotes4/p5.png" class title="p5">
+<h2 id="特点">特点</h2>
+<p><strong>主要特点</strong>：局部链接、参数共享、空间或时间上的子采样、（非逐层贪婪训练）。这些特性使得卷积神经网络具有一定程度上的平移、缩放和扭曲不变性。</p>
+<p><strong>解释</strong>：CNN神经元之间的连接是非全链接，同一层中神经元之间的链接权重是共享的——减少了权值的数量，降低了网络模型的复杂度。CNN的一个卷积层中，一般包含若干个特征平面，每个特征平面由一些矩阵形排列的神经元组成，同一特征平面神经元共享权值。<br>
+每个卷积层之后，通常立即会有一个非线性层（激活层），目的是给一个卷积层中刚经过线性计算操作的系统引入非线性特征。</p>
+<h2 id="各层介绍">各层介绍</h2>
+<ul>
+<li>池化层pooling：逐渐降低数据空间尺寸，有效减少网络中参数；</li>
+<li>卷积层cov：通过卷积操作对输入图像进行降维和特征抽取；</li>
+<li>全连接层：整个网络中分类器的作用；</li>
+<li>Relu：1.采用Sigmoid计算量较大，而Relu激活函数可以减少计算过程计算量；2.防止梯度消失；3.Relu会使一部分神经元输出为0，造成网络稀疏性，从而减小参数相互依赖关系，缓解过拟合。</li>
+</ul>
+<h2 id="附：卷积运算">附：卷积运算</h2>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/03/AdvancedAI-LearningNotes4/p10.png" class title="p10">
+<p>本质上是一种加权求和运算，举例：</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/03/AdvancedAI-LearningNotes4/p9.png" class title="p9">
+<h1>RNN及其变种</h1>
+<h2 id="RNN">RNN</h2>
+<p><strong>核心思想</strong>：<br>
+RNN对前面信息进行记忆并且应用于当前输出计算中，隐藏层节点之间存在链接，并且隐藏层输入不仅包含输入层输出还包含上一层隐含层的输入。（可以看成是权值共享的多层前向网络）</p>
+<p><strong>特点</strong>：</p>
+<ul>
+<li>分布式隐藏状态，可以有效存储过去大量信息；</li>
+<li>以非线性动态方式更新隐藏状态。</li>
+</ul>
+<p><strong>参数学习算法BPTT</strong>（Backpropagation through time）：<br>
+（实现权值一致）</p>
+<ul>
+<li>前向传递：每个时间步长各单元的输出入栈；</li>
+<li>后向传递：状态出栈，计算每个时间步长误差函数的导数；</li>
+<li>将每个权重的所有时刻导数加和。（所有时刻的损失相加 = 总损失）</li>
+</ul>
+<p><strong>存在问题</strong>：</p>
+<ul>
+<li>梯度消失/爆炸问题；</li>
+<li>长期依赖问题：距当前节点越远的节点对当前节点处理影响越小，无法建模长时间的依赖。</li>
+</ul>
+<p>——&gt;内部单元改进及变形：LSTM、GRU</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/03/AdvancedAI-LearningNotes4/p6.png" class title="p6">
+<h2 id="LSTM">LSTM</h2>
+<p>LSTM通过门结构来除去和增加“细胞状态”的信息，实现了对重要内容的保留或对不重要内容的去除（长期记忆）。通过sigmoid层输入0到1之间概率值，描述有多少信息通过。<br>
+门结构包括：遗忘门、信息增加门（输入门）和输出门。【长期记忆】</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/03/AdvancedAI-LearningNotes4/p7.png" class title="p7">
+<h2 id="GRU">GRU</h2>
+<p>2门控（重置门、更新门）<br>
+GRU是LSTM的变体，相比LSTM有更简单的结构。GRU包括了重置门和更新门（输入门+遗忘门）。【计算速度快、远距离传递、更容易训练、容易创建较大的网络】</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/03/AdvancedAI-LearningNotes4/p8.png" class title="p8">
+<h2 id="BRNN">BRNN</h2>
+<p>每个时刻都有一个正向输入的隐层和一个反向输入隐层，两个隐层分别可以表示一个词的上文信息和下文信息。即：每个词对应一个输出，同时用到了同一个词前后的信息。<br>
+缺点：需要完整的数据序列，你才能预测任意位置。</p>
+<h2 id="DRNNs">DRNNs</h2>
+<p>深度双向RNN采用多个隐层，每个隐层向后一层传递序列信息。</p>
+<h1>GAN对抗网络</h1>
+<h2 id="核心思想">核心思想</h2>
+<p>GAN的核心思想来源于博弈论的<strong>纳什均衡</strong>——对抗达到平衡（共同进步）：</p>
+<ul>
+<li>生成器（生成一个数据，会被判别结果优化）：生成器的目的是尽量去学习真实的数据分布。把噪声数据z（也就是我们说的假数据）通过生成模型G，伪装成了真实数据x；</li>
+<li>判别器（判断是否是生成器生成的）：判别器的目的是尽量正确判别输入数据是来自真实数据还是来自生成器。<br>
+各自提高自己的生成能力和判别能力，这个学习优化过程就是寻找二者之间的一个纳什均衡。</li>
+</ul>
+<p><strong>基本原理</strong>：有一个判别器和一个生成器，生成器生成图片让判别器判别，生成器提升自己让判别器无法判别，判别器则提升自己努力识别出生成器生成的图片/序列，双方对抗达到平衡。</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/03/AdvancedAI-LearningNotes4/p11.png" class title="p11">
+<h2 id="学习算法">学习算法</h2>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/03/AdvancedAI-LearningNotes4/p12.png" class title="p12">
+<p>1.固定生成器G0，训练判别器，提升判别器的判别能力得到D1；【G*=arg min max V(G,D)】<br>
+2.固定判别器D1，训练生成器，提升生成器的生成能力，目标让判别器无法识别，得到G1；【D*=arg max V(G,D)】<br>
+3.再回到1中用G1训练判别器得到D2，……，依次迭代，直至两者平衡。</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/03/AdvancedAI-LearningNotes4/p13.png" class title="p13">
+<p>解释：<br>
+第一步训练D，D希望V(G、D)越大越好，所以需要加上梯度。（我希望我判断能力越来越好）。<br>
+第二步训练G，G希望V(G，D)越小越好，所以要减去梯度。（希望让判别模糊，我希望自己的欺骗能力越来越好。<br>
+整个训练过程由上面两步交替进行。</p>
+]]></content>
+      <categories>
+        <category>高级人工智能学习笔记</category>
+      </categories>
+      <tags>
+        <tag>人工智能</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>人工智能概述</title>
     <url>/2022/09/01/AdvancedAI-LearningNotes1/</url>
     <content><![CDATA[<blockquote>
@@ -606,6 +876,58 @@ Overall the consumption of the world’s resources is undergoing a dangerous rat
       </tags>
   </entry>
   <entry>
+    <title>LC旋转数组</title>
+    <url>/2021/05/20/LC%E6%97%8B%E8%BD%AC%E6%95%B0%E7%BB%84/</url>
+    <content><![CDATA[<h1>旋转数组</h1>
+<p>给定一个数组，将数组中的元素向右移动 k 个位置，其中 k 是非负数。</p>
+<blockquote>
+<p><strong>示例 1:</strong></p>
+<ul>
+<li>输入: nums = [1,2,3,4,5,6,7], k = 3</li>
+<li>输出: [5,6,7,1,2,3,4]</li>
+<li>解释:
+<ul>
+<li>向右旋转 1 步: [7,1,2,3,4,5,6]</li>
+<li>向右旋转 2 步: [6,7,1,2,3,4,5]</li>
+<li>向右旋转 3 步: [5,6,7,1,2,3,4]</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<blockquote>
+<p><strong>示例 2:</strong></p>
+<ul>
+<li>输入：nums = [-1,-100,3,99], k = 2</li>
+<li>输出：[3,99,-1,-100]</li>
+<li>解释:
+<ul>
+<li>向右旋转 1 步: [99,-1,-100,3]</li>
+<li>向右旋转 2 步: [3,99,-1,-100]</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<h2 id="方法一：傻瓜方法">方法一：傻瓜方法</h2>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">rotate</span><span class="params">(<span class="keyword">int</span>* nums, <span class="keyword">int</span> numsSize, <span class="keyword">int</span> k)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> length = numsSize;</span><br><span class="line">    <span class="keyword">int</span> <span class="built_in">list</span>[length];</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;length;i++)&#123;</span><br><span class="line">        <span class="built_in">list</span>[i]=nums[i];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;length;j++)&#123;</span><br><span class="line">        nums[(j+k)%length]=<span class="built_in">list</span>[j];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="方法二：旋转旋转旋转">方法二：旋转旋转旋转</h2>
+<p>举个例子：</p>
+<blockquote>
+<p>nums = [1,2,3,4,5,6,7], k = 3</p>
+<ol>
+<li>[7,6,5,4,3,2,1] (整个数组旋转)</li>
+<li>[[5,6,7],[1,2,3,4]]</li>
+</ol>
+</blockquote>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">rotate</span><span class="params">(<span class="keyword">int</span>* nums, <span class="keyword">int</span> numsSize, <span class="keyword">int</span> k)</span></span>&#123;</span><br><span class="line">    <span class="comment">//先旋转整个数组-》旋转前一部分-》旋转后一部分</span></span><br><span class="line">    k=k%numsSize;</span><br><span class="line">    reverse(nums,<span class="number">0</span>,numsSize<span class="number">-1</span>);</span><br><span class="line">    reverse(nums,<span class="number">0</span>,k<span class="number">-1</span>);</span><br><span class="line">    reverse(nums,k,numsSize<span class="number">-1</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">reverse</span><span class="params">(<span class="keyword">int</span>* nums, <span class="keyword">int</span> start, <span class="keyword">int</span> end)</span></span>&#123;</span><br><span class="line">    <span class="keyword">while</span>(start&lt;end)&#123;</span><br><span class="line">        <span class="keyword">int</span> tmp = nums[start];</span><br><span class="line">        nums[start++]=nums[end];</span><br><span class="line">        nums[end--]=tmp;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>刷题</category>
+      </categories>
+      <tags>
+        <tag>LC</tag>
+        <tag>数组</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>网络协议安全基础</title>
     <url>/2022/09/01/NetProtoSec-LearningNotes1/</url>
     <content><![CDATA[<blockquote>
@@ -755,58 +1077,6 @@ Overall the consumption of the world’s resources is undergoing a dangerous rat
       <tags>
         <tag>网络协议</tag>
         <tag>网络安全</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>LC旋转数组</title>
-    <url>/2021/05/20/LC%E6%97%8B%E8%BD%AC%E6%95%B0%E7%BB%84/</url>
-    <content><![CDATA[<h1>旋转数组</h1>
-<p>给定一个数组，将数组中的元素向右移动 k 个位置，其中 k 是非负数。</p>
-<blockquote>
-<p><strong>示例 1:</strong></p>
-<ul>
-<li>输入: nums = [1,2,3,4,5,6,7], k = 3</li>
-<li>输出: [5,6,7,1,2,3,4]</li>
-<li>解释:
-<ul>
-<li>向右旋转 1 步: [7,1,2,3,4,5,6]</li>
-<li>向右旋转 2 步: [6,7,1,2,3,4,5]</li>
-<li>向右旋转 3 步: [5,6,7,1,2,3,4]</li>
-</ul>
-</li>
-</ul>
-</blockquote>
-<blockquote>
-<p><strong>示例 2:</strong></p>
-<ul>
-<li>输入：nums = [-1,-100,3,99], k = 2</li>
-<li>输出：[3,99,-1,-100]</li>
-<li>解释:
-<ul>
-<li>向右旋转 1 步: [99,-1,-100,3]</li>
-<li>向右旋转 2 步: [3,99,-1,-100]</li>
-</ul>
-</li>
-</ul>
-</blockquote>
-<h2 id="方法一：傻瓜方法">方法一：傻瓜方法</h2>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">rotate</span><span class="params">(<span class="keyword">int</span>* nums, <span class="keyword">int</span> numsSize, <span class="keyword">int</span> k)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> length = numsSize;</span><br><span class="line">    <span class="keyword">int</span> <span class="built_in">list</span>[length];</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;length;i++)&#123;</span><br><span class="line">        <span class="built_in">list</span>[i]=nums[i];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;length;j++)&#123;</span><br><span class="line">        nums[(j+k)%length]=<span class="built_in">list</span>[j];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="方法二：旋转旋转旋转">方法二：旋转旋转旋转</h2>
-<p>举个例子：</p>
-<blockquote>
-<p>nums = [1,2,3,4,5,6,7], k = 3</p>
-<ol>
-<li>[7,6,5,4,3,2,1] (整个数组旋转)</li>
-<li>[[5,6,7],[1,2,3,4]]</li>
-</ol>
-</blockquote>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">rotate</span><span class="params">(<span class="keyword">int</span>* nums, <span class="keyword">int</span> numsSize, <span class="keyword">int</span> k)</span></span>&#123;</span><br><span class="line">    <span class="comment">//先旋转整个数组-》旋转前一部分-》旋转后一部分</span></span><br><span class="line">    k=k%numsSize;</span><br><span class="line">    reverse(nums,<span class="number">0</span>,numsSize<span class="number">-1</span>);</span><br><span class="line">    reverse(nums,<span class="number">0</span>,k<span class="number">-1</span>);</span><br><span class="line">    reverse(nums,k,numsSize<span class="number">-1</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">reverse</span><span class="params">(<span class="keyword">int</span>* nums, <span class="keyword">int</span> start, <span class="keyword">int</span> end)</span></span>&#123;</span><br><span class="line">    <span class="keyword">while</span>(start&lt;end)&#123;</span><br><span class="line">        <span class="keyword">int</span> tmp = nums[start];</span><br><span class="line">        nums[start++]=nums[end];</span><br><span class="line">        nums[end--]=tmp;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>刷题</category>
-      </categories>
-      <tags>
-        <tag>LC</tag>
-        <tag>数组</tag>
       </tags>
   </entry>
   <entry>
@@ -1074,7 +1344,7 @@ netmask：子网掩码照抄自己主机的，如：255.255.255.0</p>
 <img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/18/NetProtoSec-LearningNotes3/p10.png" class title="p10">
 <h4 id="VPT攻击">VPT攻击</h4>
 <p>原理：VLAN信息的同步是通过VTP通告来实现的， VTP通告只能在Trunk链路上传输（因此交换机之间的Trunk链路必须成功配置了Trunk）<br>
-思路：攻击者发送高的Revision的VTP通告，就能把网络中的VLAN信息覆盖了</p>
+思路：攻击者发送高的Revision的VTP通告，就能把网络中的VLAN信息覆盖了。</p>
 ]]></content>
       <categories>
         <category>网络协议安全学习笔记</category>
@@ -1958,172 +2228,6 @@ TSS是一个特殊的段。在Linux中，CPU从系统态切换到用户态时，
       <tags>
         <tag>python</tag>
         <tag>可视化</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>搜索算法</title>
-    <url>/2022/10/02/AdvancedAI-LearningNotes2/</url>
-    <content><![CDATA[<blockquote>
-<p>内容杂且多，老师讲的也一言难尽，用的吴恩达的PPT，也没有用全，跳着讲，公式也不解释清楚变量，推导也不推，照着ppt念，太难了QAQ<br>
-这里仅记录较为重要的部分</p>
-</blockquote>
-<h1>一些概念</h1>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/02/AdvancedAI-LearningNotes2/p1.png" class title="p1"> 
-<h1>无信息搜索</h1>
-<p>无信息搜索也被称为盲目搜索，意味着该搜索策略没有超出问题定义提供的状态之外的附加信息。所有能做的就是生成后继节点。</p>
-<h2 id="深度优先搜索DFS">深度优先搜索DFS</h2>
-<p><strong>描述</strong>：每一次将深度最深的那个节点进行优先探索，若不是终点，则将其拓展并将它的子节点纳入边缘空间，若是边缘空间中所有的节点都是同一个深度，那么就探索最左边的那个节点<br>
-<strong>优点</strong>：机器每次只需要探索最深的那个点，而且边缘空间中的节点也不会太多，不会占用太多的内存<br>
-<strong>缺点</strong>：无法保证完备性和最优性，比较耗费时间</p>
-<h2 id="广度优先搜索BFS">广度优先搜索BFS</h2>
-<p><strong>描述</strong>：与深度搜索不同的是它每次拓展的是边缘空间节点中最浅的那个节点，都是同一个深度的话就拓展最左边的那个节点<br>
-<strong>优点</strong>：具备完备性<br>
-<strong>缺点</strong>：占用内存，而且也不具备最优性</p>
-<h2 id="DFS和BFS比较">DFS和BFS比较</h2>
-<h2 id="迭代深入搜索">迭代深入搜索</h2>
-<p><strong>特点</strong>：同时结合深度优先于广度优先的优点<br>
-<strong>描述</strong>：预先设定一个探索的层数，然后在这个层数以内采用深度优先算法，当在这个层数里面都没有找到终点的话，然后就对这个层数进行拓展，允许进行更深一层的探索<br>
-<strong>优点</strong>：结合FDFS空间优势+BFS时间优势<br>
-<strong>缺点</strong>：可能会造成一定的浪费冗余</p>
-<h2 id="代价敏感搜索">代价敏感搜索</h2>
-<p><strong>特点</strong>：算法开始关注了路程中的代价问题，两个节点之间的代价不再等效处理</p>
-<h2 id="代价一致搜索">代价一致搜索</h2>
-<p><strong>特点</strong>：代价敏感搜索的一种，一致代价搜索总是扩展路径消耗最小的节点N。N点的路径消耗等于前一节点N-1的路径消耗加上N-1到N节点的路径消耗</p>
-<h1>启发式搜索</h1>
-<p>启发式：对每个状态估计到最近目标的距离</p>
-<h2 id="贪婪搜索">贪婪搜索</h2>
-<p><strong>策略</strong>：扩展你认为最接近目标状态的节点，只使用启发函数来评价节点<br>
-<strong>缺点</strong>：只考虑了后半段的距离而没有考虑前面的距离，不能满足最优性</p>
-<h2 id="A-算法（重要）">A*算法（重要）</h2>
-<h2 id="算法介绍">算法介绍</h2>
-<p><strong>特点</strong>：结合贪婪搜索与代价一致搜索<br>
-<strong>策略</strong>：将代价函数g(n)与启发函数h(n)简单相加，得到一个新的函数f(n)，这个函数就是A*算法判断路径的标准<br>
-<strong>估价函数</strong>：f(n)=g(n)+h(n)，其中：g(n)是到达n节点已花费的代价；f(n)是当前节点到目标节点最小代价路径的估计值（greedy）<br>
-<strong>存在问题</strong>：当启发函数h大于实际耗散时，启发函数失效</p>
-<h3 id="可采纳性">可采纳性</h3>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">0 ≤ h(n)≤ h*(n)</span><br></pre></td></tr></table></figure>
-<p>其中：h*(n) 是从 n 结点到目标结点的最优路径的真实代价，当启发式函数 h(n) 满足以上不等式的时候，我们称该 h(n) 是可采纳的 (admissible) ，即：没有过高估计某点到目标点的花费。</p>
-<h3 id="mark-证明A-树搜索的最优性（重要）-mark"><mark>证明A* 树搜索的最优性（重要）</mark></h3>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/02/AdvancedAI-LearningNotes2/p2.png" class title="p2"> 
-<h3 id="A-算法其他性质">A*算法其他性质</h3>
-<p>Open表中任一具有f(n)&lt;=f*(S0)的节点n，都被A*算法作为扩展节点</p>
-<h3 id="最优条件">最优条件</h3>
-<ul>
-<li>树A*算法最优条件：可采纳性（h(n)&lt;=h*(n)）</li>
-<li>图A*算法最优条件：一致性（f(n)沿着路径非递减）</li>
-</ul>
-<h2 id="A-图搜索">A*图搜索</h2>
-<h3 id="主要思想">主要思想</h3>
-<p>可采纳性：h(A)&lt;=h*(A)真实<br>
-一致性：沿路径的节点f(n)值单调递增   h(A)&lt;=cost(A to C)+h©</p>
-<h3 id="最优性">最优性</h3>
-<h4 id="条件">条件</h4>
-<p>一致性：</p>
-<ul>
-<li>A*算法扩展节点，f值单调增</li>
-<li>对于每个状态S，到达S最优的节点先于次优的节点扩展</li>
-</ul>
-<h4 id="证明">证明</h4>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/02/AdvancedAI-LearningNotes2/p3.png" class title="p3"> 
-<h2 id="mark-传教士和野人问题的A-搜索-mark"><mark>传教士和野人问题的A*搜索</mark></h2>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/02/AdvancedAI-LearningNotes2/p4.png" class title="p4">
-<p><strong>变量解释</strong>：<br>
-M-左岸传教士数目<br>
-C-左岸野人数目<br>
-B-左岸是否有船<br>
-Pcm-有c个传教士，m个野人从左岸到右岸<br>
-Qcm-有c个传教士，m个野人从右岸到左岸</p>
-<p><strong>问题有解所必须的特性</strong></p>
-<ul>
-<li>M&gt;=C且（3-M)&gt;=(3-C)&lt;==&gt;M=C</li>
-<li>或者M=0,M=3</li>
-</ul>
-<p><strong>安全状态(以左岸为例)</strong>：</p>
-<ul>
-<li>传教士与野人的数目相等；</li>
-<li>传教士都在左岸；</li>
-<li>传教士都不在左岸。</li>
-</ul>
-<p><strong>完全状态图</strong>：<br>
-（不满足约束的不在图内）</p>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/02/AdvancedAI-LearningNotes2/p5.png" class title="p5">
-<blockquote>
-<p>参考: <a href="https://blog.csdn.net/qq_41296039/article/details/122442921?spm=1001.2014.3001.5501">https://blog.csdn.net/qq_41296039/article/details/122442921?spm=1001.2014.3001.5501</a></p>
-</blockquote>
-<h1>局部搜索</h1>
-<ul>
-<li>爬山法：任意位置开始，可能是局部最优解；</li>
-<li>模拟退火搜索：引入随机因素，避免局部极大；</li>
-<li>遗传算法：适应度函数，每步保留N个最好状态。</li>
-</ul>
-<h1>其他</h1>
-<ul>
-<li>未知梯度时，用蚁群算法/粒子群算法；</li>
-<li>贪婪最优搜索不是完备的。</li>
-</ul>
-]]></content>
-      <categories>
-        <category>高级人工智能学习笔记</category>
-      </categories>
-      <tags>
-        <tag>人工智能</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>人工神经网络</title>
-    <url>/2022/10/03/AdvancedAI-LearningNotes3/</url>
-    <content><![CDATA[<h1>标题一</h1>
-<p>占坑</p>
-<h2 id="标题二">标题二</h2>
-<!--  -->
-]]></content>
-      <categories>
-        <category>高级人工智能学习笔记</category>
-      </categories>
-      <tags>
-        <tag>人工智能</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>深度学习</title>
-    <url>/2022/10/03/AdvancedAI-LearningNotes4/</url>
-    <content><![CDATA[<h1>一、玻尔兹曼机系列</h1>
-<h2 id="Hopfield">Hopfield</h2>
-<p>Hopfield网络是反馈类型，其神经元的结构功能在网络中的地位是一样的。其学习是基于灌输式学习，即网络的权值不是通过训练出来的，而是按照一定规则计算出来的，<strong>将求解的问题转换成优化问题的能量函数，网络的稳定状态是优化问题的解，其权值一旦确定就不再改变了</strong>。</p>
-<p>简单的来讲就是，Hopfield网络的主要功能是联想记忆。既然如此，首先应该让网络实现“记忆”，我们需要一些数据，然后训练网络，训完练完成之后，可以得到一组可用的权值信息，形成网络的“记忆”功能。当输入数据不完整时，根据训练得到的权重去运算，得到一个稳定的输出状态，这就是联想功能。</p>
-<p>【BM与Hopfield有一定共性，看一下有助理解。】</p>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/03/AdvancedAI-LearningNotes4/p1.png" class title="p1">
-<h2 id="BM（玻尔兹曼机）">BM（玻尔兹曼机）</h2>
-<p>离散Hopfield神经网络+模拟退火+隐单元=Boltzman机</p>
-<p>Boltzmann机结合多层前馈神经网络和离散Hopfield网络在网络结构、学习算法和动态运行机制方面的优点。它是建立在离散Hopfield网基础上的，具有学习能力，它在神经元状态变化中引入了统计概率，网络的平衡状态服从Boltzmann分布，能够通过一个模拟退火过程寻求最优解。不过，其训练时间比BP网络要长。</p>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/03/AdvancedAI-LearningNotes4/p3.png" class title="p3">
-<p>原理：<br>
-1.上文提到Hopfield神经元的结构功能在网络中的地位是一样的,BM中一部分神经元与外部相连接，可以起到网络的输入输出作用，或者严格的说可以受到外部条件的约束，另一部分神经元不与外部相连，因而属于隐单元（相对于外部）。<br>
-2.每个神经元只有1/0两个状态：状态为1代表神经元处于激活(连接)状态，0表示非激活（断开）状态。</p>
-<h2 id="RBM（受限玻尔兹曼机）">RBM（受限玻尔兹曼机）</h2>
-<p>RBM是BM的一个变体，层间全连接，层内无连接，网络中的神经元是随机神经元。限定模型必须为二分图，学习的目标是极大似然。</p>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/03/AdvancedAI-LearningNotes4/p2.png" class title="p2">
-<h2 id="DBN（深度置信网络）">DBN（深度置信网络）</h2>
-<p>DBN模型由若干个RBM堆叠而成，通过非监督的预学习和监督微调训练参数。<br>
-训练时通过从底到高逐层训练这些RBM来实现：</p>
-<p>1.底部RBM以原始输入数据训练；<br>
-2.将底部RBM抽取的特征作为顶部RBM的输入训练；<br>
-3.过程（1）和（2）可以重复训练所需的尽可能多的参数。</p>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/03/AdvancedAI-LearningNotes4/p4.png" class title="p4">
-<h1>CNN卷积神经网络</h1>
-<p>（三、GAN对抗网络）</p>
-<h1>RNN及其变种</h1>
-<p>RNN<br>
-LSTM<br>
-GRU<br>
-BRNN<br>
-DRNNs</p>
-]]></content>
-      <categories>
-        <category>高级人工智能学习笔记</category>
-      </categories>
-      <tags>
-        <tag>人工智能</tag>
       </tags>
   </entry>
 </search>
