@@ -1,169 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>搜索算法</title>
-    <url>/2022/10/02/AdvancedAI-LearningNotes2/</url>
-    <content><![CDATA[<blockquote>
-<p>内容杂且多，老师讲的也一言难尽，用的吴恩达的PPT，也没有用全，跳着讲，公式也不解释清楚变量，推导也不推，照着ppt念，太难了QAQ<br>
-这里仅记录较为重要的部分</p>
-</blockquote>
-<h1>一些概念</h1>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/02/AdvancedAI-LearningNotes2/p1.png" class title="p1"> 
-<h1>无信息搜索</h1>
-<p>无信息搜索也被称为盲目搜索，意味着该搜索策略没有超出问题定义提供的状态之外的附加信息。所有能做的就是生成后继节点。</p>
-<h2 id="深度优先搜索DFS">深度优先搜索DFS</h2>
-<p><strong>描述</strong>：每一次将深度最深的那个节点进行优先探索，若不是终点，则将其拓展并将它的子节点纳入边缘空间，若是边缘空间中所有的节点都是同一个深度，那么就探索最左边的那个节点<br>
-<strong>优点</strong>：机器每次只需要探索最深的那个点，而且边缘空间中的节点也不会太多，不会占用太多的内存<br>
-<strong>缺点</strong>：无法保证完备性和最优性，比较耗费时间</p>
-<h2 id="广度优先搜索BFS">广度优先搜索BFS</h2>
-<p><strong>描述</strong>：与深度搜索不同的是它每次拓展的是边缘空间节点中最浅的那个节点，都是同一个深度的话就拓展最左边的那个节点<br>
-<strong>优点</strong>：具备完备性<br>
-<strong>缺点</strong>：占用内存，而且也不具备最优性</p>
-<h2 id="DFS和BFS比较">DFS和BFS比较</h2>
-<h2 id="迭代深入搜索">迭代深入搜索</h2>
-<p><strong>特点</strong>：同时结合深度优先于广度优先的优点<br>
-<strong>描述</strong>：预先设定一个探索的层数，然后在这个层数以内采用深度优先算法，当在这个层数里面都没有找到终点的话，然后就对这个层数进行拓展，允许进行更深一层的探索<br>
-<strong>优点</strong>：结合FDFS空间优势+BFS时间优势<br>
-<strong>缺点</strong>：可能会造成一定的浪费冗余</p>
-<h2 id="代价敏感搜索">代价敏感搜索</h2>
-<p><strong>特点</strong>：算法开始关注了路程中的代价问题，两个节点之间的代价不再等效处理</p>
-<h2 id="代价一致搜索">代价一致搜索</h2>
-<p><strong>特点</strong>：代价敏感搜索的一种，一致代价搜索总是扩展路径消耗最小的节点N。N点的路径消耗等于前一节点N-1的路径消耗加上N-1到N节点的路径消耗</p>
-<h1>启发式搜索</h1>
-<p>启发式：对每个状态估计到最近目标的距离</p>
-<h2 id="贪婪搜索">贪婪搜索</h2>
-<p><strong>策略</strong>：扩展你认为最接近目标状态的节点，只使用启发函数来评价节点<br>
-<strong>缺点</strong>：只考虑了后半段的距离而没有考虑前面的距离，不能满足最优性</p>
-<h2 id="A-算法（重要）">A*算法（重要）</h2>
-<h2 id="算法介绍">算法介绍</h2>
-<p><strong>特点</strong>：结合贪婪搜索与代价一致搜索<br>
-<strong>策略</strong>：将代价函数g(n)与启发函数h(n)简单相加，得到一个新的函数f(n)，这个函数就是A*算法判断路径的标准<br>
-<strong>估价函数</strong>：f(n)=g(n)+h(n)，其中：g(n)是到达n节点已花费的代价；f(n)是当前节点到目标节点最小代价路径的估计值（greedy）<br>
-<strong>存在问题</strong>：当启发函数h大于实际耗散时，启发函数失效</p>
-<h3 id="可采纳性">可采纳性</h3>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">0 ≤ h(n)≤ h*(n)</span><br></pre></td></tr></table></figure>
-<p>其中：h*(n) 是从 n 结点到目标结点的最优路径的真实代价，当启发式函数 h(n) 满足以上不等式的时候，我们称该 h(n) 是可采纳的 (admissible) ，即：没有过高估计某点到目标点的花费。</p>
-<h3 id="mark-证明A-树搜索的最优性（重要）-mark"><mark>证明A* 树搜索的最优性（重要）</mark></h3>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/02/AdvancedAI-LearningNotes2/p2.png" class title="p2"> 
-<h3 id="A-算法其他性质">A*算法其他性质</h3>
-<p>Open表中任一具有f(n)&lt;=f*(S0)的节点n，都被A*算法作为扩展节点</p>
-<h3 id="最优条件">最优条件</h3>
-<ul>
-<li>树A*算法最优条件：可采纳性（h(n)&lt;=h*(n)）</li>
-<li>图A*算法最优条件：一致性（f(n)沿着路径非递减）</li>
-</ul>
-<h2 id="A-图搜索">A*图搜索</h2>
-<h3 id="主要思想">主要思想</h3>
-<p>可采纳性：h(A)&lt;=h*(A)真实<br>
-一致性：沿路径的节点f(n)值单调递增   h(A)&lt;=cost(A to C)+h©</p>
-<h3 id="最优性">最优性</h3>
-<h4 id="条件">条件</h4>
-<p>一致性：</p>
-<ul>
-<li>A*算法扩展节点，f值单调增</li>
-<li>对于每个状态S，到达S最优的节点先于次优的节点扩展</li>
-</ul>
-<h4 id="证明">证明</h4>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/02/AdvancedAI-LearningNotes2/p3.png" class title="p3"> 
-<h2 id="mark-传教士和野人问题的A-搜索-mark"><mark>传教士和野人问题的A*搜索</mark></h2>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/02/AdvancedAI-LearningNotes2/p4.png" class title="p4">
-<p><strong>变量解释</strong>：<br>
-M-左岸传教士数目<br>
-C-左岸野人数目<br>
-B-左岸是否有船<br>
-Pcm-有c个传教士，m个野人从左岸到右岸<br>
-Qcm-有c个传教士，m个野人从右岸到左岸</p>
-<p><strong>问题有解所必须的特性</strong></p>
-<ul>
-<li>M&gt;=C且（3-M)&gt;=(3-C)&lt;==&gt;M=C</li>
-<li>或者M=0,M=3</li>
-</ul>
-<p><strong>安全状态(以左岸为例)</strong>：</p>
-<ul>
-<li>传教士与野人的数目相等；</li>
-<li>传教士都在左岸；</li>
-<li>传教士都不在左岸。</li>
-</ul>
-<p><strong>完全状态图</strong>：<br>
-（不满足约束的不在图内）</p>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/02/AdvancedAI-LearningNotes2/p5.png" class title="p5">
-<blockquote>
-<p>参考: <a href="https://blog.csdn.net/qq_41296039/article/details/122442921?spm=1001.2014.3001.5501">https://blog.csdn.net/qq_41296039/article/details/122442921?spm=1001.2014.3001.5501</a></p>
-</blockquote>
-<h1>局部搜索</h1>
-<ul>
-<li>爬山法：任意位置开始，可能是局部最优解；</li>
-<li>模拟退火搜索：引入随机因素，避免局部极大；</li>
-<li>遗传算法：适应度函数，每步保留N个最好状态。</li>
-</ul>
-<h1>其他</h1>
-<ul>
-<li>未知梯度时，用蚁群算法/粒子群算法；</li>
-<li>贪婪最优搜索不是完备的。</li>
-</ul>
-]]></content>
-      <categories>
-        <category>高级人工智能学习笔记</category>
-      </categories>
-      <tags>
-        <tag>人工智能</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>人工神经网络</title>
-    <url>/2022/10/03/AdvancedAI-LearningNotes3/</url>
-    <content><![CDATA[<h1>人工神经网络ANN</h1>
-<h2 id="结构">结构</h2>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/03/AdvancedAI-LearningNotes3/p1.png" class title="p1">
-<h2 id="学习规则">学习规则</h2>
-<ul>
-<li>能量最小（ENERGY MINIMIZATION）</li>
-<li>对人工神经网络，需要确定合适的能量定义；可以使用数学上的优化技术来发现如何改变神经元间的联接权重。</li>
-</ul>
-<h1>多层感知机</h1>
-<p>多层感知机是ANN的一种。指具有至少三层节点，输入层，一些中间层和输出层的神经网络。给定层中的每个节点都连接到相邻层中的每个节点。输入层接收数据，中间层计算数据，输出层输出结果。</p>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/03/AdvancedAI-LearningNotes3/p2.png" class title="p2">
-<h2 id="特点">特点</h2>
-<p>多层感知机特性：</p>
-<ul>
-<li>多层感知机层间神经元全连接；</li>
-<li>Can represent AND, OR, NOT, etc., but not XOR；</li>
-<li>若训练数据集是线性可分的，则感知机模型收敛。</li>
-</ul>
-<h2 id="感知机存在的问题">感知机存在的问题</h2>
-<ul>
-<li>噪声（线性不可分）</li>
-<li>泛化性</li>
-</ul>
-<h3 id="单层感知机不可解决异或问题">单层感知机不可解决异或问题</h3>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/03/AdvancedAI-LearningNotes3/p4.png" class title="p4">
-<blockquote>
-<p>传送门[<a href="https://blog.csdn.net/buracag_mc/article/details/89254808?utm_medium=distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromMachineLearnPai2~default-2.nonecase&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromMachineLearnPai2~default-2.nonecase">https://blog.csdn.net/buracag_mc/article/details/89254808?utm_medium=distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromMachineLearnPai2~default-2.nonecase&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromMachineLearnPai2~default-2.nonecase</a>]</p>
-</blockquote>
-<h1>权重学习算法：BP算法</h1>
-<h2 id="介绍">介绍</h2>
-<p>BP算法全称叫作误差反向传播(error Back Propagation，或者也叫作误差逆传播)算法。其算法基本思想为：将输出误差以某种形式反传给各层所有的单元，各层按本层误差修<br>
-正各单元连接权值。【有监督学习，采用梯度下降法调参】</p>
-<h3 id="特点-2">特点</h3>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/03/AdvancedAI-LearningNotes3/p3.png" class title="p3">
-<h2 id="BP遇到的困难，为什么会出现梯度消失">BP遇到的困难，为什么会出现梯度消失</h2>
-<h3 id="困难">困难</h3>
-<ul>
-<li>梯度消失，梯度爆炸</li>
-<li>局部极小</li>
-<li>只能用于标注数据</li>
-</ul>
-<h3 id="why梯度消失">why梯度消失</h3>
-<p>因为BP算法采用链式法则，从后层向前层传递信息时，若每层神经元对上一层神经元偏导乘以w均小于1，多次链式法则,多级导数权值相乘结果会越来越小，导致loss传递到越前方越小。</p>
-]]></content>
-      <categories>
-        <category>高级人工智能学习笔记</category>
-      </categories>
-      <tags>
-        <tag>人工智能</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>深度学习</title>
     <url>/2022/10/03/AdvancedAI-LearningNotes4/</url>
     <content><![CDATA[<h1>一、玻尔兹曼机系列</h1>
@@ -271,45 +108,160 @@ GRU是LSTM的变体，相比LSTM有更简单的结构。GRU包括了重置门和
       </tags>
   </entry>
   <entry>
-    <title>人工智能概述</title>
-    <url>/2022/09/01/AdvancedAI-LearningNotes1/</url>
-    <content><![CDATA[<blockquote>
-<p>三节课讲述的东西太多，这里仅记录相对来说稍重要的部分。</p>
-</blockquote>
-<h1>图灵测试</h1>
-<h2 id="什么是图灵测试">什么是图灵测试</h2>
-<p>测试者与被测试者（一个人和一台机器）隔开的情况下，通过一些装置（如键盘）向被测试者随意提问。进行多次测试后，如果机器让平均每个参与者做出超过30%的误判，那么这台机器就通过了测试，并被认为具有人类智能。</p>
+    <title>人工神经网络</title>
+    <url>/2022/10/03/AdvancedAI-LearningNotes3/</url>
+    <content><![CDATA[<h1>人工神经网络ANN</h1>
+<h2 id="结构">结构</h2>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/03/AdvancedAI-LearningNotes3/p1.png" class title="p1">
+<h2 id="学习规则">学习规则</h2>
+<ul>
+<li>能量最小（ENERGY MINIMIZATION）</li>
+<li>对人工神经网络，需要确定合适的能量定义；可以使用数学上的优化技术来发现如何改变神经元间的联接权重。</li>
+</ul>
+<h1>多层感知机</h1>
+<p>多层感知机是ANN的一种。指具有至少三层节点，输入层，一些中间层和输出层的神经网络。给定层中的每个节点都连接到相邻层中的每个节点。输入层接收数据，中间层计算数据，输出层输出结果。</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/03/AdvancedAI-LearningNotes3/p2.png" class title="p2">
+<h2 id="特点">特点</h2>
+<p>多层感知机特性：</p>
+<ul>
+<li>多层感知机层间神经元全连接；</li>
+<li>Can represent AND, OR, NOT, etc., but not XOR；</li>
+<li>若训练数据集是线性可分的，则感知机模型收敛。</li>
+</ul>
+<h2 id="感知机存在的问题">感知机存在的问题</h2>
+<ul>
+<li>噪声（线性不可分）</li>
+<li>泛化性</li>
+</ul>
+<h3 id="单层感知机不可解决异或问题">单层感知机不可解决异或问题</h3>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/03/AdvancedAI-LearningNotes3/p4.png" class title="p4">
 <blockquote>
-<p>图灵问题：Can Machine Think？（思考）</p>
+<p>传送门[<a href="https://blog.csdn.net/buracag_mc/article/details/89254808?utm_medium=distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromMachineLearnPai2~default-2.nonecase&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromMachineLearnPai2~default-2.nonecase">https://blog.csdn.net/buracag_mc/article/details/89254808?utm_medium=distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromMachineLearnPai2~default-2.nonecase&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromMachineLearnPai2~default-2.nonecase</a>]</p>
 </blockquote>
-<h2 id="质疑">质疑</h2>
+<h1>权重学习算法：BP算法</h1>
+<h2 id="介绍">介绍</h2>
+<p>BP算法全称叫作误差反向传播(error Back Propagation，或者也叫作误差逆传播)算法。其算法基本思想为：将输出误差以某种形式反传给各层所有的单元，各层按本层误差修<br>
+正各单元连接权值。【有监督学习，采用梯度下降法调参】</p>
+<h3 id="特点-2">特点</h3>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/03/AdvancedAI-LearningNotes3/p3.png" class title="p3">
+<h2 id="BP遇到的困难，为什么会出现梯度消失">BP遇到的困难，为什么会出现梯度消失</h2>
+<h3 id="困难">困难</h3>
 <ul>
-<li>图灵测试是不可构造的：“完全不接触”环境难以构建</li>
-<li>图灵测试不可重现的：问题是开放的，答案正确性判断是主观的</li>
-<li>图灵测试无法进行数学分析：只是一种操作式测试，缺少形式化描述</li>
+<li>梯度消失，梯度爆炸</li>
+<li>局部极小</li>
+<li>只能用于标注数据</li>
 </ul>
-<h1>人工智能三大学派</h1>
-<h2 id="符号主义">符号主义</h2>
+<h3 id="why梯度消失">why梯度消失</h3>
+<p>因为BP算法采用链式法则，从后层向前层传递信息时，若每层神经元对上一层神经元偏导乘以w均小于1，多次链式法则,多级导数权值相乘结果会越来越小，导致loss传递到越前方越小。</p>
+]]></content>
+      <categories>
+        <category>高级人工智能学习笔记</category>
+      </categories>
+      <tags>
+        <tag>人工智能</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>搜索算法</title>
+    <url>/2022/10/02/AdvancedAI-LearningNotes2/</url>
+    <content><![CDATA[<blockquote>
+<p>内容杂且多，老师讲的也一言难尽，用的吴恩达的PPT，也没有用全，跳着讲，公式也不解释清楚变量，推导也不推，照着ppt念，太难了QAQ<br>
+这里仅记录较为重要的部分</p>
+</blockquote>
+<h1>一些概念</h1>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/02/AdvancedAI-LearningNotes2/p1.png" class title="p1"> 
+<h1>无信息搜索</h1>
+<p>无信息搜索也被称为盲目搜索，意味着该搜索策略没有超出问题定义提供的状态之外的附加信息。所有能做的就是生成后继节点。</p>
+<h2 id="深度优先搜索DFS">深度优先搜索DFS</h2>
+<p><strong>描述</strong>：每一次将深度最深的那个节点进行优先探索，若不是终点，则将其拓展并将它的子节点纳入边缘空间，若是边缘空间中所有的节点都是同一个深度，那么就探索最左边的那个节点<br>
+<strong>优点</strong>：机器每次只需要探索最深的那个点，而且边缘空间中的节点也不会太多，不会占用太多的内存<br>
+<strong>缺点</strong>：无法保证完备性和最优性，比较耗费时间</p>
+<h2 id="广度优先搜索BFS">广度优先搜索BFS</h2>
+<p><strong>描述</strong>：与深度搜索不同的是它每次拓展的是边缘空间节点中最浅的那个节点，都是同一个深度的话就拓展最左边的那个节点<br>
+<strong>优点</strong>：具备完备性<br>
+<strong>缺点</strong>：占用内存，而且也不具备最优性</p>
+<h2 id="DFS和BFS比较">DFS和BFS比较</h2>
+<h2 id="迭代深入搜索">迭代深入搜索</h2>
+<p><strong>特点</strong>：同时结合深度优先于广度优先的优点<br>
+<strong>描述</strong>：预先设定一个探索的层数，然后在这个层数以内采用深度优先算法，当在这个层数里面都没有找到终点的话，然后就对这个层数进行拓展，允许进行更深一层的探索<br>
+<strong>优点</strong>：结合FDFS空间优势+BFS时间优势<br>
+<strong>缺点</strong>：可能会造成一定的浪费冗余</p>
+<h2 id="代价敏感搜索">代价敏感搜索</h2>
+<p><strong>特点</strong>：算法开始关注了路程中的代价问题，两个节点之间的代价不再等效处理</p>
+<h2 id="代价一致搜索">代价一致搜索</h2>
+<p><strong>特点</strong>：代价敏感搜索的一种，一致代价搜索总是扩展路径消耗最小的节点N。N点的路径消耗等于前一节点N-1的路径消耗加上N-1到N节点的路径消耗</p>
+<h1>启发式搜索</h1>
+<p>启发式：对每个状态估计到最近目标的距离</p>
+<h2 id="贪婪搜索">贪婪搜索</h2>
+<p><strong>策略</strong>：扩展你认为最接近目标状态的节点，只使用启发函数来评价节点<br>
+<strong>缺点</strong>：只考虑了后半段的距离而没有考虑前面的距离，不能满足最优性</p>
+<h2 id="A-算法（重要）">A*算法（重要）</h2>
+<h2 id="算法介绍">算法介绍</h2>
+<p><strong>特点</strong>：结合贪婪搜索与代价一致搜索<br>
+<strong>策略</strong>：将代价函数g(n)与启发函数h(n)简单相加，得到一个新的函数f(n)，这个函数就是A*算法判断路径的标准<br>
+<strong>估价函数</strong>：f(n)=g(n)+h(n)，其中：g(n)是到达n节点已花费的代价；f(n)是当前节点到目标节点最小代价路径的估计值（greedy）<br>
+<strong>存在问题</strong>：当启发函数h大于实际耗散时，启发函数失效</p>
+<h3 id="可采纳性">可采纳性</h3>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">0 ≤ h(n)≤ h*(n)</span><br></pre></td></tr></table></figure>
+<p>其中：h*(n) 是从 n 结点到目标结点的最优路径的真实代价，当启发式函数 h(n) 满足以上不等式的时候，我们称该 h(n) 是可采纳的 (admissible) ，即：没有过高估计某点到目标点的花费。</p>
+<h3 id="mark-证明A-树搜索的最优性（重要）-mark"><mark>证明A* 树搜索的最优性（重要）</mark></h3>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/02/AdvancedAI-LearningNotes2/p2.png" class title="p2"> 
+<h3 id="A-算法其他性质">A*算法其他性质</h3>
+<p>Open表中任一具有f(n)&lt;=f*(S0)的节点n，都被A*算法作为扩展节点</p>
+<h3 id="最优条件">最优条件</h3>
 <ul>
-<li>认为“人的认知基元是符号（语言文字），认知过程即符号操作过程”</li>
-<li>认为人工智能的<strong>核心是知识表示、知识推理和知识运用</strong></li>
-<li>衍生出：逻辑、专家系统、知识库、<strong>知识图谱</strong></li>
+<li>树A*算法最优条件：可采纳性（h(n)&lt;=h*(n)）</li>
+<li>图A*算法最优条件：一致性（f(n)沿着路径非递减）</li>
 </ul>
-<h2 id="联结主义">联结主义</h2>
+<h2 id="A-图搜索">A*图搜索</h2>
+<h3 id="主要思想">主要思想</h3>
+<p>可采纳性：h(A)&lt;=h*(A)真实<br>
+一致性：沿路径的节点f(n)值单调递增   h(A)&lt;=cost(A to C)+h©</p>
+<h3 id="最优性">最优性</h3>
+<h4 id="条件">条件</h4>
+<p>一致性：</p>
 <ul>
-<li>又称<strong>仿生</strong>学派或生理学派</li>
-<li>认为人的思维基元是神经元，而不是符号处理过程</li>
-<li>原理：神经网络及神经网络间的连接机制和学习算法</li>
-<li>衍生出：<strong>人工神经网络</strong>，认知科学、类脑计算</li>
+<li>A*算法扩展节点，f值单调增</li>
+<li>对于每个状态S，到达S最优的节点先于次优的节点扩展</li>
 </ul>
-<h2 id="行为主义">行为主义</h2>
+<h4 id="证明">证明</h4>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/02/AdvancedAI-LearningNotes2/p3.png" class title="p3"> 
+<h2 id="mark-传教士和野人问题的A-搜索-mark"><mark>传教士和野人问题的A*搜索</mark></h2>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/02/AdvancedAI-LearningNotes2/p4.png" class title="p4">
+<p><strong>变量解释</strong>：<br>
+M-左岸传教士数目<br>
+C-左岸野人数目<br>
+B-左岸是否有船<br>
+Pcm-有c个传教士，m个野人从左岸到右岸<br>
+Qcm-有c个传教士，m个野人从右岸到左岸</p>
+<p><strong>问题有解所必须的特性</strong></p>
 <ul>
-<li>又称进化主义或<strong>控制论学派</strong></li>
-<li>主张<strong>利用机器对环境作用后的响应或反馈为原型</strong>来实现智能化</li>
-<li>衍生出：动态规划、<strong>强化学习</strong>、多智能体</li>
+<li>M&gt;=C且（3-M)&gt;=(3-C)&lt;==&gt;M=C</li>
+<li>或者M=0,M=3</li>
 </ul>
-<h1>课程蓝图</h1>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/01/AdvancedAI-LearningNotes1/p.png" class title="p">
+<p><strong>安全状态(以左岸为例)</strong>：</p>
+<ul>
+<li>传教士与野人的数目相等；</li>
+<li>传教士都在左岸；</li>
+<li>传教士都不在左岸。</li>
+</ul>
+<p><strong>完全状态图</strong>：<br>
+（不满足约束的不在图内）</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/02/AdvancedAI-LearningNotes2/p5.png" class title="p5">
+<blockquote>
+<p>参考: <a href="https://blog.csdn.net/qq_41296039/article/details/122442921?spm=1001.2014.3001.5501">https://blog.csdn.net/qq_41296039/article/details/122442921?spm=1001.2014.3001.5501</a></p>
+</blockquote>
+<h1>局部搜索</h1>
+<ul>
+<li>爬山法：任意位置开始，可能是局部最优解；</li>
+<li>模拟退火搜索：引入随机因素，避免局部极大；</li>
+<li>遗传算法：适应度函数，每步保留N个最好状态。</li>
+</ul>
+<h1>其他</h1>
+<ul>
+<li>未知梯度时，用蚁群算法/粒子群算法；</li>
+<li>贪婪最优搜索不是完备的。</li>
+</ul>
 ]]></content>
       <categories>
         <category>高级人工智能学习笔记</category>
@@ -876,6 +828,579 @@ Overall the consumption of the world’s resources is undergoing a dangerous rat
       </tags>
   </entry>
   <entry>
+    <title>主机和端口扫描</title>
+    <url>/2022/09/07/NetProtoSec-LearningNotes2/</url>
+    <content><![CDATA[<blockquote>
+<p>实验环境：Kali+Wireshark+Nmap</p>
+<ul>
+<li>Kali：是一个基于Debian的Linux发行版，预装了许多渗透测试软件，是一个很酷的“黑客操作系统”；</li>
+<li>Wireshark：是一个网络封包分析软件，功能是截取网络封包，并尽可能显示出最为详细的网络封包资料。Wireshark使用WinPCAP作为接口，直接与网卡进行数据报文交换；</li>
+<li>Nmap：即Network Mapper，是Linux下的网络扫描和嗅探工具包。</li>
+</ul>
+</blockquote>
+<h1>实验内容</h1>
+<p>1.在Nmap中，使用nmap –sP xx指令实现主机扫描，用wireshark抓取扫描过程中的ARP请求和响应报文；通过ping指令发起ICMP扫描，用wireshark抓取扫描过程中的ICMP报文；</p>
+<p>2.在Nmap中，使用nmap –sS xx指令实现端口扫描，用wireshark抓取扫描过程中的TCP报文。</p>
+<h1>kali网络配置</h1>
+<p>由于我使用的是校园网，因此我这里使用NAT模式。</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/07/NetProtoSec-LearningNotes2/p1.png" class title="p1"> 
+<h2 id="1-查看主机地址">1.查看主机地址</h2>
+<p>首先通过<code>win</code>+<code>R</code>输入cmd打开终端，然后通过<code>ipconfig</code>查看自己主机的ip地址，网关，网段（我这里选择VMnet8）。</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/07/NetProtoSec-LearningNotes2/p2.png" class title="p2"> 
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">IPv4 地址: 192.168.253.1</span><br><span class="line">子网掩码: 255.255.255.0</span><br></pre></td></tr></table></figure>
+<h2 id="2-修改-etc-network-interfaces文件">2.修改/etc/network/interfaces文件</h2>
+<p>然后，通过<code>vim /etc/network/interfaces</code>，设置静态IP：<br>
+address：把ip地址设置为自己主机网段中的一个，如：我的主机ip是192.168.253.1，这里设为192.168.253.36<br>
+gateway：在其中加上自己主机的网关，如：192.168.253.2<br>
+netmask：子网掩码照抄自己主机的，如：255.255.255.0</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">auto eth0</span><br><span class="line">iface eth0 inet static</span><br><span class="line">address 192.168.253.36</span><br><span class="line">netmask 255.255.255.0</span><br><span class="line">gateway 192.168.253.2</span><br></pre></td></tr></table></figure>
+<h2 id="3-修改dns">3.修改dns</h2>
+<p><code>vim /etc/resolv.conf</code>添加几个常用DNS：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">domain localdomain</span><br><span class="line">search localdomain</span><br><span class="line">nameserver 8.8.8.8</span><br><span class="line">nameserver 114.114.114.114</span><br><span class="line">nameserver 192.168.253.2</span><br></pre></td></tr></table></figure>
+<h2 id="4-重启网络">4.重启网络</h2>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">systemctl restart networking</span><br></pre></td></tr></table></figure>
+<p>或者</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;etc&#x2F;init.d&#x2F;networking restart</span><br></pre></td></tr></table></figure>
+<h2 id="5-测试">5.测试</h2>
+<p>输入<code>ifconfig -a</code>查看ip：</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/07/NetProtoSec-LearningNotes2/p3.png" class title="p3"> 
+<h2 id="nmap参数速查">nmap参数速查</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">命令</th>
+<th style="text-align:center">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">nmap IP</td>
+<td style="text-align:center">扫描IP</td>
+</tr>
+<tr>
+<td style="text-align:center">nmap -v IP</td>
+<td style="text-align:center">加强扫描</td>
+</tr>
+<tr>
+<td style="text-align:center">nmap IP1 IP2 …</td>
+<td style="text-align:center">扫描多IP</td>
+</tr>
+<tr>
+<td style="text-align:center">nmap a.b.c.*</td>
+<td style="text-align:center">扫描整个子网</td>
+</tr>
+<tr>
+<td style="text-align:center">nmap a.b.c.x,y,…</td>
+<td style="text-align:center">扫描多子网地址</td>
+</tr>
+<tr>
+<td style="text-align:center">nmap -iL xxx.txt</td>
+<td style="text-align:center">根据文件扫描多IP</td>
+</tr>
+<tr>
+<td style="text-align:center">nmap a.b.c.x-y</td>
+<td style="text-align:center">扫描子网IP范围</td>
+</tr>
+<tr>
+<td style="text-align:center">nmap a.b.c.* --exclude IP</td>
+<td style="text-align:center">排除指定IP扫描整个子网</td>
+</tr>
+<tr>
+<td style="text-align:center">nmap -A IP</td>
+<td style="text-align:center">全面的系统扫描,包括操作系统探测、版本探测、脚本扫描、路径跟踪</td>
+</tr>
+<tr>
+<td style="text-align:center">nmap -O IP</td>
+<td style="text-align:center">探测操作系统</td>
+</tr>
+<tr>
+<td style="text-align:center">nmap -sA/-PN IP</td>
+<td style="text-align:center">探测防火墙</td>
+</tr>
+<tr>
+<td style="text-align:center">nmap -sP a.b.c.*</td>
+<td style="text-align:center">探测在线主机</td>
+</tr>
+<tr>
+<td style="text-align:center">nmap -F IP</td>
+<td style="text-align:center">快速扫描</td>
+</tr>
+<tr>
+<td style="text-align:center">nmap -r IP</td>
+<td style="text-align:center">按顺序扫描</td>
+</tr>
+<tr>
+<td style="text-align:center">nmap -iflist</td>
+<td style="text-align:center">显示接口和路由信息</td>
+</tr>
+<tr>
+<td style="text-align:center">nmap -p n1,n2… IP</td>
+<td style="text-align:center">扫描指定端口</td>
+</tr>
+<tr>
+<td style="text-align:center">nmap -p T:n1,n2… IP</td>
+<td style="text-align:center">扫描TCP端口</td>
+</tr>
+<tr>
+<td style="text-align:center">nmap -sU n1,n2… IP</td>
+<td style="text-align:center">扫描UDP端口</td>
+</tr>
+<tr>
+<td style="text-align:center">nmap -sV IP</td>
+<td style="text-align:center">查看服务的版本</td>
+</tr>
+<tr>
+<td style="text-align:center">nmap -PS IP</td>
+<td style="text-align:center">TCP ACK扫描</td>
+</tr>
+<tr>
+<td style="text-align:center">nmap -PA IP</td>
+<td style="text-align:center">TCP SYN扫描</td>
+</tr>
+<tr>
+<td style="text-align:center">nmap -sS IP</td>
+<td style="text-align:center">隐蔽扫描</td>
+</tr>
+<tr>
+<td style="text-align:center">nmap -sN IP</td>
+<td style="text-align:center">TCP空扫描欺骗防火墙</td>
+</tr>
+</tbody>
+</table>
+<h1>主机扫描</h1>
+<blockquote>
+<p>开两个虚拟机：192.168.253.36 + 192.168.253.37</p>
+</blockquote>
+<h2 id="主机扫描参数">主机扫描参数</h2>
+<p>主机发现有时候也叫做ping扫描，有以下选项：<br>
+<code>-sL</code>（列表扫描）：它仅仅列出指定网络上的每台主机，不发送任何报文到目标主机；<br>
+<code>-sP</code>（Ping扫描）：该选项告诉Nmap仅仅进行ping扫描（主机发现），然后打印出对扫描做出响应的那些主机；Nmap会发一个ICMP ECHO请求和一个TCP报文到目标端口；<br>
+<code>-Pn</code>（无ping）：无Ping扫描通常用于防火墙禁止Ping的情况下，完全跳过Nmap发现阶段，且对目标主机进行端口扫描；<br>
+<code>-PS</code>（TCP SYN ping）：该选项发送了一个设置了SYN标志位的空TCP报文，需要root权限；<br>
+<code>-PA</code>（TCP ACK ping）：它与TCP SYN Ping扫描类似，不同的只是设置的TCP报文的标志位是ACK；<br>
+<code>-PU</code>（UDP  ping）：发送一个空的UDP报文到指定端口，很少用；<br>
+<code>-PE/PP/PM</code>（ICMP ECHO/时间戳/地址掩码Ping）；<br>
+<code>-ARP</code>（ARP ping）：该选项通常在扫描局域网时使用，在内网中使用ARP Ping是非常有效的。</p>
+<h2 id="实验过程">实验过程</h2>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">nmap -P 192.168.253.1/24</span><br></pre></td></tr></table></figure>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/07/NetProtoSec-LearningNotes2/p4.png" class title="p4"> 
+<p>wireshark抓取ARP请求和响应报文：</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/07/NetProtoSec-LearningNotes2/p5.png" class title="p5">
+<p>ping命令发起ICMP扫描，wireshark抓取ICMP报文：</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/07/NetProtoSec-LearningNotes2/p6.png" class title="p6">
+<h1>端口扫描</h1>
+<h2 id="端口扫描基础">端口扫描基础</h2>
+<h3 id="端口状态">端口状态</h3>
+<p>Nmap所识别的6个端口状态：</p>
+<ul>
+<li><code>Opend</code>：端口开启；</li>
+<li><code>Closed</code>： 端口关闭；</li>
+<li><code>Filtered</code>：端口被过滤，数据没有到达主机，返回的结果为空，数据被防火墙拦截了；</li>
+<li><code>Unfiltered</code>：未被过滤，数据有到达主机，但是不能识别端口的当前状态；</li>
+<li><code>Open|filtered</code>：开放或者被过滤，端口没有返回值，主要发生在UDP、IP、FIN、NULL和X mas扫描中；</li>
+<li><code>Closed|filtered</code>：关闭或者被过滤，只发生在IP ID idle扫描。</li>
+</ul>
+<h3 id="命令参数">命令参数</h3>
+<p>-<code>sS</code>（TCP SYN扫描）：半开扫描，很少有系统能把它记入系统日志。不过，需要Root权限；<br>
+-<code>sT</code>（TCP connect()扫描）:当SYN扫描不能用时，CP Connect()扫描就是默认的TCP扫描；<br>
+-<code>sN/-sF/-sX</code>（TCP Null/FIN/Xmas扫描）:能躲过一些无状态防火墙和报文过滤路由器；<br>
+-<code>p</code>：指定范围性扫描端口；<br>
+-<code>v</code>：详细信息。</p>
+<h2 id="实验过程-2">实验过程</h2>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">┌──(root㉿kali)-[~]</span><br><span class="line">└─<span class="comment"># nmap -sS 192.168.253.1</span></span><br><span class="line">Starting Nmap 7.92 ( https://nmap.org ) at 2022-09-07 22:42 EDT</span><br><span class="line">Nmap scan report <span class="keyword">for</span> 192.168.253.1</span><br><span class="line">Host is up (0.00019s latency).</span><br><span class="line">Not shown: 996 filtered tcp ports (no-response)</span><br><span class="line">PORT     STATE SERVICE</span><br><span class="line">135/tcp  open  msrpc</span><br><span class="line">139/tcp  open  netbios-ssn</span><br><span class="line">445/tcp  open  microsoft-ds</span><br><span class="line">4001/tcp open  newoak</span><br><span class="line">MAC Address: 00:50:56:C0:00:08 (VMware)</span><br><span class="line"></span><br><span class="line">Nmap <span class="keyword">done</span>: 1 IP address (1 host up) scanned <span class="keyword">in</span> 4.70 seconds</span><br></pre></td></tr></table></figure>
+<p>打开wireshark抓取tcp包，可看到：</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/07/NetProtoSec-LearningNotes2/p7.png" class title="p7">
+<p>扫描主机的135和139端口已经回发数据了。</p>
+]]></content>
+      <categories>
+        <category>网络协议安全学习笔记</category>
+      </categories>
+      <tags>
+        <tag>网络安全</tag>
+        <tag>Wireshark</tag>
+        <tag>Nmap</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>人工智能概述</title>
+    <url>/2022/09/01/AdvancedAI-LearningNotes1/</url>
+    <content><![CDATA[<blockquote>
+<p>三节课讲述的东西太多，这里仅记录相对来说稍重要的部分。</p>
+</blockquote>
+<h1>图灵测试</h1>
+<h2 id="什么是图灵测试">什么是图灵测试</h2>
+<p>测试者与被测试者（一个人和一台机器）隔开的情况下，通过一些装置（如键盘）向被测试者随意提问。进行多次测试后，如果机器让平均每个参与者做出超过30%的误判，那么这台机器就通过了测试，并被认为具有人类智能。</p>
+<blockquote>
+<p>图灵问题：Can Machine Think？（思考）</p>
+</blockquote>
+<h2 id="质疑">质疑</h2>
+<ul>
+<li>图灵测试是不可构造的：“完全不接触”环境难以构建</li>
+<li>图灵测试不可重现的：问题是开放的，答案正确性判断是主观的</li>
+<li>图灵测试无法进行数学分析：只是一种操作式测试，缺少形式化描述</li>
+</ul>
+<h1>人工智能三大学派</h1>
+<h2 id="符号主义">符号主义</h2>
+<ul>
+<li>认为“人的认知基元是符号（语言文字），认知过程即符号操作过程”</li>
+<li>认为人工智能的<strong>核心是知识表示、知识推理和知识运用</strong></li>
+<li>衍生出：逻辑、专家系统、知识库、<strong>知识图谱</strong></li>
+</ul>
+<h2 id="联结主义">联结主义</h2>
+<ul>
+<li>又称<strong>仿生</strong>学派或生理学派</li>
+<li>认为人的思维基元是神经元，而不是符号处理过程</li>
+<li>原理：神经网络及神经网络间的连接机制和学习算法</li>
+<li>衍生出：<strong>人工神经网络</strong>，认知科学、类脑计算</li>
+</ul>
+<h2 id="行为主义">行为主义</h2>
+<ul>
+<li>又称进化主义或<strong>控制论学派</strong></li>
+<li>主张<strong>利用机器对环境作用后的响应或反馈为原型</strong>来实现智能化</li>
+<li>衍生出：动态规划、<strong>强化学习</strong>、多智能体</li>
+</ul>
+<h1>课程蓝图</h1>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/01/AdvancedAI-LearningNotes1/p.png" class title="p">
+]]></content>
+      <categories>
+        <category>高级人工智能学习笔记</category>
+      </categories>
+      <tags>
+        <tag>人工智能</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>链路层协议安全</title>
+    <url>/2022/09/18/NetProtoSec-LearningNotes3/</url>
+    <content><![CDATA[<blockquote>
+<p>本节分为三个部分：</p>
+<ul>
+<li>有线网络协议安全</li>
+<li>无线网络协议安全</li>
+<li>VLAN安全</li>
+</ul>
+</blockquote>
+<h1>链路层协议安全</h1>
+<h2 id="有线网络协议安全">有线网络协议安全</h2>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/18/NetProtoSec-LearningNotes3/p1.png" class title="p1">
+<h2 id="无线网络协议安全">无线网络协议安全</h2>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/18/NetProtoSec-LearningNotes3/p2.png" class title="p2">
+<h2 id="VLAN安全">VLAN安全</h2>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/18/NetProtoSec-LearningNotes3/p3.png" class title="p3">
+<h3 id="特点">特点</h3>
+<p>VLAN与传统LAN相比，具有以下特点：</p>
+<ul>
+<li>隔离广播域</li>
+<li>创建虚拟工作组，超越传统网络的工作方式，减少改变的代价，安全性⬆，健壮性⬆</li>
+</ul>
+<p>VLAN的划分方法有以下几种：</p>
+<ul>
+<li>基于端口（静态）</li>
+<li>基于MAC（动态）</li>
+<li>基于协议</li>
+<li>基于子网</li>
+</ul>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/18/NetProtoSec-LearningNotes3/p4.png" class title="p4">
+<h3 id="三层交换机">三层交换机</h3>
+<p>不同VLAN的信息必须通过三层路由处理才能转发到端口上。</p>
+<h4 id="二层交换机与路由器">二层交换机与路由器</h4>
+<p>二层交换机：数据交换靠硬件，但不能处理不同子网(包括VLAN)间数据交换；<br>
+路由器：主要功能是路由转发，通过软件实现，所以转发效率低。</p>
+<h4 id="三层交换技术">三层交换技术</h4>
+<p>三层交换技术其实就是：二层交换技术+三层转发技术。它能做到<strong>一次路由，多次转发</strong>，对于数据包转发等规律性的过程由硬件高速实现，而像路由信息更新、路由表维护、路由计算等功能，由软件实现。</p>
+<h4 id="工作过程">工作过程</h4>
+<p>1.第一个包过来（包目的MAC是自己，交给IP层，发现IP地址不是自己），硬件转发表无表项，交给路由进程处理，查找下一跳IP，通过ARP得到MAC；<br>
+2.转发时：修改IP包ttl；修改原mac；建立硬件转发表；<br>
+3.下一包，直接查看硬件转发表直接转发，而不会经过路由表查询。</p>
+<h3 id="链路类型">链路类型</h3>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/18/NetProtoSec-LearningNotes3/p5.png" class title="p5">
+<p>1.干道链路<br>
+可以承载多个不同VLAN数据，用于交换机间、交换机与路由器间的互连，<strong>它不属于任何一个具体VLAN</strong>。所有在干道链路上传输的帧都是打上标记的帧。</p>
+<p>2.接入链路<br>
+用于连接主机和交换机的链路，接入链路属于某一个特定的端口，这个端口属于一个并且只能是一个VLAN。</p>
+<h3 id="帧在网络通信中的变化">帧在网络通信中的变化</h3>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/18/NetProtoSec-LearningNotes3/p6.png" class title="p6">
+<h3 id="本征VLAN">本征VLAN</h3>
+<p>相当于默认VLAN，可以在Trunk链路上指定一个Native VLAN。Access端口只属于一个VLAN，所以它的缺省ID就是它所在的VLAN，不用设置；Trunk端口属于多个VLAN， 所以需要设置缺省VLAN ID，缺省情况下为VLAN 1。<br>
+来自Native VLAN的数据帧通过Trunk链路时不重新封装，以原有的帧传输（不重新打标签）。</p>
+<h3 id="转发原则-由交换机实现">转发原则(由交换机实现)</h3>
+<h4 id="Access-Link">Access-Link</h4>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/18/NetProtoSec-LearningNotes3/p7.png" class title="p7">
+<h4 id="Trunk-Link">Trunk-Link</h4>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/18/NetProtoSec-LearningNotes3/p8.png" class title="p8">
+<h3 id="VLAN安全威胁">VLAN安全威胁</h3>
+<h4 id="双标签跳跃攻击">双标签跳跃攻击</h4>
+<p>原理：构造含有双层标签的帧，其外层标记为Trunk链路的 Native VLAN 号，交换机trunk端口发送帧时，将外层标签去掉<br>
+缺点：只能单项攻击<br>
+防范：native VLAN设置为一个不存在的VLAN</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/18/NetProtoSec-LearningNotes3/p9.png" class title="p9">
+<h4 id="DTP跳跃攻击">DTP跳跃攻击</h4>
+<p>DTP：有设备主动向接口发起协议，接口将形成Trunk，该链路可以双向传输任何VLAN数据<br>
+特点：可双向访问，绕过防火墙</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/18/NetProtoSec-LearningNotes3/p10.png" class title="p10">
+<h4 id="VPT攻击">VPT攻击</h4>
+<p>原理：VLAN信息的同步是通过VTP通告来实现的， VTP通告只能在Trunk链路上传输（因此交换机之间的Trunk链路必须成功配置了Trunk）<br>
+思路：攻击者发送高的Revision的VTP通告，就能把网络中的VLAN信息覆盖了。</p>
+]]></content>
+      <categories>
+        <category>网络协议安全学习笔记</category>
+      </categories>
+      <tags>
+        <tag>网络安全</tag>
+        <tag>网络协议</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>从开机加电到执行main函数之前的过程</title>
+    <url>/2022/09/06/OS-LearningNotes2/</url>
+    <content><![CDATA[<blockquote>
+<p>参考用书：《Linux内核设计的艺术》</p>
+<p>题外话：由于疫情，国科大现在实行线下上网课的形式。本节课就是大家全部到教室，然后老师共享屏幕来教学的，虽然互动减少了，但是还是干货满满。本周主要的笔记是记在电子版书上，下周可能会考虑整个思维导图，或许思路会更清晰。总之，开学前两周，先摸索一下学习方式。</p>
+</blockquote>
+<h1>引言</h1>
+<p>从开机加电到执行main函数之前，主要分为以下三个部分：</p>
+<ol>
+<li>启动BIOS，准备实模式下的中断向量表和中断服务程序</li>
+<li>从启动盘加载操作系统程序到内存：
+<ul>
+<li>bootsect程序（扇区 -&gt; 主机内存）</li>
+<li>setup程序（设置内核运行所需的机器系统数据）</li>
+<li>head程序（保护模式，内存分页）</li>
+</ul>
+</li>
+<li>为执行32位的main函数做过渡</li>
+</ol>
+<p>整体思维导图：</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/06/OS-LearningNotes2/xmind.png" class title="xmind">
+<h1>启动BIOS</h1>
+<ol>
+<li>CPU的硬件都设置为加电进入实模式</li>
+<li>BIOS程序被固化在ROM中，由<strong>硬件方式</strong>执行：加电瞬间，CS:IP指向BIOS程序的入口地址（0xFFFF0）</li>
+<li>BIOS检测显卡、内存······，并且<strong>在内存中建立中断向量表和中断服务程序</strong></li>
+</ol>
+<blockquote>
+<p>补充知识：</p>
+<ul>
+<li>ROM：只读存储器，断电之后仍能保存信息</li>
+<li>0x00400 = 4*(16^2)字节 = 4*256字节 = 1024字节 = 1KB</li>
+</ul>
+</blockquote>
+<h1>加载操作系统内核程序</h1>
+<h2 id="加载第一部分内核代码——引导程序bootsect">加载第一部分内核代码——引导程序bootsect</h2>
+<p><strong>理解</strong>： bootsect中sect是section的缩写，代表软盘。整个bootsect程序就是<strong>将内核程序从软盘加载到主机内存</strong>的过程。<br>
+<strong>过程</strong>：</p>
+<ol>
+<li>CPU接收到一个int 0x19中断</li>
+<li>对应中断服务程序把软盘中第一扇区的程序（512B）加载到内存的指定位置（0x07C00）</li>
+</ol>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/06/OS-LearningNotes2/p1.png" class title="p1">
+<blockquote>
+<p>冷知识：0x07C00来自Intel第一台个人电脑8088芯片，为了保持兼容，以后的CPU都保留此地址</p>
+</blockquote>
+<h2 id="加载第二部分内核代码——setup">加载第二部分内核代码——setup</h2>
+<p>BIOS将引导程序bootsect载入内存后，现在需要将第二批、第三批程序陆续加载到内存中。</p>
+<p><strong>1.bootsect对内存的规划</strong><br>
+为了实现上述操作，bootsect首要工作就是先规划内存。如图，bootsect程序对后续操作涉及的内存位置进行了设置：</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/06/OS-LearningNotes2/p2.png" class title="p2">
+<p><strong>2.复制bootsect</strong><br>
+接下来，bootsect将自身复制至内存0x90000（INITSEG）处：</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/06/OS-LearningNotes2/p3.png" class title="p3">
+<p><strong>过程</strong>：一遍执行，一边复制<br>
+<strong>目的</strong>：复制完后，就能根据自己的需要规划内存，程序可以执行更复杂的数据运算类指令了</p>
+<p><strong>3.将setup程序加载到内存中</strong><br>
+通过BIOS提供的int 0x13中断向量指向的中断服务程序，将软盘第二扇区开始的4个扇区（即setup.s对应程序）加载到内存中（SETUPSEG）。</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/06/OS-LearningNotes2/p4.png" class title="p4">
+<p>此时，操作系统已经从软盘中加载了5个扇区的代码。bootsect程序执行完后，setup程序就要开始工作了。</p>
+<h2 id="加载第三部分内核代码——system模块">加载第三部分内核代码——system模块</h2>
+<p><strong>1.bootsect载入系统模块</strong><br>
+接下来，bootsect程序进行第三批程序的载入工作。首先，bootsect借助BIOS中断int 0x13，将240个扇区的system<strong>系统模块加载进内存</strong>。至此，整个操作系统的代码已全部加载至内存。bootsect还需要再确认一下根设备号，然后其工作就结束了！</p>
+<blockquote>
+<p>补充：Linux0.11要求系统必须存在一个根文件系统，这里的文件系统☞配套文件系统格式的设备，如一张格式化好的软盘</p>
+</blockquote>
+<p><strong>2.setup程序提取机器系统数据</strong><br>
+setup程序现在开始执行。首先，它利用BIOS中断服务程序从设备上提取内核所需要运行的机器系统数据（光标位置、显示页面等），并加载在内存中。<br>
+<strong>注意</strong>：BIOS提取的机器系统数据将覆盖bootsect程序所在部分区域，这提高了内存的利用率。<br>
+到此为止，内核已全部加载完成。接下来，系统将通过已加载到内存的代码，实现<strong>从实模式到保护模式的转变</strong>，使得Linux真正成为“现代”操作系统！</p>
+<h1>向32位模式转变</h1>
+<p>本节，操作系统执行的操作包括打开32位的寻址空间、打开保护模式、建立保护模式下的中断响应机制等与保护模式相关的工作、建立内存分页机制，最后最好调用main函数的准备。</p>
+<h2 id="关闭中断，移动system">关闭中断，移动system</h2>
+<p>首先<strong>关闭中断</strong>，即将CPU的标志寄存器（EFLAGS）的中断允许标志（IF）置0。</p>
+<blockquote>
+<p>补充：</p>
+<ul>
+<li>EFLAGS相当于总开关</li>
+<li>这里的关闭中断并不意味着没有中断了，其实是仍会存在中断，只是不再响应处理而已</li>
+</ul>
+</blockquote>
+<p>接下来，setup程序<strong>将位于0x10000的内核程序复制至内存起始地址0x00000处</strong>，将BIOS中断向量表和BIOS数据区完全覆盖。</p>
+<h2 id="设置中断描述符表和全集描述符表">设置中断描述符表和全集描述符表</h2>
+<p>setup程序<strong>对中断描述符表寄存器（IDTR）和全局描述符表寄存器（GDTR）进行初始化设置</strong>。</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/06/OS-LearningNotes2/p5.png" class title="p5">
+<blockquote>
+<p>补充知识：<br>
+GDT：全局描述符表，是存放段寄存器内容（段描述符）的数组，可以理解为进程总目录表<br>
+GDTR：GDT基地址寄存器，是GDT的入口<br>
+IDT：中断描述符表，保护模式下所有中断服务程序的入口地址，相当于实模式下的中断向量表<br>
+IDTR：IDT基地址寄存器，是IDT的入口</p>
+</blockquote>
+<h2 id="打开A20，实现32位寻址">打开A20，实现32位寻址</h2>
+<blockquote>
+<p>寻址：CPU能使用多大空间的内存</p>
+</blockquote>
+<p>打开A20，意味CPU可以进行32位寻址，最大寻址空间为4GB，内存条范围由0~0xFFFFF扩展为0~0xFFFFFFFF。</p>
+<blockquote>
+<p>2^32 = 4*2^30 = 4GB；2^32 = 16^8 = 0xFFFFFFFF</p>
+</blockquote>
+<h2 id="为保护模式下执行head-s做准备">为保护模式下执行head.s做准备</h2>
+<p><strong>1.setup程序对可编程中断控制器重新编程</strong><br>
+若不对其重新编程，一些Intel保留作为内部的中断和异常中断将被覆盖。</p>
+<p><strong>2.设置CPU为保护模式</strong><br>
+setup程序将CR0寄存器第0位(PE)置1，即设置CPU为保护模式。</p>
+<p><strong>3.跳转到head程序</strong><br>
+通过<code>jmpi  0, 8</code>，从setup跳转到head程序。需要把这里的<code>8</code>看成二进制<code>1000</code>：</p>
+<ul>
+<li>0:段内偏移</li>
+<li>8:段选择符
+<ul>
+<li>二进制1000
+<ul>
+<li>最后两位(00)：内核特权级
+<ul>
+<li>倒第三位(0)：代表GDT</li>
+<li>第一位(1)：GDT项号为第2项(从0开始)</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="head-s开始执行">head.s开始执行</h2>
+<h3 id="执行过程的整体策略">执行过程的整体策略</h3>
+<p><strong>1.head程序的加载</strong><br>
+head.s先汇编成目标代码，c语言内核程序编译成目标代码，然后链接成system模块。</p>
+<p><strong>2.head程序创建了内核分页机制</strong><br>
+在0x000000创建页目录表、页表、页表缓冲区、GDT、IDT，并将head执行完的代码所占内存空间覆盖。这也意味着head将自己废弃，main函数开始执行。</p>
+<h3 id="步骤">步骤</h3>
+<p>1._pg_dir标识内核分页机制完成后的内核起始位置，head程序从这里建立页目录表，为分页机制做准备。<br>
+2.head正式执行，将CS的用法转为保护模式（CS作为代码段选择符），<code>jump 0,8</code>使CS和GDT第2项关联，并使代码段基址指向0x000000。<br>
+3.段选择子指向内核代码段：DS、ES、FS和GS（都是段选择子）的值都置为<code>0x10</code>，这里的<code>0x10</code>也看成二进制<code>00010000</code>，其中：</p>
+<ul>
+<li>最后两位（00）：内存特权级；</li>
+<li>倒数第三位（0）：代表GDT；</li>
+<li>第4、5位两位（10）：GDT的2项（从0开始），即第3项。</li>
+</ul>
+<p>（<strong>重要：理解每一位代表的东西</strong>）</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/06/OS-LearningNotes2/p6.png" class title="p6">
+<p>4.对栈的设置：SS转为栈段选择符，栈顶指针成为32位的esp。</p>
+<blockquote>
+<p>注意：栈顶增长方向由高地址向低地址</p>
+</blockquote>
+<p>5.设置IDT：先让所有中断描述符默认指向ignore_int这个位置，然后对IDT寄存器的值进行设置。</p>
+<ul>
+<li>IDT的一部分 ——&gt; GDT表项 ——&gt; 基址</li>
+<li>另一部分 —解析—&gt;偏移+特权等信息</li>
+</ul>
+<p>6.废除已有的GDT，并在内核新位置重建 ——&gt; 段限长增加了一倍，变为16MB。这里再次对一些段选择符进行重新设置，包括DS、ES等。</p>
+<p>7.检验A20地址线、数学协处理器。</p>
+<p>8.将L6标号和main函数入口地址压栈，栈顶位main函数地址，这使得head执行完，能通过ret直接执行main函数。</p>
+<p>9.创建<strong>分页机制</strong>：<br>
+首先，将页目录表和4个页表放在物理内存起始位置，此步骤覆盖了head程序自身内存空间（注意：这4个页表都是内核专属页表，将来每个用户进程都有他们的专属页表）。然后，设置页目录表的前4项，分别指向后4个表。然后，将CR3指向页目录表（CR3是物理地址！），启动分页机制开关PG标志置位。然后认定页目录表在内存的起始位置，这个位置是<strong>内核通过分页机制能够实现线性地址等于物理地址</strong>的唯一起始位置。</p>
+<blockquote>
+<p>页目录表、页表都占1页(1 页 4KB，1 项 4B)<br>
+1 个页表有 1K 项，1 项对应一页覆盖的物理地址(4KB)<br>
+1 个页目录表覆盖 1K<em>1K</em>4KB = 4GB物理地址</p>
+</blockquote>
+<p>10.ret，通过跳入main函数执行，将压入的main函数在执行入口地址弹出给EIP。</p>
+]]></content>
+      <categories>
+        <category>操作系统高级教程学习笔记</category>
+      </categories>
+      <tags>
+        <tag>操作系统</tag>
+        <tag>Linux Kernel</tag>
+        <tag>BIOS</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>网络与系统安全随记</title>
+    <url>/2022/09/09/NetSysSec-LearningNotes/</url>
+    <content><![CDATA[<h1>20220909</h1>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/09/NetSysSec-LearningNotes/p1.png" class title="p1"> 
+]]></content>
+      <categories>
+        <category>网络与系统安全</category>
+      </categories>
+      <tags>
+        <tag>网络与系统安全</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>设备环境初始化及激活进程0</title>
+    <url>/2022/10/01/OS-LearningNotes4/</url>
+    <content><![CDATA[<h1>引言</h1>
+<h2 id="设置根设备、硬盘">设置根设备、硬盘</h2>
+<p>用<code>bootsect.s</code>中写入机器系统数据的信息设置软盘为根设备，并设置内核中的硬盘信息。</p>
+<h2 id="规划物理内存格局">规划物理内存格局</h2>
+<p>设置内存中除内核代码和数据之外三部分的位置和大小：</p>
+<ul>
+<li>主内存区：进程代码运行的空间；</li>
+<li>缓冲区：主机与外设（块设备）交换数据的中转站；</li>
+<li>虚拟盘区：可选，可将外设数据先复制至虚拟盘区，然后加以使用。</li>
+</ul>
+<blockquote>
+<p>注：&lt;&lt;12或&gt;&gt;12相当于乘或除以4KB——页</p>
+</blockquote>
+<h2 id="设置虚拟盘空间并初始化">设置虚拟盘空间并初始化</h2>
+<p>设定内存16MB，虚拟盘2MB（缓冲区末端2MB设为虚拟盘）。调用<code>rd_init()</code>函数，对虚拟盘设置：<br>
+将虚拟盘请求项处理函数<code>do_rd_request</code>与 请求项处理函数控制结构<code>blk_dev[7]</code>第二项挂钩，意味着内核能通过调用<code>do_rd_request</code>函数处理与虚拟盘相关的请求项操作。</p>
+<h2 id="内存管理结构-mem-map-初始化">内存管理结构 mem_map 初始化</h2>
+<p>调用<code>mem_init()</code>函数，通过<code>mem_map[]</code>对 1MB (内核所在区域)以上的内存分页进行管理，记录一个页面的使用次数</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/01/OS-LearningNotes4/p1.png" class title="p1">
+<h2 id="异常处理类中断服务程序挂接">异常处理类中断服务程序挂接</h2>
+<p><code>trap_init()</code>函数将中断、异常处理的服务程序与IDT进行挂接，逐步重建中断服务体系。</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/01/OS-LearningNotes4/p2.png" class title="p2">
+<p>其中，还需要拼接中断描述符：</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/01/OS-LearningNotes4/p3.png" class title="p3">
+<h2 id="初始化块设备请求项结构">初始化块设备请求项结构</h2>
+<p>linux外设分为块设备（硬盘、软盘）和字符设备（键盘、黑屏命令行显示器），进程想与块设备进行沟通，必须经过主机内存的缓冲区。<br>
+请求项管理结构<code>request[32]</code>就是操作系统管理缓冲区与块设备逻辑块读写关系的数据结构。操作系统决定缓冲块与块设备间的读写操作，并把需要操作的缓冲块记录在请求项中，得到读写块设备操作指令后，只根据请求项中的记录决定要处理哪个设备的哪个逻辑块。</p>
+<p>初始化：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">request[i].dev&#x3D;-1; &#x2F;&#x2F;请求项未对应哪个设备</span><br><span class="line">request[i].next&#x3D;NULL; &#x2F;&#x2F;还未形成请求项队列</span><br></pre></td></tr></table></figure>
+<h2 id="与人机交互界面相关外设中断服务程序挂接">与人机交互界面相关外设中断服务程序挂接</h2>
+<p>对串行口、显示器、键盘、开机启动时间设置，以及与此相关的中断服务程序与IDT挂接。</p>
+<h2 id="初始化0进程（重要）">初始化0进程（重要）</h2>
+<p>大致过程如下，都由<code>sched_init()</code>函数实现：</p>
+<ol>
+<li>初始化进程0
+<ul>
+<li>将进程0的task_struct中LDT、TSS与GDT挂接</li>
+<li>初始化GDT、task[64]以及与进程调度相关寄存器</li>
+</ul>
+</li>
+<li>时钟中断设置 —&gt; 多进程轮转</li>
+<li>系统调用：通过set_system_gate将system_call与IDT挂接（特权3，set_trap_gate为特权0）</li>
+</ol>
+<h3 id="初始化进程0">初始化进程0</h3>
+<p>首先在GDT中初始化进程0所占的4、5项，即初始化TSS0（任务状态段）和LDT0（局部描述符）。</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/01/OS-LearningNotes4/p4.png" class title="p4">
+<p>另外，需要拼接对应的段描述符：</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/01/OS-LearningNotes4/p5.png" class title="p5">
+<p>然后还需要通过INIT_TASK指针初始化进程0的task_struct（内核栈）。每个进程都有自己的用户栈和内核栈（跑内核代码时用这个）。</p>
+<h3 id="设置时钟中断">设置时钟中断</h3>
+<p>时钟中断是进程0及其他由它创建的进程轮转的基础。</p>
+<h3 id="设置系统调用总入口">设置系统调用总入口</h3>
+<p>将系统调用函数 system_call 与 int 0x80 中断描述符表挂接。</p>
+]]></content>
+      <categories>
+        <category>操作系统高级教程学习笔记</category>
+      </categories>
+      <tags>
+        <tag>操作系统</tag>
+        <tag>Linux Kernel</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>LC旋转数组</title>
     <url>/2021/05/20/LC%E6%97%8B%E8%BD%AC%E6%95%B0%E7%BB%84/</url>
     <content><![CDATA[<h1>旋转数组</h1>
@@ -1075,296 +1600,8 @@ Overall the consumption of the world’s resources is undergoing a dangerous rat
         <category>网络协议安全学习笔记</category>
       </categories>
       <tags>
+        <tag>网络安全</tag>
         <tag>网络协议</tag>
-        <tag>网络安全</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>主机和端口扫描</title>
-    <url>/2022/09/07/NetProtoSec-LearningNotes2/</url>
-    <content><![CDATA[<blockquote>
-<p>实验环境：Kali+Wireshark+Nmap</p>
-<ul>
-<li>Kali：是一个基于Debian的Linux发行版，预装了许多渗透测试软件，是一个很酷的“黑客操作系统”；</li>
-<li>Wireshark：是一个网络封包分析软件，功能是截取网络封包，并尽可能显示出最为详细的网络封包资料。Wireshark使用WinPCAP作为接口，直接与网卡进行数据报文交换；</li>
-<li>Nmap：即Network Mapper，是Linux下的网络扫描和嗅探工具包。</li>
-</ul>
-</blockquote>
-<h1>实验内容</h1>
-<p>1.在Nmap中，使用nmap –sP xx指令实现主机扫描，用wireshark抓取扫描过程中的ARP请求和响应报文；通过ping指令发起ICMP扫描，用wireshark抓取扫描过程中的ICMP报文；</p>
-<p>2.在Nmap中，使用nmap –sS xx指令实现端口扫描，用wireshark抓取扫描过程中的TCP报文。</p>
-<h1>kali网络配置</h1>
-<p>由于我使用的是校园网，因此我这里使用NAT模式。</p>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/07/NetProtoSec-LearningNotes2/p1.png" class title="p1"> 
-<h2 id="1-查看主机地址">1.查看主机地址</h2>
-<p>首先通过<code>win</code>+<code>R</code>输入cmd打开终端，然后通过<code>ipconfig</code>查看自己主机的ip地址，网关，网段（我这里选择VMnet8）。</p>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/07/NetProtoSec-LearningNotes2/p2.png" class title="p2"> 
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">IPv4 地址: 192.168.253.1</span><br><span class="line">子网掩码: 255.255.255.0</span><br></pre></td></tr></table></figure>
-<h2 id="2-修改-etc-network-interfaces文件">2.修改/etc/network/interfaces文件</h2>
-<p>然后，通过<code>vim /etc/network/interfaces</code>，设置静态IP：<br>
-address：把ip地址设置为自己主机网段中的一个，如：我的主机ip是192.168.253.1，这里设为192.168.253.36<br>
-gateway：在其中加上自己主机的网关，如：192.168.253.2<br>
-netmask：子网掩码照抄自己主机的，如：255.255.255.0</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">auto eth0</span><br><span class="line">iface eth0 inet static</span><br><span class="line">address 192.168.253.36</span><br><span class="line">netmask 255.255.255.0</span><br><span class="line">gateway 192.168.253.2</span><br></pre></td></tr></table></figure>
-<h2 id="3-修改dns">3.修改dns</h2>
-<p><code>vim /etc/resolv.conf</code>添加几个常用DNS：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">domain localdomain</span><br><span class="line">search localdomain</span><br><span class="line">nameserver 8.8.8.8</span><br><span class="line">nameserver 114.114.114.114</span><br><span class="line">nameserver 192.168.253.2</span><br></pre></td></tr></table></figure>
-<h2 id="4-重启网络">4.重启网络</h2>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">systemctl restart networking</span><br></pre></td></tr></table></figure>
-<p>或者</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;etc&#x2F;init.d&#x2F;networking restart</span><br></pre></td></tr></table></figure>
-<h2 id="5-测试">5.测试</h2>
-<p>输入<code>ifconfig -a</code>查看ip：</p>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/07/NetProtoSec-LearningNotes2/p3.png" class title="p3"> 
-<h2 id="nmap参数速查">nmap参数速查</h2>
-<table>
-<thead>
-<tr>
-<th style="text-align:center">命令</th>
-<th style="text-align:center">描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">nmap IP</td>
-<td style="text-align:center">扫描IP</td>
-</tr>
-<tr>
-<td style="text-align:center">nmap -v IP</td>
-<td style="text-align:center">加强扫描</td>
-</tr>
-<tr>
-<td style="text-align:center">nmap IP1 IP2 …</td>
-<td style="text-align:center">扫描多IP</td>
-</tr>
-<tr>
-<td style="text-align:center">nmap a.b.c.*</td>
-<td style="text-align:center">扫描整个子网</td>
-</tr>
-<tr>
-<td style="text-align:center">nmap a.b.c.x,y,…</td>
-<td style="text-align:center">扫描多子网地址</td>
-</tr>
-<tr>
-<td style="text-align:center">nmap -iL xxx.txt</td>
-<td style="text-align:center">根据文件扫描多IP</td>
-</tr>
-<tr>
-<td style="text-align:center">nmap a.b.c.x-y</td>
-<td style="text-align:center">扫描子网IP范围</td>
-</tr>
-<tr>
-<td style="text-align:center">nmap a.b.c.* --exclude IP</td>
-<td style="text-align:center">排除指定IP扫描整个子网</td>
-</tr>
-<tr>
-<td style="text-align:center">nmap -A IP</td>
-<td style="text-align:center">全面的系统扫描,包括操作系统探测、版本探测、脚本扫描、路径跟踪</td>
-</tr>
-<tr>
-<td style="text-align:center">nmap -O IP</td>
-<td style="text-align:center">探测操作系统</td>
-</tr>
-<tr>
-<td style="text-align:center">nmap -sA/-PN IP</td>
-<td style="text-align:center">探测防火墙</td>
-</tr>
-<tr>
-<td style="text-align:center">nmap -sP a.b.c.*</td>
-<td style="text-align:center">探测在线主机</td>
-</tr>
-<tr>
-<td style="text-align:center">nmap -F IP</td>
-<td style="text-align:center">快速扫描</td>
-</tr>
-<tr>
-<td style="text-align:center">nmap -r IP</td>
-<td style="text-align:center">按顺序扫描</td>
-</tr>
-<tr>
-<td style="text-align:center">nmap -iflist</td>
-<td style="text-align:center">显示接口和路由信息</td>
-</tr>
-<tr>
-<td style="text-align:center">nmap -p n1,n2… IP</td>
-<td style="text-align:center">扫描指定端口</td>
-</tr>
-<tr>
-<td style="text-align:center">nmap -p T:n1,n2… IP</td>
-<td style="text-align:center">扫描TCP端口</td>
-</tr>
-<tr>
-<td style="text-align:center">nmap -sU n1,n2… IP</td>
-<td style="text-align:center">扫描UDP端口</td>
-</tr>
-<tr>
-<td style="text-align:center">nmap -sV IP</td>
-<td style="text-align:center">查看服务的版本</td>
-</tr>
-<tr>
-<td style="text-align:center">nmap -PS IP</td>
-<td style="text-align:center">TCP ACK扫描</td>
-</tr>
-<tr>
-<td style="text-align:center">nmap -PA IP</td>
-<td style="text-align:center">TCP SYN扫描</td>
-</tr>
-<tr>
-<td style="text-align:center">nmap -sS IP</td>
-<td style="text-align:center">隐蔽扫描</td>
-</tr>
-<tr>
-<td style="text-align:center">nmap -sN IP</td>
-<td style="text-align:center">TCP空扫描欺骗防火墙</td>
-</tr>
-</tbody>
-</table>
-<h1>主机扫描</h1>
-<blockquote>
-<p>开两个虚拟机：192.168.253.36 + 192.168.253.37</p>
-</blockquote>
-<h2 id="主机扫描参数">主机扫描参数</h2>
-<p>主机发现有时候也叫做ping扫描，有以下选项：<br>
-<code>-sL</code>（列表扫描）：它仅仅列出指定网络上的每台主机，不发送任何报文到目标主机；<br>
-<code>-sP</code>（Ping扫描）：该选项告诉Nmap仅仅进行ping扫描（主机发现），然后打印出对扫描做出响应的那些主机；Nmap会发一个ICMP ECHO请求和一个TCP报文到目标端口；<br>
-<code>-Pn</code>（无ping）：无Ping扫描通常用于防火墙禁止Ping的情况下，完全跳过Nmap发现阶段，且对目标主机进行端口扫描；<br>
-<code>-PS</code>（TCP SYN ping）：该选项发送了一个设置了SYN标志位的空TCP报文，需要root权限；<br>
-<code>-PA</code>（TCP ACK ping）：它与TCP SYN Ping扫描类似，不同的只是设置的TCP报文的标志位是ACK；<br>
-<code>-PU</code>（UDP  ping）：发送一个空的UDP报文到指定端口，很少用；<br>
-<code>-PE/PP/PM</code>（ICMP ECHO/时间戳/地址掩码Ping）；<br>
-<code>-ARP</code>（ARP ping）：该选项通常在扫描局域网时使用，在内网中使用ARP Ping是非常有效的。</p>
-<h2 id="实验过程">实验过程</h2>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">nmap -P 192.168.253.1/24</span><br></pre></td></tr></table></figure>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/07/NetProtoSec-LearningNotes2/p4.png" class title="p4"> 
-<p>wireshark抓取ARP请求和响应报文：</p>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/07/NetProtoSec-LearningNotes2/p5.png" class title="p5">
-<p>ping命令发起ICMP扫描，wireshark抓取ICMP报文：</p>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/07/NetProtoSec-LearningNotes2/p6.png" class title="p6">
-<h1>端口扫描</h1>
-<h2 id="端口扫描基础">端口扫描基础</h2>
-<h3 id="端口状态">端口状态</h3>
-<p>Nmap所识别的6个端口状态：</p>
-<ul>
-<li><code>Opend</code>：端口开启；</li>
-<li><code>Closed</code>： 端口关闭；</li>
-<li><code>Filtered</code>：端口被过滤，数据没有到达主机，返回的结果为空，数据被防火墙拦截了；</li>
-<li><code>Unfiltered</code>：未被过滤，数据有到达主机，但是不能识别端口的当前状态；</li>
-<li><code>Open|filtered</code>：开放或者被过滤，端口没有返回值，主要发生在UDP、IP、FIN、NULL和X mas扫描中；</li>
-<li><code>Closed|filtered</code>：关闭或者被过滤，只发生在IP ID idle扫描。</li>
-</ul>
-<h3 id="命令参数">命令参数</h3>
-<p>-<code>sS</code>（TCP SYN扫描）：半开扫描，很少有系统能把它记入系统日志。不过，需要Root权限；<br>
--<code>sT</code>（TCP connect()扫描）:当SYN扫描不能用时，CP Connect()扫描就是默认的TCP扫描；<br>
--<code>sN/-sF/-sX</code>（TCP Null/FIN/Xmas扫描）:能躲过一些无状态防火墙和报文过滤路由器；<br>
--<code>p</code>：指定范围性扫描端口；<br>
--<code>v</code>：详细信息。</p>
-<h2 id="实验过程-2">实验过程</h2>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">┌──(root㉿kali)-[~]</span><br><span class="line">└─<span class="comment"># nmap -sS 192.168.253.1</span></span><br><span class="line">Starting Nmap 7.92 ( https://nmap.org ) at 2022-09-07 22:42 EDT</span><br><span class="line">Nmap scan report <span class="keyword">for</span> 192.168.253.1</span><br><span class="line">Host is up (0.00019s latency).</span><br><span class="line">Not shown: 996 filtered tcp ports (no-response)</span><br><span class="line">PORT     STATE SERVICE</span><br><span class="line">135/tcp  open  msrpc</span><br><span class="line">139/tcp  open  netbios-ssn</span><br><span class="line">445/tcp  open  microsoft-ds</span><br><span class="line">4001/tcp open  newoak</span><br><span class="line">MAC Address: 00:50:56:C0:00:08 (VMware)</span><br><span class="line"></span><br><span class="line">Nmap <span class="keyword">done</span>: 1 IP address (1 host up) scanned <span class="keyword">in</span> 4.70 seconds</span><br></pre></td></tr></table></figure>
-<p>打开wireshark抓取tcp包，可看到：</p>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/07/NetProtoSec-LearningNotes2/p7.png" class title="p7">
-<p>扫描主机的135和139端口已经回发数据了。</p>
-]]></content>
-      <categories>
-        <category>网络协议安全学习笔记</category>
-      </categories>
-      <tags>
-        <tag>网络安全</tag>
-        <tag>Wireshark</tag>
-        <tag>Nmap</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>链路层协议安全</title>
-    <url>/2022/09/18/NetProtoSec-LearningNotes3/</url>
-    <content><![CDATA[<blockquote>
-<p>本节分为三个部分：</p>
-<ul>
-<li>有线网络协议安全</li>
-<li>无线网络协议安全</li>
-<li>VLAN安全</li>
-</ul>
-</blockquote>
-<h1>链路层协议安全</h1>
-<h2 id="有线网络协议安全">有线网络协议安全</h2>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/18/NetProtoSec-LearningNotes3/p1.png" class title="p1">
-<h2 id="无线网络协议安全">无线网络协议安全</h2>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/18/NetProtoSec-LearningNotes3/p2.png" class title="p2">
-<h2 id="VLAN安全">VLAN安全</h2>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/18/NetProtoSec-LearningNotes3/p3.png" class title="p3">
-<h3 id="特点">特点</h3>
-<p>VLAN与传统LAN相比，具有以下特点：</p>
-<ul>
-<li>隔离广播域</li>
-<li>创建虚拟工作组，超越传统网络的工作方式，减少改变的代价，安全性⬆，健壮性⬆</li>
-</ul>
-<p>VLAN的划分方法有以下几种：</p>
-<ul>
-<li>基于端口（静态）</li>
-<li>基于MAC（动态）</li>
-<li>基于协议</li>
-<li>基于子网</li>
-</ul>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/18/NetProtoSec-LearningNotes3/p4.png" class title="p4">
-<h3 id="三层交换机">三层交换机</h3>
-<p>不同VLAN的信息必须通过三层路由处理才能转发到端口上。</p>
-<h4 id="二层交换机与路由器">二层交换机与路由器</h4>
-<p>二层交换机：数据交换靠硬件，但不能处理不同子网(包括VLAN)间数据交换；<br>
-路由器：主要功能是路由转发，通过软件实现，所以转发效率低。</p>
-<h4 id="三层交换技术">三层交换技术</h4>
-<p>三层交换技术其实就是：二层交换技术+三层转发技术。它能做到<strong>一次路由，多次转发</strong>，对于数据包转发等规律性的过程由硬件高速实现，而像路由信息更新、路由表维护、路由计算等功能，由软件实现。</p>
-<h4 id="工作过程">工作过程</h4>
-<p>1.第一个包过来（包目的MAC是自己，交给IP层，发现IP地址不是自己），硬件转发表无表项，交给路由进程处理，查找下一跳IP，通过ARP得到MAC；<br>
-2.转发时：修改IP包ttl；修改原mac；建立硬件转发表；<br>
-3.下一包，直接查看硬件转发表直接转发，而不会经过路由表查询。</p>
-<h3 id="链路类型">链路类型</h3>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/18/NetProtoSec-LearningNotes3/p5.png" class title="p5">
-<p>1.干道链路<br>
-可以承载多个不同VLAN数据，用于交换机间、交换机与路由器间的互连，<strong>它不属于任何一个具体VLAN</strong>。所有在干道链路上传输的帧都是打上标记的帧。</p>
-<p>2.接入链路<br>
-用于连接主机和交换机的链路，接入链路属于某一个特定的端口，这个端口属于一个并且只能是一个VLAN。</p>
-<h3 id="帧在网络通信中的变化">帧在网络通信中的变化</h3>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/18/NetProtoSec-LearningNotes3/p6.png" class title="p6">
-<h3 id="本征VLAN">本征VLAN</h3>
-<p>相当于默认VLAN，可以在Trunk链路上指定一个Native VLAN。Access端口只属于一个VLAN，所以它的缺省ID就是它所在的VLAN，不用设置；Trunk端口属于多个VLAN， 所以需要设置缺省VLAN ID，缺省情况下为VLAN 1。<br>
-来自Native VLAN的数据帧通过Trunk链路时不重新封装，以原有的帧传输（不重新打标签）。</p>
-<h3 id="转发原则-由交换机实现">转发原则(由交换机实现)</h3>
-<h4 id="Access-Link">Access-Link</h4>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/18/NetProtoSec-LearningNotes3/p7.png" class title="p7">
-<h4 id="Trunk-Link">Trunk-Link</h4>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/18/NetProtoSec-LearningNotes3/p8.png" class title="p8">
-<h3 id="VLAN安全威胁">VLAN安全威胁</h3>
-<h4 id="双标签跳跃攻击">双标签跳跃攻击</h4>
-<p>原理：构造含有双层标签的帧，其外层标记为Trunk链路的 Native VLAN 号，交换机trunk端口发送帧时，将外层标签去掉<br>
-缺点：只能单项攻击<br>
-防范：native VLAN设置为一个不存在的VLAN</p>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/18/NetProtoSec-LearningNotes3/p9.png" class title="p9">
-<h4 id="DTP跳跃攻击">DTP跳跃攻击</h4>
-<p>DTP：有设备主动向接口发起协议，接口将形成Trunk，该链路可以双向传输任何VLAN数据<br>
-特点：可双向访问，绕过防火墙</p>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/18/NetProtoSec-LearningNotes3/p10.png" class title="p10">
-<h4 id="VPT攻击">VPT攻击</h4>
-<p>原理：VLAN信息的同步是通过VTP通告来实现的， VTP通告只能在Trunk链路上传输（因此交换机之间的Trunk链路必须成功配置了Trunk）<br>
-思路：攻击者发送高的Revision的VTP通告，就能把网络中的VLAN信息覆盖了。</p>
-]]></content>
-      <categories>
-        <category>网络协议安全学习笔记</category>
-      </categories>
-      <tags>
-        <tag>网络协议</tag>
-        <tag>网络安全</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>网络与系统安全随记</title>
-    <url>/2022/09/09/NetSysSec-LearningNotes/</url>
-    <content><![CDATA[<h1>20220909</h1>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/09/NetSysSec-LearningNotes/p1.png" class title="p1"> 
-]]></content>
-      <categories>
-        <category>网络与系统安全</category>
-      </categories>
-      <tags>
-        <tag>网络与系统安全</tag>
       </tags>
   </entry>
   <entry>
@@ -1464,350 +1701,6 @@ netmask：子网掩码照抄自己主机的，如：255.255.255.0</p>
         <tag>Linux Kernel</tag>
         <tag>特权级</tag>
         <tag>授权</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>从开机加电到执行main函数之前的过程</title>
-    <url>/2022/09/06/OS-LearningNotes2/</url>
-    <content><![CDATA[<blockquote>
-<p>参考用书：《Linux内核设计的艺术》</p>
-<p>题外话：由于疫情，国科大现在实行线下上网课的形式。本节课就是大家全部到教室，然后老师共享屏幕来教学的，虽然互动减少了，但是还是干货满满。本周主要的笔记是记在电子版书上，下周可能会考虑整个思维导图，或许思路会更清晰。总之，开学前两周，先摸索一下学习方式。</p>
-</blockquote>
-<h1>引言</h1>
-<p>从开机加电到执行main函数之前，主要分为以下三个部分：</p>
-<ol>
-<li>启动BIOS，准备实模式下的中断向量表和中断服务程序</li>
-<li>从启动盘加载操作系统程序到内存：
-<ul>
-<li>bootsect程序（扇区 -&gt; 主机内存）</li>
-<li>setup程序（设置内核运行所需的机器系统数据）</li>
-<li>head程序（保护模式，内存分页）</li>
-</ul>
-</li>
-<li>为执行32位的main函数做过渡</li>
-</ol>
-<p>整体思维导图：</p>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/06/OS-LearningNotes2/xmind.png" class title="xmind">
-<h1>启动BIOS</h1>
-<ol>
-<li>CPU的硬件都设置为加电进入实模式</li>
-<li>BIOS程序被固化在ROM中，由<strong>硬件方式</strong>执行：加电瞬间，CS:IP指向BIOS程序的入口地址（0xFFFF0）</li>
-<li>BIOS检测显卡、内存······，并且<strong>在内存中建立中断向量表和中断服务程序</strong></li>
-</ol>
-<blockquote>
-<p>补充知识：</p>
-<ul>
-<li>ROM：只读存储器，断电之后仍能保存信息</li>
-<li>0x00400 = 4*(16^2)字节 = 4*256字节 = 1024字节 = 1KB</li>
-</ul>
-</blockquote>
-<h1>加载操作系统内核程序</h1>
-<h2 id="加载第一部分内核代码——引导程序bootsect">加载第一部分内核代码——引导程序bootsect</h2>
-<p><strong>理解</strong>： bootsect中sect是section的缩写，代表软盘。整个bootsect程序就是<strong>将内核程序从软盘加载到主机内存</strong>的过程。<br>
-<strong>过程</strong>：</p>
-<ol>
-<li>CPU接收到一个int 0x19中断</li>
-<li>对应中断服务程序把软盘中第一扇区的程序（512B）加载到内存的指定位置（0x07C00）</li>
-</ol>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/06/OS-LearningNotes2/p1.png" class title="p1">
-<blockquote>
-<p>冷知识：0x07C00来自Intel第一台个人电脑8088芯片，为了保持兼容，以后的CPU都保留此地址</p>
-</blockquote>
-<h2 id="加载第二部分内核代码——setup">加载第二部分内核代码——setup</h2>
-<p>BIOS将引导程序bootsect载入内存后，现在需要将第二批、第三批程序陆续加载到内存中。</p>
-<p><strong>1.bootsect对内存的规划</strong><br>
-为了实现上述操作，bootsect首要工作就是先规划内存。如图，bootsect程序对后续操作涉及的内存位置进行了设置：</p>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/06/OS-LearningNotes2/p2.png" class title="p2">
-<p><strong>2.复制bootsect</strong><br>
-接下来，bootsect将自身复制至内存0x90000（INITSEG）处：</p>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/06/OS-LearningNotes2/p3.png" class title="p3">
-<p><strong>过程</strong>：一遍执行，一边复制<br>
-<strong>目的</strong>：复制完后，就能根据自己的需要规划内存，程序可以执行更复杂的数据运算类指令了</p>
-<p><strong>3.将setup程序加载到内存中</strong><br>
-通过BIOS提供的int 0x13中断向量指向的中断服务程序，将软盘第二扇区开始的4个扇区（即setup.s对应程序）加载到内存中（SETUPSEG）。</p>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/06/OS-LearningNotes2/p4.png" class title="p4">
-<p>此时，操作系统已经从软盘中加载了5个扇区的代码。bootsect程序执行完后，setup程序就要开始工作了。</p>
-<h2 id="加载第三部分内核代码——system模块">加载第三部分内核代码——system模块</h2>
-<p><strong>1.bootsect载入系统模块</strong><br>
-接下来，bootsect程序进行第三批程序的载入工作。首先，bootsect借助BIOS中断int 0x13，将240个扇区的system<strong>系统模块加载进内存</strong>。至此，整个操作系统的代码已全部加载至内存。bootsect还需要再确认一下根设备号，然后其工作就结束了！</p>
-<blockquote>
-<p>补充：Linux0.11要求系统必须存在一个根文件系统，这里的文件系统☞配套文件系统格式的设备，如一张格式化好的软盘</p>
-</blockquote>
-<p><strong>2.setup程序提取机器系统数据</strong><br>
-setup程序现在开始执行。首先，它利用BIOS中断服务程序从设备上提取内核所需要运行的机器系统数据（光标位置、显示页面等），并加载在内存中。<br>
-<strong>注意</strong>：BIOS提取的机器系统数据将覆盖bootsect程序所在部分区域，这提高了内存的利用率。<br>
-到此为止，内核已全部加载完成。接下来，系统将通过已加载到内存的代码，实现<strong>从实模式到保护模式的转变</strong>，使得Linux真正成为“现代”操作系统！</p>
-<h1>向32位模式转变</h1>
-<p>本节，操作系统执行的操作包括打开32位的寻址空间、打开保护模式、建立保护模式下的中断响应机制等与保护模式相关的工作、建立内存分页机制，最后最好调用main函数的准备。</p>
-<h2 id="关闭中断，移动system">关闭中断，移动system</h2>
-<p>首先<strong>关闭中断</strong>，即将CPU的标志寄存器（EFLAGS）的中断允许标志（IF）置0。</p>
-<blockquote>
-<p>补充：</p>
-<ul>
-<li>EFLAGS相当于总开关</li>
-<li>这里的关闭中断并不意味着没有中断了，其实是仍会存在中断，只是不再响应处理而已</li>
-</ul>
-</blockquote>
-<p>接下来，setup程序<strong>将位于0x10000的内核程序复制至内存起始地址0x00000处</strong>，将BIOS中断向量表和BIOS数据区完全覆盖。</p>
-<h2 id="设置中断描述符表和全集描述符表">设置中断描述符表和全集描述符表</h2>
-<p>setup程序<strong>对中断描述符表寄存器（IDTR）和全局描述符表寄存器（GDTR）进行初始化设置</strong>。</p>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/06/OS-LearningNotes2/p5.png" class title="p5">
-<blockquote>
-<p>补充知识：<br>
-GDT：全局描述符表，是存放段寄存器内容（段描述符）的数组，可以理解为进程总目录表<br>
-GDTR：GDT基地址寄存器，是GDT的入口<br>
-IDT：中断描述符表，保护模式下所有中断服务程序的入口地址，相当于实模式下的中断向量表<br>
-IDTR：IDT基地址寄存器，是IDT的入口</p>
-</blockquote>
-<h2 id="打开A20，实现32位寻址">打开A20，实现32位寻址</h2>
-<blockquote>
-<p>寻址：CPU能使用多大空间的内存</p>
-</blockquote>
-<p>打开A20，意味CPU可以进行32位寻址，最大寻址空间为4GB，内存条范围由0~0xFFFFF扩展为0~0xFFFFFFFF。</p>
-<blockquote>
-<p>2^32 = 4*2^30 = 4GB；2^32 = 16^8 = 0xFFFFFFFF</p>
-</blockquote>
-<h2 id="为保护模式下执行head-s做准备">为保护模式下执行head.s做准备</h2>
-<p><strong>1.setup程序对可编程中断控制器重新编程</strong><br>
-若不对其重新编程，一些Intel保留作为内部的中断和异常中断将被覆盖。</p>
-<p><strong>2.设置CPU为保护模式</strong><br>
-setup程序将CR0寄存器第0位(PE)置1，即设置CPU为保护模式。</p>
-<p><strong>3.跳转到head程序</strong><br>
-通过<code>jmpi  0, 8</code>，从setup跳转到head程序。需要把这里的<code>8</code>看成二进制<code>1000</code>：</p>
-<ul>
-<li>0:段内偏移</li>
-<li>8:段选择符
-<ul>
-<li>二进制1000
-<ul>
-<li>最后两位(00)：内核特权级
-<ul>
-<li>倒第三位(0)：代表GDT</li>
-<li>第一位(1)：GDT项号为第2项(从0开始)</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h2 id="head-s开始执行">head.s开始执行</h2>
-<h3 id="执行过程的整体策略">执行过程的整体策略</h3>
-<p><strong>1.head程序的加载</strong><br>
-head.s先汇编成目标代码，c语言内核程序编译成目标代码，然后链接成system模块。</p>
-<p><strong>2.head程序创建了内核分页机制</strong><br>
-在0x000000创建页目录表、页表、页表缓冲区、GDT、IDT，并将head执行完的代码所占内存空间覆盖。这也意味着head将自己废弃，main函数开始执行。</p>
-<h3 id="步骤">步骤</h3>
-<p>1._pg_dir标识内核分页机制完成后的内核起始位置，head程序从这里建立页目录表，为分页机制做准备。<br>
-2.head正式执行，将CS的用法转为保护模式（CS作为代码段选择符），<code>jump 0,8</code>使CS和GDT第2项关联，并使代码段基址指向0x000000。<br>
-3.段选择子指向内核代码段：DS、ES、FS和GS（都是段选择子）的值都置为<code>0x10</code>，这里的<code>0x10</code>也看成二进制<code>00010000</code>，其中：</p>
-<ul>
-<li>最后两位（00）：内存特权级；</li>
-<li>倒数第三位（0）：代表GDT；</li>
-<li>第4、5位两位（10）：GDT的2项（从0开始），即第3项。</li>
-</ul>
-<p>（<strong>重要：理解每一位代表的东西</strong>）</p>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/06/OS-LearningNotes2/p6.png" class title="p6">
-<p>4.对栈的设置：SS转为栈段选择符，栈顶指针成为32位的esp。</p>
-<blockquote>
-<p>注意：栈顶增长方向由高地址向低地址</p>
-</blockquote>
-<p>5.设置IDT：先让所有中断描述符默认指向ignore_int这个位置，然后对IDT寄存器的值进行设置。</p>
-<ul>
-<li>IDT的一部分 ——&gt; GDT表项 ——&gt; 基址</li>
-<li>另一部分 —解析—&gt;偏移+特权等信息</li>
-</ul>
-<p>6.废除已有的GDT，并在内核新位置重建 ——&gt; 段限长增加了一倍，变为16MB。这里再次对一些段选择符进行重新设置，包括DS、ES等。</p>
-<p>7.检验A20地址线、数学协处理器。</p>
-<p>8.将L6标号和main函数入口地址压栈，栈顶位main函数地址，这使得head执行完，能通过ret直接执行main函数。</p>
-<p>9.创建<strong>分页机制</strong>：<br>
-首先，将页目录表和4个页表放在物理内存起始位置，此步骤覆盖了head程序自身内存空间（注意：这4个页表都是内核专属页表，将来每个用户进程都有他们的专属页表）。然后，设置页目录表的前4项，分别指向后4个表。然后，将CR3指向页目录表（CR3是物理地址！），启动分页机制开关PG标志置位。然后认定页目录表在内存的起始位置，这个位置是<strong>内核通过分页机制能够实现线性地址等于物理地址</strong>的唯一起始位置。</p>
-<blockquote>
-<p>页目录表、页表都占1页(1 页 4KB，1 项 4B)<br>
-1 个页表有 1K 项，1 项对应一页覆盖的物理地址(4KB)<br>
-1 个页目录表覆盖 1K<em>1K</em>4KB = 4GB物理地址</p>
-</blockquote>
-<p>10.ret，通过跳入main函数执行，将压入的main函数在执行入口地址弹出给EIP。</p>
-]]></content>
-      <categories>
-        <category>操作系统高级教程学习笔记</category>
-      </categories>
-      <tags>
-        <tag>操作系统</tag>
-        <tag>Linux Kernel</tag>
-        <tag>BIOS</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>补充知识整理</title>
-    <url>/2022/09/20/OS-LearningNotes3/</url>
-    <content><![CDATA[<h1>分段和分页</h1>
-<blockquote>
-<p>起因是上《操作系统高级教程》时，突然发现对这块的知识已经混沌了，所以重新总结下。<br>
-参考：<br>
-<a href="https://blog.csdn.net/yzy1103203312/article/details/78529067">https://blog.csdn.net/yzy1103203312/article/details/78529067</a><br>
-<a href="https://blog.csdn.net/qq_32740495/article/details/102924136">https://blog.csdn.net/qq_32740495/article/details/102924136</a></p>
-</blockquote>
-<h2 id="为何需要分段">为何需要分段</h2>
-<p>在8086处理器诞生之前，内存寻址方式就是直接访问物理地址（实模式）。8086处理器为了寻址1M的内存空间，把<strong>地址总线扩展到了20位</strong>。但是，ALU的宽度只有16位，即ALU不能计算20位的地址。为了解决这个问题，从而引入了<strong>分段机制</strong>。</p>
-<h2 id="IA32框架的内存寻址">IA32框架的内存寻址</h2>
-<h3 id="三类地址">三类地址</h3>
-<p>IA32的三类地址如下：</p>
-<ul>
-<li><strong>逻辑地址</strong>：<strong>机器语言指令</strong>用这类地址指定<strong>一个操作数的地址或一条指令的地址</strong>，最原始的地址就是逻辑地址。</li>
-<li><strong>线性地址</strong>：将逻辑地址经过<strong>分段机制转换</strong>之后，便得到了线性地址，每个线性地址都<strong>由一个段基址和段内偏移量组成</strong>。</li>
-<li><strong>物理地址</strong>：线性地址<strong>经过分页单元的处理</strong>之后得到一个实际物理地址，也就是<strong>内存单元的实际地址</strong>，用于芯片级内存单元寻址。</li>
-</ul>
-<blockquote>
-<p><strong>地址空间</strong>：操作系统给每个进程用的一段连续的虚拟内存空间。这个地址范围不是真实的，是虚拟地址的范围，有时甚至会超过实际物理内存的大小。</p>
-</blockquote>
-<h3 id="三类地址的转化">三类地址的转化</h3>
-<p>以上3类地址通过MMU（内存管理单元）来进行转换。其中MMU处理时包含2个过程，分段和分页。在这里简单的说明下具体过程：</p>
-<ol>
-<li>当一条<strong>机器指令</strong>给出一个地址时，这时候的地址便是<strong>逻辑地址</strong>；</li>
-<li>为了得到线性地址，需要从相应的段寄存器中取出16位的段标识符（段选择符），通过这个段标识符可以得到一个段基址。然后将得到的<strong>段基址与指令中的地址相加</strong>，从而得到一个<strong>线性地址</strong>；</li>
-<li>有了线性地址之后，再通过<strong>分页单元</strong>得到<strong>实际的物理地址</strong>。<br>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="https://img-blog.csdnimg.cn/76d5c9e629654292b413216ab1ed2c4a.png" alt="在这里插入图片描述"></li>
-</ol>
-<h2 id="分段">分段</h2>
-<h3 id="硬件中的分段">硬件中的分段</h3>
-<p>段是虚拟地址空间的基本单位，分段机制必须把虚拟地址空间的一个地址转换为线性地址空间的一个线性地址。<br>
-为了实现这种映射，仅仅用段寄存器来确定一个基地址是不够的，至少还得描述段的长度，并且还需要段的一些其他信息，比如访问权之类。所以，这里需要的是一个数据结构——段描述符，它包括三个方面的内容：</p>
-<ul>
-<li>段的基地址(Base Address)：在线性地址空间中段的起始地址。</li>
-<li>段的界限(Limit)：在虚拟地址空间中，段内可以使用的最大偏移量。</li>
-<li>段的保护属性(Attribute)：表示段的特性。例如，该段是否可被读出或写入，或者该段是否作为一个程序来执行，以及段的特权级等等。</li>
-</ul>
-<p>多个段描述符组成的表称为段描述符表。</p>
-<p>逻辑地址的段寄存器中的值提供<strong>段描述符</strong>，然后从段描述符中得到<strong>段基址</strong>和<strong>段界限</strong>，然后<strong>加上逻辑地址的偏移量</strong>，就得到了线性地址，线性地址通过分页机制得到物理地址。</p>
-<h3 id="Linux的分段">Linux的分段</h3>
-<p>为了支持分段，8086处理器设置了四个段寄存器：CS, DS, SS, ES。每个段寄存器都是16位的，都包含着相应段的基址。访存指令中的地址也是16位的，但是，在送入地址总线之前，CPU先把它与某个段寄存器内的值按以下方式相加：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">实际物理地址 &#x3D; （段寄存器地址 &lt;&lt; 4） + （指令访存地址）</span><br></pre></td></tr></table></figure>
-<p>这四个段寄存器的段首地址均是0，也就是说，段首地址+逻辑地址=线性地址，这个公式里面的段首地址为0，也就意味着在linux中，<strong>逻辑地址=线性地址</strong>，这就是linux的分段技术。</p>
-<h2 id="分页">分页</h2>
-<p>对于物理内存，分页单元把它分为固定长度的页框（page frame），每一个页框包含一个页（page）。对于虚拟地址空间，也把它分为一个个的页。为了访问每一个物理页，需要有一个页表，记录每个物理页的起始地址，简单说通过页表就可以将一个虚拟内存中的页与具体的物理页一一对应起来。虚拟地址可以分为两部分，页号和页内偏移，页号为页表的索引，得到页的基地址后，加上偏移地址就可以得到具体的物理地址。</p>
-<p>以32位环境为例，<strong>虚拟地址空间为4G</strong>，一般<strong>一页为4KB</strong>，这样4G内存可以分为1M个页，由于<strong>每个页表项需要4个字节</strong>来描述，因此一共需要4M的存储空间，因为每个进程都有自己的页表，所以1个进程就需要4M的存储空间。</p>
-<h1>特权级CPL、DPL和RPL</h1>
-<h2 id="相关概念">相关概念</h2>
-<p>x86 处理器中，提供了4个特权级别：0，1，2，3。数字越小，特权级别越高！一般来说，操作系统是的重要性、可靠性是最高的，需要运行在0特权级；应用程序工作在最上层，来源广泛、可靠性最低，工作在3特权级别。中间的1和2两个特权级别，一般很少使用。这几个个特权级均由两位（bit）组成，可以表示0～3共4个等级。</p>
-<p>在处理器中，有3个相关的术语与特权级密切相关：</p>
-<ul>
-<li>CPL：<strong>当前进程</strong>的权限级别（Current Privilege Level），是当前<strong>正在执行的代码所在的段</strong>的特权级，存在于cs寄存器的低两位。</li>
-<li>RPL: 说明的是<strong>进程对段访问的请求权限</strong>（Request Privilege Level），是对于段选择子而言的，每个段选择子有自己的RPL，它说明的是进程对段访问的请求权限，有点像函数参数。而且<strong>RPL对每个段来说不是固定的</strong>，两次访问同一段时的RPL可以不同。RPL可能会削弱CPL的作用，例如当前CPL=0的进程要访问一个数据段，它把段选择符中的RPL设为3，这样虽然它是0特权，但对该段仍然只有特权为3的访问权限。</li>
-<li>DPL: 存储在段描述符中，规定<strong>访问该段的权限级别</strong>(Descriptor Privilege Level)，每个段的DPL固定。当进程访问一个段时，需要进程特权级检查，一般要求 DPL &gt;= max {CPL, RPL}</li>
-</ul>
-<p>在保护模式下，cpu利用cpl/rpl/dpl对程序的<strong>访问操作</strong>进行特权级检查，数据段和代码段的特权级检查规则有所不同。</p>
-<h2 id="对数据段和堆栈段访问时的特权级控制：">对数据段和堆栈段访问时的特权级控制：</h2>
-<p>要求访问数据段或堆栈段的程序的CPL ≤ 待访问的数据段或堆栈段的DPL，同时选择子的 RPL ≤ 待访问的数据段或堆栈段的 DPL。即程序访问数据段或堆栈段要遵循一个准则：<strong>只有相同或更高特权级的代码才能访问相应的数据段</strong>。这里，RPL可能会削弱CPL的作用，访问数据段或堆栈段时，默认用CPU和RPL中的最小特权级去访问数据段，所以max {CPL, RPL} ≤ DPL，否则访问失败。</p>
-<h2 id="对代码段访问的特权级控制（代码执行权的特权转移）：">对代码段访问的特权级控制（代码执行权的特权转移）：</h2>
-<p>一些“定律”：</p>
-<ul>
-<li>所有的程序转跳，CPU都不会把段选择子的RPL赋给转跳后程序的CS.RPL.</li>
-<li>转跳后程序的CPL(CS.RPL)只会有下面的2种可能：
-<ul>
-<li>转跳后程序的CPL(CS.RPL) = 转跳前程序的CPL(CS.RPL)</li>
-<li>转跳后程序的CPL(CS.RPL) =　转跳后程序的CodeDescriptor.DPL</li>
-</ul>
-</li>
-<li>CPU不允许程序向低特权级跳转（认为低特权级的代码不可靠，有风险）</li>
-<li>只有一种方式能够使特权级发生改变，call + 调用门 + 非一致代码段，且当前cpl大于目标段dpl，且特权级只能向上跳转。</li>
-</ul>
-<h1>GDT TSS IDT LDT</h1>
-<h2 id="回顾Linux寻址">回顾Linux寻址</h2>
-<p>Linux中的寻址: logical addr --&gt; linear addr --&gt; physical addr<br>
-第一个转换是通过GDT的分段机制,第二个转换是通过分页机制。CPU使用logical addr, CPU中的MMU部件使用physical addr。比如一个程序编译后，代码段的指令地址是0x08048888，这就是logical addr，CPU就取这个地址。GDT是一个表，用来实现logical addr–&gt; linear addr的转化，也就是分段思想的实现。gdtr寄存器指向GDT在内存中的首地址，用CS,DS中的内容做为index，这个index的学名叫segment selector。</p>
-<p>CS：在保护模式下的段选择器,我们一直都只把它看做一个段描述符的“索引号”，用来在 GDT (全局描述描述符表) 中查找一个段描述符。<br>
-用户程序拥有自己私有的描述符表 LDT(Local Descriptor Table),并且拥有自己的特权级别(总不能让用户程序与操作系统一样,工作在非常高的 0 特权级别)。</p>
-<p>正如处理器中有一个寄存器 GDTR，保存着 GDT 的开始地址和长度；处理器中还有一个寄存器 LDTR，存储着当前正在执行的那个应用程序的 LDT 开始地址和长度。</p>
-<h3 id="GDT">GDT</h3>
-<p>在Protected Mode下，对一个段的描述则包括3方面因素：【Base Address, Limit, Access】，它们加在一起被放在一个64-bit长的数据结构中，被称为段描述符。但是，无法通过16-bit长度的段寄存器来直接引用64-bit的段描述符。解决的方法就是把这些长度为64-bit的段描述符放入一个数组中，而将段寄存器中的值作为下标索引来间接引用（事实上，是将段寄存器中的高13 -bit的内容作为索引）。这个全局的数组就是GDT。</p>
-<h3 id="LDT">LDT</h3>
-<p>除了GDT之外，IA-32还允许程序员构建与GDT类似的数据结构，它们被称作LDT（Local Descriptor Table，局部描述符表），但与GDT不同的是，LDT在系统中可以存在多个，并且从LDT的名字可以得知，LDT不是全局可见的，它们只对引用它们的任务可见，每个任务最多可以拥有一个LDT。另外，每一个LDT自身作为一个段存在，它们的段描述符被放在GDT中。</p>
-<p>由于每个进程都有自己的一套程序段、数据段、堆栈段，有了局部描述符表则可以将每个进程的程序段、数据段、堆栈段封装在一起，只要改变LDTR就可以实现对不同进程的段进行访问。</p>
-<h3 id="段选择子是什么？">段选择子是什么？</h3>
-<p>保护模式下，处理器提供段寄存器，处理器提供了6个段寄存器来保存段描述符。这些段寄存器称为cs、ss、ds、es、fs和gs。每个段寄存器都由可见部分和不可见部分组成，当段选择子（可见部分）被加载至段寄存器时，处理器也通过段选择子所指向的段描述符获取了这个段的不可见部分。</p>
-<p>段选择子段选择符为16位，描述段的一些信息，它不是直接指向段，指向在GDT或LDT中的段描述符。它的高13位作为被引用的段描述符在GDT/LDT中的下标索引，bit 2用来指定被引用段描述符被放在GDT中还是到LDT中，bit 0和bit 1是RPL——请求特权等级，被用来做保护目的。</p>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/20/OS-LearningNotes3/p1.png" class title="p1">
-<p>段选择子包括三部分：描述符索引（index）、TI、请求特权级（RPL）。它的index（描述符索引）部分表示<strong>所需要的段描述符在描述符表的位置</strong>，由这个位置再根据在GDTR中存储的描述符表基址就可以找到相应的描述符。然后用描述符表中的段基址加上逻辑地址（SEL:OFFSET）的OFFSET就可以转换成线性地址，段选择子中的TI值只有一位0或1，0代表选择子是在GDT选择，1代表选择子是在LDT选择。请求特权级（RPL）则代表选择子的特权级，共有4个特权级（0级、1级、2级、3级）。</p>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/20/OS-LearningNotes3/p2.png" class title="p2">
-<h3 id="TSS-任务状态段">TSS: 任务状态段</h3>
-<p>顾名思义，任务状态段就是用来存储和恢复任务的状态信息。</p>
-<p>经常听到一个术语:任务上下文。<br>
-TSS是一个特殊的段。在Linux中，CPU从系统态切换到用户态时，会用到TSS里面的ss0和esp0。每个CPU只维护一个TSS。TR寄存器指向这个TSS，切换时里面的ss0和esp0会有改变。相应有一个TSSD放在GDT中，是GDT的一个表项。</p>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/20/OS-LearningNotes3/p3.png" class title="p3">
-<p>可以看到：任务寄存器中可见部分的段选择符加载TSS描述符的段选择符，访问GDT中TSS描述符，通过TSS描述符访问TSS。同时TSS描述符中的基址和界限字段的值又加载到任务寄存器的不可见部分的基址和界限字段，这样做的目的是下次访问该TSS时可以不用通过GDT中的TSS描述符访问TSS，而是直接通过缓存在任务寄存器中的基址和界限字段访问TSS，加快了系统对TSS的访问。</p>
-]]></content>
-      <categories>
-        <category>操作系统高级教程学习笔记</category>
-      </categories>
-      <tags>
-        <tag>操作系统</tag>
-        <tag>Linux Kernel</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>设备环境初始化及激活进程0</title>
-    <url>/2022/10/01/OS-LearningNotes4/</url>
-    <content><![CDATA[<h1>引言</h1>
-<h2 id="设置根设备、硬盘">设置根设备、硬盘</h2>
-<p>用<code>bootsect.s</code>中写入机器系统数据的信息设置软盘为根设备，并设置内核中的硬盘信息。</p>
-<h2 id="规划物理内存格局">规划物理内存格局</h2>
-<p>设置内存中除内核代码和数据之外三部分的位置和大小：</p>
-<ul>
-<li>主内存区：进程代码运行的空间；</li>
-<li>缓冲区：主机与外设（块设备）交换数据的中转站；</li>
-<li>虚拟盘区：可选，可将外设数据先复制至虚拟盘区，然后加以使用。</li>
-</ul>
-<blockquote>
-<p>注：&lt;&lt;12或&gt;&gt;12相当于乘或除以4KB——页</p>
-</blockquote>
-<h2 id="设置虚拟盘空间并初始化">设置虚拟盘空间并初始化</h2>
-<p>设定内存16MB，虚拟盘2MB（缓冲区末端2MB设为虚拟盘）。调用<code>rd_init()</code>函数，对虚拟盘设置：<br>
-将虚拟盘请求项处理函数<code>do_rd_request</code>与 请求项处理函数控制结构<code>blk_dev[7]</code>第二项挂钩，意味着内核能通过调用<code>do_rd_request</code>函数处理与虚拟盘相关的请求项操作。</p>
-<h2 id="内存管理结构-mem-map-初始化">内存管理结构 mem_map 初始化</h2>
-<p>调用<code>mem_init()</code>函数，通过<code>mem_map[]</code>对 1MB (内核所在区域)以上的内存分页进行管理，记录一个页面的使用次数</p>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/01/OS-LearningNotes4/p1.png" class title="p1">
-<h2 id="异常处理类中断服务程序挂接">异常处理类中断服务程序挂接</h2>
-<p><code>trap_init()</code>函数将中断、异常处理的服务程序与IDT进行挂接，逐步重建中断服务体系。</p>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/01/OS-LearningNotes4/p2.png" class title="p2">
-<p>其中，还需要拼接中断描述符：</p>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/01/OS-LearningNotes4/p3.png" class title="p3">
-<h2 id="初始化块设备请求项结构">初始化块设备请求项结构</h2>
-<p>linux外设分为块设备（硬盘、软盘）和字符设备（键盘、黑屏命令行显示器），进程想与块设备进行沟通，必须经过主机内存的缓冲区。<br>
-请求项管理结构<code>request[32]</code>就是操作系统管理缓冲区与块设备逻辑块读写关系的数据结构。操作系统决定缓冲块与块设备间的读写操作，并把需要操作的缓冲块记录在请求项中，得到读写块设备操作指令后，只根据请求项中的记录决定要处理哪个设备的哪个逻辑块。</p>
-<p>初始化：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">request[i].dev&#x3D;-1; &#x2F;&#x2F;请求项未对应哪个设备</span><br><span class="line">request[i].next&#x3D;NULL; &#x2F;&#x2F;还未形成请求项队列</span><br></pre></td></tr></table></figure>
-<h2 id="与人机交互界面相关外设中断服务程序挂接">与人机交互界面相关外设中断服务程序挂接</h2>
-<p>对串行口、显示器、键盘、开机启动时间设置，以及与此相关的中断服务程序与IDT挂接。</p>
-<h2 id="初始化0进程（重要）">初始化0进程（重要）</h2>
-<p>大致过程如下，都由<code>sched_init()</code>函数实现：</p>
-<ol>
-<li>初始化进程0
-<ul>
-<li>将进程0的task_struct中LDT、TSS与GDT挂接</li>
-<li>初始化GDT、task[64]以及与进程调度相关寄存器</li>
-</ul>
-</li>
-<li>时钟中断设置 —&gt; 多进程轮转</li>
-<li>系统调用：通过set_system_gate将system_call与IDT挂接（特权3，set_trap_gate为特权0）</li>
-</ol>
-<h3 id="初始化进程0">初始化进程0</h3>
-<p>首先在GDT中初始化进程0所占的4、5项，即初始化TSS0（任务状态段）和LDT0（局部描述符）。</p>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/01/OS-LearningNotes4/p4.png" class title="p4">
-<p>另外，需要拼接对应的段描述符：</p>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/01/OS-LearningNotes4/p5.png" class title="p5">
-<p>然后还需要通过INIT_TASK指针初始化进程0的task_struct（内核栈）。每个进程都有自己的用户栈和内核栈（跑内核代码时用这个）。</p>
-<h3 id="设置时钟中断">设置时钟中断</h3>
-<p>时钟中断是进程0及其他由它创建的进程轮转的基础。</p>
-<h3 id="设置系统调用总入口">设置系统调用总入口</h3>
-<p>将系统调用函数 system_call 与 int 0x80 中断描述符表挂接。</p>
-]]></content>
-      <categories>
-        <category>操作系统高级教程学习笔记</category>
-      </categories>
-      <tags>
-        <tag>操作系统</tag>
-        <tag>Linux Kernel</tag>
       </tags>
   </entry>
   <entry>
@@ -2108,6 +2001,113 @@ TSS是一个特殊的段。在Linux中，CPU从系统态切换到用户态时，
       </tags>
   </entry>
   <entry>
+    <title>补充知识整理</title>
+    <url>/2022/09/20/OS-LearningNotes3/</url>
+    <content><![CDATA[<h1>分段和分页</h1>
+<blockquote>
+<p>起因是上《操作系统高级教程》时，突然发现对这块的知识已经混沌了，所以重新总结下。<br>
+参考：<br>
+<a href="https://blog.csdn.net/yzy1103203312/article/details/78529067">https://blog.csdn.net/yzy1103203312/article/details/78529067</a><br>
+<a href="https://blog.csdn.net/qq_32740495/article/details/102924136">https://blog.csdn.net/qq_32740495/article/details/102924136</a></p>
+</blockquote>
+<h2 id="为何需要分段">为何需要分段</h2>
+<p>在8086处理器诞生之前，内存寻址方式就是直接访问物理地址（实模式）。8086处理器为了寻址1M的内存空间，把<strong>地址总线扩展到了20位</strong>。但是，ALU的宽度只有16位，即ALU不能计算20位的地址。为了解决这个问题，从而引入了<strong>分段机制</strong>。</p>
+<h2 id="IA32框架的内存寻址">IA32框架的内存寻址</h2>
+<h3 id="三类地址">三类地址</h3>
+<p>IA32的三类地址如下：</p>
+<ul>
+<li><strong>逻辑地址</strong>：<strong>机器语言指令</strong>用这类地址指定<strong>一个操作数的地址或一条指令的地址</strong>，最原始的地址就是逻辑地址。</li>
+<li><strong>线性地址</strong>：将逻辑地址经过<strong>分段机制转换</strong>之后，便得到了线性地址，每个线性地址都<strong>由一个段基址和段内偏移量组成</strong>。</li>
+<li><strong>物理地址</strong>：线性地址<strong>经过分页单元的处理</strong>之后得到一个实际物理地址，也就是<strong>内存单元的实际地址</strong>，用于芯片级内存单元寻址。</li>
+</ul>
+<blockquote>
+<p><strong>地址空间</strong>：操作系统给每个进程用的一段连续的虚拟内存空间。这个地址范围不是真实的，是虚拟地址的范围，有时甚至会超过实际物理内存的大小。</p>
+</blockquote>
+<h3 id="三类地址的转化">三类地址的转化</h3>
+<p>以上3类地址通过MMU（内存管理单元）来进行转换。其中MMU处理时包含2个过程，分段和分页。在这里简单的说明下具体过程：</p>
+<ol>
+<li>当一条<strong>机器指令</strong>给出一个地址时，这时候的地址便是<strong>逻辑地址</strong>；</li>
+<li>为了得到线性地址，需要从相应的段寄存器中取出16位的段标识符（段选择符），通过这个段标识符可以得到一个段基址。然后将得到的<strong>段基址与指令中的地址相加</strong>，从而得到一个<strong>线性地址</strong>；</li>
+<li>有了线性地址之后，再通过<strong>分页单元</strong>得到<strong>实际的物理地址</strong>。<br>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="https://img-blog.csdnimg.cn/76d5c9e629654292b413216ab1ed2c4a.png" alt="在这里插入图片描述"></li>
+</ol>
+<h2 id="分段">分段</h2>
+<h3 id="硬件中的分段">硬件中的分段</h3>
+<p>段是虚拟地址空间的基本单位，分段机制必须把虚拟地址空间的一个地址转换为线性地址空间的一个线性地址。<br>
+为了实现这种映射，仅仅用段寄存器来确定一个基地址是不够的，至少还得描述段的长度，并且还需要段的一些其他信息，比如访问权之类。所以，这里需要的是一个数据结构——段描述符，它包括三个方面的内容：</p>
+<ul>
+<li>段的基地址(Base Address)：在线性地址空间中段的起始地址。</li>
+<li>段的界限(Limit)：在虚拟地址空间中，段内可以使用的最大偏移量。</li>
+<li>段的保护属性(Attribute)：表示段的特性。例如，该段是否可被读出或写入，或者该段是否作为一个程序来执行，以及段的特权级等等。</li>
+</ul>
+<p>多个段描述符组成的表称为段描述符表。</p>
+<p>逻辑地址的段寄存器中的值提供<strong>段描述符</strong>，然后从段描述符中得到<strong>段基址</strong>和<strong>段界限</strong>，然后<strong>加上逻辑地址的偏移量</strong>，就得到了线性地址，线性地址通过分页机制得到物理地址。</p>
+<h3 id="Linux的分段">Linux的分段</h3>
+<p>为了支持分段，8086处理器设置了四个段寄存器：CS, DS, SS, ES。每个段寄存器都是16位的，都包含着相应段的基址。访存指令中的地址也是16位的，但是，在送入地址总线之前，CPU先把它与某个段寄存器内的值按以下方式相加：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">实际物理地址 &#x3D; （段寄存器地址 &lt;&lt; 4） + （指令访存地址）</span><br></pre></td></tr></table></figure>
+<p>这四个段寄存器的段首地址均是0，也就是说，段首地址+逻辑地址=线性地址，这个公式里面的段首地址为0，也就意味着在linux中，<strong>逻辑地址=线性地址</strong>，这就是linux的分段技术。</p>
+<h2 id="分页">分页</h2>
+<p>对于物理内存，分页单元把它分为固定长度的页框（page frame），每一个页框包含一个页（page）。对于虚拟地址空间，也把它分为一个个的页。为了访问每一个物理页，需要有一个页表，记录每个物理页的起始地址，简单说通过页表就可以将一个虚拟内存中的页与具体的物理页一一对应起来。虚拟地址可以分为两部分，页号和页内偏移，页号为页表的索引，得到页的基地址后，加上偏移地址就可以得到具体的物理地址。</p>
+<p>以32位环境为例，<strong>虚拟地址空间为4G</strong>，一般<strong>一页为4KB</strong>，这样4G内存可以分为1M个页，由于<strong>每个页表项需要4个字节</strong>来描述，因此一共需要4M的存储空间，因为每个进程都有自己的页表，所以1个进程就需要4M的存储空间。</p>
+<h1>特权级CPL、DPL和RPL</h1>
+<h2 id="相关概念">相关概念</h2>
+<p>x86 处理器中，提供了4个特权级别：0，1，2，3。数字越小，特权级别越高！一般来说，操作系统是的重要性、可靠性是最高的，需要运行在0特权级；应用程序工作在最上层，来源广泛、可靠性最低，工作在3特权级别。中间的1和2两个特权级别，一般很少使用。这几个个特权级均由两位（bit）组成，可以表示0～3共4个等级。</p>
+<p>在处理器中，有3个相关的术语与特权级密切相关：</p>
+<ul>
+<li>CPL：<strong>当前进程</strong>的权限级别（Current Privilege Level），是当前<strong>正在执行的代码所在的段</strong>的特权级，存在于cs寄存器的低两位。</li>
+<li>RPL: 说明的是<strong>进程对段访问的请求权限</strong>（Request Privilege Level），是对于段选择子而言的，每个段选择子有自己的RPL，它说明的是进程对段访问的请求权限，有点像函数参数。而且<strong>RPL对每个段来说不是固定的</strong>，两次访问同一段时的RPL可以不同。RPL可能会削弱CPL的作用，例如当前CPL=0的进程要访问一个数据段，它把段选择符中的RPL设为3，这样虽然它是0特权，但对该段仍然只有特权为3的访问权限。</li>
+<li>DPL: 存储在段描述符中，规定<strong>访问该段的权限级别</strong>(Descriptor Privilege Level)，每个段的DPL固定。当进程访问一个段时，需要进程特权级检查，一般要求 DPL &gt;= max {CPL, RPL}</li>
+</ul>
+<p>在保护模式下，cpu利用cpl/rpl/dpl对程序的<strong>访问操作</strong>进行特权级检查，数据段和代码段的特权级检查规则有所不同。</p>
+<h2 id="对数据段和堆栈段访问时的特权级控制：">对数据段和堆栈段访问时的特权级控制：</h2>
+<p>要求访问数据段或堆栈段的程序的CPL ≤ 待访问的数据段或堆栈段的DPL，同时选择子的 RPL ≤ 待访问的数据段或堆栈段的 DPL。即程序访问数据段或堆栈段要遵循一个准则：<strong>只有相同或更高特权级的代码才能访问相应的数据段</strong>。这里，RPL可能会削弱CPL的作用，访问数据段或堆栈段时，默认用CPU和RPL中的最小特权级去访问数据段，所以max {CPL, RPL} ≤ DPL，否则访问失败。</p>
+<h2 id="对代码段访问的特权级控制（代码执行权的特权转移）：">对代码段访问的特权级控制（代码执行权的特权转移）：</h2>
+<p>一些“定律”：</p>
+<ul>
+<li>所有的程序转跳，CPU都不会把段选择子的RPL赋给转跳后程序的CS.RPL.</li>
+<li>转跳后程序的CPL(CS.RPL)只会有下面的2种可能：
+<ul>
+<li>转跳后程序的CPL(CS.RPL) = 转跳前程序的CPL(CS.RPL)</li>
+<li>转跳后程序的CPL(CS.RPL) =　转跳后程序的CodeDescriptor.DPL</li>
+</ul>
+</li>
+<li>CPU不允许程序向低特权级跳转（认为低特权级的代码不可靠，有风险）</li>
+<li>只有一种方式能够使特权级发生改变，call + 调用门 + 非一致代码段，且当前cpl大于目标段dpl，且特权级只能向上跳转。</li>
+</ul>
+<h1>GDT TSS IDT LDT</h1>
+<h2 id="回顾Linux寻址">回顾Linux寻址</h2>
+<p>Linux中的寻址: logical addr --&gt; linear addr --&gt; physical addr<br>
+第一个转换是通过GDT的分段机制,第二个转换是通过分页机制。CPU使用logical addr, CPU中的MMU部件使用physical addr。比如一个程序编译后，代码段的指令地址是0x08048888，这就是logical addr，CPU就取这个地址。GDT是一个表，用来实现logical addr–&gt; linear addr的转化，也就是分段思想的实现。gdtr寄存器指向GDT在内存中的首地址，用CS,DS中的内容做为index，这个index的学名叫segment selector。</p>
+<p>CS：在保护模式下的段选择器,我们一直都只把它看做一个段描述符的“索引号”，用来在 GDT (全局描述描述符表) 中查找一个段描述符。<br>
+用户程序拥有自己私有的描述符表 LDT(Local Descriptor Table),并且拥有自己的特权级别(总不能让用户程序与操作系统一样,工作在非常高的 0 特权级别)。</p>
+<p>正如处理器中有一个寄存器 GDTR，保存着 GDT 的开始地址和长度；处理器中还有一个寄存器 LDTR，存储着当前正在执行的那个应用程序的 LDT 开始地址和长度。</p>
+<h3 id="GDT">GDT</h3>
+<p>在Protected Mode下，对一个段的描述则包括3方面因素：【Base Address, Limit, Access】，它们加在一起被放在一个64-bit长的数据结构中，被称为段描述符。但是，无法通过16-bit长度的段寄存器来直接引用64-bit的段描述符。解决的方法就是把这些长度为64-bit的段描述符放入一个数组中，而将段寄存器中的值作为下标索引来间接引用（事实上，是将段寄存器中的高13 -bit的内容作为索引）。这个全局的数组就是GDT。</p>
+<h3 id="LDT">LDT</h3>
+<p>除了GDT之外，IA-32还允许程序员构建与GDT类似的数据结构，它们被称作LDT（Local Descriptor Table，局部描述符表），但与GDT不同的是，LDT在系统中可以存在多个，并且从LDT的名字可以得知，LDT不是全局可见的，它们只对引用它们的任务可见，每个任务最多可以拥有一个LDT。另外，每一个LDT自身作为一个段存在，它们的段描述符被放在GDT中。</p>
+<p>由于每个进程都有自己的一套程序段、数据段、堆栈段，有了局部描述符表则可以将每个进程的程序段、数据段、堆栈段封装在一起，只要改变LDTR就可以实现对不同进程的段进行访问。</p>
+<h3 id="段选择子是什么？">段选择子是什么？</h3>
+<p>保护模式下，处理器提供段寄存器，处理器提供了6个段寄存器来保存段描述符。这些段寄存器称为cs、ss、ds、es、fs和gs。每个段寄存器都由可见部分和不可见部分组成，当段选择子（可见部分）被加载至段寄存器时，处理器也通过段选择子所指向的段描述符获取了这个段的不可见部分。</p>
+<p>段选择子段选择符为16位，描述段的一些信息，它不是直接指向段，指向在GDT或LDT中的段描述符。它的高13位作为被引用的段描述符在GDT/LDT中的下标索引，bit 2用来指定被引用段描述符被放在GDT中还是到LDT中，bit 0和bit 1是RPL——请求特权等级，被用来做保护目的。</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/20/OS-LearningNotes3/p1.png" class title="p1">
+<p>段选择子包括三部分：描述符索引（index）、TI、请求特权级（RPL）。它的index（描述符索引）部分表示<strong>所需要的段描述符在描述符表的位置</strong>，由这个位置再根据在GDTR中存储的描述符表基址就可以找到相应的描述符。然后用描述符表中的段基址加上逻辑地址（SEL:OFFSET）的OFFSET就可以转换成线性地址，段选择子中的TI值只有一位0或1，0代表选择子是在GDT选择，1代表选择子是在LDT选择。请求特权级（RPL）则代表选择子的特权级，共有4个特权级（0级、1级、2级、3级）。</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/20/OS-LearningNotes3/p2.png" class title="p2">
+<h3 id="TSS-任务状态段">TSS: 任务状态段</h3>
+<p>顾名思义，任务状态段就是用来存储和恢复任务的状态信息。</p>
+<p>经常听到一个术语:任务上下文。<br>
+TSS是一个特殊的段。在Linux中，CPU从系统态切换到用户态时，会用到TSS里面的ss0和esp0。每个CPU只维护一个TSS。TR寄存器指向这个TSS，切换时里面的ss0和esp0会有改变。相应有一个TSSD放在GDT中，是GDT的一个表项。</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/20/OS-LearningNotes3/p3.png" class title="p3">
+<p>可以看到：任务寄存器中可见部分的段选择符加载TSS描述符的段选择符，访问GDT中TSS描述符，通过TSS描述符访问TSS。同时TSS描述符中的基址和界限字段的值又加载到任务寄存器的不可见部分的基址和界限字段，这样做的目的是下次访问该TSS时可以不用通过GDT中的TSS描述符访问TSS，而是直接通过缓存在任务寄存器中的基址和界限字段访问TSS，加快了系统对TSS的访问。</p>
+]]></content>
+      <categories>
+        <category>操作系统高级教程学习笔记</category>
+      </categories>
+      <tags>
+        <tag>操作系统</tag>
+        <tag>Linux Kernel</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>seaborn</title>
     <url>/2021/02/03/seaborn/</url>
     <content><![CDATA[<h2 id="seaborn简介">seaborn简介</h2>
@@ -2228,6 +2228,157 @@ TSS是一个特殊的段。在Linux中，CPU从系统态切换到用户态时，
       <tags>
         <tag>python</tag>
         <tag>可视化</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>OS-LearningNotes5</title>
+    <url>/2022/11/16/OS-LearningNotes5/</url>
+    <content><![CDATA[<h1>思考题</h1>
+<h2 id="1-为什么开始启动计算机的时候，执行的是BIOS代码而不是操作系统自身的代码？（P1，3）">1.为什么开始启动计算机的时候，执行的是BIOS代码而不是操作系统自身的代码？（P1，3）</h2>
+<p>加电的一瞬间，计算机内存中，准确的说是RAM中，还未初始化，没有任何程序。软盘里虽然有操作系统程序，但CPU的逻辑电路被设计为只能运行内存中的程序，没有能力直接从软盘运行操作系统。这就需要硬件主动加载0xffff0处的BIOS程序，由BIOS准备好中断向量表、中断服务程序，接着通过中断“int 0x19”将引导程序bootsect加载至内存，以及后续的一系列操作，最终操作系统自身代码才能位于内存中，被CPU执行。</p>
+<p>在加电后，BIOS 需要完成一些检测工作，设置实模式下的中断向量表和服务程序，并将操作系统的引导扇区加载至 0x7C00 处，然后将跳转至 0x7C00运行操作系统自身的代码。</p>
+<h2 id="2-为什么BIOS只加载了一个扇区，后续扇区却是由bootsect代码加载？为什么BIOS没有直接把所有需要加载的扇区都加载？（P6，7）">2.为什么BIOS只加载了一个扇区，后续扇区却是由bootsect代码加载？为什么BIOS没有直接把所有需要加载的扇区都加载？（P6，7）</h2>
+<p>BIOS和操作系统通常由不同的专业团队开发的，为了能协调工作，需要按固定的规则约定，进行灵活的各自设计相应的部分。<br>
+因此，现行的方法是定位识别：对BIOS而言，“约定”接到启动操作系统命令，“定位识别”只从启动扇区把代码加载至0x7c00(BOOTSEG)位置，至于该扇区内容是什么，一概不管。而后续扇区则由操作系统自己的bootsect代码加载，这些代码由编写系统的用户负责，与之前BIOS也无关。<br>
+这样构建的好处是站在整个体系的高度，统一设计安排，简单而有效。且BIOS和操作系统的开发都可遵循这一约定，按照自己的意愿进行各自的设计，包括内存的规划等都更为灵活。</p>
+<p>如果BIOS一次性加载，会存在：<br>
+1）对于不同的操作系统，其代码长度不一样，可能导致操作系统加载不完全；<br>
+2）使用BIOS进行加载，且加载完成之后再执行，需要很长的时间，因此Linux采用的是边执行边加载的方法。</p>
+<h2 id="3-为什么BIOS把bootsect加载到0x07c00，而不是0x00000？加载后又马上挪到0x90000处，是何道理？为什么不一次加载到位？-P4、P5-17">3.为什么BIOS把bootsect加载到0x07c00，而不是0x00000？加载后又马上挪到0x90000处，是何道理？为什么不一次加载到位？(P4、P5-17)</h2>
+<p>1）0x07c00是历史约定。<br>
+2）BIOS在从0x00000开始的1KB字节构建了中断向量表，接着的256KB字节内存空间构建了BIOS数据区，这些数据还有用处，所以不能把bootsect加载到0x00000。 0X07c00是BIOS设置的内存地址，不是bootsect能够决定的。<br>
+3）挪到0x90000处是操作系统内存规划行为，主要为了避免在内核system占据0x000000处时可能将0x07c00(bootsect)覆盖，造成在main中设置根设备时取不到正确数据。将该扇区挪到0x90000，在setup.s中，获取一些硬件数据保存在0x90000~0x901ff处，可以对一些后面内核将要利用的数据，集中保存和管理。</p>
+<h2 id="4-bootsect、setup、head程序之间是怎么衔接的？给出代码证据。（P16、P24-P25-P26）">4.bootsect、setup、head程序之间是怎么衔接的？给出代码证据。（P16、P24+P25+P26）</h2>
+<p>1）bootsect跳转至setup程序：jmpi 0, SETUPSEG;<br>
+解释：通过BIOS的“int 0x13”中断，找到bootsect自身的中断服务程序，将setup加载至SETUPSEG(0x90200)处。同样手法，将system加载至SYSSEG(0x10000)处。bootsect程序任务都已经完成。然后，通过“jmpi 0, SETUPSEG”跳转至setup程序的加载位置，此时CS:IP指向setup程序的第一条指令，意味着现在由setup程序接着bootsect程序继续执行。此时还是实模式。<br>
+2）setup跳转至head程序：jmpi 0, 8<br>
+解释：setup通过BIOS提供的中断服务程序提取了系统数据，存储在原来的bootsect位置只保留最后2字节未被覆盖（0x901fc，根设备号）。接着，将IF至0，完成关中断操作。然后，将system移动到0x00000位置，此时head已经占据了0x00000处，同时BIOS中断向量表彻底被覆盖。为此，setup开始为保护模式做准备，设置GDT、IDT并用CPU中专用寄存器IDTR、GDTR看住。接着，打开A20，也就是32位寻址模式，再对可编程中断控制器8259A进行重新编程，并置PE位为1，即设定处理器工作方式为保护模式，以后根据GDT决定执行哪里的程序。最后，通过“jmpi 0,8”跳转到head。“0”表示段内偏移，“8(1000)”是保护模式下的段选择符，最后两位“00”表示内核态，第二位“0”表示GDT，第一位“1”表示GDT表中GDT[1]项（内核代码段），从该项中得知段基址为0x00000000。结合上述偏移0，可知最终跳转至0x0000000处，执行head程序。</p>
+<h2 id="5-setup程序的最后是jmpi-0-8-，为什么这个8不能简单的当作阿拉伯数字8看待，究竟有什么内涵？-P25">5.setup程序的最后是jmpi 0,8 ，为什么这个8不能简单的当作阿拉伯数字8看待，究竟有什么内涵？(P25)</h2>
+<p>此时为32位保护模式，0表示段内偏移，8表示段选择符，转化为二进制：1000。<br>
+最后两位00表示内核特权级，第三位0表示GDT表，第四位1表示所选的表（在此就是GDT表）的1项来确定代码段的段基址和段限长等信息。<br>
+这样可以得到代码是从段基址0x00000000、偏移为0处开始执行的，即head的开始位置。</p>
+<p>补充：<br>
+最后两位表示特权，其中00是内核，11是用户。<br>
+倒数第3位如果是0表示GDT，1则表示LDT。<br>
+前两位表示这个表的第几项。GDT表的0表示空，1表示内核代码段，2表示内核数据段。LDT表的0表示空，1表示用户代码段，2表示用户数据段。</p>
+<p>6.保护模式在“保护”什么？它的“保护”体现在哪里？特权级的目的和意义是什么？分页有“保护”作用吗？(P436-P439、P443)<br>
+1）打开了保护模式后，CPU的寻址模式发生了变化，需要依赖于GDT去获取代码或数据段的基址。从GDT可以看出，保护模式除了段基址外，还有段限长，这样相当于增加了一个段位寄存器。既有效地防止了对代码或数据段的覆盖，又防止了代码段自身的访问超限，明显增强了保护作用。<br>
+2）体现：①在GDT、LDT及IDT中，均有自己界限特、权级等属性，这是对描述符所描述的对象的保护；②在不同特权级间访问时，系统会对CPL、RPL、DPL、IOPL 等进行检验，对不同层级的程序进行保护，同还限制某些特殊指令的使用，如 lgdt, lidt,cli等。<br>
+3）特权级的目的和意义：①为了更好的管理资源并保护系统不受侵害，操作系统利用先机，以时间换取特权，先霸占所有特权；②依托CPU提供的保护模式，着眼于“段”，在所有的段选择符最后两位标示特权级，禁止用户执行cli、sti等对掌控局面至关重要的指令。③操作系统可以把内核设计成最高特权级，把用户进程设计成最低特权级。这样，操作系统可以访问 GDT、LDT、TR，而 GDT、LDT是逻辑地址形成线性地址的关键，因此操作系统可以掌控线性地址。物理地址是由内核将线性地址转换而成的，所以操作系统可以访问任何物理地址，而用户进程只能使用逻辑地址。<br>
+4）①分页机制中PDE和PTE中的R/W和U/S等，提供了页级保护；②分页机制将线性地址与物理地址加以映射，提供了对物理地址的保护。<br>
+补充：为什么特权级是基于段的?<br>
+在操作系统设计中，一般一个段实现的功能相对完整，可以把代码放在一个段，数据放在一个段，并通过段选择符（包括CS、SS、DS、ES、FS和GS）获取段的基址和特权级等信息。特权级基于段，这样当段选择子具有不匹配的特权级时，按照特权级规则判断是否可以访问。特权级基于段，是结合了程序的特点和硬件实现的一种考虑。</p>
+<p>7.在setup程序里曾经设置过gdt，为什么在head程序中将其废弃，又重新设置了一个？为什么设置两次，而不是一次搞好？(P33)<br>
+原来GDT所在的位置是设计代码时在setup.s里面设置的数据，将来这个setup模块所在的内存位置会在设计缓冲区时被覆盖。如果不改变位置，将来GDT的内容肯定会被缓冲区覆盖掉，从而影响系统的运行。这样一来，将来整个内存空间中唯一安全的地方就是现在head.s所在的位置了。<br>
+不能在执行setup程序时直接把GDT的内容复制到head.s所在位置：如果先复制GDT内容，后移动system模块，它就会被后者覆盖；如果先移动system模块，后复制GDT内容，它又会把head.s对应的程序覆盖，而这时head.s还没有执行。所以无论如何都要重新建立GDT。</p>
+<p>8.进程0的task_struct在哪？具体内容是什么？(P70)<br>
+进程0的task_struct、内核栈、用户栈都在内核数据段。<br>
+进程0的task_struct 的具体内容包括状态、信号、pid、alarm、ldt、tss等管理该进程所需的数据。如下代码所示：</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 进程0的task_struct</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> INIT_TASK \</span></span><br><span class="line"><span class="comment">/* state etc */</span>	&#123; <span class="number">0</span>,<span class="number">15</span>,<span class="number">15</span>, \</span><br><span class="line"><span class="comment">/* signals */</span>	<span class="number">0</span>,&#123;&#123;&#125;,&#125;,<span class="number">0</span>, \</span><br><span class="line"><span class="comment">/* ec,brk... */</span>	<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>, \</span><br><span class="line"><span class="comment">/* pid etc.. */</span>	<span class="number">0</span>,<span class="number">-1</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>, \</span><br><span class="line"><span class="comment">/* uid etc */</span>	<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>, \</span><br><span class="line"><span class="comment">/* alarm */</span>	<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>, \</span><br><span class="line"><span class="comment">/* math */</span>	<span class="number">0</span>, \</span><br><span class="line"><span class="comment">/* fs info */</span>	<span class="number">-1</span>,<span class="number">0022</span>,<span class="literal">NULL</span>,<span class="literal">NULL</span>,<span class="literal">NULL</span>,<span class="number">0</span>, \</span><br><span class="line"><span class="comment">/* filp */</span>	&#123;<span class="literal">NULL</span>,&#125;, \</span><br><span class="line">	&#123; \</span><br><span class="line">		&#123;<span class="number">0</span>,<span class="number">0</span>&#125;, \</span><br><span class="line"><span class="comment">/* ldt */</span>	&#123;<span class="number">0x9f</span>,<span class="number">0xc0fa00</span>&#125;, \</span><br><span class="line">		&#123;<span class="number">0x9f</span>,<span class="number">0xc0f200</span>&#125;, \</span><br><span class="line">	&#125;, \</span><br><span class="line"><span class="comment">/*tss*/</span>	&#123;<span class="number">0</span>,PAGE_SIZE+(<span class="keyword">long</span>)&amp;init_task,<span class="number">0x10</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,(<span class="keyword">long</span>)&amp;pg_dir,\</span><br><span class="line">	 <span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>, \</span><br><span class="line">	 <span class="number">0</span>,<span class="number">0</span>,<span class="number">0x17</span>,<span class="number">0x17</span>,<span class="number">0x17</span>,<span class="number">0x17</span>,<span class="number">0x17</span>,<span class="number">0x17</span>, \</span><br><span class="line">	 _LDT(<span class="number">0</span>),<span class="number">0x80000000</span>, \</span><br><span class="line">		&#123;&#125; \</span><br><span class="line">	&#125;, \</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>以下代码说明user_stack在内核数据段。（0x10）（参考杨炯的内核代码完全注释）一个任务的数据结构与其内核态堆栈是放在同一内存页中。所以进程0的内核栈是跟着task struct后面的，所以进程0的内核栈不是user_stack，user_stack是进程0的用户栈。（P91的图）<br>
+long user_stack [ PAGE_SIZE&gt;&gt;2 ] ;//定义用户堆栈4K，指针指向最后一项<br>
+//该结构用于设置堆栈ss：esp（数据段选择符）<br>
+struct {<br>
+long * a;<br>
+short b;<br>
+} stack_start = { &amp; user_stack [PAGE_SIZE&gt;&gt;2] , 0x10 };//内核数据段</p>
+<p>//每个进程在内核态运行时都有自己的内核态堆栈，这里定义了内核态堆栈的结构<br>
+union task_union {<br>
+struct task_struct task;<br>
+char stack[PAGE_SIZE];<br>
+};<br>
+static union task_union init_task = {INIT_TASK,};</p>
+<p>9.内核的线性地址空间是如何分页的？（P37-38）画出从0x000000开始的7个页（包括页目录表、页表所在页）的挂接关系图，就是页目录表的前四个页目录项、第一个个页表的前7个页表项指向什么位置？（P39）给出代码证据。（P39）<br>
+1）head.s在setup_paging开始创建分页机制。将页目录表和4个页表放到物理内存的起始位置，从内存起始位置开始的5个页空间内容全部清零（每页4kb），然后设置页目录表的前4项，使之分别指向4个页表。然后开始从高地址向低地址方向填写4个页表，依次指向内存从高地址向低地址方向的各个页面。即将第4个页表的最后一项（pg3+4092指向的位置）指向寻址范围的最后一个页面。即从0xFFF000开始的4kb 大小的内存空间。将第4个页表的倒数第二个页表项（pg3-4+4092）指向倒数第二个页面，即0xFFF000-0x1000开始的4KB字节的内存空间，依此类推。<br>
+2）图见P39</p>
+<p>3）Head.s中：（P39）<br>
+setup_paging: <br>
+movl <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1024</mn><mo>∗</mo><mn>5</mn><mo separator="true">,</mo><mi>x</mi><mi>o</mi><mi>r</mi><mi>l</mi><mtext> </mtext><mi>x</mi><mi>o</mi><mi>r</mi><mi>l</mi><mtext> </mtext><mi>c</mi><mi>l</mi><mi>d</mi><mo separator="true">;</mo><mi>r</mi><mi>e</mi><mi>p</mi><mo separator="true">;</mo><mi>s</mi><mi>t</mi><mi>o</mi><mi>s</mi><mi>l</mi><mtext> </mtext><mi>m</mi><mi>o</mi><mi>v</mi><mi>l</mi><mtext> </mtext></mrow><annotation encoding="application/x-tex">1024*5,%ecx  /* 5 pages - pg_dir+4 page tables */ 
+xorl %eax,%eax 
+xorl %edi,%edi  /* pg_dir is at 0x000 */ 
+cld;rep;stosl
+ movl </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1024</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord">5</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal">x</span><span class="mord mathnormal" style="margin-right:0.02778em;">or</span><span class="mord mathnormal" style="margin-right:0.01968em;">l</span><span class="mord"> </span><span class="mord mathnormal">x</span><span class="mord mathnormal" style="margin-right:0.02778em;">or</span><span class="mord mathnormal" style="margin-right:0.01968em;">l</span><span class="mord"> </span><span class="mord mathnormal">c</span><span class="mord mathnormal" style="margin-right:0.01968em;">l</span><span class="mord mathnormal">d</span><span class="mpunct">;</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal">re</span><span class="mord mathnormal">p</span><span class="mpunct">;</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal">s</span><span class="mord mathnormal">t</span><span class="mord mathnormal">os</span><span class="mord mathnormal" style="margin-right:0.01968em;">l</span><span class="mord"> </span><span class="mord mathnormal">m</span><span class="mord mathnormal">o</span><span class="mord mathnormal" style="margin-right:0.03588em;">v</span><span class="mord mathnormal" style="margin-right:0.01968em;">l</span><span class="mord"> </span></span></span></span>pg0+7,pg_dir  /* set present bit/user r/w <em>/  <br>
+movl <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi><mi>g</mi><mn>1</mn><mo>+</mo><mn>7</mn><mo separator="true">,</mo><mi>p</mi><msub><mi>g</mi><mi>d</mi></msub><mi>i</mi><mi>r</mi><mo>+</mo><mn>4</mn><mtext>  </mtext><mi mathvariant="normal">/</mi><mo>∗</mo><mtext>  </mtext><mo>−</mo><mo>−</mo><mo>−</mo><mo>−</mo><mo>−</mo><mo>−</mo><mo>−</mo><mo>−</mo><mo>−</mo><mtext> </mtext><mi mathvariant="normal">&quot;</mi><mtext> </mtext><mi mathvariant="normal">&quot;</mi><mtext> </mtext><mo>−</mo><mo>−</mo><mo>−</mo><mo>−</mo><mo>−</mo><mo>−</mo><mo>−</mo><mo>−</mo><mo>−</mo><mtext> </mtext><mo>∗</mo><mi mathvariant="normal">/</mi><mtext> </mtext><mi>m</mi><mi>o</mi><mi>v</mi><mi>l</mi><mtext> </mtext></mrow><annotation encoding="application/x-tex">pg1+7,pg_dir+4  /*  --------- &quot; &quot; --------- */ 
+movl </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8388800000000001em;vertical-align:-0.19444em;"></span><span class="mord mathnormal">p</span><span class="mord mathnormal" style="margin-right:0.03588em;">g</span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.85396em;vertical-align:-0.19444em;"></span><span class="mord">7</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal">p</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">g</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">d</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord mathnormal">i</span><span class="mord mathnormal" style="margin-right:0.02778em;">r</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">4  /</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord">  </span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.77777em;vertical-align:-0.08333em;"></span><span class="mord"> &quot; &quot; </span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.46528em;vertical-align:0em;"></span><span class="mord"> </span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">/ </span><span class="mord mathnormal">m</span><span class="mord mathnormal">o</span><span class="mord mathnormal" style="margin-right:0.03588em;">v</span><span class="mord mathnormal" style="margin-right:0.01968em;">l</span><span class="mord"> </span></span></span></span>pg2+7,pg_dir+8  /</em>  --------- &quot; &quot; --------- <em>/  <br>
+movl <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi><mi>g</mi><mn>3</mn><mo>+</mo><mn>7</mn><mo separator="true">,</mo><mi>p</mi><msub><mi>g</mi><mi>d</mi></msub><mi>i</mi><mi>r</mi><mo>+</mo><mn>12</mn><mtext>  </mtext><mi mathvariant="normal">/</mi><mo>∗</mo><mtext>  </mtext><mo>−</mo><mo>−</mo><mo>−</mo><mo>−</mo><mo>−</mo><mo>−</mo><mo>−</mo><mo>−</mo><mo>−</mo><mtext> </mtext><mi mathvariant="normal">&quot;</mi><mtext> </mtext><mi mathvariant="normal">&quot;</mi><mtext> </mtext><mo>−</mo><mo>−</mo><mo>−</mo><mo>−</mo><mo>−</mo><mo>−</mo><mo>−</mo><mo>−</mo><mo>−</mo><mtext> </mtext><mo>∗</mo><mi mathvariant="normal">/</mi><msub><mtext> </mtext><mi>p</mi></msub><msub><mi>g</mi><mi>d</mi></msub><mi>i</mi><mi>r</mi><mtext>用于表示内核分页机制完成后的内核起始位置，也就是物理内存的起始位置</mtext><mn>0</mn><mi>x</mi><mn>000000</mn><mtext>，以上四句完成页目录表的前四项与页表</mtext><mn>1</mn><mtext>，</mtext><mn>2</mn><mo separator="true">,</mo><mn>3</mn><mo separator="true">,</mo><mn>4</mn><mtext>的挂接 </mtext><mi>m</mi><mi>o</mi><mi>v</mi><mi>l</mi><mtext> </mtext></mrow><annotation encoding="application/x-tex">pg3+7,pg_dir+12  /*  --------- &quot; &quot; --------- */ 
+_pg_dir用于表示内核分页机制完成后的内核起始位置，也就是物理内存的起始位置0x000000，以上四句完成页目录表的前四项与页表1，2,3,4的挂接 
+movl </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8388800000000001em;vertical-align:-0.19444em;"></span><span class="mord mathnormal">p</span><span class="mord mathnormal" style="margin-right:0.03588em;">g</span><span class="mord">3</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.85396em;vertical-align:-0.19444em;"></span><span class="mord">7</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal">p</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">g</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">d</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord mathnormal">i</span><span class="mord mathnormal" style="margin-right:0.02778em;">r</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">12  /</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord">  </span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.77777em;vertical-align:-0.08333em;"></span><span class="mord"> &quot; &quot; </span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.46528em;vertical-align:0em;"></span><span class="mord"> </span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1.036108em;vertical-align:-0.286108em;"></span><span class="mord">/</span><span class="mord"><span class="mord"> </span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.15139200000000003em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">p</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">g</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">d</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord mathnormal">i</span><span class="mord mathnormal" style="margin-right:0.02778em;">r</span><span class="mord cjk_fallback">用于表示内核分页机制完成后的内核起始位置，也就是物理内存的起始位置</span><span class="mord">0</span><span class="mord mathnormal">x</span><span class="mord">000000</span><span class="mord cjk_fallback">，以上四句完成页目录表的前四项与页表</span><span class="mord">1</span><span class="mord cjk_fallback">，</span><span class="mord">2</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">3</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">4</span><span class="mord cjk_fallback">的挂接</span><span class="mord"> </span><span class="mord mathnormal">m</span><span class="mord mathnormal">o</span><span class="mord mathnormal" style="margin-right:0.03588em;">v</span><span class="mord mathnormal" style="margin-right:0.01968em;">l</span><span class="mord"> </span></span></span></span>pg3+4092,%edi <br>
+movl $0xfff007,%eax  /</em>  16Mb - 4096 + 7 (r/w user,p) <em>/ <br>
+std <br>
+1: 	stosl   /</em> fill pages backwards - more efficient :-) <em>/ <br>
+subl $0x1000,%eax<br>
+jge 1b<br>
+xorl %eax,%eax		/</em> pg_dir is at 0x0000 <em>/<br>
+movl %eax,%cr3		/</em> cr3 - page directory start <em>/<br>
+movl %cr0,%eax<br>
+orl $0x80000000,%eax<br>
+movl %eax,%cr0		/</em> set paging (PG) bit <em>/<br>
+ret			/</em> this also flushes prefetch-queue */<br>
+ <br>
+完成页表项与页面的挂接，是从高地址向低地址方向完成挂接的，16M内存全部完成挂接（注意页表从0开始，页表0-页表3）</p>
+<p>10.在head程序执行结束的时候，在idt的前面有184个字节的head程序的剩余代码，剩余了什么？为什么要剩余？(P31、P36、P40)<br>
+1）剩余的内容：0x5400~0x54b7处，包含代码段：after_page_tables(栈中压入了些参数)、 ignore_int(初始化中断时的中断处理函数) 和 setup_paging(初始化分页)。<br>
+2）原因：after_page_tables中压入了一些参数，为内核进入main函数的跳转做准备。为了谨慎起见，设计者在栈中压入了L6，以使得系统可能出错时，返回到L6处执行。ignore_int: 使用 ignore_int将 idt全部初始化，因此如果中断开启后，可能使用了未设置的中断向量，那么将默认跳转到 ignore_int处执行。这样做的好处是使得系统不会跳转到随机的地方执行错误的代码，所以ignore_int不能被覆盖。 setup_paging:为设置分页机制的代码，它在分页完成前不能被覆盖。</p>
+<p>11.为什么不用call，而是用ret“调用”main函数？画出调用路线图，给出代码证据。(P42)<br>
+call指令会将EIP的值自动压栈，保护返回现场，然后执行被调函数的程序，等到执行被调函数的ret指令时，自动出栈给EIP并还原现场，继续执行call的下一条指令。然而对操作系统的main函数来说，如果用call调用main函数，那么ret时返回给谁呢？因为没有更底层的函数程序接收操作系统的返回。用ret实现的调用操作当然就不需要返回了，call做的压栈和跳转动作需要手工编写代码。<br>
+2）图在p42仿call示意图下面部分</p>
+<p>3）代码：<br>
+after_page_tables:<br>
+pushl $0		# These are the parameters to main :-)<br>
+pushl $0<br>
+pushl $0<br>
+pushl $L6		# return address for main, if it decides to.<br>
+pushl $__main; //将main的地址压入栈，即EIP<br>
+jmp setup_paging<br>
+setup_paging:<br>
+ret; //弹出EIP，针对EIP指向的值继续执行，即main函数的入口地址。</p>
+<p>12.用文字和图说明中断描述符表是如何初始化的，可以举例说明（比如：set_trap_gate(0,&amp;divide_error)），并给出代码证据。（P52）<br>
+对中断描述符表的初始化，就是将中断、异常处理的服务程序与IDT进行挂接，逐步重建中断服务体系。<br>
+（先画图见P54 图2-9然后解释）<br>
+以set_trap_gate(0,&amp;divide_error)//除零错误 为例，进行宏展开后得到：</p>
+<p>其中：n是0；gate_addr是&amp;idt[0]，也就是IDT的第一项中断描述符的地址；type是15；dpl（描述符特权级）是0；addr是中断服务程序divide_error(void)的入口地址。</p>
+<p>13.在IA-32中，有大约20多个指令是只能在0特权级下使用，其他的指令，比如cli，并没有这个约定。奇怪的是，在Linux0.11中，3特权级的进程代码并不能使用cli指令，这是为什么？请解释并给出代码证据。(P68、P79、P92)<br>
+根据IA-32手册，某些系统指令是禁止应用程序使用的。cli指令用于复位IF标志位，cli指令与CPL和EFLAGS[IOPL]有关。如果CPL的权限高于等于EFLAGS中的IOPL的权限，即数值上CPL&lt;=IOPL，则可以执行该指令，IF位清除为0。如果CPL大于当前程序或过程的IOPL，则产生保护模式异常。<br>
+由于在内核中IOPL的值初始为0，且未经改变。INIT_TASK的TSS中设置了EFLAGS值，进程0又在move_to_user_mode中，继承了内核的EFLAGS。<br>
+\linux0.11\include\linux\sched.h<br>
+#define INIT_TASK <br>
+//…<br>
+/<em>tss</em>/	{0,PAGE_SIZE+(long)&amp;init_task,0x10,0,0,0,0,(long)&amp;pg_dir,<br>
+0,0,0,0,0,0,0,0, \     //eflags的值，决定了cli这类指令只能在0特权级使用<br>
+0,0,0x17,0x17,0x17,0x17,0x17,0x17, <br>
+_LDT(0),0x80000000, <br>
+{} <br>
+}, <br>
+}<br>
+\linux0.11\include\asm\system.h<br>
+#define move_to_user_mode() <br>
+…<br>
+“pushfl\n\t” \   //eflags进栈<br>
+…<br>
+“iret\n” <br>
+//…<br>
+:::“ax”)<br>
+在进程0的TSS中，设置了eflags中的IOPL位为0，代码见P68，后续进程如果没有改动的话也是0，即IOPL=0。因此，通过设置IOPL，可以限制3特权级进程代码使用cli指令。<br>
+\linux0.11\kernel\fork.c<br>
+int copy_process(int nr,long ebp,long edi,long esi,long gs,long none,<br>
+long ebx,long ecx,long edx,<br>
+long fs,long es,long ds,<br>
+long eip,long cs,long eflags,long esp,long ss)<br>
+{<br>
+//…<br>
+p-&gt;tss.eip = eip;<br>
+p-&gt;tss.eflags = eflags;<br>
+p-&gt;tss.eax = 0;<br>
+//…<br>
+return last_pid;<br>
+}</p>
+]]></content>
+      <categories>
+        <category>操作系统高级教程学习笔记</category>
+      </categories>
+      <tags>
+        <tag>操作系统</tag>
+        <tag>Linux Kernel</tag>
       </tags>
   </entry>
 </search>

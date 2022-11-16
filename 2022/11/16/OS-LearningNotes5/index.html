@@ -1,0 +1,354 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>OS-LearningNotes5 | Enchanted to Meet U</title><meta name="keywords" content="操作系统,Linux Kernel"><meta name="author" content="HattieHD"><meta name="copyright" content="HattieHD"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="description" content="国科大杨力祥《操作系统高级教程》思考题整理">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OS-LearningNotes5">
+<meta property="og:url" content="https://enchantedovo.cn/2022/11/16/OS-LearningNotes5/index.html">
+<meta property="og:site_name" content="Enchanted to Meet U">
+<meta property="og:description" content="国科大杨力祥《操作系统高级教程》思考题整理">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s3.bmp.ovh/imgs/2022/08/30/57e6003529c041b7.webp">
+<meta property="article:published_time" content="2022-11-16T11:54:20.000Z">
+<meta property="article:modified_time" content="2022-11-16T11:58:11.302Z">
+<meta property="article:author" content="HattieHD">
+<meta property="article:tag" content="操作系统">
+<meta property="article:tag" content="Linux Kernel">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s3.bmp.ovh/imgs/2022/08/30/57e6003529c041b7.webp"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://enchantedovo.cn/2022/11/16/OS-LearningNotes5/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css" media="print" onload="this.media='all'"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"简"},
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#121212","position":"bottom-left"},
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isanchor: true
+};
+
+var saveToLocal = {
+  set: function setWithExpiry(key, value, ttl) {
+    const now = new Date()
+    const expiryDay = ttl * 86400000
+    const item = {
+      value: value,
+      expiry: now.getTime() + expiryDay,
+    }
+    localStorage.setItem(key, JSON.stringify(item))
+  },
+
+  get: function getWithExpiry(key) {
+    const itemStr = localStorage.getItem(key)
+
+    if (!itemStr) {
+      return undefined
+    }
+    const item = JSON.parse(itemStr)
+    const now = new Date()
+
+    if (now.getTime() > item.expiry) {
+      localStorage.removeItem(key)
+      return undefined
+    }
+    return item.value
+  }
+}
+
+// https://stackoverflow.com/questions/16839698/jquery-getscript-alternative-in-native-javascript
+const getScript = url => new Promise((resolve, reject) => {
+  const script = document.createElement('script')
+  script.src = url
+  script.async = true
+  script.onerror = reject
+  script.onload = script.onreadystatechange = function() {
+    const loadState = this.readyState
+    if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+    script.onload = script.onreadystatechange = null
+    resolve()
+  }
+  document.head.appendChild(script)
+})</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-11-16 19:58:11'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(function () {  window.activateDarkMode = function () {
+    document.documentElement.setAttribute('data-theme', 'dark')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+    }
+  }
+  window.activateLightMode = function () {
+    document.documentElement.setAttribute('data-theme', 'light')
+   if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+    }
+  }
+  const autoChangeMode = 'false'
+  const t = saveToLocal.get('theme')
+  if (autoChangeMode === '1') {
+    const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+    const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+    const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+    if (t === undefined) {
+      if (isLightMode) activateLightMode()
+      else if (isDarkMode) activateDarkMode()
+      else if (isNotSpecified || hasNoSupport) {
+        const now = new Date()
+        const hour = now.getHours()
+        const isNight = hour <= 6 || hour >= 18
+        isNight ? activateDarkMode() : activateLightMode()
+      }
+      window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+        if (saveToLocal.get('theme') === undefined) {
+          e.matches ? activateDarkMode() : activateLightMode()
+        }
+      })
+    } else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else if (autoChangeMode === '2') {
+    const now = new Date()
+    const hour = now.getHours()
+    const isNight = hour <= 6 || hour >= 18
+    if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+    else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else {
+    if (t === 'dark') activateDarkMode()
+    else if (t === 'light') activateLightMode()
+  }const asideStatus = saveToLocal.get('aside-status')
+if (asideStatus !== undefined) {
+   if (asideStatus === 'hide') {
+     document.documentElement.classList.add('hide-aside')
+   } else {
+     document.documentElement.classList.remove('hide-aside')
+   }
+}const fontSizeVal = saveToLocal.get('global-font-size')
+if (fontSizeVal !== undefined) {
+  document.documentElement.style.setProperty('--global-font-size', fontSizeVal + 'px')
+}})()</script><link rel="stylesheet" href="/css/diy.css"><meta name="generator" content="Hexo 5.3.0"><link rel="alternate" href="/atom.xml" title="Enchanted to Meet U" type="application/atom+xml">
+</head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" data-lazy-src="/img/ava.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">22</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">22</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">10</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(https://s3.bmp.ovh/imgs/2022/08/30/57e6003529c041b7.webp)"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Enchanted to Meet U</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">OS-LearningNotes5</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-11-16T11:54:20.000Z" title="发表于 2022-11-16 19:54:20">2022-11-16</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-11-16T11:58:11.302Z" title="更新于 2022-11-16 19:58:11">2022-11-16</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E9%AB%98%E7%BA%A7%E6%95%99%E7%A8%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">操作系统高级教程学习笔记</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">4.6k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>15分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1>思考题</h1>
+<h2 id="1-为什么开始启动计算机的时候，执行的是BIOS代码而不是操作系统自身的代码？（P1，3）">1.为什么开始启动计算机的时候，执行的是BIOS代码而不是操作系统自身的代码？（P1，3）</h2>
+<p>加电的一瞬间，计算机内存中，准确的说是RAM中，还未初始化，没有任何程序。软盘里虽然有操作系统程序，但CPU的逻辑电路被设计为只能运行内存中的程序，没有能力直接从软盘运行操作系统。这就需要硬件主动加载0xffff0处的BIOS程序，由BIOS准备好中断向量表、中断服务程序，接着通过中断“int 0x19”将引导程序bootsect加载至内存，以及后续的一系列操作，最终操作系统自身代码才能位于内存中，被CPU执行。</p>
+<p>在加电后，BIOS 需要完成一些检测工作，设置实模式下的中断向量表和服务程序，并将操作系统的引导扇区加载至 0x7C00 处，然后将跳转至 0x7C00运行操作系统自身的代码。</p>
+<h2 id="2-为什么BIOS只加载了一个扇区，后续扇区却是由bootsect代码加载？为什么BIOS没有直接把所有需要加载的扇区都加载？（P6，7）">2.为什么BIOS只加载了一个扇区，后续扇区却是由bootsect代码加载？为什么BIOS没有直接把所有需要加载的扇区都加载？（P6，7）</h2>
+<p>BIOS和操作系统通常由不同的专业团队开发的，为了能协调工作，需要按固定的规则约定，进行灵活的各自设计相应的部分。<br>
+因此，现行的方法是定位识别：对BIOS而言，“约定”接到启动操作系统命令，“定位识别”只从启动扇区把代码加载至0x7c00(BOOTSEG)位置，至于该扇区内容是什么，一概不管。而后续扇区则由操作系统自己的bootsect代码加载，这些代码由编写系统的用户负责，与之前BIOS也无关。<br>
+这样构建的好处是站在整个体系的高度，统一设计安排，简单而有效。且BIOS和操作系统的开发都可遵循这一约定，按照自己的意愿进行各自的设计，包括内存的规划等都更为灵活。</p>
+<p>如果BIOS一次性加载，会存在：<br>
+1）对于不同的操作系统，其代码长度不一样，可能导致操作系统加载不完全；<br>
+2）使用BIOS进行加载，且加载完成之后再执行，需要很长的时间，因此Linux采用的是边执行边加载的方法。</p>
+<h2 id="3-为什么BIOS把bootsect加载到0x07c00，而不是0x00000？加载后又马上挪到0x90000处，是何道理？为什么不一次加载到位？-P4、P5-17">3.为什么BIOS把bootsect加载到0x07c00，而不是0x00000？加载后又马上挪到0x90000处，是何道理？为什么不一次加载到位？(P4、P5-17)</h2>
+<p>1）0x07c00是历史约定。<br>
+2）BIOS在从0x00000开始的1KB字节构建了中断向量表，接着的256KB字节内存空间构建了BIOS数据区，这些数据还有用处，所以不能把bootsect加载到0x00000。 0X07c00是BIOS设置的内存地址，不是bootsect能够决定的。<br>
+3）挪到0x90000处是操作系统内存规划行为，主要为了避免在内核system占据0x000000处时可能将0x07c00(bootsect)覆盖，造成在main中设置根设备时取不到正确数据。将该扇区挪到0x90000，在setup.s中，获取一些硬件数据保存在0x90000~0x901ff处，可以对一些后面内核将要利用的数据，集中保存和管理。</p>
+<h2 id="4-bootsect、setup、head程序之间是怎么衔接的？给出代码证据。（P16、P24-P25-P26）">4.bootsect、setup、head程序之间是怎么衔接的？给出代码证据。（P16、P24+P25+P26）</h2>
+<p>1）bootsect跳转至setup程序：jmpi 0, SETUPSEG;<br>
+解释：通过BIOS的“int 0x13”中断，找到bootsect自身的中断服务程序，将setup加载至SETUPSEG(0x90200)处。同样手法，将system加载至SYSSEG(0x10000)处。bootsect程序任务都已经完成。然后，通过“jmpi 0, SETUPSEG”跳转至setup程序的加载位置，此时CS:IP指向setup程序的第一条指令，意味着现在由setup程序接着bootsect程序继续执行。此时还是实模式。<br>
+2）setup跳转至head程序：jmpi 0, 8<br>
+解释：setup通过BIOS提供的中断服务程序提取了系统数据，存储在原来的bootsect位置只保留最后2字节未被覆盖（0x901fc，根设备号）。接着，将IF至0，完成关中断操作。然后，将system移动到0x00000位置，此时head已经占据了0x00000处，同时BIOS中断向量表彻底被覆盖。为此，setup开始为保护模式做准备，设置GDT、IDT并用CPU中专用寄存器IDTR、GDTR看住。接着，打开A20，也就是32位寻址模式，再对可编程中断控制器8259A进行重新编程，并置PE位为1，即设定处理器工作方式为保护模式，以后根据GDT决定执行哪里的程序。最后，通过“jmpi 0,8”跳转到head。“0”表示段内偏移，“8(1000)”是保护模式下的段选择符，最后两位“00”表示内核态，第二位“0”表示GDT，第一位“1”表示GDT表中GDT[1]项（内核代码段），从该项中得知段基址为0x00000000。结合上述偏移0，可知最终跳转至0x0000000处，执行head程序。</p>
+<h2 id="5-setup程序的最后是jmpi-0-8-，为什么这个8不能简单的当作阿拉伯数字8看待，究竟有什么内涵？-P25">5.setup程序的最后是jmpi 0,8 ，为什么这个8不能简单的当作阿拉伯数字8看待，究竟有什么内涵？(P25)</h2>
+<p>此时为32位保护模式，0表示段内偏移，8表示段选择符，转化为二进制：1000。<br>
+最后两位00表示内核特权级，第三位0表示GDT表，第四位1表示所选的表（在此就是GDT表）的1项来确定代码段的段基址和段限长等信息。<br>
+这样可以得到代码是从段基址0x00000000、偏移为0处开始执行的，即head的开始位置。</p>
+<p>补充：<br>
+最后两位表示特权，其中00是内核，11是用户。<br>
+倒数第3位如果是0表示GDT，1则表示LDT。<br>
+前两位表示这个表的第几项。GDT表的0表示空，1表示内核代码段，2表示内核数据段。LDT表的0表示空，1表示用户代码段，2表示用户数据段。</p>
+<p>6.保护模式在“保护”什么？它的“保护”体现在哪里？特权级的目的和意义是什么？分页有“保护”作用吗？(P436-P439、P443)<br>
+1）打开了保护模式后，CPU的寻址模式发生了变化，需要依赖于GDT去获取代码或数据段的基址。从GDT可以看出，保护模式除了段基址外，还有段限长，这样相当于增加了一个段位寄存器。既有效地防止了对代码或数据段的覆盖，又防止了代码段自身的访问超限，明显增强了保护作用。<br>
+2）体现：①在GDT、LDT及IDT中，均有自己界限特、权级等属性，这是对描述符所描述的对象的保护；②在不同特权级间访问时，系统会对CPL、RPL、DPL、IOPL 等进行检验，对不同层级的程序进行保护，同还限制某些特殊指令的使用，如 lgdt, lidt,cli等。<br>
+3）特权级的目的和意义：①为了更好的管理资源并保护系统不受侵害，操作系统利用先机，以时间换取特权，先霸占所有特权；②依托CPU提供的保护模式，着眼于“段”，在所有的段选择符最后两位标示特权级，禁止用户执行cli、sti等对掌控局面至关重要的指令。③操作系统可以把内核设计成最高特权级，把用户进程设计成最低特权级。这样，操作系统可以访问 GDT、LDT、TR，而 GDT、LDT是逻辑地址形成线性地址的关键，因此操作系统可以掌控线性地址。物理地址是由内核将线性地址转换而成的，所以操作系统可以访问任何物理地址，而用户进程只能使用逻辑地址。<br>
+4）①分页机制中PDE和PTE中的R/W和U/S等，提供了页级保护；②分页机制将线性地址与物理地址加以映射，提供了对物理地址的保护。<br>
+补充：为什么特权级是基于段的?<br>
+在操作系统设计中，一般一个段实现的功能相对完整，可以把代码放在一个段，数据放在一个段，并通过段选择符（包括CS、SS、DS、ES、FS和GS）获取段的基址和特权级等信息。特权级基于段，这样当段选择子具有不匹配的特权级时，按照特权级规则判断是否可以访问。特权级基于段，是结合了程序的特点和硬件实现的一种考虑。</p>
+<p>7.在setup程序里曾经设置过gdt，为什么在head程序中将其废弃，又重新设置了一个？为什么设置两次，而不是一次搞好？(P33)<br>
+原来GDT所在的位置是设计代码时在setup.s里面设置的数据，将来这个setup模块所在的内存位置会在设计缓冲区时被覆盖。如果不改变位置，将来GDT的内容肯定会被缓冲区覆盖掉，从而影响系统的运行。这样一来，将来整个内存空间中唯一安全的地方就是现在head.s所在的位置了。<br>
+不能在执行setup程序时直接把GDT的内容复制到head.s所在位置：如果先复制GDT内容，后移动system模块，它就会被后者覆盖；如果先移动system模块，后复制GDT内容，它又会把head.s对应的程序覆盖，而这时head.s还没有执行。所以无论如何都要重新建立GDT。</p>
+<p>8.进程0的task_struct在哪？具体内容是什么？(P70)<br>
+进程0的task_struct、内核栈、用户栈都在内核数据段。<br>
+进程0的task_struct 的具体内容包括状态、信号、pid、alarm、ldt、tss等管理该进程所需的数据。如下代码所示：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 进程0的task_struct</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> INIT_TASK \</span></span><br><span class="line"><span class="comment">/* state etc */</span>	&#123; <span class="number">0</span>,<span class="number">15</span>,<span class="number">15</span>, \</span><br><span class="line"><span class="comment">/* signals */</span>	<span class="number">0</span>,&#123;&#123;&#125;,&#125;,<span class="number">0</span>, \</span><br><span class="line"><span class="comment">/* ec,brk... */</span>	<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>, \</span><br><span class="line"><span class="comment">/* pid etc.. */</span>	<span class="number">0</span>,<span class="number">-1</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>, \</span><br><span class="line"><span class="comment">/* uid etc */</span>	<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>, \</span><br><span class="line"><span class="comment">/* alarm */</span>	<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>, \</span><br><span class="line"><span class="comment">/* math */</span>	<span class="number">0</span>, \</span><br><span class="line"><span class="comment">/* fs info */</span>	<span class="number">-1</span>,<span class="number">0022</span>,<span class="literal">NULL</span>,<span class="literal">NULL</span>,<span class="literal">NULL</span>,<span class="number">0</span>, \</span><br><span class="line"><span class="comment">/* filp */</span>	&#123;<span class="literal">NULL</span>,&#125;, \</span><br><span class="line">	&#123; \</span><br><span class="line">		&#123;<span class="number">0</span>,<span class="number">0</span>&#125;, \</span><br><span class="line"><span class="comment">/* ldt */</span>	&#123;<span class="number">0x9f</span>,<span class="number">0xc0fa00</span>&#125;, \</span><br><span class="line">		&#123;<span class="number">0x9f</span>,<span class="number">0xc0f200</span>&#125;, \</span><br><span class="line">	&#125;, \</span><br><span class="line"><span class="comment">/*tss*/</span>	&#123;<span class="number">0</span>,PAGE_SIZE+(<span class="keyword">long</span>)&amp;init_task,<span class="number">0x10</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,(<span class="keyword">long</span>)&amp;pg_dir,\</span><br><span class="line">	 <span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>, \</span><br><span class="line">	 <span class="number">0</span>,<span class="number">0</span>,<span class="number">0x17</span>,<span class="number">0x17</span>,<span class="number">0x17</span>,<span class="number">0x17</span>,<span class="number">0x17</span>,<span class="number">0x17</span>, \</span><br><span class="line">	 _LDT(<span class="number">0</span>),<span class="number">0x80000000</span>, \</span><br><span class="line">		&#123;&#125; \</span><br><span class="line">	&#125;, \</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>以下代码说明user_stack在内核数据段。（0x10）（参考杨炯的内核代码完全注释）一个任务的数据结构与其内核态堆栈是放在同一内存页中。所以进程0的内核栈是跟着task struct后面的，所以进程0的内核栈不是user_stack，user_stack是进程0的用户栈。（P91的图）<br>
+long user_stack [ PAGE_SIZE&gt;&gt;2 ] ;//定义用户堆栈4K，指针指向最后一项<br>
+//该结构用于设置堆栈ss：esp（数据段选择符）<br>
+struct {<br>
+long * a;<br>
+short b;<br>
+} stack_start = { &amp; user_stack [PAGE_SIZE&gt;&gt;2] , 0x10 };//内核数据段</p>
+<p>//每个进程在内核态运行时都有自己的内核态堆栈，这里定义了内核态堆栈的结构<br>
+union task_union {<br>
+struct task_struct task;<br>
+char stack[PAGE_SIZE];<br>
+};<br>
+static union task_union init_task = {INIT_TASK,};</p>
+<p>9.内核的线性地址空间是如何分页的？（P37-38）画出从0x000000开始的7个页（包括页目录表、页表所在页）的挂接关系图，就是页目录表的前四个页目录项、第一个个页表的前7个页表项指向什么位置？（P39）给出代码证据。（P39）<br>
+1）head.s在setup_paging开始创建分页机制。将页目录表和4个页表放到物理内存的起始位置，从内存起始位置开始的5个页空间内容全部清零（每页4kb），然后设置页目录表的前4项，使之分别指向4个页表。然后开始从高地址向低地址方向填写4个页表，依次指向内存从高地址向低地址方向的各个页面。即将第4个页表的最后一项（pg3+4092指向的位置）指向寻址范围的最后一个页面。即从0xFFF000开始的4kb 大小的内存空间。将第4个页表的倒数第二个页表项（pg3-4+4092）指向倒数第二个页面，即0xFFF000-0x1000开始的4KB字节的内存空间，依此类推。<br>
+2）图见P39</p>
+<p>3）Head.s中：（P39）<br>
+setup_paging: <br>
+movl <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1024</mn><mo>∗</mo><mn>5</mn><mo separator="true">,</mo><mi>x</mi><mi>o</mi><mi>r</mi><mi>l</mi><mtext> </mtext><mi>x</mi><mi>o</mi><mi>r</mi><mi>l</mi><mtext> </mtext><mi>c</mi><mi>l</mi><mi>d</mi><mo separator="true">;</mo><mi>r</mi><mi>e</mi><mi>p</mi><mo separator="true">;</mo><mi>s</mi><mi>t</mi><mi>o</mi><mi>s</mi><mi>l</mi><mtext> </mtext><mi>m</mi><mi>o</mi><mi>v</mi><mi>l</mi><mtext> </mtext></mrow><annotation encoding="application/x-tex">1024*5,%ecx  /* 5 pages - pg_dir+4 page tables */ 
+xorl %eax,%eax 
+xorl %edi,%edi  /* pg_dir is at 0x000 */ 
+cld;rep;stosl
+ movl </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1024</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord">5</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal">x</span><span class="mord mathnormal" style="margin-right:0.02778em;">or</span><span class="mord mathnormal" style="margin-right:0.01968em;">l</span><span class="mord"> </span><span class="mord mathnormal">x</span><span class="mord mathnormal" style="margin-right:0.02778em;">or</span><span class="mord mathnormal" style="margin-right:0.01968em;">l</span><span class="mord"> </span><span class="mord mathnormal">c</span><span class="mord mathnormal" style="margin-right:0.01968em;">l</span><span class="mord mathnormal">d</span><span class="mpunct">;</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal">re</span><span class="mord mathnormal">p</span><span class="mpunct">;</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal">s</span><span class="mord mathnormal">t</span><span class="mord mathnormal">os</span><span class="mord mathnormal" style="margin-right:0.01968em;">l</span><span class="mord"> </span><span class="mord mathnormal">m</span><span class="mord mathnormal">o</span><span class="mord mathnormal" style="margin-right:0.03588em;">v</span><span class="mord mathnormal" style="margin-right:0.01968em;">l</span><span class="mord"> </span></span></span></span>pg0+7,pg_dir  /* set present bit/user r/w <em>/  <br>
+movl <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi><mi>g</mi><mn>1</mn><mo>+</mo><mn>7</mn><mo separator="true">,</mo><mi>p</mi><msub><mi>g</mi><mi>d</mi></msub><mi>i</mi><mi>r</mi><mo>+</mo><mn>4</mn><mtext>  </mtext><mi mathvariant="normal">/</mi><mo>∗</mo><mtext>  </mtext><mo>−</mo><mo>−</mo><mo>−</mo><mo>−</mo><mo>−</mo><mo>−</mo><mo>−</mo><mo>−</mo><mo>−</mo><mtext> </mtext><mi mathvariant="normal">&quot;</mi><mtext> </mtext><mi mathvariant="normal">&quot;</mi><mtext> </mtext><mo>−</mo><mo>−</mo><mo>−</mo><mo>−</mo><mo>−</mo><mo>−</mo><mo>−</mo><mo>−</mo><mo>−</mo><mtext> </mtext><mo>∗</mo><mi mathvariant="normal">/</mi><mtext> </mtext><mi>m</mi><mi>o</mi><mi>v</mi><mi>l</mi><mtext> </mtext></mrow><annotation encoding="application/x-tex">pg1+7,pg_dir+4  /*  --------- &quot; &quot; --------- */ 
+movl </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8388800000000001em;vertical-align:-0.19444em;"></span><span class="mord mathnormal">p</span><span class="mord mathnormal" style="margin-right:0.03588em;">g</span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.85396em;vertical-align:-0.19444em;"></span><span class="mord">7</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal">p</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">g</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">d</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord mathnormal">i</span><span class="mord mathnormal" style="margin-right:0.02778em;">r</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">4  /</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord">  </span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.77777em;vertical-align:-0.08333em;"></span><span class="mord"> &quot; &quot; </span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.46528em;vertical-align:0em;"></span><span class="mord"> </span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">/ </span><span class="mord mathnormal">m</span><span class="mord mathnormal">o</span><span class="mord mathnormal" style="margin-right:0.03588em;">v</span><span class="mord mathnormal" style="margin-right:0.01968em;">l</span><span class="mord"> </span></span></span></span>pg2+7,pg_dir+8  /</em>  --------- &quot; &quot; --------- <em>/  <br>
+movl <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi><mi>g</mi><mn>3</mn><mo>+</mo><mn>7</mn><mo separator="true">,</mo><mi>p</mi><msub><mi>g</mi><mi>d</mi></msub><mi>i</mi><mi>r</mi><mo>+</mo><mn>12</mn><mtext>  </mtext><mi mathvariant="normal">/</mi><mo>∗</mo><mtext>  </mtext><mo>−</mo><mo>−</mo><mo>−</mo><mo>−</mo><mo>−</mo><mo>−</mo><mo>−</mo><mo>−</mo><mo>−</mo><mtext> </mtext><mi mathvariant="normal">&quot;</mi><mtext> </mtext><mi mathvariant="normal">&quot;</mi><mtext> </mtext><mo>−</mo><mo>−</mo><mo>−</mo><mo>−</mo><mo>−</mo><mo>−</mo><mo>−</mo><mo>−</mo><mo>−</mo><mtext> </mtext><mo>∗</mo><mi mathvariant="normal">/</mi><msub><mtext> </mtext><mi>p</mi></msub><msub><mi>g</mi><mi>d</mi></msub><mi>i</mi><mi>r</mi><mtext>用于表示内核分页机制完成后的内核起始位置，也就是物理内存的起始位置</mtext><mn>0</mn><mi>x</mi><mn>000000</mn><mtext>，以上四句完成页目录表的前四项与页表</mtext><mn>1</mn><mtext>，</mtext><mn>2</mn><mo separator="true">,</mo><mn>3</mn><mo separator="true">,</mo><mn>4</mn><mtext>的挂接 </mtext><mi>m</mi><mi>o</mi><mi>v</mi><mi>l</mi><mtext> </mtext></mrow><annotation encoding="application/x-tex">pg3+7,pg_dir+12  /*  --------- &quot; &quot; --------- */ 
+_pg_dir用于表示内核分页机制完成后的内核起始位置，也就是物理内存的起始位置0x000000，以上四句完成页目录表的前四项与页表1，2,3,4的挂接 
+movl </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8388800000000001em;vertical-align:-0.19444em;"></span><span class="mord mathnormal">p</span><span class="mord mathnormal" style="margin-right:0.03588em;">g</span><span class="mord">3</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.85396em;vertical-align:-0.19444em;"></span><span class="mord">7</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal">p</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">g</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">d</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord mathnormal">i</span><span class="mord mathnormal" style="margin-right:0.02778em;">r</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">12  /</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord">  </span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.77777em;vertical-align:-0.08333em;"></span><span class="mord"> &quot; &quot; </span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.46528em;vertical-align:0em;"></span><span class="mord"> </span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1.036108em;vertical-align:-0.286108em;"></span><span class="mord">/</span><span class="mord"><span class="mord"> </span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.15139200000000003em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">p</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">g</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">d</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord mathnormal">i</span><span class="mord mathnormal" style="margin-right:0.02778em;">r</span><span class="mord cjk_fallback">用于表示内核分页机制完成后的内核起始位置，也就是物理内存的起始位置</span><span class="mord">0</span><span class="mord mathnormal">x</span><span class="mord">000000</span><span class="mord cjk_fallback">，以上四句完成页目录表的前四项与页表</span><span class="mord">1</span><span class="mord cjk_fallback">，</span><span class="mord">2</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">3</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">4</span><span class="mord cjk_fallback">的挂接</span><span class="mord"> </span><span class="mord mathnormal">m</span><span class="mord mathnormal">o</span><span class="mord mathnormal" style="margin-right:0.03588em;">v</span><span class="mord mathnormal" style="margin-right:0.01968em;">l</span><span class="mord"> </span></span></span></span>pg3+4092,%edi <br>
+movl $0xfff007,%eax  /</em>  16Mb - 4096 + 7 (r/w user,p) <em>/ <br>
+std <br>
+1: 	stosl   /</em> fill pages backwards - more efficient :-) <em>/ <br>
+subl $0x1000,%eax<br>
+jge 1b<br>
+xorl %eax,%eax		/</em> pg_dir is at 0x0000 <em>/<br>
+movl %eax,%cr3		/</em> cr3 - page directory start <em>/<br>
+movl %cr0,%eax<br>
+orl $0x80000000,%eax<br>
+movl %eax,%cr0		/</em> set paging (PG) bit <em>/<br>
+ret			/</em> this also flushes prefetch-queue */<br>
+ <br>
+完成页表项与页面的挂接，是从高地址向低地址方向完成挂接的，16M内存全部完成挂接（注意页表从0开始，页表0-页表3）</p>
+<p>10.在head程序执行结束的时候，在idt的前面有184个字节的head程序的剩余代码，剩余了什么？为什么要剩余？(P31、P36、P40)<br>
+1）剩余的内容：0x5400~0x54b7处，包含代码段：after_page_tables(栈中压入了些参数)、 ignore_int(初始化中断时的中断处理函数) 和 setup_paging(初始化分页)。<br>
+2）原因：after_page_tables中压入了一些参数，为内核进入main函数的跳转做准备。为了谨慎起见，设计者在栈中压入了L6，以使得系统可能出错时，返回到L6处执行。ignore_int: 使用 ignore_int将 idt全部初始化，因此如果中断开启后，可能使用了未设置的中断向量，那么将默认跳转到 ignore_int处执行。这样做的好处是使得系统不会跳转到随机的地方执行错误的代码，所以ignore_int不能被覆盖。 setup_paging:为设置分页机制的代码，它在分页完成前不能被覆盖。</p>
+<p>11.为什么不用call，而是用ret“调用”main函数？画出调用路线图，给出代码证据。(P42)<br>
+call指令会将EIP的值自动压栈，保护返回现场，然后执行被调函数的程序，等到执行被调函数的ret指令时，自动出栈给EIP并还原现场，继续执行call的下一条指令。然而对操作系统的main函数来说，如果用call调用main函数，那么ret时返回给谁呢？因为没有更底层的函数程序接收操作系统的返回。用ret实现的调用操作当然就不需要返回了，call做的压栈和跳转动作需要手工编写代码。<br>
+2）图在p42仿call示意图下面部分</p>
+<p>3）代码：<br>
+after_page_tables:<br>
+pushl $0		# These are the parameters to main :-)<br>
+pushl $0<br>
+pushl $0<br>
+pushl $L6		# return address for main, if it decides to.<br>
+pushl $__main; //将main的地址压入栈，即EIP<br>
+jmp setup_paging<br>
+setup_paging:<br>
+ret; //弹出EIP，针对EIP指向的值继续执行，即main函数的入口地址。</p>
+<p>12.用文字和图说明中断描述符表是如何初始化的，可以举例说明（比如：set_trap_gate(0,&amp;divide_error)），并给出代码证据。（P52）<br>
+对中断描述符表的初始化，就是将中断、异常处理的服务程序与IDT进行挂接，逐步重建中断服务体系。<br>
+（先画图见P54 图2-9然后解释）<br>
+以set_trap_gate(0,&amp;divide_error)//除零错误 为例，进行宏展开后得到：</p>
+<p>其中：n是0；gate_addr是&amp;idt[0]，也就是IDT的第一项中断描述符的地址；type是15；dpl（描述符特权级）是0；addr是中断服务程序divide_error(void)的入口地址。</p>
+<p>13.在IA-32中，有大约20多个指令是只能在0特权级下使用，其他的指令，比如cli，并没有这个约定。奇怪的是，在Linux0.11中，3特权级的进程代码并不能使用cli指令，这是为什么？请解释并给出代码证据。(P68、P79、P92)<br>
+根据IA-32手册，某些系统指令是禁止应用程序使用的。cli指令用于复位IF标志位，cli指令与CPL和EFLAGS[IOPL]有关。如果CPL的权限高于等于EFLAGS中的IOPL的权限，即数值上CPL&lt;=IOPL，则可以执行该指令，IF位清除为0。如果CPL大于当前程序或过程的IOPL，则产生保护模式异常。<br>
+由于在内核中IOPL的值初始为0，且未经改变。INIT_TASK的TSS中设置了EFLAGS值，进程0又在move_to_user_mode中，继承了内核的EFLAGS。<br>
+\linux0.11\include\linux\sched.h<br>
+#define INIT_TASK <br>
+//…<br>
+/<em>tss</em>/	{0,PAGE_SIZE+(long)&amp;init_task,0x10,0,0,0,0,(long)&amp;pg_dir,<br>
+0,0,0,0,0,0,0,0, \     //eflags的值，决定了cli这类指令只能在0特权级使用<br>
+0,0,0x17,0x17,0x17,0x17,0x17,0x17, <br>
+_LDT(0),0x80000000, <br>
+{} <br>
+}, <br>
+}<br>
+\linux0.11\include\asm\system.h<br>
+#define move_to_user_mode() <br>
+…<br>
+“pushfl\n\t” \   //eflags进栈<br>
+…<br>
+“iret\n” <br>
+//…<br>
+:::“ax”)<br>
+在进程0的TSS中，设置了eflags中的IOPL位为0，代码见P68，后续进程如果没有改动的话也是0，即IOPL=0。因此，通过设置IOPL，可以限制3特权级进程代码使用cli指令。<br>
+\linux0.11\kernel\fork.c<br>
+int copy_process(int nr,long ebp,long edi,long esi,long gs,long none,<br>
+long ebx,long ecx,long edx,<br>
+long fs,long es,long ds,<br>
+long eip,long cs,long eflags,long esp,long ss)<br>
+{<br>
+//…<br>
+p-&gt;tss.eip = eip;<br>
+p-&gt;tss.eflags = eflags;<br>
+p-&gt;tss.eax = 0;<br>
+//…<br>
+return last_pid;<br>
+}</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">HattieHD</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://enchantedovo.cn/2022/11/16/OS-LearningNotes5/">https://enchantedovo.cn/2022/11/16/OS-LearningNotes5/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://enchantedovo.cn" target="_blank">Enchanted to Meet U</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a><a class="post-meta__tags" href="/tags/Linux-Kernel/">Linux Kernel</a></div><div class="post_share"><div class="social-share" data-image="https://s3.bmp.ovh/imgs/2022/08/30/57e6003529c041b7.webp" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2022/10/03/AdvancedAI-LearningNotes4/"><img class="next-cover" data-lazy-src="https://s3.bmp.ovh/imgs/2022/09/03/f51220518329aecb.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">深度学习</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2022/09/06/OS-LearningNotes2/" title="从开机加电到执行main函数之前的过程"><img class="cover" data-lazy-src="https://s3.bmp.ovh/imgs/2022/08/30/57e6003529c041b7.webp" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-09-06</div><div class="title">从开机加电到执行main函数之前的过程</div></div></a></div><div><a href="/2022/10/01/OS-LearningNotes4/" title="设备环境初始化及激活进程0"><img class="cover" data-lazy-src="https://s3.bmp.ovh/imgs/2022/08/30/57e6003529c041b7.webp" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-10-01</div><div class="title">设备环境初始化及激活进程0</div></div></a></div><div><a href="/2022/08/30/OS-LearningNotes1/" title="操作系统的“公理化”"><img class="cover" data-lazy-src="https://s3.bmp.ovh/imgs/2022/08/30/57e6003529c041b7.webp" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-08-30</div><div class="title">操作系统的“公理化”</div></div></a></div><div><a href="/2022/09/20/OS-LearningNotes3/" title="补充知识整理"><img class="cover" data-lazy-src="https://s3.bmp.ovh/imgs/2022/08/30/57e6003529c041b7.webp" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-09-20</div><div class="title">补充知识整理</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" data-lazy-src="/img/ava.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">HattieHD</div><div class="author-info__description">———— 🦋的个人博客</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">22</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">22</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">10</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/xxxxx" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:xxxxxx@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">Welcome to My Blog ❤</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">1.</span> <span class="toc-text">思考题</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E4%B8%BA%E4%BB%80%E4%B9%88%E5%BC%80%E5%A7%8B%E5%90%AF%E5%8A%A8%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%9A%84%E6%97%B6%E5%80%99%EF%BC%8C%E6%89%A7%E8%A1%8C%E7%9A%84%E6%98%AFBIOS%E4%BB%A3%E7%A0%81%E8%80%8C%E4%B8%8D%E6%98%AF%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%87%AA%E8%BA%AB%E7%9A%84%E4%BB%A3%E7%A0%81%EF%BC%9F%EF%BC%88P1%EF%BC%8C3%EF%BC%89"><span class="toc-number">1.1.</span> <span class="toc-text">1.为什么开始启动计算机的时候，执行的是BIOS代码而不是操作系统自身的代码？（P1，3）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E4%B8%BA%E4%BB%80%E4%B9%88BIOS%E5%8F%AA%E5%8A%A0%E8%BD%BD%E4%BA%86%E4%B8%80%E4%B8%AA%E6%89%87%E5%8C%BA%EF%BC%8C%E5%90%8E%E7%BB%AD%E6%89%87%E5%8C%BA%E5%8D%B4%E6%98%AF%E7%94%B1bootsect%E4%BB%A3%E7%A0%81%E5%8A%A0%E8%BD%BD%EF%BC%9F%E4%B8%BA%E4%BB%80%E4%B9%88BIOS%E6%B2%A1%E6%9C%89%E7%9B%B4%E6%8E%A5%E6%8A%8A%E6%89%80%E6%9C%89%E9%9C%80%E8%A6%81%E5%8A%A0%E8%BD%BD%E7%9A%84%E6%89%87%E5%8C%BA%E9%83%BD%E5%8A%A0%E8%BD%BD%EF%BC%9F%EF%BC%88P6%EF%BC%8C7%EF%BC%89"><span class="toc-number">1.2.</span> <span class="toc-text">2.为什么BIOS只加载了一个扇区，后续扇区却是由bootsect代码加载？为什么BIOS没有直接把所有需要加载的扇区都加载？（P6，7）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E4%B8%BA%E4%BB%80%E4%B9%88BIOS%E6%8A%8Abootsect%E5%8A%A0%E8%BD%BD%E5%88%B00x07c00%EF%BC%8C%E8%80%8C%E4%B8%8D%E6%98%AF0x00000%EF%BC%9F%E5%8A%A0%E8%BD%BD%E5%90%8E%E5%8F%88%E9%A9%AC%E4%B8%8A%E6%8C%AA%E5%88%B00x90000%E5%A4%84%EF%BC%8C%E6%98%AF%E4%BD%95%E9%81%93%E7%90%86%EF%BC%9F%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%8D%E4%B8%80%E6%AC%A1%E5%8A%A0%E8%BD%BD%E5%88%B0%E4%BD%8D%EF%BC%9F-P4%E3%80%81P5-17"><span class="toc-number">1.3.</span> <span class="toc-text">3.为什么BIOS把bootsect加载到0x07c00，而不是0x00000？加载后又马上挪到0x90000处，是何道理？为什么不一次加载到位？(P4、P5-17)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-bootsect%E3%80%81setup%E3%80%81head%E7%A8%8B%E5%BA%8F%E4%B9%8B%E9%97%B4%E6%98%AF%E6%80%8E%E4%B9%88%E8%A1%94%E6%8E%A5%E7%9A%84%EF%BC%9F%E7%BB%99%E5%87%BA%E4%BB%A3%E7%A0%81%E8%AF%81%E6%8D%AE%E3%80%82%EF%BC%88P16%E3%80%81P24-P25-P26%EF%BC%89"><span class="toc-number">1.4.</span> <span class="toc-text">4.bootsect、setup、head程序之间是怎么衔接的？给出代码证据。（P16、P24+P25+P26）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-setup%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%80%E5%90%8E%E6%98%AFjmpi-0-8-%EF%BC%8C%E4%B8%BA%E4%BB%80%E4%B9%88%E8%BF%99%E4%B8%AA8%E4%B8%8D%E8%83%BD%E7%AE%80%E5%8D%95%E7%9A%84%E5%BD%93%E4%BD%9C%E9%98%BF%E6%8B%89%E4%BC%AF%E6%95%B0%E5%AD%978%E7%9C%8B%E5%BE%85%EF%BC%8C%E7%A9%B6%E7%AB%9F%E6%9C%89%E4%BB%80%E4%B9%88%E5%86%85%E6%B6%B5%EF%BC%9F-P25"><span class="toc-number">1.5.</span> <span class="toc-text">5.setup程序的最后是jmpi 0,8 ，为什么这个8不能简单的当作阿拉伯数字8看待，究竟有什么内涵？(P25)</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/11/16/OS-LearningNotes5/" title="OS-LearningNotes5"><img data-lazy-src="https://s3.bmp.ovh/imgs/2022/08/30/57e6003529c041b7.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="OS-LearningNotes5"/></a><div class="content"><a class="title" href="/2022/11/16/OS-LearningNotes5/" title="OS-LearningNotes5">OS-LearningNotes5</a><time datetime="2022-11-16T11:54:20.000Z" title="发表于 2022-11-16 19:54:20">2022-11-16</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/10/03/AdvancedAI-LearningNotes4/" title="深度学习"><img data-lazy-src="https://s3.bmp.ovh/imgs/2022/09/03/f51220518329aecb.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="深度学习"/></a><div class="content"><a class="title" href="/2022/10/03/AdvancedAI-LearningNotes4/" title="深度学习">深度学习</a><time datetime="2022-10-03T06:58:20.000Z" title="发表于 2022-10-03 14:58:20">2022-10-03</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/10/03/AdvancedAI-LearningNotes3/" title="人工神经网络"><img data-lazy-src="https://s3.bmp.ovh/imgs/2022/09/03/f51220518329aecb.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="人工神经网络"/></a><div class="content"><a class="title" href="/2022/10/03/AdvancedAI-LearningNotes3/" title="人工神经网络">人工神经网络</a><time datetime="2022-10-03T02:26:08.000Z" title="发表于 2022-10-03 10:26:08">2022-10-03</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/10/02/AdvancedAI-LearningNotes2/" title="搜索算法"><img data-lazy-src="https://s3.bmp.ovh/imgs/2022/09/03/f51220518329aecb.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="搜索算法"/></a><div class="content"><a class="title" href="/2022/10/02/AdvancedAI-LearningNotes2/" title="搜索算法">搜索算法</a><time datetime="2022-10-02T06:12:20.000Z" title="发表于 2022-10-02 14:12:20">2022-10-02</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/10/01/OS-LearningNotes4/" title="设备环境初始化及激活进程0"><img data-lazy-src="https://s3.bmp.ovh/imgs/2022/08/30/57e6003529c041b7.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="设备环境初始化及激活进程0"/></a><div class="content"><a class="title" href="/2022/10/01/OS-LearningNotes4/" title="设备环境初始化及激活进程0">设备环境初始化及激活进程0</a><time datetime="2022-10-01T09:23:32.000Z" title="发表于 2022-10-01 17:23:32">2022-10-01</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By HattieHD</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">❤Hi, welcome to my blog!❤</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="font-plus" type="button" title="放大字体"><i class="fas fa-plus"></i></button><button id="font-minus" type="button" title="缩小字体"><i class="fas fa-minus"></i></button><button id="translateLink" type="button" title="简繁转换">简</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>function loadValine () {
+  function initValine () {
+    let initData = {
+      el: '#vcomment',
+      appId: 'idIIOSAeq1UbVzvHKh7NdbXC-gzGzoHsz',
+      appKey: 'Ozg70h4ULc79NSqitNLUL3vP',
+      placeholder: 'Please leave your footprints',
+      avatar: 'monsterid',
+      meta: 'nick,mail,link'.split(','),
+      pageSize: '10',
+      lang: 'zh-CN',
+      recordIP: false,
+      serverURLs: '',
+      emojiCDN: '',
+      emojiMaps: "",
+      enableQQ: false,
+      path: window.location.pathname,
+    }
+
+    if (true) { 
+      initData.requiredFields= ('nick,mail'.split(','))
+    }
+    
+    if (false) {
+      const otherData = false
+      initData = Object.assign(initData, otherData)
+    }
+    
+    const valine = new Valine(initData)
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !true) {
+  if (true) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/click-heart.min.js" async="async" mobile="false"></script></div></body></html>
