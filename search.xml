@@ -101,7 +101,8 @@ GRU是LSTM的变体，相比LSTM有更简单的结构。GRU包括了重置门和
 整个训练过程由上面两步交替进行。</p>
 ]]></content>
       <categories>
-        <category>高级人工智能学习笔记</category>
+        <category>国科大课程笔记</category>
+        <category>高级人工智能</category>
       </categories>
       <tags>
         <tag>人工智能</tag>
@@ -155,7 +156,8 @@ GRU是LSTM的变体，相比LSTM有更简单的结构。GRU包括了重置门和
 <p>因为BP算法采用链式法则，从后层向前层传递信息时，若每层神经元对上一层神经元偏导乘以w均小于1，多次链式法则,多级导数权值相乘结果会越来越小，导致loss传递到越前方越小。</p>
 ]]></content>
       <categories>
-        <category>高级人工智能学习笔记</category>
+        <category>国科大课程笔记</category>
+        <category>高级人工智能</category>
       </categories>
       <tags>
         <tag>人工智能</tag>
@@ -264,7 +266,8 @@ Qcm-有c个传教士，m个野人从右岸到左岸</p>
 </ul>
 ]]></content>
       <categories>
-        <category>高级人工智能学习笔记</category>
+        <category>国科大课程笔记</category>
+        <category>高级人工智能</category>
       </categories>
       <tags>
         <tag>人工智能</tag>
@@ -284,7 +287,8 @@ Qcm-有c个传教士，m个野人从右岸到左岸</p>
 <img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/03/ComputerNet-LearningNotes1/p2.png" class title="p2">
 ]]></content>
       <categories>
-        <category>计算机网络学习笔记</category>
+        <category>国科大课程笔记</category>
+        <category>计算机网络</category>
       </categories>
       <tags>
         <tag>计算机网络</tag>
@@ -1013,7 +1017,8 @@ netmask：子网掩码照抄自己主机的，如：255.255.255.0</p>
 <p>扫描主机的135和139端口已经回发数据了。</p>
 ]]></content>
       <categories>
-        <category>网络协议安全学习笔记</category>
+        <category>国科大课程笔记</category>
+        <category>网络协议安全</category>
       </categories>
       <tags>
         <tag>网络安全</tag>
@@ -1063,7 +1068,8 @@ netmask：子网掩码照抄自己主机的，如：255.255.255.0</p>
 <img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/01/AdvancedAI-LearningNotes1/p.png" class title="p">
 ]]></content>
       <categories>
-        <category>高级人工智能学习笔记</category>
+        <category>国科大课程笔记</category>
+        <category>高级人工智能</category>
       </categories>
       <tags>
         <tag>人工智能</tag>
@@ -1143,7 +1149,8 @@ netmask：子网掩码照抄自己主机的，如：255.255.255.0</p>
 思路：攻击者发送高的Revision的VTP通告，就能把网络中的VLAN信息覆盖了。</p>
 ]]></content>
       <categories>
-        <category>网络协议安全学习笔记</category>
+        <category>国科大课程笔记</category>
+        <category>网络协议安全</category>
       </categories>
       <tags>
         <tag>网络安全</tag>
@@ -1314,7 +1321,8 @@ head.s先汇编成目标代码，c语言内核程序编译成目标代码，然�
 <p>10.ret，通过跳入main函数执行，将压入的main函数在执行入口地址弹出给EIP。</p>
 ]]></content>
       <categories>
-        <category>操作系统高级教程学习笔记</category>
+        <category>国科大课程笔记</category>
+        <category>操作系统高级教程</category>
       </categories>
       <tags>
         <tag>操作系统</tag>
@@ -1329,6 +1337,7 @@ head.s先汇编成目标代码，c语言内核程序编译成目标代码，然�
 <img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/09/NetSysSec-LearningNotes/p1.png" class title="p1"> 
 ]]></content>
       <categories>
+        <category>国科大课程笔记</category>
         <category>网络与系统安全</category>
       </categories>
       <tags>
@@ -1393,7 +1402,8 @@ head.s先汇编成目标代码，c语言内核程序编译成目标代码，然�
 <p>将系统调用函数 system_call 与 int 0x80 中断描述符表挂接。</p>
 ]]></content>
       <categories>
-        <category>操作系统高级教程学习笔记</category>
+        <category>国科大课程笔记</category>
+        <category>操作系统高级教程</category>
       </categories>
       <tags>
         <tag>操作系统</tag>
@@ -1597,7 +1607,8 @@ head.s先汇编成目标代码，c语言内核程序编译成目标代码，然�
 <h2 id="网络层次分类">网络层次分类</h2>
 <img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/01/NetProtoSec-LearningNotes1/p7.png" class title="p7">]]></content>
       <categories>
-        <category>网络协议安全学习笔记</category>
+        <category>国科大课程笔记</category>
+        <category>网络协议安全</category>
       </categories>
       <tags>
         <tag>网络安全</tag>
@@ -1694,7 +1705,8 @@ head.s先汇编成目标代码，c语言内核程序编译成目标代码，然�
 </ul>
 ]]></content>
       <categories>
-        <category>操作系统高级教程学习笔记</category>
+        <category>国科大课程笔记</category>
+        <category>操作系统高级教程</category>
       </categories>
       <tags>
         <tag>操作系统</tag>
@@ -1887,7 +1899,7 @@ head.s先汇编成目标代码，c语言内核程序编译成目标代码，然�
 <p>修改完上述的配置之后，就可以看到网站菜单上面多了一个搜索按钮，点击就可以进行搜索了。</p>
 ]]></content>
       <categories>
-        <category>其他</category>
+        <category>Hexo</category>
       </categories>
       <tags>
         <tag>Hexo</tag>
@@ -2100,7 +2112,8 @@ TSS是一个特殊的段。在Linux中，CPU从系统态切换到用户态时，
 <p>可以看到：任务寄存器中可见部分的段选择符加载TSS描述符的段选择符，访问GDT中TSS描述符，通过TSS描述符访问TSS。同时TSS描述符中的基址和界限字段的值又加载到任务寄存器的不可见部分的基址和界限字段，这样做的目的是下次访问该TSS时可以不用通过GDT中的TSS描述符访问TSS，而是直接通过缓存在任务寄存器中的基址和界限字段访问TSS，加快了系统对TSS的访问。</p>
 ]]></content>
       <categories>
-        <category>操作系统高级教程学习笔记</category>
+        <category>国科大课程笔记</category>
+        <category>操作系统高级教程</category>
       </categories>
       <tags>
         <tag>操作系统</tag>
@@ -2441,11 +2454,28 @@ break：接下来，如果缓冲头指针bh为空，或者tmp所指的缓冲头�
 <p>make_request()函数主要功能为创建请求项并插入请求队列。根据具体读写操作，如果request[32]中没有一项是空闲的，则查看此次请求是不是提前读写，如果是则立即放弃此次请求操作。否则让本次请求先睡眠“sleep_on(&amp;wait_for_request);”以等待request请求队列腾出空闲项，一段时间后再次搜索请求队列。</p>
 ]]></content>
       <categories>
-        <category>操作系统高级教程学习笔记</category>
+        <category>国科大课程笔记</category>
+        <category>操作系统高级教程</category>
       </categories>
       <tags>
         <tag>操作系统</tag>
         <tag>Linux Kernel</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>LLM-Learning1</title>
+    <url>/2024/04/08/LLM-Learning1/</url>
+    <content><![CDATA[<h1>标题一</h1>
+<h2 id="标题二">标题二</h2>
+<!--  -->
+]]></content>
+      <categories>
+        <category>大模型</category>
+        <category>RAG</category>
+      </categories>
+      <tags>
+        <tag>大模型</tag>
+        <tag>RAG</tag>
       </tags>
   </entry>
 </search>
