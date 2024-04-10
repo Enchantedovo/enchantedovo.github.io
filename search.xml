@@ -2465,7 +2465,10 @@ break：接下来，如果缓冲头指针bh为空，或者tmp所指的缓冲头�
   <entry>
     <title>RAG 应知必会</title>
     <url>/2024/04/08/LLM-Learning1/</url>
-    <content><![CDATA[<h1>RAG的发展</h1>
+    <content><![CDATA[<blockquote>
+<p>参考：<a href="https://arxiv.org/abs/2312.10997">Retrieval-Augmented Generation for Large Language Models: A Survey</a></p>
+</blockquote>
+<h1>RAG的发展</h1>
 <p>RAG技术的发展可以从技术范式的角度分为几个阶段，主要包括：</p>
 <ul>
 <li><strong>朴素RAG(Naive RAG)</strong>:这是RAG技术的基出形式，包括三个基本步骤：索引(将文档库分割成较短的Chunk并通过编码器构建向量索引)、检索(根据问题和chunks的相似度检索相关文档片段)、生成(以检索到的上下文为条件，生成问题的回答)。</li>
@@ -2475,7 +2478,7 @@ break：接下来，如果缓冲头指针bh为空，或者tmp所指的缓冲头�
 </ul>
 <p>三个阶段之间是继承与发展的关系：</p>
 <img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2024/04/08/LLM-Learning1/p1.png" class title="p1">
-<h2 id="RAG的评价">RAG的评价</h2>
+<h1>如何评价RAG</h1>
 <blockquote>
 <p>🚩 <big><strong>评估指标</strong></big>：</p>
 <ol>
@@ -2485,19 +2488,256 @@ break：接下来，如果缓冲头指针bh为空，或者tmp所指的缓冲头�
 <li>答案相关性一一评估生成的答案是否与问题相关，以及是否提供了有用的信息</li>
 </ol>
 </blockquote>
-<h3 id="评估角度">评估角度</h3>
-<h4 id="RAG三元组">RAG三元组</h4>
+<h2 id="评估角度">评估角度</h2>
+<h3 id="RAG三元组">RAG三元组</h3>
 <ul>
 <li><strong>Context Relevance</strong>：衡量召回的Context能够支持Query的程度。如果该得分低，反应出了召回了太多与Qury问题无关的内容，这些错误的召回知识会对LLM的最终回答造成一定影响。</li>
 <li><strong>Groundedness</strong>：衡量LLM的Response遵从召回的Context的程度。如果该得分低，反应出了LLM的回答不遵从召回的知识，那么回答出现幻觉的可能就越大。</li>
 <li><strong>Answer Relevance</strong>：衡量最终的Response回答对Query提问的相关度。如果该得分低，反应出了可能答不对题。</li>
 </ul>
 <img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2024/04/08/LLM-Learning1/p2.png" class title="p2">
-<h4 id="基于Ground-truth的指标">基于Ground-truth的指标</h4>
+<h3 id="基于Ground-truth的指标">基于Ground-truth的指标</h3>
 <ul>
 <li>Ground-truth是回答，那就可以<u>直接比较RAG应用的回答和ground-truth之间的相关性</u>，来端到端地进行衡量。</li>
-<li>Ground-truth是知识文档中的chunks，对比ground-truth doc chunks和召回的contexts之间的相关性。<br>
-·让LLM生成评估测试集，来生成query和ground-truth,比如，在ragas的 <a href="https://docs.ragas.io/en/latest/concepts/testset_generation.html">Synthetic Test Data generation</a> 和 <a href="https://docs.llamaindex.ai/en/stable/examples/evaluation/QuestionGeneration.html">llama-index QuestionGeneration</a>中都有一些集成好的方法，可以直接方便地使用。</li>
+<li>让LLM生成评估测试集，来生成query和ground-truth,比如，在ragas的 <a href="https://docs.ragas.io/en/latest/concepts/testset_generation.html">Synthetic Test Data generation</a> 和 <a href="https://docs.llamaindex.ai/en/stable/examples/evaluation/QuestionGeneration.html">llama-index QuestionGeneration</a> 中都有一些集成好的方法，可以直接方便地使用。</li>
+<li>Ground-truth是知识文档中的chunks，对比ground-truth doc chunks和召回的contexts之间的相关性。</li>
+</ul>
+<h3 id="基于LLM的定量评估">基于LLM的定量评估</h3>
+<ul>
+<li>有了GPT-4后，其可行性就提高了。我们只需设计好prompt,将要打分的一些文字放入prompt,访问GPT-4,就可以得到一个想要的得分结果。</li>
+</ul>
+<h2 id="评估工具">评估工具</h2>
+<ol>
+<li>RAGAs:<a href="https://docs.ragas.io/en/latest/concepts/metrics/context_recall.html">https://docs.ragas.io/en/latest/concepts/metrics/context_recall.html</a></li>
+<li>TruLens:<a href="https://www.trulens.org/trulens_eval/install/">https://www.trulens.org/trulens_eval/install/</a></li>
+<li>Llama-Index:<a href="https://docs.llamaindex.ai/en/stable/optimizing/evaluation/evaluation.html">https://docs.llamaindex.ai/en/stable/optimizing/evaluation/evaluation.html</a></li>
+<li>Phoenix:<a href="https://docs.arize.com/phoenix/">https://docs.arize.com/phoenix/</a></li>
+<li>DeepEval:<a href="https://github.com/confident-ai/deepeval">https://github.com/confident-ai/deepeval</a></li>
+<li>LangSmith:<a href="https://docs.smith.langchain.com/evaluation/evaluator-implementations">https://docs.smith.langchain.com/evaluation/evaluator-implementations</a></li>
+<li>OpenAI Evals:<a href="https://github.com/openai/evals">https://github.com/openai/evals</a></li>
+</ol>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2024/04/08/LLM-Learning1/p3.png" class title="p3">
+<h1>RAG未来发展方向</h1>
+<h2 id="RAG的垂直优化">RAG的垂直优化</h2>
+<ul>
+<li>长下文长度
+<ul>
+<li>检索内容过多，超过窗口限制怎么办？</li>
+<li>如果LLMs的上下文窗口不再受限制，RAG应该如何改进？</li>
+</ul>
+</li>
+<li>鲁棒性
+<ul>
+<li>检索到错误内容怎么处理？</li>
+<li>怎么对检索出来内容进行过滤和验证？</li>
+<li>怎么提高模型抗毒、抗噪声的能力。</li>
+</ul>
+</li>
+<li>与微调协同
+<ul>
+<li>如何同时发挥RAG和FT的效果，两者怎么协同，怎么组织，是串行、交替还是端到端？</li>
+</ul>
+</li>
+<li>Scaling-Law
+<ul>
+<li>RAG模型是否满足Scaling Law?</li>
+<li>RAG是否会，或是在什么场景下会出现Inverse Scaling Law的现象？</li>
+</ul>
+</li>
+<li>LLM的角色
+<ul>
+<li>LLMs可以用于检索(用LLMs的生成代替检索或检索LLMs记忆)、用于生成、用于评估。如何进一步挖掘LLMs在RAG中的潜力？</li>
+</ul>
+</li>
+</ul>
+<h2 id="工程实践">工程实践</h2>
+<ul>
+<li>如何降低超大规模语料的检索时延？</li>
+<li>如何保证检索出来内容不被大模型泄露？</li>
+</ul>
+<h2 id="RAG的多模态的拓展">RAG的多模态的拓展</h2>
+<ul>
+<li>如何将RAG不断发展的技术和思想拓展到图片、音频、视频或代码等其他模态的数据中？</li>
+<li>一方面可以增强单一模态的任务，另一方面可以通过RAG的思想将多模态进行融合。</li>
+</ul>
+<h2 id="RAG的生态">RAG的生态</h2>
+<ul>
+<li>RAG的应用已经不仅仅局限于问答系统，其影响力正在扩展到更多领域。现在，推荐系统、信息抽取和报告生成等多种任务都开始受益于RAG技术的应用。</li>
+<li>与此同时，RAG技术栈也在井喷。除了已知的Langchain和LlamaIndex等工具，市场上涌现出更多针对性的RAG工具，例如：用途定制化，满足更加聚焦场景的需求；使用简易化，进一步降低上手门槛的；功能专业化，逐渐面向生产环境。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>大模型</category>
+        <category>RAG</category>
+      </categories>
+      <tags>
+        <tag>大模型</tag>
+        <tag>RAG</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>RAG开发的痛点以及解决方案</title>
+    <url>/2024/04/10/LLM-Learning2/</url>
+    <content><![CDATA[<div class="hide-toggle" style="border: 1px solid bg"><div class="hide-button toggle-title" style="background-color: bg;color: color"><i class="fas fa-caret-right fa-fw"></i><span>参考</span></div>
+    <div class="hide-content"><ul>
+<li><a href="https://towardsdatascience.com/12-rag-pain-points-and-proposed-solutions-43709939a28c">12 RAG Pain Points and Proposed Solutions</a></li>
+<li><a href="https://baoyu.io/translations/rag/12-rag-pain-points-and-proposed-solutions">https://baoyu.io/translations/rag/12-rag-pain-points-and-proposed-solutions</a></li>
+</ul>
+</div></div>
+<h1>引言</h1>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2024/04/10/LLM-Learning2/p1.webp" class title="p1">
+<p>图源自 Barnett 等人的研究 <a href="https://baoyu.io/translations/ai-paper/2401.05856v1-seven-failure-points-when-engineering-a-retrieval-augmented-generation-system">工程化检索增强生成系统时的七大挑战</a>。后面会介绍上述7大挑战，并且补充5个额外的挑战，以及它们的解决方案：</p>
+<ul>
+<li>痛点 1：缺失内容</li>
+<li>痛点 2：关键文档被遗漏</li>
+<li>痛点 3：文档整合的长度限制 —— 超出上下文</li>
+<li>痛点 4：提取困难</li>
+<li>痛点 5：格式错误</li>
+<li>痛点 6：缺乏具体细节</li>
+<li>痛点 7：回答不全面</li>
+<li>痛点 8：数据摄入的可扩展性问题</li>
+<li>痛点 9：结构化数据的问答</li>
+<li>痛点 10：从复杂 PDF 文档提取数据</li>
+<li>痛点 11：备用模型策略</li>
+<li>痛点 12：大语言模型的安全性</li>
+</ul>
+<h1>痛点1：缺失内容</h1>
+<p><strong>具体描述</strong>：当提出的问题无法从可用文档中找到答案时，RAG系统可能会回答&quot;对不起，我不知道”，但如果问题与内容相关却没有答案，系统可能会被误导提供错误的回答。</p>
+<p><strong>解决方案</strong>：</p>
+<ul>
+<li>
+<p>数据清洗，构建高质量的数据</p>
+</li>
+<li>
+<p>prompt优化</p>
+<ul>
+<li>例如，通过设置提示：“如果你对答案不确定，就告诉我你不知道”，可以鼓励模型承认其局限性，并更透明地表达不确定性。虽然无法保证百分百的准确率，但在数据清洗之后，设计恰当的提示是提高回答质量的有效手段之一。</li>
+</ul>
+</li>
+</ul>
+<h1>痛点2：关键文档被遗漏</h1>
+<p><strong>具体描述</strong>：问题的答案在文档中，但排名没有足够高以返回给用户。（理论上所有文档都会被排名并用于下一步，但实际上只返回排名最高的K个文档）。</p>
+<p><strong>解决方案</strong>：</p>
+<ul>
+<li>
+<p>通过调整<code>chunk_size</code>和<code>similarity_top_k</code>两个参数优化检索效果</p>
+<ul>
+<li><a href="https://medium.com/gitconnected/automating-hyperparameter-tuning-with-llamaindex-72fdd68e3b90?sk=0a29f2025b965040b9b1defd9525e4eb">通过 LlamaIndex 实现超参数自动调整中</a></li>
+<li><a href="https://docs.llamaindex.ai/en/stable/examples/param_optimizer/param_optimizer.html">对 RAG 进行超参数优化</a></li>
+</ul>
+</li>
+<li>
+<p>检索结果的优化排序（Rerank算法）</p>
+<ul>
+<li><a href="https://docs.llamaindex.ai/en/stable/examples/node_postprocessor/CohereRerank.html">优化排序的前后差异</a></li>
+<li>另外，通过各种嵌入技术和排序器，可以对检索性能进行评估和提升，详见<a href="https://blog.llamaindex.ai/boosting-rag-picking-the-best-embedding-reranker-models-42d079022e83">提升 RAG 性能：挑选最优的嵌入技术和排序模型</a>，由 Ravi Theja 撰写。</li>
+<li>定制化的排序器经过微调后能够实现更优的检索性能，具体实施方法请参阅<a href="https://blog.llamaindex.ai/improving-retrieval-performance-by-fine-tuning-cohere-reranker-with-llamaindex-16c0c1f9b33b">通过微调 Cohere 排序器与 LlamaIndex 提升检索效果</a></li>
+</ul>
+</li>
+</ul>
+<h1>痛点3：文档整合的长度限制一超出上下文</h1>
+<p><strong>具体描述</strong>：数据库检索到包含答案的文档，但这些文档没有被包含在生成答案的上下文中。当数据库返回许多文档时，需要进行整合处理以检索答案。</p>
+<p><strong>解决方案</strong>：</p>
+<ul>
+<li>
+<p>调整检索策略：比如：基础检索、知识图谱检索等</p>
+</li>
+<li>
+<p>微调嵌入技术：如果使用的是开源嵌入模型，对其进行微调是提高检索准确度的有效手段。<a href="https://docs.llamaindex.ai/en/stable/examples/finetuning/embeddings/finetune_embedding.html">嵌入模型微调指南</a></p>
+</li>
+</ul>
+<h1>痛点4：提取困难</h1>
+<p><strong>具体描述</strong>：答案存在于上下文中，但大型语言模型未能提取出正确的答案。这通常发生在上下文中存在太多噪声或矛盾信息时。</p>
+<p><strong>解决方案</strong>：</p>
+<ul>
+<li>
+<p>数据清洗</p>
+</li>
+<li>
+<p>提示信息压缩，可以参考：<a href="https://rzv2chzpkh.feishu.cn/wiki/FIMJwPPyGiKJmAkuhJGcBrAonKe#CZQ6dQ58HotZswxkNTrcqZiwnGf">LongLLMLingua.pdf</a></p>
+</li>
+<li>
+<p>LongContextReorder（长内容优先排序）：<a href="https://arxiv.org/abs/2307.03172">研究</a>发现，当关键数据被放置在输入内容的开始或结尾时，往往能够获得最佳的性能表现。为了解决信息在输入中间部分“迷失”的问题，LongContextReorder 应运而生，它通过重新排序检索到的节点来优化处理，特别适用于需要处理大量顶级结果的情形。</p>
+</li>
+</ul>
+<h1>痛点5：格式错误</h1>
+<p><strong>具体描述</strong>：问题涉及以特定格式（如表格或列表）提取信息，但大型语言模型忽略了指令。</p>
+<p><strong>解决方案</strong>：</p>
+<ul>
+<li>
+<p>prompt优化</p>
+</li>
+<li>
+<p>输出解析：可以在以下方面帮助确保获得期望的输出：为任何提示/查询提供格式化指令；对大语言模型的输出进行“解析”</p>
+<ul>
+<li><a href="https://docs.llamaindex.ai/en/stable/module_guides/querying/structured_outputs/pydantic_program.html">Pydantic程序</a></li>
+</ul>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pydantic <span class="keyword">import</span> BaseModel</span><br><span class="line"><span class="keyword">from</span> typing <span class="keyword">import</span> List</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> llama_index.program <span class="keyword">import</span> OpenAIPydanticProgram</span><br><span class="line"></span><br><span class="line"><span class="comment"># Define output schema (without docstring)</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Song</span>(<span class="params">BaseModel</span>):</span></span><br><span class="line">    title: <span class="built_in">str</span></span><br><span class="line">    length_seconds: <span class="built_in">int</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Album</span>(<span class="params">BaseModel</span>):</span></span><br><span class="line">    name: <span class="built_in">str</span></span><br><span class="line">    artist: <span class="built_in">str</span></span><br><span class="line">    songs: List[Song]</span><br><span class="line"></span><br><span class="line"><span class="comment"># Define openai pydantic program</span></span><br><span class="line">prompt_template_str = <span class="string">&quot;&quot;&quot;\</span></span><br><span class="line"><span class="string">Generate an example album, with an artist and a list of songs. \</span></span><br><span class="line"><span class="string">Using the movie &#123;movie_name&#125; as inspiration.\</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line">program = OpenAIPydanticProgram.from_defaults(</span><br><span class="line">    output_cls=Album, prompt_template_str=prompt_template_str, verbose=<span class="literal">True</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Run program to get structured output</span></span><br><span class="line">output = program(</span><br><span class="line">    movie_name=<span class="string">&quot;The Shining&quot;</span>, description=<span class="string">&quot;Data model for an album.&quot;</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<h1>痛点6：缺乏具体细节</h1>
+<p><strong>具体描述</strong>：回答在响应中返回，但不够具体或过于具体，无法满足用户的需求。当RAG系统设计者对给定问题有预期结果时（例如针对学生的教学内容），就会发生这种情况。</p>
+<p><strong>解决方案</strong>：</p>
+<ul>
+<li>进阶检索技巧：从小到大的信息聚合检索、递归式检索方法
+<ul>
+<li>参考文章：<a href="https://towardsdatascience.com/jump-start-your-rag-pipelines-with%E9%AB%98%E7%BA%A7%E6%A3%80%E7%B4%A2-llamapacks-%E5%92%8C-lighthouz-ai-80a09b7c7d9d?sk=14e50a68f9ef825aaa6634365c7d9617">如何通过高级检索 LlamaPacks 优化您的 RAG 流程，并利用 Lighthouz AI 进行性能基准测试</a></li>
+</ul>
+</li>
+</ul>
+<h1>痛点7：回答不全面</h1>
+<p><strong>具体描述</strong>：回答不完整并不是错误的，但遗漏了一些信息，尽管这些信息在上下文中可用并且可以提取。例如，对于&quot;这些文件A、B和C的关键点是什么？&quot;这样的问题，更好的方法是分别询问这些问题。</p>
+<p><strong>解决方案</strong>：</p>
+<ul>
+<li>查询变换的技巧：一个有效提升凡AG处理能力的策略是增设一个查询理解层，即在实际检索知识库之前进行一系列的查询变换。具体来说，我们有以下四种变换方式：
+<ul>
+<li>路由：在不改变原始查询的基础上，识别并定向到相关的工具子集，并将这些工具确定为处理该查询的首选。</li>
+<li>查询改写：在保留选定工具的同时，通过多种方式重构查询语句，以便跨相同的工具集进行应用。</li>
+<li>细分问题：将原查询拆解为若干个更小的问题，每个问题都针对特定的工具进行定向，这些工具是根据它们的元数据来选定的。</li>
+<li>ReAct 代理工具选择：根据原始查询判断最适用的工具，并为在该工具上运行而特别构造的查询。</li>
+</ul>
+</li>
+<li>参考文章：<a href="https://towardsdatascience.com/advanced-query-transformations-to-improve-rag-11adca9b19d1">提升 RAG 性能的高级查询变换技巧</a></li>
+</ul>
+<h1>痛点8：数据摄入的可扩展性问题</h1>
+<p><strong>具体描述</strong>：在RAG系统中，数据摄入的可扩展性问题指的是系统在有效管理和处理大规模数据时面临的挑战，这可能导致性能瓶颈甚至系统故障。这类问题可能会造成数据摄入时间过长、系统过载、数据质量下降以及可用性受限等现象。</p>
+<p><strong>解决方案</strong>：</p>
+<ul>
+<li>加速文档处理：并行摄取技术，参考：LlamaIndex 提供的<a href="https://github.com/run-llama/llama_index/blob/main/docs/examples/ingestion/parallel_execution_ingestion_pipeline.ipynb?__s=db5ef5gllwa79ba7a4r2&amp;utm_source=drip&amp;utm_medium=email&amp;utm_campaign=LlamaIndex+news%2C+2024-01-16">详细教程</a>。</li>
+</ul>
+<h1>痛点9：结构化数据的问答</h1>
+<p><strong>具体描述</strong>：解读用户的查询并准确检索到所需的结构化数据是一项挑战，尤其是当面对复杂或模糊的查询请求时。这一挑战由于文本到SQL的转换不够灵活，以及当前大语言模型在处理这些任务上的局限性而更加复杂。</p>
+<p><strong>解决方案</strong>：</p>
+<ul>
+<li>
+<p>链式思维表格包：适合处理包含多重信息的复杂表格单元问题，通过逐步精确地切割和解析数据，直至找到所需的数据子集，显著提高了对表格数据的查询效率，参考：<a href="https://arxiv.org/abs/2401.04398">链式表格原论文</a></p>
+</li>
+<li>
+<p>混合自洽（多数投票法）查询引擎包：原文见<a href="https://arxiv.org/pdf/2312.16702v1.pdf">重新思考大语言模型如何理解表格数据</a></p>
+</li>
+</ul>
+<h1>痛点10：从复杂PDF中提取数据</h1>
+<p><strong>具体描述</strong>：在从复杂PDF文档，如嵌入表格的文档中提取数据进行问答时，传统的检索方法往往无法达到目的。需要一个更高效的方法来处理这种复杂的PDF数据提取需求。</p>
+<p><strong>解决方案</strong>：</p>
+<ul>
+<li>嵌入式表格检索技术：LlamaIndex 提出了一种解决方案——`EmbeddedTablesUnstructuredRetrieverPack</li>
+</ul>
+<h1>痛点11：备用模型策略</h1>
+<p><strong>具体描述</strong>：在使用大语言模型过程中，可能会担心模型可能会遇到问题，比如遇到OpenAI模型的访问频率限制错误。这时候就需要一个或多个备用模型作为后备，以防主模型出现故障。</p>
+<p><strong>解决方案</strong>：</p>
+<ul>
+<li>
+<p>Neutrino Router：Neutrino路由器能够通过一个预测模型，智能地选择最适合输入问题的大语言模型。</p>
+</li>
+<li>
+<p>OpenRouter：OpenRouter提供了一个一站式的API接口，能够接入任何大语言模型。不仅能找到市场上任一模型的最低价格，还能在首选的服务提供商遇到问题时，自动切换到其他选项。</p>
+</li>
+</ul>
+<h1>痛点12：LLM的安全性：</h1>
+<p><strong>具体描述</strong>：在设计和开发 AI 系统时，如何有效防止恶意输入、确保输出安全、保护敏感信息不被泄露等问题，都是每位 AI 设计师和开发者需要面对的重要挑战。</p>
+<p><strong>解决方案</strong>：</p>
+<ul>
+<li>Llama Guard：保护大语言模型的新工具，借鉴7-B Llama 2的技术，Llama Guard旨在通过评估输入（例如分析提问的内容）和输出（即对回答的分类）来帮助大语言模型 (LLMs) 鉴别内容是否安全。它本身也使用了大语言模型技术，能够判断某个问题或回答是否安全，若发现不安全的内容，还会详细列出违反的具体规则。</li>
 </ul>
 ]]></content>
       <categories>
