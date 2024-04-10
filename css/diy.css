@@ -163,5 +163,11 @@
   background-color: #49b1f5;
 }
 
+#article-container ol {
+  margin-top: 0;
+}
 
-
+#article-container ol li,
+#article-container ul li {
+  margin: 0 0;
+}

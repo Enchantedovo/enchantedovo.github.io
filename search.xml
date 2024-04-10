@@ -2463,11 +2463,42 @@ break：接下来，如果缓冲头指针bh为空，或者tmp所指的缓冲头�
       </tags>
   </entry>
   <entry>
-    <title>LLM-Learning1</title>
+    <title>RAG 应知必会</title>
     <url>/2024/04/08/LLM-Learning1/</url>
-    <content><![CDATA[<h1>标题一</h1>
-<h2 id="标题二">标题二</h2>
-<!--  -->
+    <content><![CDATA[<h1>RAG的发展</h1>
+<p>RAG技术的发展可以从技术范式的角度分为几个阶段，主要包括：</p>
+<ul>
+<li><strong>朴素RAG(Naive RAG)</strong>:这是RAG技术的基出形式，包括三个基本步骤：索引(将文档库分割成较短的Chunk并通过编码器构建向量索引)、检索(根据问题和chunks的相似度检索相关文档片段)、生成(以检索到的上下文为条件，生成问题的回答)。</li>
+<li><strong>进阶的RAG(Advanced RAG)</strong>:为了解决Naive RAG在检索质量、响应生成质量以及增强过程中的挑战，Advanced RAG:范式被提出。它在数据索引、检索前和检索后都进行了额外处理，如更精细的数据清洗、设计文档结构和添加元数据等，以提升文本的<br>
+一致性、准确性和检索效率。</li>
+<li><strong>模块化RAG(Modular RAG)</strong>:随着RAG技术的进一步发展，模块化RAG概念被提出。它在结构上更加自由和灵活，引入了更多的具体功能模块，例如查询搜索引擎、融合多个回答。技术上将检索与微调分开，提供了更高的自定义性和灵活性。</li>
+</ul>
+<p>三个阶段之间是继承与发展的关系：</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2024/04/08/LLM-Learning1/p1.png" class title="p1">
+<h2 id="RAG的评价">RAG的评价</h2>
+<blockquote>
+<p>🚩 <big><strong>评估指标</strong></big>：</p>
+<ol>
+<li>上下文相关性一一检索的上下文是否相关</li>
+<li>上下文回溯一评估检索到的上下文是否包含了问题的所有必要信息</li>
+<li>忠实度一一生成的答案是否与检索的内容一致，是否保留了原始信息</li>
+<li>答案相关性一一评估生成的答案是否与问题相关，以及是否提供了有用的信息</li>
+</ol>
+</blockquote>
+<h3 id="评估角度">评估角度</h3>
+<h4 id="RAG三元组">RAG三元组</h4>
+<ul>
+<li><strong>Context Relevance</strong>：衡量召回的Context能够支持Query的程度。如果该得分低，反应出了召回了太多与Qury问题无关的内容，这些错误的召回知识会对LLM的最终回答造成一定影响。</li>
+<li><strong>Groundedness</strong>：衡量LLM的Response遵从召回的Context的程度。如果该得分低，反应出了LLM的回答不遵从召回的知识，那么回答出现幻觉的可能就越大。</li>
+<li><strong>Answer Relevance</strong>：衡量最终的Response回答对Query提问的相关度。如果该得分低，反应出了可能答不对题。</li>
+</ul>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2024/04/08/LLM-Learning1/p2.png" class title="p2">
+<h4 id="基于Ground-truth的指标">基于Ground-truth的指标</h4>
+<ul>
+<li>Ground-truth是回答，那就可以<u>直接比较RAG应用的回答和ground-truth之间的相关性</u>，来端到端地进行衡量。</li>
+<li>Ground-truth是知识文档中的chunks，对比ground-truth doc chunks和召回的contexts之间的相关性。<br>
+·让LLM生成评估测试集，来生成query和ground-truth,比如，在ragas的 <a href="https://docs.ragas.io/en/latest/concepts/testset_generation.html">Synthetic Test Data generation</a> 和 <a href="https://docs.llamaindex.ai/en/stable/examples/evaluation/QuestionGeneration.html">llama-index QuestionGeneration</a>中都有一些集成好的方法，可以直接方便地使用。</li>
+</ul>
 ]]></content>
       <categories>
         <category>大模型</category>
