@@ -2702,7 +2702,7 @@ TSS是一个特殊的段。在Linux中，CPU从系统态切换到用户态时，
 ]]></content>
       <categories>
         <category>大模型</category>
-        <category>RAG</category>
+        <category>大模型安全</category>
       </categories>
       <tags>
         <tag>大模型</tag>
