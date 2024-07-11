@@ -1324,7 +1324,7 @@ canvas:not(#ribbon-canvas),
   }
 }
 :root {
-  --global-font-size: 14px;
+  --global-font-size: 17px;
   --global-bg: #fff;
   --font-color: #4c4948;
   --hr-border: #d2ebfd;
@@ -1388,8 +1388,6 @@ input::placeholder {
   background: url(https://i.loli.net/2019/09/09/5oDRkWVKctx2b6A.png);
   background-attachment: local;
   background-position: center;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
   background-size: cover;
   background-repeat: no-repeat;
 }
@@ -1674,7 +1672,7 @@ figure.highlight pre .javascript .function {
   padding: 0;
   background: #f6f8fa;
   color: #90a4ae;
-  line-height: 1.6;
+  line-height: 1.5;
 }
 blockquote {
   margin: 0 0 1rem;
@@ -1699,7 +1697,7 @@ blockquote footer cite:before {
 }
 #article-container pre,
 #article-container code {
-  font-size: 14px;
+  font-size: 17px;
   font-family: consolas, Menlo, 'PingFang SC', 'Microsoft YaHei', sans-serif !important;
 }
 #article-container code {
@@ -1730,7 +1728,7 @@ blockquote footer cite:before {
 #article-container figure.highlight figcaption,
 #article-container figure.highlight .caption {
   padding: 0.3rem 0 0.1rem 0.7rem;
-  font-size: 14px;
+  font-size: 17px;
   line-height: 1em;
 }
 #article-container figure.highlight figcaption a,
@@ -1762,7 +1760,7 @@ blockquote footer cite:before {
   height: 2.15em;
   background: #e6ebf1;
   color: #90a4ae;
-  font-size: 14px;
+  font-size: 17px;
 }
 #article-container .highlight-tools.closed + table {
   display: none;
@@ -3139,8 +3137,6 @@ blockquote footer cite:before {
   background: #49b1f5;
   background-attachment: local;
   background-position: bottom;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
   background-size: cover;
 }
 #footer-wrap {
@@ -3169,8 +3165,6 @@ blockquote footer cite:before {
   width: 100%;
   background-color: #49b1f5;
   background-position: center center;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
   background-size: cover;
   background-repeat: no-repeat;
   -webkit-transition: all 0.5s;
