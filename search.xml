@@ -50,6 +50,156 @@
       </tags>
   </entry>
   <entry>
+    <title>文本生成模型的对抗攻击</title>
+    <url>/2024/07/11/AI-Security1/</url>
+    <content><![CDATA[<p>对抗攻击（也称为对抗样本生成）是智能算法安全的子领域，最初是针对图像所提出，在计算机视觉领域取得了丰硕的研究成果，提出了很多实用的攻击算法。近几年，研究人员在不断寻找新的应用场景，积极探索对抗攻击在其他领域的应用，针对文本的对抗攻击已取得一些进展。</p>
+<h1 id="基本概念">基本概念</h1>
+<h2 id="对抗样本">对抗样本</h2>
+<p>对抗样本的概念最初是在2014年提出的，指的是一类人为构造的样本，通过对原始的样本数据添加针对性的微小扰动所得到，其不会影响人类的感知，但会使深度学习模型产生错误的判断[1]。对抗攻击即指构造对抗样本的过程。</p>
+<p>举个例子:</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2024/07/11/AI-Security1/p1.png" class title="p1">
+<p>语句（1）为原始样本，语句（2）为经过几个字符变换后得到的对抗样本。深度学习模型能正确地将原始样本判为正面评论，而将对抗样本误判为负面评论。而显然，这种微小扰动并不会影响人类的判断。</p>
+<p>关于对抗样本存在的原因，有学者认为是由于模型的<strong>高度非线性</strong>和<strong>过拟合</strong>，有学者认为是由于<strong>特征维度过高</strong>和<strong>模型的线性性质</strong>，至今还未达成共识，研究人员一般都会根据自己的研究成果来进行解释，每个人提出的观点往往仅适用于局部现象。但不管是线性解释还是非线性解释，究其<strong>本质是由于模型没有学到完美的判别规则，模型的判断边界与真实的决策边界不一致</strong>。深度学习模型由于能够自动学习特征的能力而得到广泛应用，但是这种由数据出发进行自主学习，所得到的特征并不一定就是我们所希望的特征，模型对数据的理解与人的理解有着很大的差异。因而模型学习到的特征，极有可能并非是人理解事物的特征，即对抗样本的存在是深度学习模型的固有缺陷。</p>
+<h2 id="文本对抗和图像对抗">文本对抗和图像对抗</h2>
+<p>文本数据与图像数据的不同，为文本领域的对抗攻击研究带来了巨大挑战。[2]</p>
+<ol>
+<li><strong>离散VS连续</strong>（Discrete VS Continucous）</li>
+</ol>
+<p>图像数据是连续的，易编码为数值向量，预处理操作线性、可微，通常使用lp范数来度量原始样本与对抗样本间的距离；而文本数据是符号化的数据，是<strong>离散</strong>的，预处理操作<strong>非线性、不可微</strong>，很难定义文本上的扰动及度量文本序列改变前后的差异。</p>
+<ol start="2">
+<li><strong>易感知VS不易感知</strong>（Preceivable VS Unperceivable）</li>
+</ol>
+<p>人类通常不容易察觉到图像像素的微小变化，因此图像的对抗样本不会改变人类的判断力，只会影响深度学习模型的判别结果；而文本上的变化则很<strong>容易影响文本可读性</strong>，在将文本数据输入DNN模型之前通过拼写检查和语法检查来识别或纠正更改，极有可能导致攻击失败。</p>
+<ol start="3">
+<li><strong>富有语义VS无语义</strong>（Semanic VS Semanic-less）</li>
+</ol>
+<p>像素的微小变化不会改变图像的语义，但对文本的扰动<strong>可轻易改变单词和句子的语义</strong>。例如，干扰单个像素不会将图像从猫变为另一种动物，而删除否定词将改变句子的情感。更改样本的语义有悖于对抗样本的定义，文本领域的对抗样本应在使深度学习模型发生误判的同时保持数据样本的真实标签不变。</p>
+<h2 id="算法分类">算法分类</h2>
+<h3 id="模型访问权限">模型访问权限</h3>
+<p>根据模型访问权限可以分为白盒攻击和黑盒攻击，白盒攻击需要获取模型的结构和参数等详细信息；而黑盒攻击不需要模型知识，只需访问模型获取输入的对应输出即可。</p>
+<h3 id="攻击目标">攻击目标</h3>
+<p>根据攻击目标设定可以分为有目标攻击和无目标攻击，无目标攻击旨在使模型的输出为偏离正确结果的任意错误预测；而有目标攻击旨在使模型的输出为某一特定结果。</p>
+<h2 id="添加扰动的粒度">添加扰动的粒度</h2>
+<p>根据添加扰动时所操作的文本粒度可以分为字符级、单词级和语句级攻击。字符级攻击通过插入、删除或替换字符，以及交换字符顺序实现；单词级攻击主要通过替换单词实现，基于近义词、形近词、错误拼写等建立候选词库；语句级攻击主要通过文本复述或插入句子实现。</p>
+<h2 id="攻击策略">攻击策略</h2>
+<p>根据攻击策略可以分为<strong>Image-to-Text</strong>（借鉴图像领域的经典算法）、<strong>基于优化</strong>的攻击、<strong>基于重要性</strong>的攻击以及<strong>基于神经网络</strong>的攻击。</p>
+<ul>
+<li>部分学者通过<strong>将文本数据映射到连续空间</strong>，然后借鉴图像领域的一些经典算法如FGSM、JSMA等，生成对抗样本；</li>
+<li>基于优化的攻击将对抗攻击表述为<strong>带约束的优化问题</strong>，利用现有的优化技术求解，如梯度优化、遗传算法优化；</li>
+<li>基于重要性的攻击通常首先利用梯度或文本特性设计评分函数<strong>锁定关键词</strong>，然后通过<strong>文本编辑</strong>添加扰动；</li>
+<li>基于神经网络的攻击训练神经网络模型<strong>自动学习对抗样本的特征</strong>，从而实现对抗样本的自动化生成。</li>
+</ul>
+<h1 id="代表性算法">代表性算法</h1>
+<p>文本领域的常见任务有文本分类、情感分析、机器翻译、阅读理解、问答系统、对话生成、文本蕴含等，其中文本分类与情感分析任务使用分类器模型，其他任务使用seq2seq模型。针对分类任务的研究较多，下文介绍几种代表性算法。</p>
+<table>
+<thead>
+<tr>
+<th>算法</th>
+<th>访问权限</th>
+<th>攻击形式</th>
+<th>操作粒度</th>
+<th>策略</th>
+<th>应用场景</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Papernot et al.</td>
+<td>白盒</td>
+<td>无目标攻击</td>
+<td>单词</td>
+<td>JSMA-based, FGSM-based</td>
+<td>文本分类</td>
+</tr>
+<tr>
+<td>TextFool</td>
+<td>白盒/黑盒</td>
+<td>有目标攻击</td>
+<td>单词</td>
+<td>FGSM-based</td>
+<td>文本分类</td>
+</tr>
+<tr>
+<td>HotFlip</td>
+<td>白盒</td>
+<td>无目标攻击</td>
+<td>字符</td>
+<td>Gradient-Optimization</td>
+<td>文本分类</td>
+</tr>
+<tr>
+<td>Alzantot et al.</td>
+<td>黑盒</td>
+<td>有目标攻击</td>
+<td>单词</td>
+<td>GA-Optimization</td>
+<td>情感分析</td>
+</tr>
+<tr>
+<td>DeepWordBug</td>
+<td>黑盒</td>
+<td>无目标攻击</td>
+<td>字符</td>
+<td>Importance-based</td>
+<td>文本分类</td>
+</tr>
+<tr>
+<td>TextBugger</td>
+<td>白盒/黑盒</td>
+<td>字符/单词</td>
+<td>字符</td>
+<td>Importance-based</td>
+<td>情感分析</td>
+</tr>
+<tr>
+<td>DISPTFLIP</td>
+<td>白盒</td>
+<td>无目标攻击</td>
+<td>字符</td>
+<td>Neural Network</td>
+<td>文本分类</td>
+</tr>
+<tr>
+<td>Zhao et al.</td>
+<td>黑盒</td>
+<td>无目标攻击</td>
+<td>单词</td>
+<td>GAN-based</td>
+<td>文本分类/机器翻译</td>
+</tr>
+</tbody>
+</table>
+<p>Papernot等人[3]最先研究了文本领域的对抗样本问题，提出了<strong>生成对抗性输入序列</strong>的概念。作者将图像对抗领域的JSMA算法迁移到文本领域，利用计算图展开技术来评估与单词序列的嵌入输入有关的前向导数，构建雅可比矩阵，并借鉴<strong>FGSM</strong>的思想计算对抗性扰动。由于词向量不能取任意实数值，作者建立了一个特定的词典来选择单词以替换原始序列中的随机词。</p>
+<p>Liang等人[4]提出了TextFool方法，首先针对白盒模型和黑盒模型使用不同的策略<strong>识别出对分类具有重要贡献的文本项</strong>（HTP、HSP），然后对这些重要的文本项通过单一或混合使用插入、修改和删除三种<strong>扰动</strong>策略，生成对抗样本。对于白盒模型，作者借鉴FGSM的思想来估算文本项的重要度，但是通过<strong>损失函数的梯度大小</strong>而不是梯度符号来度量；对于黑盒模型，通过<strong>遮挡文本</strong>的策略来识别重要文本项。</p>
+<p>Ebrahimi 等人[5]提出了HotFlip方法，<strong>基于one-hot表示的梯度来有效估计单个操作所造成的最大损失的变化</strong>，通过原子翻转操作（将一个字符替换为另一个字符）生成对抗样本，并通过一系列的字符翻转来支持插入和删除操作。考虑到梯度优化的局限性，Alzantot等人[6]提出使用最优化技术中的遗传算法（Genetic Algorithm, GA）来生成与原始样本具有相似语义和语法的对抗样本。</p>
+<p>Gao等人[7]提出了DeepWordBug方法，将对抗样本的生成分为两个阶段。首先使用针对文本数据特性设计的评分函数来<strong>识别关键的Token</strong>，根据重要性进行排名；然后对排名最高的m个Token通过简单的<strong>字符级操作</strong>（交换、替换、删除和插入）进行扰动，改变分类结果。</p>
+<p>Li等人[8]提出了TextBugger方法，首先针对白盒和黑盒模型通过不同策略<strong>识别影响模型分类结果的重要词</strong>，然后采取插入、删除、字符交换、字符替换、单词替换等五种扰动策略分别生成扰动从中选择一个最优扰动。在白盒场景下，通过计算分类器的雅可比矩阵来找到重要词；在黑盒场景下，首先根据分类置信度找到重要的句子，然后使用评分函数来找到重要单词。</p>
+<p>Gil 等人[9]提出了HotFlip的派生方法DISTFLIP，该算法<strong>提取HotFlip优化过程中的知识训练神经网络模型</strong>来模拟攻击从而生成对抗样本，极大地节省了运行时间，并可以迁移到黑盒场景下进行攻击。</p>
+<p>Zhao等人[10]设计的用于生成对抗样本的模型，首先使用一个逆变器<strong>将原始数据映射到向量空间</strong>，在数据对应的<strong>稠密向量空间</strong>中进行搜索<strong>添加扰动</strong>得到对抗样本；然后使用GAN作为生成器将向量空间中得到的对抗样本<strong>映射回原始数据类型</strong>。</p>
+<h1 id="参考文献">参考文献</h1>
+<p>[1]Szegedy C, Zaremba W, Sutskever I, et al. Intriguing Properties of Neural Networks[C] // Proceedings of the 2th International Conference on Learning Representations, 2014.<br>
+[2]Zhang W E, Sheng Q Z, Alhazmi A, et al. Adversarial Attacks on Deep Learning Models in Natural Language Processing: A Survey[J]. ACM Transactions on Intelligent Systems and Technology (TIST). 2020, 11(3): 1-41.<br>
+[3]Papernot N, McDaniel P, Swami A, et al. Crafting Adversarial Input Sequences for Recurrent Neural Networks[C]// Proceedings of MILCOM 2016-2016 IEEE Military Communications Conference. IEEE, 2016: 49-54.<br>
+[4]Liang B, Li H, Su M, et al. Deep Text Classification Can be Fooled[C]// Proceedings of the Twenty-Seventh International Joint Conference on Artificial Intelligence(IJCAI). 2018: 4208-4215.<br>
+[5]Ebrahimi J, Rao A, Lowd D, et al. HotFlip: White-Box Adversarial Examples for Text Classification[C]//Proceedings of the 56th Annual Meeting of the Association for Computational Linguistics (Volume 2: Short Papers). 2018: 31-36.<br>
+[6]Alzantot M, Sharma Y, Elgohary A, et al. Generating Natural Language Adversarial Examples[C]//Proceedings of the 2018 Conference on Empirical Methods in Natural Language Processing. 2018: 2890-2896.<br>
+[7]Gao J, Lanchantin J, Soffa M L, et al. Black-box Generation of Adversarial Text Sequences to Evade Deep Learning Classifiers[C]// Proceedings of 2018 IEEE Security and Privacy Workshops (SPW). IEEE, 2018: 50-56.<br>
+[8]Li J, Ji S, Du T, et al. TextBugger: Generating Adversarial Text Against Real-world Applications[C]// Proceedings of the 26th Annual Network and Distributed System Security Symposium. 2019.<br>
+[9]Gil Y, Chai Y, Gorodissky O, et al. White-to-Black: Efficient Distillation of Black-Box Adversarial Attacks[C]//Proceedings of the 2019 Conference of the North American Chapter of the Association for Computational Linguistics: Human Language Technologies, Volume 1 (Long and Short Papers). 2019: 1373-1379.<br>
+[10]Zhao Z, Dua D, Singh S. Generating Natural Adversarial Examples[C]// Proceedings of the International Conference on Learning Representations. 2018.<br>
+参考博客: <a href="https://www.secrss.com/articles/25644">https://www.secrss.com/articles/25644</a></p>
+<!-- <img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2024/07/11/AI-Security1/p1.png" class="" title="p1"> -->
+<!-- <img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="p1.png"  style="zoom:60%;" /> -->]]></content>
+      <categories>
+        <category>智能算法安全</category>
+        <category>对抗攻击</category>
+      </categories>
+      <tags>
+        <tag>智能算法安全</tag>
+        <tag>生成式人工智能</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>搜索算法</title>
     <url>/2022/10/02/AdvancedAI-LearningNotes2/</url>
     <content><![CDATA[<blockquote>
@@ -933,119 +1083,6 @@ Overall the consumption of the world’s resources is undergoing a dangerous rat
       </tags>
   </entry>
   <entry>
-    <title>RAG 应知必会</title>
-    <url>/2024/04/08/LLM-Learning1/</url>
-    <content><![CDATA[<blockquote>
-<p>参考：<a href="https://arxiv.org/abs/2312.10997">Retrieval-Augmented Generation for Large Language Models: A Survey</a></p>
-</blockquote>
-<h1 id="rag的发展">RAG的发展</h1>
-<p>RAG技术的发展可以从技术范式的角度分为几个阶段，主要包括：</p>
-<ul>
-<li><strong>朴素RAG(Naive RAG)</strong>:这是RAG技术的基出形式，包括三个基本步骤：索引(将文档库分割成较短的Chunk并通过编码器构建向量索引)、检索(根据问题和chunks的相似度检索相关文档片段)、生成(以检索到的上下文为条件，生成问题的回答)。</li>
-<li><strong>进阶的RAG(Advanced RAG)</strong>:为了解决Naive RAG在检索质量、响应生成质量以及增强过程中的挑战，Advanced RAG:范式被提出。它在数据索引、检索前和检索后都进行了额外处理，如更精细的数据清洗、设计文档结构和添加元数据等，以提升文本的<br>
-一致性、准确性和检索效率。</li>
-<li><strong>模块化RAG(Modular RAG)</strong>:随着RAG技术的进一步发展，模块化RAG概念被提出。它在结构上更加自由和灵活，引入了更多的具体功能模块，例如查询搜索引擎、融合多个回答。技术上将检索与微调分开，提供了更高的自定义性和灵活性。</li>
-</ul>
-<p>三个阶段之间是继承与发展的关系：</p>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2024/04/08/LLM-Learning1/p1.png" class title="p1">
-<h1 id="如何评价rag">如何评价RAG</h1>
-<blockquote>
-<p>🚩 <big><strong>评估指标</strong></big>：</p>
-<ol>
-<li>上下文相关性一一检索的上下文是否相关</li>
-<li>上下文回溯一评估检索到的上下文是否包含了问题的所有必要信息</li>
-<li>忠实度一一生成的答案是否与检索的内容一致，是否保留了原始信息</li>
-<li>答案相关性一一评估生成的答案是否与问题相关，以及是否提供了有用的信息</li>
-</ol>
-</blockquote>
-<h2 id="评估角度">评估角度</h2>
-<h3 id="rag三元组">RAG三元组</h3>
-<ul>
-<li><strong>Context Relevance</strong>：衡量召回的Context能够支持Query的程度。如果该得分低，反应出了召回了太多与Qury问题无关的内容，这些错误的召回知识会对LLM的最终回答造成一定影响。</li>
-<li><strong>Groundedness</strong>：衡量LLM的Response遵从召回的Context的程度。如果该得分低，反应出了LLM的回答不遵从召回的知识，那么回答出现幻觉的可能就越大。</li>
-<li><strong>Answer Relevance</strong>：衡量最终的Response回答对Query提问的相关度。如果该得分低，反应出了可能答不对题。</li>
-</ul>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2024/04/08/LLM-Learning1/p2.png" class title="p2">
-<h3 id="基于ground-truth的指标">基于Ground-truth的指标</h3>
-<ul>
-<li>Ground-truth是回答，那就可以<u>直接比较RAG应用的回答和ground-truth之间的相关性</u>，来端到端地进行衡量。</li>
-<li>让LLM生成评估测试集，来生成query和ground-truth,比如，在ragas的 <a href="https://docs.ragas.io/en/latest/concepts/testset_generation.html">Synthetic Test Data generation</a> 和 <a href="https://docs.llamaindex.ai/en/stable/examples/evaluation/QuestionGeneration.html">llama-index QuestionGeneration</a> 中都有一些集成好的方法，可以直接方便地使用。</li>
-<li>Ground-truth是知识文档中的chunks，对比ground-truth doc chunks和召回的contexts之间的相关性。</li>
-</ul>
-<h3 id="基于llm的定量评估">基于LLM的定量评估</h3>
-<ul>
-<li>有了GPT-4后，其可行性就提高了。我们只需设计好prompt,将要打分的一些文字放入prompt,访问GPT-4,就可以得到一个想要的得分结果。</li>
-</ul>
-<h2 id="评估工具">评估工具</h2>
-<ol>
-<li>RAGAs:<a href="https://docs.ragas.io/en/latest/concepts/metrics/context_recall.html">https://docs.ragas.io/en/latest/concepts/metrics/context_recall.html</a></li>
-<li>TruLens:<a href="https://www.trulens.org/trulens_eval/install/">https://www.trulens.org/trulens_eval/install/</a></li>
-<li>Llama-Index:<a href="https://docs.llamaindex.ai/en/stable/optimizing/evaluation/evaluation.html">https://docs.llamaindex.ai/en/stable/optimizing/evaluation/evaluation.html</a></li>
-<li>Phoenix:<a href="https://docs.arize.com/phoenix/">https://docs.arize.com/phoenix/</a></li>
-<li>DeepEval:<a href="https://github.com/confident-ai/deepeval">https://github.com/confident-ai/deepeval</a></li>
-<li>LangSmith:<a href="https://docs.smith.langchain.com/evaluation/evaluator-implementations">https://docs.smith.langchain.com/evaluation/evaluator-implementations</a></li>
-<li>OpenAI Evals:<a href="https://github.com/openai/evals">https://github.com/openai/evals</a></li>
-</ol>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2024/04/08/LLM-Learning1/p3.png" class title="p3">
-<h1 id="rag未来发展方向">RAG未来发展方向</h1>
-<h2 id="rag的垂直优化">RAG的垂直优化</h2>
-<ul>
-<li>长下文长度
-<ul>
-<li>检索内容过多，超过窗口限制怎么办？</li>
-<li>如果LLMs的上下文窗口不再受限制，RAG应该如何改进？</li>
-</ul>
-</li>
-<li>鲁棒性
-<ul>
-<li>检索到错误内容怎么处理？</li>
-<li>怎么对检索出来内容进行过滤和验证？</li>
-<li>怎么提高模型抗毒、抗噪声的能力。</li>
-</ul>
-</li>
-<li>与微调协同
-<ul>
-<li>如何同时发挥RAG和FT的效果，两者怎么协同，怎么组织，是串行、交替还是端到端？</li>
-</ul>
-</li>
-<li>Scaling-Law
-<ul>
-<li>RAG模型是否满足Scaling Law?</li>
-<li>RAG是否会，或是在什么场景下会出现Inverse Scaling Law的现象？</li>
-</ul>
-</li>
-<li>LLM的角色
-<ul>
-<li>LLMs可以用于检索(用LLMs的生成代替检索或检索LLMs记忆)、用于生成、用于评估。如何进一步挖掘LLMs在RAG中的潜力？</li>
-</ul>
-</li>
-</ul>
-<h2 id="工程实践">工程实践</h2>
-<ul>
-<li>如何降低超大规模语料的检索时延？</li>
-<li>如何保证检索出来内容不被大模型泄露？</li>
-</ul>
-<h2 id="rag的多模态的拓展">RAG的多模态的拓展</h2>
-<ul>
-<li>如何将RAG不断发展的技术和思想拓展到图片、音频、视频或代码等其他模态的数据中？</li>
-<li>一方面可以增强单一模态的任务，另一方面可以通过RAG的思想将多模态进行融合。</li>
-</ul>
-<h2 id="rag的生态">RAG的生态</h2>
-<ul>
-<li>RAG的应用已经不仅仅局限于问答系统，其影响力正在扩展到更多领域。现在，推荐系统、信息抽取和报告生成等多种任务都开始受益于RAG技术的应用。</li>
-<li>与此同时，RAG技术栈也在井喷。除了已知的Langchain和LlamaIndex等工具，市场上涌现出更多针对性的RAG工具，例如：用途定制化，满足更加聚焦场景的需求；使用简易化，进一步降低上手门槛的；功能专业化，逐渐面向生产环境。</li>
-</ul>
-]]></content>
-      <categories>
-        <category>大模型</category>
-        <category>RAG</category>
-      </categories>
-      <tags>
-        <tag>大模型</tag>
-        <tag>RAG</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>RAG开发的痛点以及解决方案</title>
     <url>/2024/04/10/LLM-Learning2/</url>
     <content><![CDATA[<div class="hide-toggle" style="border: 1px solid bg"><div class="hide-button toggle-title" style="background-color: bg;color: color"><i class="fas fa-caret-right fa-fw"></i><span>参考</span></div>
@@ -1211,6 +1248,119 @@ Overall the consumption of the world’s resources is undergoing a dangerous rat
 <p><strong>解决方案</strong>：</p>
 <ul>
 <li>Llama Guard：保护大语言模型的新工具，借鉴7-B Llama 2的技术，Llama Guard旨在通过评估输入（例如分析提问的内容）和输出（即对回答的分类）来帮助大语言模型 (LLMs) 鉴别内容是否安全。它本身也使用了大语言模型技术，能够判断某个问题或回答是否安全，若发现不安全的内容，还会详细列出违反的具体规则。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>大模型</category>
+        <category>RAG</category>
+      </categories>
+      <tags>
+        <tag>大模型</tag>
+        <tag>RAG</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>RAG 应知必会</title>
+    <url>/2024/04/08/LLM-Learning1/</url>
+    <content><![CDATA[<blockquote>
+<p>参考：<a href="https://arxiv.org/abs/2312.10997">Retrieval-Augmented Generation for Large Language Models: A Survey</a></p>
+</blockquote>
+<h1 id="rag的发展">RAG的发展</h1>
+<p>RAG技术的发展可以从技术范式的角度分为几个阶段，主要包括：</p>
+<ul>
+<li><strong>朴素RAG(Naive RAG)</strong>:这是RAG技术的基出形式，包括三个基本步骤：索引(将文档库分割成较短的Chunk并通过编码器构建向量索引)、检索(根据问题和chunks的相似度检索相关文档片段)、生成(以检索到的上下文为条件，生成问题的回答)。</li>
+<li><strong>进阶的RAG(Advanced RAG)</strong>:为了解决Naive RAG在检索质量、响应生成质量以及增强过程中的挑战，Advanced RAG:范式被提出。它在数据索引、检索前和检索后都进行了额外处理，如更精细的数据清洗、设计文档结构和添加元数据等，以提升文本的<br>
+一致性、准确性和检索效率。</li>
+<li><strong>模块化RAG(Modular RAG)</strong>:随着RAG技术的进一步发展，模块化RAG概念被提出。它在结构上更加自由和灵活，引入了更多的具体功能模块，例如查询搜索引擎、融合多个回答。技术上将检索与微调分开，提供了更高的自定义性和灵活性。</li>
+</ul>
+<p>三个阶段之间是继承与发展的关系：</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2024/04/08/LLM-Learning1/p1.png" class title="p1">
+<h1 id="如何评价rag">如何评价RAG</h1>
+<blockquote>
+<p>🚩 <big><strong>评估指标</strong></big>：</p>
+<ol>
+<li>上下文相关性一一检索的上下文是否相关</li>
+<li>上下文回溯一评估检索到的上下文是否包含了问题的所有必要信息</li>
+<li>忠实度一一生成的答案是否与检索的内容一致，是否保留了原始信息</li>
+<li>答案相关性一一评估生成的答案是否与问题相关，以及是否提供了有用的信息</li>
+</ol>
+</blockquote>
+<h2 id="评估角度">评估角度</h2>
+<h3 id="rag三元组">RAG三元组</h3>
+<ul>
+<li><strong>Context Relevance</strong>：衡量召回的Context能够支持Query的程度。如果该得分低，反应出了召回了太多与Qury问题无关的内容，这些错误的召回知识会对LLM的最终回答造成一定影响。</li>
+<li><strong>Groundedness</strong>：衡量LLM的Response遵从召回的Context的程度。如果该得分低，反应出了LLM的回答不遵从召回的知识，那么回答出现幻觉的可能就越大。</li>
+<li><strong>Answer Relevance</strong>：衡量最终的Response回答对Query提问的相关度。如果该得分低，反应出了可能答不对题。</li>
+</ul>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2024/04/08/LLM-Learning1/p2.png" class title="p2">
+<h3 id="基于ground-truth的指标">基于Ground-truth的指标</h3>
+<ul>
+<li>Ground-truth是回答，那就可以<u>直接比较RAG应用的回答和ground-truth之间的相关性</u>，来端到端地进行衡量。</li>
+<li>让LLM生成评估测试集，来生成query和ground-truth,比如，在ragas的 <a href="https://docs.ragas.io/en/latest/concepts/testset_generation.html">Synthetic Test Data generation</a> 和 <a href="https://docs.llamaindex.ai/en/stable/examples/evaluation/QuestionGeneration.html">llama-index QuestionGeneration</a> 中都有一些集成好的方法，可以直接方便地使用。</li>
+<li>Ground-truth是知识文档中的chunks，对比ground-truth doc chunks和召回的contexts之间的相关性。</li>
+</ul>
+<h3 id="基于llm的定量评估">基于LLM的定量评估</h3>
+<ul>
+<li>有了GPT-4后，其可行性就提高了。我们只需设计好prompt,将要打分的一些文字放入prompt,访问GPT-4,就可以得到一个想要的得分结果。</li>
+</ul>
+<h2 id="评估工具">评估工具</h2>
+<ol>
+<li>RAGAs:<a href="https://docs.ragas.io/en/latest/concepts/metrics/context_recall.html">https://docs.ragas.io/en/latest/concepts/metrics/context_recall.html</a></li>
+<li>TruLens:<a href="https://www.trulens.org/trulens_eval/install/">https://www.trulens.org/trulens_eval/install/</a></li>
+<li>Llama-Index:<a href="https://docs.llamaindex.ai/en/stable/optimizing/evaluation/evaluation.html">https://docs.llamaindex.ai/en/stable/optimizing/evaluation/evaluation.html</a></li>
+<li>Phoenix:<a href="https://docs.arize.com/phoenix/">https://docs.arize.com/phoenix/</a></li>
+<li>DeepEval:<a href="https://github.com/confident-ai/deepeval">https://github.com/confident-ai/deepeval</a></li>
+<li>LangSmith:<a href="https://docs.smith.langchain.com/evaluation/evaluator-implementations">https://docs.smith.langchain.com/evaluation/evaluator-implementations</a></li>
+<li>OpenAI Evals:<a href="https://github.com/openai/evals">https://github.com/openai/evals</a></li>
+</ol>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2024/04/08/LLM-Learning1/p3.png" class title="p3">
+<h1 id="rag未来发展方向">RAG未来发展方向</h1>
+<h2 id="rag的垂直优化">RAG的垂直优化</h2>
+<ul>
+<li>长下文长度
+<ul>
+<li>检索内容过多，超过窗口限制怎么办？</li>
+<li>如果LLMs的上下文窗口不再受限制，RAG应该如何改进？</li>
+</ul>
+</li>
+<li>鲁棒性
+<ul>
+<li>检索到错误内容怎么处理？</li>
+<li>怎么对检索出来内容进行过滤和验证？</li>
+<li>怎么提高模型抗毒、抗噪声的能力。</li>
+</ul>
+</li>
+<li>与微调协同
+<ul>
+<li>如何同时发挥RAG和FT的效果，两者怎么协同，怎么组织，是串行、交替还是端到端？</li>
+</ul>
+</li>
+<li>Scaling-Law
+<ul>
+<li>RAG模型是否满足Scaling Law?</li>
+<li>RAG是否会，或是在什么场景下会出现Inverse Scaling Law的现象？</li>
+</ul>
+</li>
+<li>LLM的角色
+<ul>
+<li>LLMs可以用于检索(用LLMs的生成代替检索或检索LLMs记忆)、用于生成、用于评估。如何进一步挖掘LLMs在RAG中的潜力？</li>
+</ul>
+</li>
+</ul>
+<h2 id="工程实践">工程实践</h2>
+<ul>
+<li>如何降低超大规模语料的检索时延？</li>
+<li>如何保证检索出来内容不被大模型泄露？</li>
+</ul>
+<h2 id="rag的多模态的拓展">RAG的多模态的拓展</h2>
+<ul>
+<li>如何将RAG不断发展的技术和思想拓展到图片、音频、视频或代码等其他模态的数据中？</li>
+<li>一方面可以增强单一模态的任务，另一方面可以通过RAG的思想将多模态进行融合。</li>
+</ul>
+<h2 id="rag的生态">RAG的生态</h2>
+<ul>
+<li>RAG的应用已经不仅仅局限于问答系统，其影响力正在扩展到更多领域。现在，推荐系统、信息抽取和报告生成等多种任务都开始受益于RAG技术的应用。</li>
+<li>与此同时，RAG技术栈也在井喷。除了已知的Langchain和LlamaIndex等工具，市场上涌现出更多针对性的RAG工具，例如：用途定制化，满足更加聚焦场景的需求；使用简易化，进一步降低上手门槛的；功能专业化，逐渐面向生产环境。</li>
 </ul>
 ]]></content>
       <categories>
@@ -1653,6 +1803,20 @@ netmask：子网掩码照抄自己主机的，如：255.255.255.0</p>
       </tags>
   </entry>
   <entry>
+    <title>网络与系统安全随记</title>
+    <url>/2022/09/09/NetSysSec-LearningNotes/</url>
+    <content><![CDATA[<h1 id="20220909">20220909</h1>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/09/NetSysSec-LearningNotes/p1.png" class title="p1"> 
+]]></content>
+      <categories>
+        <category>国科大课程笔记</category>
+        <category>网络与系统安全</category>
+      </categories>
+      <tags>
+        <tag>网络与系统安全</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>操作系统的“公理化”</title>
     <url>/2022/08/30/OS-LearningNotes1/</url>
     <content><![CDATA[<blockquote>
@@ -1750,20 +1914,6 @@ netmask：子网掩码照抄自己主机的，如：255.255.255.0</p>
         <tag>Linux Kernel</tag>
         <tag>特权级</tag>
         <tag>授权</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>网络与系统安全随记</title>
-    <url>/2022/09/09/NetSysSec-LearningNotes/</url>
-    <content><![CDATA[<h1 id="20220909">20220909</h1>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/09/NetSysSec-LearningNotes/p1.png" class title="p1"> 
-]]></content>
-      <categories>
-        <category>国科大课程笔记</category>
-        <category>网络与系统安全</category>
-      </categories>
-      <tags>
-        <tag>网络与系统安全</tag>
       </tags>
   </entry>
   <entry>
@@ -2534,6 +2684,233 @@ TSS是一个特殊的段。在Linux中，CPU从系统态切换到用户态时，
       </tags>
   </entry>
   <entry>
+    <title>LLM-Learning3</title>
+    <url>/2024/07/19/LLM-Learning3/</url>
+    <content><![CDATA[<h1 id="react">ReAct</h1>
+<p>ReAct: Synergizing Reasoning and Acting in Language Models</p>
+<ul>
+<li>发表：ICLR</li>
+<li>时间：2023</li>
+<li>机构：普林斯顿大学 &amp; 谷歌</li>
+</ul>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2024/07/19/LLM-Learning3/p1.png" class title="p1">
+<h2 id="摘要总结">摘要总结</h2>
+<p>虽然大模型在语言理解和交互式决策等任务中表现出色，但它们的推理（例如思维链提示）和行动（例如行动计划生成）能力通常被识别为单独的研究领域。ReAct 论文提出了一种将推理和行动相结合的新方法，<strong>允许 LLM 以交错的方式生成推理轨迹和特定任务的行动</strong>。推理轨迹帮助模型归纳、跟踪和更新行动计划以及处理异常，而Action允许它与外部源（例如知识库或环境）交互并收集附加信息。ReAct 在多个任务上取得了成功，并在表现、可解释性和可信度方面优于现有基线。</p>
+<h2 id="研究动机">研究动机</h2>
+<ul>
+<li>人脑智能的启发： 人类能够将任务导向的行动与语言推理（或内心独白）无缝结合，这在人类认知中发挥着重要作用，例如自我调节、策略规划和保持工作记忆。</li>
+<li>现有方法的局限性：
+<ul>
+<li>链式思维推理（CoT）： CoT 虽然能进行推理，但通常是<strong>静态</strong>的，<strong>无法与外部世界交互</strong>，导致推理过程中出现事实虚构和错误传播等问题。</li>
+<li>行动生成： 最近的行动生成方法通常将多模态观察转换为文本，使用语言模型生成特定领域的动作或计划，但<strong>缺乏对高级目标进行抽象推理</strong>或<strong>维持工作记忆</strong>的能力。</li>
+</ul>
+</li>
+</ul>
+<h2 id="主要贡献">主要贡献</h2>
+<ul>
+<li>提出了一种新的提示方法ReAct 模型，<strong>将推理和行动相结合</strong>，使 LLM 能够以交错的方式生成推理轨迹和特定任务的行动，从而实现更有效的推理和决策。</li>
+<li>多基准评估： 在多个基准测试（包括问答、事实验证、文本游戏和网页导航）中进行了广泛的实验，证明了 ReAct 在少量学习设置下优于仅进行推理或行动生成的现有方法。</li>
+<li>通过系统地进行消融实验和分析，研究了行动在推理任务中的重要性以及推理在交互任务中的重要性。</li>
+<li>分析了 ReAct 在提示设置下的局限性（即推理和行动行为的有限支持），并进行了初步的微调实验，展示了 ReAct 在更多训练数据下改进的潜力。</li>
+</ul>
+<h2 id="叙事逻辑">叙事逻辑</h2>
+<p>该文章首先从人类智能出发，指出人类能够将任务导向的行动与语言推理相结合，从而进行有效的认知活动。随后，文章指出现有方法（如 CoT 和行动生成）的局限性，例如 CoT 缺乏外部世界交互导致虚构事实，行动生成缺乏高级目标推理能力。接着，文章提出了 ReAct 模型，该模型通过将推理和行动相结合，使 LLM 能够更有效地进行推理、规划和决策，并与外部环境进行交互。文章通过跨任务评估证明了 ReAct 的有效性，并分析了其可解释性和可控性。最后，文章探讨了 ReAct 的局限性，并提出了改进方向，例如模型细化和使用更多训练数据。</p>
+<h2 id="方法">方法</h2>
+<p>ReAct 通过将 LLM 的行动空间扩展到包括语言行动（推理轨迹），允许模型进行动态推理和规划，同时与外部环境进行交互。首先，使用Few-Shot（人类轨迹）指导 LLM 生成推理轨迹和行动，这些示例包括分解目标、提取信息、应用常识等。接着，LLM 可以通过交互式地与外部环境（如维基百科）API 进行交互来支持推理，例如检索信息和更新行动计划。</p>
+<h2 id="实验">实验</h2>
+<ul>
+<li>数据集和任务：
+<ul>
+<li>知识密集型推理任务：
+<ul>
+<li>多跳问答： HotpotQA，需要推理两个或更多维基百科段落来回答问题。</li>
+<li>事实验证： Fever，需要根据维基百科段落判断陈述是否被支持、反驳或信息不足。</li>
+</ul>
+</li>
+<li>决策制定任务：
+<ul>
+<li>基于文本的游戏： ALFWorld，需要通过文本行动与模拟家居环境交互，实现高层次目标。</li>
+<li>网页导航： WebShop，需要根据用户指令进行网页交互，购买满足要求的产品。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>行动空间：
+<ul>
+<li>知识密集型推理任务： 简单的维基百科 web API，包括搜索实体、查找字符串和完成回答三种行动。</li>
+<li>决策制定任务： 根据任务类型设计，例如 WebShop 包含搜索、选择产品、选择选项和购买等行动。</li>
+</ul>
+</li>
+<li>基线方法：
+<ul>
+<li>标准提示： 移除所有推理轨迹和行动，只提供问题和观察。</li>
+<li>思维链提示 (CoT)： 移除行动和观察，只进行推理。</li>
+<li>自我一致性 (CoT-SC)： 使用少量 CoT 轨迹作为样本，并选择多数答案。</li>
+<li>仅行动提示： 移除推理轨迹，模型只与外部环境交互。</li>
+</ul>
+</li>
+<li>评估指标：
+<ul>
+<li>知识密集型推理任务： 准确匹配、幻觉、推理错误、搜索结果错误、幻觉。</li>
+<li>决策制定任务： 成功率、得分、成功率和专家人类的表现。</li>
+</ul>
+</li>
+<li>其他实验：
+<ul>
+<li>GPT-3 实验： 验证 ReAct 提示的有效性在不同大型语言模型上的通用性。</li>
+<li>人类在环 (HITL) 行为纠正： 允许人类编辑推理轨迹，纠正模型行为。</li>
+<li>微调： 使用正确答案轨迹微调较小的语言模型，使其能够解码推理轨迹和行动。</li>
+</ul>
+</li>
+</ul>
+<h2 id="评价">评价</h2>
+<p>后面agent范式的基准，很多都是基于这个进行改进的</p>
+<h1 id="reflexion">Reflexion</h1>
+<p>Reflexion: Language Agents with Verbal Reinforcement Learning</p>
+<ul>
+<li>发表：NeurIPS</li>
+<li>时间：2023.10.10</li>
+<li>机构：美国东北大学</li>
+</ul>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2024/07/19/LLM-Learning3/p2.png" class title="p2">
+<h2 id="摘要总结">摘要总结</h2>
+<p>agent越来越多地用于与外部环境进行交互。然而，对 agent 来说，进行传统的强化学习方法需要大量的训练样本和昂贵的模型微调。论文提出了 Reflexion，不通过更新权重，而是<strong>通过语言反馈来增强语言 agent</strong>。Reflexion 足够灵活，可以合并各种类型和来源的反馈信号，并在跨不同任务（顺序决策、编码、语言推理）的基准代理上获得显着改进。例如，Reflexion 在 HumanEval 编码基准上实现了 91% 的 pass@1 准确率，超过了之前最先进的 GPT-4 的 80%。我们还使用不同的反馈信号、反思合并方法和 agent 类型进行消融分析。</p>
+<h2 id="研究动机">研究动机</h2>
+<p>LLM-based Agent的在与外界环境交互、自主决策方面展现出巨大潜力，而传统强化学习方法在 agent 应用上具有局限性。</p>
+<h2 id="主要贡献">主要贡献</h2>
+<ul>
+<li>提出了 Reflexion，一种“口头”强化的新范式，它将策略参数化为代理的记忆编码与 LLM 参数选择配对。</li>
+<li>探索了 LLM 中自我反思的这一新兴特性，并根据经验表明，自我反思对于通过少量试验学习复杂任务非常有用。</li>
+<li>引入了 LeetcodeHardGym 数据集：一个包含 40 个具有挑战性的 Leetcode 困难问题的代码生成 RL gym 环境。用于测试代码生成代理的能力，并提供一个新的基准。</li>
+<li>实验表明 Reflexion 在多个任务的强大基线上实现了改进，并在各种代码生成基准上取得了最先进的结果。</li>
+</ul>
+<h2 id="叙事逻辑">叙事逻辑</h2>
+<ol>
+<li>提出问题：LLMs 作为语言代理在处理外部环境方面展现出潜力，但传统强化学习方法学习效率低下。</li>
+<li>提出解决方案：提出 Reflexion 框架，利用语言代理的自我反思能力进行强化学习；通过语言反馈而非参数更新来增强代理，并存储反思文本以指导后续决策。</li>
+<li>论述 Reflexion 的优势：相比于传统强化学习方法，Reflexion 更轻量级，无需微调 LLM；允许更细微的反馈形式，并提供更明确和可解释的情境记忆。</li>
+<li>实验验证：在决策、推理和编程任务中，Reflexion 代理的表现都优于基线方法；Reflexion 在 LeetcodeHardGym 数据集上也取得了优异的成绩。</li>
+<li>讨论局限性：Reflexion 可能陷入局部最优解；需要更强的 LLM 进行自我评估；没有成功的正式保证；需要更多的安全性和道德考量；可能使自主 agent 更具可解释性。</li>
+<li>总结与展望：Reflexion 框架为语言代理的快速有效学习提供了一种新的思路；未来可以探索更多高级技术，例如价值学习和离策略探索技术。</li>
+</ol>
+<h2 id="实现">实现</h2>
+<ul>
+<li>Actor：角色，使用 LLM 实现，它基于可观察的状态，利用<strong>提示生成文本和动作</strong>。</li>
+<li>Evaluator：评估器，用于评估 Actor 输出的质量。<strong>将生成的轨迹作为输入，计算在给定任务上下文中的奖励分数</strong>。</li>
+<li>Self-reflection：自我反思，<strong>使用 LLM 实现</strong>，用于生成基于语言的反思。在给出稀疏奖励信号，如二元状态（成功/失败），当前轨迹及其持久记忆内存。自我反思模型会生成<strong>细致入微且具体的反馈</strong>，这种反馈相比标量奖励提供更多信息，然后被存储在代理的内存 (mem) 中。</li>
+<li>Memory：内存组件，为 Agent 提供额外的上下文。它提供<strong>短期记忆和长期记忆</strong>。在推理时，Actor 根据短期和长期记忆做出决定，在强化学习设置中，<strong>轨迹历史充当短期记忆，而自我反思模型的输出则存储在长期记忆中</strong>。</li>
+<li><strong>过程</strong>：在第一次试验中，Actor 通过与环境交互产生轨迹 τ0。然后评估器产生一个分数 r0；rt 是标量奖励；为了放大 r0，自我反思模型分析 {τ0, r0} 集合以生成存储在内存 mem 中的摘要 sr0。srt 是对试验 t 的语言反馈。Actor、Evaluator 和 Self-Reflection 模型通过循环试验协同工作，直到 Evaluator 认为 τt 是正确的。每次试验后 t、srt 都会附加存入 mem。在实践中，通过存储经验的最大数量 Ω（通常设置为 1-3）来限制 mem，从而不超过 LLM 的上下文限制。</li>
+</ul>
+<h2 id="实验">实验</h2>
+<ul>
+<li>任务类型： 选择了三种类型的任务来评估 Reflexion 的效果：
+<ul>
+<li>决策任务： 在 AlfWorld 环境中进行多步决策，例如寻找隐藏物体、移动物体等。</li>
+<li>推理任务： 在 HotPotQA 数据集上进行基于 Wikipedia 的问答，需要理解和推理多个支持文档。</li>
+<li>编程任务： 在 HumanEval、MBPP 和 LeetcodeHardGym 数据集上进行 Python 和 Rust 代码生成。</li>
+</ul>
+</li>
+<li>基线方法： 与多种基线方法进行比较，包括：
+<ul>
+<li>ReAct： 基于大型语言模型的决策模型。</li>
+<li>Chain-of-Thought (CoT)： 基于大型语言模型的推理模型。</li>
+<li>CodeT： 基于大型语言模型的代码生成模型。</li>
+</ul>
+</li>
+<li>评估指标： 根据任务类型选择不同的评估指标，例如：
+<ul>
+<li>决策任务： 成功解决任务的百分比。</li>
+<li>推理任务： 答案与正确答案完全匹配的百分比。</li>
+<li>编程任务： 函数体生成的准确率，以及代码是否通过单元测试。</li>
+</ul>
+</li>
+</ul>
+<h2 id="评价">评价</h2>
+<ul>
+<li>论文提出了一种强化学习方法。传统的调优主要是通过训练调整网络参数，而文中提出的方法则是<strong>分析错误，形成反思的文字并保存</strong>，在之后的决策中，将其<strong>作为上下文</strong>以帮助决策。</li>
+<li>它<strong>利用大模型</strong>构造了角色的行为、对结果的评价、当不能达成目标时，利用大模型来反思执行过程中具体哪一步出了问题，并将其作为反思存储。这样就构造了<strong>基于当前环境的短期存储</strong>，和<strong>基于反思的长期存储</strong>，结合二者使模型在未来做出更好的决策。</li>
+<li>提供了完整的代码</li>
+<li>局限：依赖于 LLM 的自我评估能力（或启发式方法）；无法保证成功。</li>
+</ul>
+<h1 id="retroformer">Retroformer</h1>
+<p>Retroformer: Retrospective large language agents with policy gradient optimization</p>
+<ul>
+<li>发表：ICLR</li>
+<li>时间：2024</li>
+<li>机构：Salesforce AI</li>
+</ul>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2024/07/19/LLM-Learning3/p3.png" class title="p3">
+<h2 id="摘要总结">摘要总结</h2>
+<p>一些agent通过口头反馈以完成迭代的反馈学习，他们并没有以基于reward的梯度学习来进行推理和规划。本文介绍了一种新型框架Retroformer ，旨在通过学习回顾模型来强化LLM agent。该框架利用策略梯度优化基于环境反馈的提示，从而自动调整agent的行为，使其能够独立执行面向目标的多步骤任务。与现有的agent不同，Retroformer 能够从环境反馈中学习，并利用<strong>梯度信号</strong>进行推理和规划。实验结果表明，Retroformer 代理在多个任务上表现出优异的性能，证明了其有效性。</p>
+<h2 id="研究动机">研究动机</h2>
+<p>回顾性学习的优势显现 + 手动提示工程在更新的局限性</p>
+<h2 id="主要贡献">主要贡献</h2>
+<ul>
+<li>提出了 Retroformer，它根据环境反馈迭代微调更新LLM agent的提示。采用<strong>策略梯度</strong>方法，将 Actor LLM 作为环境的一部分，允许从各种任务的广泛奖励信号中学习。</li>
+<li>Retroformer关注微调 agent 架构中的回顾模型（retrospective model），<strong>无需访问Actor LLM 参数</strong>或通过它传播梯度。 Retroformer 的不可知特性（agnostic），使其成为各种基于云的 LLM 的灵活插件模块，例如 OpenAI GPT 或 Google Bard。</li>
+</ul>
+<h2 id="叙事逻辑">叙事逻辑</h2>
+<p>首先指出 LLM agent在利用环境反馈和奖励方面存在的局限性，然后介绍了现有的 LLM agent和 Transformer 强化学习技术，并将 Retroformer 与相关研究进行比较。接着，论文定义了 LLM agent、环境和回顾模型的相关符号和公式，并详细介绍了 Retroformer 框架的组成部分，包括actor模型、回顾模型（retrospective model）、记忆模块和奖励构造。随后，论文解释了如何使用策略梯度优化来微调retrospective model，并生成更有利于任务完成的提示。最后，论文在 HotPotQA、AlfWorld 和 WebShop 等真实世界数据集上进行了实验，并将 Retroformer 与其他 agent 进行了比较，结果表明 Retroformer 能够显著提高 LLM 代理的任务完成效率和学习速度。</p>
+<h2 id="方法">方法</h2>
+<p>文章提出Retroformer,用策略梯度的方式调优prompt，更好的利用环境的reward。大体思路是学习一个retrospective LLM，将之前的轨迹和得分作为输入，得到一个新的prompt，这个prompt综合分析了之前的经验，从而提供一个更好的prompt。然后不断和环境交互，用PPO训练retrospective LLM。具体的，整个架构包括Actor Model，Retrospective Model和Memory Module。</p>
+<ul>
+<li>Actor Model是一个固定参数的LLM，用来输入prompt生成动作。</li>
+<li>Retrospective Model用来根据之前的经验生成新的prompt（Its primary function is to produce self-reflections, offering valuable feedback for diagnosing a possible reason for prior failure and devising a new, concise, high-level plan that aims to mitigate same failure.）。</li>
+<li>Memory Module存储长短时记忆。其中Short-term memory指当前episode，Long-term memory指Retrospective Model输出的总结了之前的失败经验的prompt。</li>
+</ul>
+<h2 id="实验">实验</h2>
+<ul>
+<li>设置：实验使用 GPT-3 和 GPT-4 作为冻结的actor模型，LongChat 作为回顾模型，并使用 LoRA 进行微调。</li>
+<li>在 HotPotQA 中，Retroformer 通过分析文本匹配度来评估答案的准确性；</li>
+<li>在 AlfWorld 中，使用二元成功/失败状态作为奖励；</li>
+<li>在 WebShop 中，根据商品属性和选项匹配度以及价格限制来计算奖励。</li>
+</ul>
+<h2 id="评价">评价</h2>
+<p>真正在agent中做了一个强化学习的工作，虽然是在prompt上。另外，当前使用的是基于文本的记忆模块，可以考虑使用更复杂的记忆模块，例如知识图谱，以更好地存储和利用 LLM 代理的长期记忆。</p>
+<h1 id="expel">ExpeL</h1>
+<h1 id="memorybank">MemoryBank</h1>
+<p>MemoryBank: Enhancing Large Language Models with Long-Term Memory</p>
+<ul>
+<li>发表：arxiv</li>
+<li>时间：2023.05</li>
+<li>机构：中山大学</li>
+</ul>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2024/07/19/LLM-Learning3/p4.png" class title="p4">
+<h2 id="摘要总结">摘要总结</h2>
+<p>MemoryBank 是一种新型记忆机制，旨在解决 LLM 缺乏长期记忆的问题。它通过存储、检索和更新记忆，并总结出用户画像，使 LLM 能够更好地理解用户并适应其个性，从而提供更个性化、更具同理心的交互体验，作为一个优秀的 AI 伴侣。</p>
+<h2 id="研究动机">研究动机</h2>
+<p>艾宾浩斯（Ebbinghaus，1964）的遗忘曲线理论中记忆随时间的保留和遗忘模式</p>
+<h2 id="主要贡献">主要贡献</h2>
+<ul>
+<li>提出 MemoryBank： 一种新型记忆机制，为 LLM 提供长期记忆能力，使其能够存储、检索和更新记忆，并绘制用户画像。（<strong>方法</strong>）</li>
+<li>展示 MemoryBank 的实用性： 通过开发 SiliconFriend 聊天机器人，证明 MemoryBank 可以使 LLM 更好地理解用户并适应其个性，提供更个性化、更具同理心的交互体验。（<strong>用处</strong>）</li>
+<li>验证 MemoryBank 的有效性： 通过定性和定量分析评估 MemoryBank 的有效性，结果表明其在记忆回忆、提供同理心的陪伴和理解用户画像方面表现出色。（<strong>性能</strong>）</li>
+<li>MemoryBank 的通用性： MemoryBank 可以与开源和闭源 LLM 配合使用，并支持中英双语，具有广泛的适用性。（<strong>通用、泛化</strong>）</li>
+</ul>
+<h2 id="叙事逻辑">叙事逻辑</h2>
+<p>首先指出了 LLM 缺乏长期记忆机制的问题，然后介绍了 MemoryBank 这种新型记忆机制，接着详细解释了 MemoryBank 的组成部分和工作原理，并通过 SiliconFriend 聊天机器人的应用案例展示了 MemoryBank 的有效性，最后通过定性和定量分析评估了 MemoryBank 的性能。</p>
+<h2 id="方法">方法</h2>
+<p>MemoryBank 通过以下几个步骤实现：</p>
+<ul>
+<li>记忆存储： 将用户与 LLM 的对话记录存储下来，并生成事件摘要和用户画像。</li>
+<li>记忆检索： 使用嵌入模型和索引技术，根据当前对话内容检索相关的记忆片段。</li>
+<li>记忆更新： 基于艾宾浩斯遗忘曲线理论，根据时间衰减和记忆强度更新记忆，使 LLM 能够模拟人类的遗忘和记忆强化过程。</li>
+</ul>
+<h2 id="实验">实验</h2>
+<p>设计了 194 个探索性问题来评估模型是否能够成功回忆起相关记忆并提供适当的回答。实验结果展示了SiliconFriend在记忆回忆、提供同理心陪伴和理解用户画像方面的能力。</p>
+<h2 id="评价">评价</h2>
+<p>Motivation很好，但是应用在了AI伴侣上，而且实验比较主观，都是基于人类打分。</p>
+<!-- <img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="p1.png"  style="zoom:55%;" /> -->]]></content>
+      <categories>
+        <category>大模型</category>
+        <category>Agent</category>
+      </categories>
+      <tags>
+        <tag>大模型</tag>
+        <tag>Agent</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>大模型的对抗攻击与防御</title>
     <url>/2024/07/10/LLM-Security1/</url>
     <content><![CDATA[<blockquote>
@@ -2544,16 +2921,23 @@ TSS是一个特殊的段。在Linux中，CPU从系统态切换到用户态时，
 <p>此外，还有研究者试图通过攻击大语言模型来提取其预训练数据、私有信息或者通过数据毒化手段来干扰模型的训练过程。但这些并非本文要探讨的主题。</p>
 <h1 id="基础">基础</h1>
 <h2 id="威胁模型">威胁模型</h2>
-<p>对抗攻击是<strong>对输入样本进行微小难以察觉的修改，诱使模型输出我们不期望的内容的输入</strong>。许多早期研究关注的重点是分类任务，而近期的工作则开始更多关注生成模型的输出。本文探讨的是大型语言模型，并且假定攻击<strong>仅发生在推理阶段</strong>，也就是说模型权重是固定的。</p>
+<p>对抗攻击是<strong>对输入样本进行微小难以察觉的修改，诱使模型输出我们不期望的内容</strong>。许多早期研究关注的重点是分类任务，而近期的工作则开始更多关注生成模型的输出。本文探讨的是大型语言模型，并且假定攻击<strong>仅发生在推理阶段</strong>，也就是说模型权重是固定的。</p>
 <!-- <img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2024/07/10/LLM-Security1/p1.png" class="" title="p1"> -->
+<blockquote>
+<p>对抗样本的定义:对抗样本是指能够欺骗模型，使其做出错误预测的输入样本，但与原始样本在语义上仍然相似，不易被人察觉。</p>
+</blockquote>
 <h3 id="分类">分类</h3>
-<p>在过去，研究社区更关注的是对分类器进行对抗攻击，并且许多是在图像领域。LLM 也可被用于分类。给定一个输入 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span></span></span></span> 和一个分类器 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>f</mi><mo stretchy="false">(</mo><mi mathvariant="normal">.</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">f(.)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord">.</span><span class="mclose">)</span></span></span></span>，我们希望找到该输入的一个差异细微的对抗版本 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>x</mi><mrow><mi>a</mi><mi>d</mi><mi>v</mi></mrow></msub></mrow><annotation encoding="application/x-tex">x_{adv}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">a</span><span class="mord mathdefault mtight">d</span><span class="mord mathdefault mtight" style="margin-right:0.03588em;">v</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>，使得 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>f</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mi>a</mi></msub><mi>d</mi><mi>v</mi><mo stretchy="false">)</mo><mo mathvariant="normal">≠</mo><mi>f</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">f(x_adv)≠f(x)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">a</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord mathdefault">d</span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel"><span class="mrel"><span class="mord"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.69444em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="rlap"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="inner"><span class="mrel"></span></span><span class="fix"></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.19444em;"><span></span></span></span></span></span></span><span class="mrel">=</span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord mathdefault">x</span><span class="mclose">)</span></span></span></span>。</p>
+<p>在过去，研究者更关注的是对分类器进行对抗攻击，并且许多是在图像领域。LLM 也可被用于分类，给定一个输入 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span></span></span></span> 和一个分类器 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>f</mi><mo stretchy="false">(</mo><mi mathvariant="normal">.</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">f(.)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord">.</span><span class="mclose">)</span></span></span></span>，我们希望找到该输入的一个差异细微的对抗版本 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>x</mi><mrow><mi>a</mi><mi>d</mi><mi>v</mi></mrow></msub></mrow><annotation encoding="application/x-tex">x_{adv}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">a</span><span class="mord mathdefault mtight">d</span><span class="mord mathdefault mtight" style="margin-right:0.03588em;">v</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>，使得 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>f</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mrow><mi>a</mi><mi>d</mi><mi>v</mi></mrow></msub><mo stretchy="false">)</mo><mo mathvariant="normal">≠</mo><mi>f</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">f(x_{adv})≠f(x)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">a</span><span class="mord mathdefault mtight">d</span><span class="mord mathdefault mtight" style="margin-right:0.03588em;">v</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel"><span class="mrel"><span class="mord"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.69444em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="rlap"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="inner"><span class="mrel"></span></span><span class="fix"></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.19444em;"><span></span></span></span></span></span></span><span class="mrel">=</span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord mathdefault">x</span><span class="mclose">)</span></span></span></span>。</p>
 <h3 id="文本生成">文本生成</h3>
-<p>给定一个输入<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span></span></span></span>和一个生成模型 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi><mo stretchy="false">(</mo><mi mathvariant="normal">.</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">p(.)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">p</span><span class="mopen">(</span><span class="mord">.</span><span class="mclose">)</span></span></span></span>，该模型可输出一个样本 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>y</mi><mtext> </mtext><mi>p</mi><mo stretchy="false">(</mo><mi mathvariant="normal">.</mi><mi mathvariant="normal">∣</mi><mi>x</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">y~p(.|x)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="mspace nobreak"> </span><span class="mord mathdefault">p</span><span class="mopen">(</span><span class="mord">.</span><span class="mord">∣</span><span class="mord mathdefault">x</span><span class="mclose">)</span></span></span></span>。这里的对抗攻击是找到一个<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">p(x)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">p</span><span class="mopen">(</span><span class="mord mathdefault">x</span><span class="mclose">)</span></span></span></span>，使得 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>y</mi></mrow><annotation encoding="application/x-tex">y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span></span></span></span> 会违反该模型内置的安全行为，比如输出非法主题的不安全内容、泄漏隐私信息或模型训练数据。对<strong>生成任务</strong>而言，判断一次攻击成功与否并非易事，这<strong>需要一个超高质量的分类器来判断 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>y</mi></mrow><annotation encoding="application/x-tex">y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span></span></span></span> 是否安全或需要人类来进行审查</strong>。</p>
+<p>给定一个输入<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span></span></span></span>和一个生成模型 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi><mo stretchy="false">(</mo><mi mathvariant="normal">.</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">p(.)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">p</span><span class="mopen">(</span><span class="mord">.</span><span class="mclose">)</span></span></span></span>，该模型可输出一个样本 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>y</mi><mo>∼</mo><mi>p</mi><mo stretchy="false">(</mo><mi mathvariant="normal">.</mi><mi mathvariant="normal">∣</mi><mi>x</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">y \sim p(.|x)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">∼</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">p</span><span class="mopen">(</span><span class="mord">.</span><span class="mord">∣</span><span class="mord mathdefault">x</span><span class="mclose">)</span></span></span></span>。这里的对抗攻击是找到一个<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">p(x)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">p</span><span class="mopen">(</span><span class="mord mathdefault">x</span><span class="mclose">)</span></span></span></span>，使得 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>y</mi></mrow><annotation encoding="application/x-tex">y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span></span></span></span> 会违反该模型内置的安全行为，比如输出非法主题的不安全内容、泄漏隐私信息或模型训练数据。对<strong>生成任务</strong>而言，判断一次攻击成功与否并非易事，这<strong>需要一个超高质量的分类器来判断 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>y</mi></mrow><annotation encoding="application/x-tex">y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span></span></span></span> 是否安全或需要人类来进行审查</strong>。</p>
 <h3 id="白盒攻击和黑盒攻击">白盒攻击和黑盒攻击</h3>
 <ul>
-<li>白盒攻击（White-box attacks）假设攻击者可以完全访问模型权重、架构和训练工作流程，这样一来攻击者就可以获得梯度信号。这里我们并不假设攻击者能获得全部训练数据。这仅适用于开源模型。</li>
-<li>黑盒攻击（Black-box attacks）则是假设攻击者只能访问 API 类型的服务 —— 攻击者可以提供输入 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span></span></span></span> 并获取反馈的样本 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>y</mi></mrow><annotation encoding="application/x-tex">y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span></span></span></span>，而不知道有关模型的更多信息。</li>
+<li>
+<p><strong>白盒攻击</strong>（White-box attacks）假设攻击者可以<strong>完全访问</strong>模型权重、架构和训练工作流程，这样一来攻击者就可以获得<strong>梯度信号</strong>。这里我们并不假设攻击者能获得全部训练数据。这仅适用于开源模型。</p>
+</li>
+<li>
+<p><strong>黑盒攻击</strong>（Black-box attacks）则是假设攻击者只能访问 API 类型的服务 —— 攻击者可以提供输入 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span></span></span></span> 并获取反馈的样本 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>y</mi></mrow><annotation encoding="application/x-tex">y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span></span></span></span>，而不知道有关模型的更多信息。</p>
+</li>
 </ul>
 <h1 id="对抗性攻击的种类">对抗性攻击的种类</h1>
 <p>为了让大语言模型 (LLMs) 做出错误的输出，研究人员发明了多种对抗性输入方法。这里，我们介绍五种主要策略。</p>
@@ -2596,45 +2980,54 @@ TSS是一个特殊的段。在Linux中，CPU从系统态切换到用户态时，
 <h2 id="token操作">Token操作</h2>
 <p>给定一段包含一个 token 序列的文本输入，我们可以使用<strong>简单的token操作</strong>（比如<strong>替换成同义词</strong>）来诱使模型给出错误预测。</p>
 <blockquote>
-<p>想象一下，如果我们有一段文本，里面充满了各种Token（就是文字或词汇），我们可以对这些Token进行一些小把戏，比如换个同义词，就能让智能模型搞不清楚状况，做出错误的判断。这种在所谓的 黑盒 环境下的“Token 操纵术”是可行的。</p>
+<p>想象一下，如果我们有一段文本，里面充满了各种Token（就是文字或词汇），我们可以对这些Token进行一些小把戏，比如换个同义词，就能让智能模型搞不清楚状况，做出错误的判断。这种在所谓的黑盒环境下的“Token 操纵术”是可行的。</p>
 </blockquote>
-<p>基于 token 操作的攻击属于黑盒攻击。在 Python 框架中，Morris et al. 2020 的论文《TextAttack: A Framework for Adversarial Attacks, Data Augmentation, and Adversarial Training in NLP》实现了许多词和 token 操作攻击方法，可用于为 NLP 模型创建对抗样本。这一领域的许多研究工作实验的是分类和蕴涵预测。</p>
+<p>基于 token 操作的攻击属于黑盒攻击。在 Python 框架中，Morris et al. 2020 的论文《TextAttack: A Framework for Adversarial Attacks, Data Augmentation, and Adversarial Training in NLP》实现了许多词和 token 操作攻击方法，可用于为 NLP 模型创建对抗样本。这一领域的许多实验主要针对分类和文本蕴含。</p>
 <p>举个例子，Ribeiro et al (2018) 的研究《Semantically Equivalent Adversarial Rules for Debugging NLP models》依赖于人工提出的「语义等价式对抗规则（SEAR）」，其可以通过尽可能少的 token 操作来让模型无法生成正确答案。比如，其中的规则包括将 What 换成 Which、将 was 换为 is。另外，还有其他研究者提出的替换关键词、用同义词替换等方法。</p>
 <h2 id="基于梯度的攻击">基于梯度的攻击</h2>
 <p>如果是白盒攻击，则攻击者可以获取所有的模型参数和架构。因此，攻击者就可以<strong>依靠梯度下降</strong>来通过编程方式学习最有效的攻击手段。这种基于梯度的攻击手法，<strong>只适用于可以完全访问内部结构的白盒环境</strong>，比如开源 LLM。</p>
 <h3 id="gbda">GBDA</h3>
-<p>Guo et al. 2021 的论文《Gradient-based Adversarial Attacks against Text Transformers》提出的基于梯度的分布式攻击（GBDA）使用了 Gumbel-Softmax 近似法,来使对抗损失优化可微.在这种方法中，BERTScore 和困惑度（perplexity）用来衡量生成的文本既关联又流畅。然而，Gumbel-softmax 技巧难以扩展用于 token 删除或增添，它受限于 token 替换操作。</p>
-<p>考虑一个由 Token （tokens）组成的输入 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="bold">x</mi><mo>=</mo><mo stretchy="false">[</mo><msub><mi>x</mi><mn>1</mn></msub><mo separator="true">,</mo><msub><mi>x</mi><mn>2</mn></msub><mo separator="true">,</mo><mo>…</mo><mo separator="true">,</mo><msub><mi>x</mi><mi>n</mi></msub><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">\mathbf{x} = [x_1, x_2, \ldots, x_n]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.44444em;vertical-align:0em;"></span><span class="mord"><span class="mord mathbf">x</span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="minner">…</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">n</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">]</span></span></span></span>，其中任一 Token <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>x</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">x_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 都可能来自于一个分类分布 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>P</mi><msub><mi>θ</mi><mi>i</mi></msub></msub></mrow><annotation encoding="application/x-tex">P_{\theta_i}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.93343em;vertical-align:-0.2501em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.02778em;">θ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3280857142857143em;"><span style="top:-2.357em;margin-left:-0.02778em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.143em;"><span></span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2501em;"><span></span></span></span></span></span></span></span></span></span>，<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>θ</mi><mi>i</mi></msub><mo>∈</mo><msup><mi mathvariant="double-struck">R</mi><mi>V</mi></msup></mrow><annotation encoding="application/x-tex">\theta_i \in \mathbb{R}^{V}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.84444em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.02778em;">θ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.02778em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">∈</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8413309999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord"><span class="mord mathbb">R</span></span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8413309999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.22222em;">V</span></span></span></span></span></span></span></span></span></span></span></span> 和 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>V</mi></mrow><annotation encoding="application/x-tex">V</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.22222em;">V</span></span></span></span> 代表着 Token 词汇的大小。这种表示方法高过道参数化，因为 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>V</mi></mrow><annotation encoding="application/x-tex">V</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.22222em;">V</span></span></span></span> 的数量级通常在 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><mn>10</mn><mo separator="true">,</mo><mn>000</mn><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(10,000)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord">1</span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">0</span><span class="mord">0</span><span class="mord">0</span><span class="mclose">)</span></span></span></span> 左右，而大部分对抗性样本仅需要少量的 Token 替换。具体来说：</p>
-<p class="katex-block"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>x</mi><mi>i</mi></msub><mo>∼</mo><msub><mi>P</mi><msub><mi>θ</mi><mi>i</mi></msub></msub><mo>=</mo><mtext>Categorical</mtext><mo stretchy="false">(</mo><msub><mi>π</mi><mi>i</mi></msub><mo stretchy="false">)</mo><mo>=</mo><mtext>Categorical</mtext><mo stretchy="false">(</mo><mtext>Softmax</mtext><mo stretchy="false">(</mo><msub><mi>θ</mi><mi>i</mi></msub><mo stretchy="false">)</mo><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">x_i \sim P_{\theta_i} = \text{Categorical}(\pi_i) = \text{Categorical}(\text{Softmax}(\theta_i))
-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">∼</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.93343em;vertical-align:-0.2501em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.02778em;">θ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3280857142857143em;"><span style="top:-2.357em;margin-left:-0.02778em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.143em;"><span></span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2501em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">Categorical</span></span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">π</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">Categorical</span></span><span class="mopen">(</span><span class="mord text"><span class="mord">Softmax</span></span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.02778em;">θ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.02778em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span><span class="mclose">)</span></span></span></span></span></p>
-<p>其中 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>π</mi><mi>i</mi></msub><mo>∈</mo><msup><mi mathvariant="double-struck">R</mi><mi>V</mi></msup></mrow><annotation encoding="application/x-tex">\pi_i \in \mathbb{R}^{V}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6891em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">π</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">∈</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8413309999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord"><span class="mord mathbb">R</span></span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8413309999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.22222em;">V</span></span></span></span></span></span></span></span></span></span></span></span> 是第 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span></span></span></span> 个 Token 的概率向量。GBDA的目标是最小化对抗性目标函数，以生成一个错误的标签，这个标签与正确的标签 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>y</mi></mrow><annotation encoding="application/x-tex">y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span></span></span></span> 不同，对于一个分类器 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>f</mi></mrow><annotation encoding="application/x-tex">f</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span></span></span></span>：</p>
-<p class="katex-block"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><munder><mo><mi>min</mi><mo>⁡</mo></mo><mi>θ</mi></munder><msub><mi mathvariant="double-struck">E</mi><mrow><mi mathvariant="bold">x</mi><mo>∼</mo><msub><mi>P</mi><mi>θ</mi></msub></mrow></msub><msub><mi>L</mi><mtext>adv</mtext></msub><mo stretchy="false">(</mo><mi mathvariant="bold">X</mi><mo separator="true">,</mo><mi>y</mi><mo separator="true">;</mo><mi>f</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\min_{\theta} \mathbb{E}_{\mathbf{x} \sim P_{\theta}} L_{\text{adv}}(\mathbf{X}, y; f)
-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.5021079999999998em;vertical-align:-0.7521079999999999em;"></span><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.66786em;"><span style="top:-2.347892em;margin-left:0em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.02778em;">θ</span></span></span></span><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span><span class="mop">min</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.7521079999999999em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord"><span class="mord mathbb">E</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.55em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathbf mtight">x</span></span><span class="mrel mtight">∼</span><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.13889em;">P</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3448em;"><span style="top:-2.3487714285714287em;margin-left:-0.13889em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.02778em;">θ</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15122857142857138em;"><span></span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.25586em;"><span></span></span></span></span></span></span><span class="mord"><span class="mord mathdefault">L</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord text mtight"><span class="mord mtight">adv</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord"><span class="mord mathbf">X</span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="mpunct">;</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mclose">)</span></span></span></span></span></p>
-<p>但是，表面上看，这个过程同样涉及分类分布的无算法。通过采用 Gumbel-Softmax 近似（参考 Jang et al. 2016），可以用 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>π</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">\pi_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">π</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 来近似 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>P</mi><mi>θ</mi></msub></mrow><annotation encoding="application/x-tex">P_{\theta}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.02778em;">θ</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 中的分类分布。其引入了一个公式：</p>
-<p class="katex-block"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msubsup><mi>π</mi><mi>i</mi><mrow><mo stretchy="false">(</mo><mi>j</mi><mo stretchy="false">)</mo></mrow></msubsup><mo>=</mo><mfrac><mrow><mi>exp</mi><mo>⁡</mo><mrow><mo fence="true">(</mo><mfrac><mrow><msubsup><mi>θ</mi><mi>i</mi><mrow><mo stretchy="false">(</mo><mi>j</mi><mo stretchy="false">)</mo></mrow></msubsup><mo>+</mo><msubsup><mi>g</mi><mi>i</mi><mrow><mo stretchy="false">(</mo><mi>j</mi><mo stretchy="false">)</mo></mrow></msubsup></mrow><mi>τ</mi></mfrac><mo fence="true">)</mo></mrow></mrow><mrow><munderover><mo>∑</mo><mrow><mi>v</mi><mo>=</mo><mn>1</mn></mrow><mi>V</mi></munderover><mi>exp</mi><mo>⁡</mo><mrow><mo fence="true">(</mo><mfrac><mrow><msubsup><mi>θ</mi><mi>i</mi><mrow><mo stretchy="false">(</mo><mi>v</mi><mo stretchy="false">)</mo></mrow></msubsup><mo>+</mo><msubsup><mi>g</mi><mi>i</mi><mrow><mo stretchy="false">(</mo><mi>v</mi><mo stretchy="false">)</mo></mrow></msubsup></mrow><mi>τ</mi></mfrac><mo fence="true">)</mo></mrow></mrow></mfrac></mrow><annotation encoding="application/x-tex">\pi_i^{(j)} = \frac{\exp \left( \frac{\theta_i^{(j)} + g_i^{(j)}}{\tau} \right)}{\sum_{v=1}^{V} \exp \left( \frac{\theta_i^{(v)} + g_i^{(v)}}{\tau} \right)}
-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.321664em;vertical-align:-0.276864em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">π</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.0448em;"><span style="top:-2.4231360000000004em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span><span style="top:-3.2198em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mopen mtight">(</span><span class="mord mathdefault mtight" style="margin-right:0.05724em;">j</span><span class="mclose mtight">)</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.276864em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:5.08006em;vertical-align:-2.29003em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:2.7900300000000002em;"><span style="top:-2.1100000000000003em;"><span class="pstrut" style="height:3.45em;"></span><span class="mord"><span class="mop"><span class="mop op-symbol small-op" style="position:relative;top:-0.0000050000000000050004em;">∑</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.981231em;"><span style="top:-2.40029em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.03588em;">v</span><span class="mrel mtight">=</span><span class="mord mtight">1</span></span></span></span><span style="top:-3.2029em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.22222em;">V</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.29971000000000003em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mop">exp</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;"><span class="delimsizing size3">(</span></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.2769599999999999em;"><span style="top:-2.6550000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.1132em;">τ</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.5356em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.02778em;">θ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.0590857142857142em;"><span style="top:-2.2134285714285715em;margin-left:-0.02778em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5357142857142856em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mathdefault mtight">i</span></span></span><span style="top:-3.059085714285714em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5357142857142856em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mopen mtight">(</span><span class="mord mathdefault mtight" style="margin-right:0.03588em;">v</span><span class="mclose mtight">)</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.3222857142857143em;"><span></span></span></span></span></span></span><span class="mbin mtight">+</span><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.03588em;">g</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.0590857142857142em;"><span style="top:-2.2134285714285715em;margin-left:-0.03588em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5357142857142856em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mathdefault mtight">i</span></span></span><span style="top:-3.059085714285714em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5357142857142856em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mopen mtight">(</span><span class="mord mathdefault mtight" style="margin-right:0.03588em;">v</span><span class="mclose mtight">)</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.3222857142857143em;"><span></span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mclose delimcenter" style="top:0em;"><span class="delimsizing size3">)</span></span></span></span></span><span style="top:-3.68em;"><span class="pstrut" style="height:3.45em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-4.790030000000001em;"><span class="pstrut" style="height:3.45em;"></span><span class="mord"><span class="mop">exp</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;"><span class="delimsizing size3">(</span></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.2769599999999999em;"><span style="top:-2.6550000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.1132em;">τ</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.5356em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.02778em;">θ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.0590857142857142em;"><span style="top:-2.2134285714285715em;margin-left:-0.02778em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5357142857142856em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mathdefault mtight">i</span></span></span><span style="top:-3.059085714285714em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5357142857142856em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mopen mtight">(</span><span class="mord mathdefault mtight" style="margin-right:0.05724em;">j</span><span class="mclose mtight">)</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.3222857142857143em;"><span></span></span></span></span></span></span><span class="mbin mtight">+</span><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.03588em;">g</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.0590857142857142em;"><span style="top:-2.2134285714285715em;margin-left:-0.03588em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5357142857142856em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mathdefault mtight">i</span></span></span><span style="top:-3.059085714285714em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5357142857142856em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mopen mtight">(</span><span class="mord mathdefault mtight" style="margin-right:0.05724em;">j</span><span class="mclose mtight">)</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.3222857142857143em;"><span></span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mclose delimcenter" style="top:0em;"><span class="delimsizing size3">)</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:2.29003em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span></p>
-<p>这里 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>g</mi><mrow><mi>i</mi><mi>j</mi></mrow></msub><mo>∼</mo><mtext>Gumbel</mtext><mo stretchy="false">(</mo><mn>0</mn><mo separator="true">,</mo><mn>1</mn><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">g_{ij} \sim \text{Gumbel}(0, 1)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.716668em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.311664em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span><span class="mord mathdefault mtight" style="margin-right:0.05724em;">j</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">∼</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">Gumbel</span></span><span class="mopen">(</span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">1</span><span class="mclose">)</span></span></span></span>，“temperature”参数 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>τ</mi><mo>&gt;</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">\tau &gt; 0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5782em;vertical-align:-0.0391em;"></span><span class="mord mathdefault" style="margin-right:0.1132em;">τ</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&gt;</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span></span></span></span> 是用来控制整个分布平滑度的关键。</p>
-<p>Gumbel 分布特别适合于描述一系列样本中的极值，不管这些样本遵循什么分布。而加入的 Gumbel 噪音为我们模拟真实世界中从类别分布抽样的随机性提供了可能。</p>
+<p>Guo et al. 2021 的论文《Gradient-based Adversarial Attacks against Text Transformers》提出的基于梯度的分布式攻击（GBDA）使用了 Gumbel-Softmax 近似法,来使对抗损失优化可微。在这种方法中，BERTScore 和困惑度（perplexity）用来衡量生成的文本既关联又流畅。然而，Gumbel-softmax 技巧难以扩展用于 token 删除或增添，它受限于 token 替换操作。</p>
+<ul>
+<li>
+<p><strong>核心思想</strong>：<strong>寻找一个对抗分布</strong>，而不是单个对抗样本。这个对抗分布参数化地表示一系列可能的对抗样本，并使用连续的矩阵<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>θ</mi></mrow><annotation encoding="application/x-tex">\theta</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">θ</span></span></span></span>进行控制。通过优化<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>θ</mi></mrow><annotation encoding="application/x-tex">\theta</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">θ</span></span></span></span>，我们可以调整对抗分布，使其包含更多能够欺骗目标模型 h 的样本。</p>
+</li>
+<li>
+<p><strong>优化过程</strong>：</p>
+<ul>
+<li>GBDA 使用 Gumbel-softmax 技术将对抗分布的采样过程变得可微分，从而可以使用梯度下降等优化算法进行优化。</li>
+<li>优化过程中，目标是最小化一个包含对抗损失、流畅性约束和语义相似性约束的损失函数。</li>
+<li>对抗损失鼓励模型对样本做出错误预测。</li>
+<li>流畅性约束使用语言模型来评估样本的流畅程度，并鼓励生成更自然的文本。</li>
+<li>语义相似性约束使用 BERTScore 来评估样本与原始样本在语义上的相似程度，并鼓励生成语义上更接近原始样本的对抗样本。</li>
+</ul>
+</li>
+<li>
+<p><strong>生成对抗样本</strong>：优化完成后，从对抗分布 PΘ 中采样即可得到对抗样本。由于对抗分布中包含多种可能的对抗样本，我们可以从中选择最适合当前任务和目标模型的样本。</p>
+</li>
+</ul>
 <h3 id="hotflip">HotFlip</h3>
-<p>Ebrahimi et al. 2018 在论文《HotFlip: White-Box Adversarial Examples for Text Classification》 中则是将文本操作看作是向量空间中的输入，度量的是损失在这些向量上的导数。基于one-hot表示的梯度来有效估计单个操作所造成的最大损失的变化，通过原子翻转操作（将一个字符替换为另一个字符）生成对抗样本，并通过一系列的字符翻转来支持插入和删除操作。HotFlip 可以扩展用于 token 删除或增添。</p>
+<p>Ebrahimi et al. 2018 在论文《HotFlip: White-Box Adversarial Examples for Text Classification》 中则是<strong>将文本操作看作是向量空间中的输入</strong>，度量的是损失在这些向量上的导数。基于one-hot表示的梯度来有效估计单个操作所造成的最大损失的变化，通过原子翻转操作（将一个字符替换为另一个字符）生成对抗样本，并通过一系列的字符翻转来支持插入和删除操作。HotFlip 可以扩展用于 token 删除或增添。</p>
 <h3 id="uta">UTA</h3>
-<p>Wallace et al. (2019) 的论文《Universal Adversarial Triggers for Attacking and Analyzing NLP》提出了一种在 token 上进行梯度引导式搜索的方法，可以找到诱使模型输出特定预测结果的短序列，这个短序列被称为 Universal Adversarial Triggers （UAT，通用对抗触发器）。UAT 不受输入的影响，这意味着这些触发器可以作为前缀（或后缀）连接到来自数据集的任意输入上。</p>
-<p>上面的 token 搜索方法可以使用波束搜索增强。当寻找最优的 token 嵌入时，可以选取 top-k 个候选项，而不是单独一个，在当前数据批上从左到右搜索，并根据 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>L</mi><mi>a</mi></msub><mi>d</mi><mi>v</mi></mrow><annotation encoding="application/x-tex">L_adv</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.84444em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">L</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">a</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord mathdefault">d</span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span></span></span></span> 为每个波束评分。</p>
+<p>Wallace et al. (2019) 的论文《Universal Adversarial Triggers for Attacking and Analyzing NLP》提出了一种<strong>在 token 上进行梯度引导式搜索</strong>的方法，可以找到诱使模型输出特定预测结果的短序列，这个短序列被称为 Universal Adversarial Triggers （UAT，通用对抗触发器）。UAT 不受输入的影响，这意味着这些触发器可以<strong>作为前缀（或后缀）连接</strong>到来自数据集的任意输入上。</p>
+<p>上面的 token 搜索方法可以使用<strong>波束搜索增强</strong>。当寻找最优的 token 嵌入时，可以选取 top-k 个候选项，而不是单独一个，在当前数据批上从左到右搜索，并根据 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>L</mi><mrow><mi>a</mi><mi>d</mi><mi>v</mi></mrow></msub></mrow><annotation encoding="application/x-tex">L_{adv}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">L</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">a</span><span class="mord mathdefault mtight">d</span><span class="mord mathdefault mtight" style="margin-right:0.03588em;">v</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 为每个波束评分。</p>
 <img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2024/07/10/LLM-Security1/p1.png" style="zoom:45%;">
 <p>UAT 的损失 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>L</mi><mi>a</mi></msub><mi>d</mi><mi>v</mi></mrow><annotation encoding="application/x-tex">L_adv</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.84444em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">L</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">a</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord mathdefault">d</span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span></span></span></span>  需要针对具体任务而设计。分类或阅读理解依赖于交叉熵。</p>
 <img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2024/07/10/LLM-Security1/p3.png" style="zoom:45%;">
 <p>UAT 为何有效？这是一个很有趣的问题。因为 UAT 是与输入无关的，并且可以在有不同嵌入、token 化方案和架构的模型之间迁移，因此它们也许可以有效地利用训练数据中的偏差，毕竟这种偏差已经融入到了模型的全局行为中。</p>
-<p>使用 UAT 攻击有一个缺点：很容易检测出来。原因是所学习到的触发器往往是毫无意义的。Mehrabi et al. (2022) 在论文《Robust Conversational Agents against Imperceptible Toxicity Triggers》中研究了 UAT 的两种变体，它们会促使所学到的触发器在多轮对话语境中难以察觉。其目标是创建能在给定对话中有效触发有毒响应的攻击性消息，同时保证该攻击在对话中是流畅、连贯和一致的。</p>
+<p>使用 UAT 攻击有一个缺点：<strong>很容易检测出来</strong>。原因是所学习到的触发器往往是毫无意义的。Mehrabi et al. (2022) 在论文《Robust Conversational Agents against Imperceptible Toxicity Triggers》中研究了 UAT 的两种变体，它们会促使所学到的触发器在多轮对话语境中难以察觉。其目标是创建能在给定对话中有效触发有毒响应的攻击性消息，同时保证该攻击在对话中是流畅、连贯和一致的。</p>
 <h3 id="autoprompt">AutoPrompt</h3>
-<p>Shin et al., 2020 的《AutoPrompt: Eliciting Knowledge from Language Models with Automatically Generated Prompts》使用了同样的基于梯度的搜索策略来为多样化的任务寻找最有效的 prompt 模板。</p>
+<p>Shin et al., 2020 的《AutoPrompt: Eliciting Knowledge from Language Models with Automatically Generated Prompts》使用了同样的<strong>基于梯度的搜索策略</strong>来为多样化的任务寻找最有效的 <strong>prompt</strong> 模板。</p>
 <h3 id="通用对抗触发-token-作为后缀连接到输入">通用对抗触发 token 作为后缀连接到输入</h3>
-<p>Zou et al. (2023) 的论文《Robust Conversational Agents against Imperceptible Toxicity Triggers》也研究了将通用对抗触发 token 作为后缀连接到输入请求上的情况。他们具体研究了对 LLM 的恶意请求 —— 对此模型应当拒绝回答。事实上，拒绝不被允许的内容类别（比如犯罪建议）是 GPT-4 内置的一个重要的安全措施。这里的对抗目标是诱使 LLM 即便在应当拒接回答时也输出肯定的响应。这就是说，当收到恶意请求时，模型会这样回答：「当然，你需要这样做……」预期的肯定响应也被配置成重复部分用户 prompt，以避免简单就能改变主题的后缀以优化「当然」式的响应。其损失函数很简单，就是输出目标响应的 NLL（负对数似然）。</p>
-<p>他们在 Vicuna-7b 和 Vicuna-13b 这两个不同的模型上进行了实验，使用了基于贪婪坐标梯度（GCG）的搜索来贪婪地寻找候选项，使得该候选项可以在所有可能的单 token 替换中最大程度地减少损失。</p>
+<p>Zou et al. (2023) 的论文《Robust Conversational Agents against Imperceptible Toxicity Triggers》也研究了将通用对抗触发 token 作为后缀连接到输入请求上的情况。他们具体研究了对 LLM 的恶意请求 —— 对此模型应当拒绝回答。事实上，拒绝不被允许的内容类别（比如犯罪建议）是 GPT-4 内置的一个重要的安全措施。对抗性的目标是，<strong>即使面对应该被拒绝的请求，也能操纵语言模型给出 肯定的回应</strong>。例如，面对一个恶意请求，模型可能会回答说：“Sure, here is how to …”。为了避免仅仅通过改变话题来引出一个 “sure” 回答，预期中的肯定回应也被设定为会重复用户的部分提示。而计算这种回应的可能性时使用的损失函数非常简单，就是目标回应的负对数似然 (NLL)。</p>
+<h3 id="gcg">GCG</h3>
+<p>为了在多个输入上引发模型给出肯定回应，研究人员在两个不同的模型 Vicuna-7b 和 Vicuna-13b 上进行了实验。他们使用了一种称为贪婪坐标梯度 (GCG) 的搜索技术，来找到能在所有可能的单个 Token 替换中减少损失最多的候选 Token。鉴于实际上不可能评估所有 Token 的替换，研究者采用了一种基于梯度的 Token 搜索策略，这种策略与 UAT 和 AutoPrompt 相似，可以<strong>为每个 Token 找出能够最大化减少损失函数梯度的最佳候选 Token</strong>。</p>
 <p>尽管他们的攻击序列完全是基于开源模型训练的，但它们却出乎意料地可以移植用于其它商用模型，这表明对开源模型的白盒攻击对私有模型也有效，尤其是当低层的训练数据有所重叠时。注意 Vicuna 的训练使用了从 GPT-3.5-turbo 收集的数据（通过 shareGPT），这本质上是蒸馏，因此这种攻击更像是白盒攻击。</p>
 <h3 id="arca">ARCA</h3>
-<p>Jones et al. 2023 等提出的自回归随机坐标上升（ARCA）,ARCA 的坐标上升算法在每一步仅调整一个位置 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span></span></span></span> 的 Token，以此来最大化我们的目标函数，同时保持其他 Token 不变。这个过程会重复进行，直到从 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="bold">x</mi></mrow><annotation encoding="application/x-tex">\mathbf{x}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.44444em;vertical-align:0em;"></span><span class="mord"><span class="mord mathbf">x</span></span></span></span></span> 中抽样得到的 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>y</mi></mrow><annotation encoding="application/x-tex">y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span></span></span></span> 与目标函数 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>ϕ</mi><mo stretchy="false">(</mo><mi mathvariant="normal">.</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\phi(.)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">ϕ</span><span class="mopen">(</span><span class="mord">.</span><span class="mclose">)</span></span></span></span> 的值至少达到某个阈值 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>τ</mi></mrow><annotation encoding="application/x-tex">\tau</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.1132em;">τ</span></span></span></span>，或者达到了预定的迭代次数限制。</p>
+<p>Jones et al. 2023 等提出的自回归随机坐标上升（ARCA）,ARCA 考虑了一系列更广泛的优化问题，用以寻找符合某种特定行为模式的输入输出对 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">(</mo><mi>x</mi><mo separator="true">,</mo><mi>y</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">(x,y)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathdefault">x</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="mclose">)</span></span></span></span>；例如，输入是以 “Barack Obama” 开头的无害内容，但可能产生有害的输出。</p>
 <h2 id="越狱式提示">越狱式提示</h2>
-<p>ailbreak 提示技术是一种利用弱点强制大语言模型（LLMs）产出那些本应被过滤的有害内容。这种技术属于黑盒攻击，其措辞组合的选取是基于经验法则和手动尝试。Wei et al. (2023) 的论文《Jailbroken: How Does LLM Safety Training Fail?》提出了 LLM 安全的两种失败模式，可用于指导越狱攻击的设计。</p>
+<p>Jailbreak 提示技术是一种利用弱点强制大语言模型（LLMs）产出那些本应被过滤的有害内容。这种技术属于黑盒攻击，其措辞组合的选取是基于经验法则和手动尝试。</p>
+<p>Wei et al. (2023) 的论文《Jailbroken: How Does LLM Safety Training Fail?》提出了 LLM 安全的两种失败模式，可用于指导越狱攻击的设计:</p>
 <ol>
 <li>
 <p><strong>目标冲突</strong>：当一个模型在执行能力（比如“必须严格执行指令”）和安全目标之间出现矛盾时，我们称之为目标冲突。举例来说，有些人可能会利用这种冲突来实施所谓的“越狱攻击”：</p>
@@ -2649,9 +3042,9 @@ TSS是一个特殊的段。在Linux中，CPU从系统态切换到用户态时，
 <p><strong>泛化失配</strong>：安全训练未能覆盖到模型实际具备能力的领域。这种情况通常发生在模型的安全训练数据未涉及到的领域，但这些输入却在它广泛的预训练资料库中。比如：</p>
 <ul>
 <li>特殊编码：使用 Base64 编码来构建对抗性输入。</li>
-<li>字符变换：ROT13 密码、火星文或脑残体（用视觉上相似的数字和符号替换字母）、摩尔斯电码</li>
-<li>词变换：Pig Latin（用同义词替换敏感词，比如用「窃」替换「偷」）、拆分关键词（即所谓的 token smuggling，也就是把敏感词分成几部 分）</li>
-<li>prompt 层面的混淆：翻译成其它语言、要求模型以其能理解的方式进行混淆</li>
+<li>字符变换：ROT13 密码、火星文或脑残体（用视觉上相似的数字和符号替换字母）、摩尔斯电码。</li>
+<li>词变换：Pig Latin（用同义词替换敏感词，比如用「窃」替换「偷」）、拆分关键词（即所谓的 token smuggling，也就是把敏感词分成几部分）。</li>
+<li>prompt 层面的混淆：翻译成其它语言、要求模型以其能理解的方式进行混淆。</li>
 </ul>
 </li>
 </ol>
@@ -2666,11 +3059,11 @@ TSS是一个特殊的段。在Linux中，CPU从系统态切换到用户态时，
 <h2 id="有人类参与的红队策略">有人类参与的红队策略</h2>
 <p>由 Wallace 等人 (2019) 提出的“人类参与的敌对生成”策略，旨在<strong>开发工具辅助人类“智破”人工智能模型</strong>。在他们的研究中，以 QuizBowl QA 数据集 为基础，他们设计了一套敌对性写作界面。这个界面可以引导用户编写类似《危险边缘》节目风格的问题，目的是让人工智能模型产生错误的判断。系统会根据每个词的重要度来进行颜色高亮显示，这个重要度是通过移除该词后模型预测概率的变化来确定的，具体是通过计算模型对词嵌入的梯度来近似得到的。<br>
 <img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2024/07/10/LLM-Security1/p5.png" style="zoom:45%;"><br>
-由（左上角）模型的前五个预测和（右下角）根据词语重要性高亮显示的用户问题组成。</p>
+界面由（左上角）模型的前五个预测和（右下角）根据词语重要性高亮显示的用户问题组成。</p>
 <p>在 Ziegler 等人 (2022) 的一个实验中，研究人员指导人类参与者寻找针对暴力内容的安全分类器的潜在失败点。他们开发了一种工具，帮助参与者更快速、更有效地发现并解决分类器的漏洞。使用工具辅助的改写比全手工改写更高效，把处理每个案例的时间从 20 分钟缩短至 13 分钟。具体来说，他们为人类作者引入了两种辅助特性：</p>
 <ul>
 <li>特征 1: <strong>每个词语的显著性分数展示</strong>。工具界面会突出那些一旦被移除就可能影响分类器判定结果的词语。一个词语的显著性分数是根据这个词语的嵌入对分类器输出的梯度幅值来确定的，这和 Wallace 等人 (2019) 的做法是一样的。</li>
-<li>特征 2: <strong>词语替换与添加</strong>。这项功能让用户通过 BERT-Attack 轻松进行词语的操作。接着，由人类作者对词语更新进行复核。只要点击文本片段中的某个词语，就会弹出一个下拉菜单，里面按照能够降低当前模型分数的程度，列出了新的词语选项。</li>
+<li>特征 2: <strong>词语替换与添加</strong>。这项功能让用户通过 BERT-Attack 轻松进行词语的操作。接着，由人类作者对词语更新进行复核。只要点击文本片段中的某个词语，就会弹出一个下拉菜单，里面按照能够降低当前模型分数的程度，列出了新的词语选项。目的是减少模型预测这些输入为暴力内容的可能性。</li>
 </ul>
 <img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2024/07/10/LLM-Security1/p6.png" style="zoom:35%;">
 <p>Xu et al. 2021 的《Bot-Adversarial Dialogue for Safe Conversational Agents》提出了 Bot-Adversarial Dialogue（BAD），该框架可以引导人类去诱使模型犯错（比如输出不安全的内容）。他们收集了 5000 多组模型与众包工作者的对话。每一组对话都包含 14 轮，然后他们根据不安全对话轮次的数量给模型打分。他们最终得到了 BAD 数据集，其中包含大约 2500 组带有攻击性标签的对话。</p>
@@ -2678,22 +3071,21 @@ TSS是一个特殊的段。在Linux中，CPU从系统态切换到用户态时，
 <h2 id="模型红队攻击">模型红队攻击</h2>
 <p>人类红队策略很强大，但是难以大规模实施而且可能需要大量经过培训的专业人士。现在想象一下：我们可以学习一个红队模型 red 来与目标 LLM 进行对抗，以触发其给出不安全响应。对于基于模型的红队策略，主要的难题是<strong>如何判断一次攻击是否成功</strong>；只有知道了这一点，我们才能构建用于训练红队模型的合适学习信号。</p>
 <p>假设我们已经有一个高质量的分类器，能够判断模型的输出是否有害，我们就可以将其用作奖励来训练红队模型，以得到一些能最大化分类器在目标模型输出上的分数的输入。令 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>r</mi><mo stretchy="false">(</mo><mi>x</mi><mo separator="true">,</mo><mi>y</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">r(x, y)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mopen">(</span><span class="mord mathdefault">x</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="mclose">)</span></span></span></span> 是一个这样的红队分类器，其可以判断在给定测试输入<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span></span></span></span>时，输出 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>y</mi></mrow><annotation encoding="application/x-tex">y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span></span></span></span> 是否有害(基于Perez et al. 2022 的论文《Red Teaming Language Models with Language Models》)。</p>
-<p>Casper et al. (2023) 的论文《Explore, Establish, Exploit: Red Teaming Language Models from Scratch》设计了一种有人类参与的红队过程。其与 Perez et al. (2022) 的主要不同之处在于其明确地为目标模型设置了一个数据采样阶段，这样就可以收集其上的人类标签来训练针对特定任务的红队分类器。其包含探索（Explore）、建立（Establish）和利用（Exploit）三个阶段。</p>
-<p>Mehrabi et al. (2023) 的论文《FLIRT: Feedback Loop In-context Red Teaming》则是依靠红队 LM <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>p</mi><mi>r</mi></msub><mi>e</mi><mi>d</mi></mrow><annotation encoding="application/x-tex">p_red</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord mathdefault">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.02778em;">r</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord mathdefault">e</span><span class="mord mathdefault">d</span></span></span></span> 的上下文学习来攻击图像或文本生成模型 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">p</span></span></span></span>，使其输出不安全的内容。</p>
+<p>Casper et al. (2023) 的论文《Explore, Establish, Exploit: Red Teaming Language Models from Scratch》设计了一种有人类参与的红队过程。其与 Perez et al. (2022) 的主要不同之处在于其明确地为目标模型设置了一个数据采样阶段，这样就可以收集其上的人类标签来训练针对特定任务的红队分类器。其包含探索（Explore）、建立（Establish）和利用（Exploit）三个阶段。使用强化学习培养一个对抗性的提示生成器，这个生成器能够触发一系列多样化的有害输出。</p>
+<p>Mehrabi et al. (2023) 的论文《FLIRT: Feedback Loop In-context Red Teaming》则是依靠红队 LM <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>p</mi><mi>r</mi></msub><mi>e</mi><mi>d</mi></mrow><annotation encoding="application/x-tex">p_red</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord mathdefault">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.02778em;">r</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord mathdefault">e</span><span class="mord mathdefault">d</span></span></span></span> 的上下文学习来攻击图像或文本生成模型 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">p</span></span></span></span>，使其输出不安全的内容。红队语言模型 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>p</mi><mrow><mi>r</mi><mi>e</mi><mi>d</mi></mrow></msub></mrow><annotation encoding="application/x-tex">p_{red}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord mathdefault">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.02778em;">r</span><span class="mord mathdefault mtight">e</span><span class="mord mathdefault mtight">d</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 创造了一个根据示例定制的对抗性提示 $ x \sim {p_{red}{(.∣{examples})}}$ 这些初步的示例是由人工仔细打造的；生成模型<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">p</span></span></span></span>会以这个提示为条件，输出图像或文字 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>y</mi><mo>∼</mo><mi>p</mi><mo stretchy="false">(</mo><mi mathvariant="normal">.</mi><mo>∣</mo><mi>x</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">y \sim p(.∣x)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">∼</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">p</span><span class="mopen">(</span><span class="mord">.</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">∣</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">x</span><span class="mclose">)</span></span></span></span>。然后，生成的作品 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>y</mi></mrow><annotation encoding="application/x-tex">y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span></span></span></span> 会被检测，比如使用分类器来判定其是否安全；如果结果是不安全的，那么这个触发提示 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span></span></span></span> 就会用来更新上下文的案例，从而让 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>p</mi><mrow><mi>r</mi><mi>e</mi><mi>d</mi></mrow></msub></mrow><annotation encoding="application/x-tex">p_{red}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord mathdefault">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.02778em;">r</span><span class="mord mathdefault mtight">e</span><span class="mord mathdefault mtight">d</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 按照某种策略制作出新的对抗性提示。</p>
 <h1 id="如何应对攻击">如何应对攻击</h1>
 <h2 id="鞍点问题">鞍点问题</h2>
-<p>Madry et al. 2017 的《Towards Deep Learning Models Resistant to Adversarial Attacks》提出了一个很不错的对抗稳健性（adversarial robustness）框架，即将对抗稳健性建模成一个鞍点问题，这样就变成了一个稳健优化（robust optimization）问题。该框架是为分类任务的连续输入而提出的，但它用相当简洁的数学公式描述了双层优化过程，因此值得分享。<br>
-其目标由一个内部最大化问题和一个外部最小化问题组成：</p>
+<p>Madry et al. 2017 的《Towards Deep Learning Models Resistant to Adversarial Attacks》提出了一个很不错的对抗稳健性（adversarial robustness）框架，即将对抗稳健性建模成一个鞍点问题，这样就变成了一个稳健优化（robust optimization）问题。该框架是为分类任务的连续输入而提出的，但它用相当简洁的数学公式描述了双层优化过程。其目标由一个<strong>内部最大化</strong>问题和一个<strong>外部最小化</strong>问题组成：</p>
 <ul>
 <li>内部最大化：寻找能导致高损失的最有效的对抗数据点 𝐱+𝜹。所有对抗性攻击方法最终都可归结为如何最大化这个内部过程的损失。</li>
 <li>外部最小化：寻找最佳的模型参数化方案，使得由内部最大化过程找到的最有效攻击的损失能被最小化。要训练出稳健的模型，一个简单方法是将每个数据点替换为其扰动版本，这些版本可以是一个数据点的多个对抗变体。<br>
 <img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2024/07/10/LLM-Security1/p7.png" style="zoom:45%;"></li>
 </ul>
-<h2 id="llm-稳健性方面的一些研究工作">LLM 稳健性方面的一些研究工作</h2>
+<h2 id="llm-稳健性">LLM 稳健性</h2>
 <p>这里简单谈谈一些有关 LLM 稳健性的研究。</p>
 <p>Xie et al. 2023 的论文《Defending ChatGPT against Jailbreak Attack via Self-Reminder》发现了一种简单直观的保护模型免受对抗攻击的方法：<strong>明确地指示模型成为负责任的模型，不要生成有害内</strong>容。这会极大降低越狱攻击的成功率，但对模型的生成质量会有副作用，这是因为这样的指示<strong>会让模型变得保守</strong>（比如不利于创意写作），或者会在某些情况下错误地解读指令（比如在安全 - 不安全分类时）。</p>
 <p>目前降低恶意攻击风险最常见的方法是<strong>对抗性训练</strong>，即在攻击样本上训练模型。这种方法被认为是最有效的防御手段，但它需要在模型稳健性和性能之间做出权衡。在 Jain 等人 2023 的《Baseline Defenses for Adversarial Attacks Against Aligned Language Models》中，他们测试了两种对抗性训练方案：（1）将有害提示与 “I’m sorry. As a …” 的回应配对进行梯度下降；（2）在每个训练步骤中，对拒绝回应进行一次梯度下降，而对“红队”的不当回应进行一次梯度上升。结果显示方案（2）几乎无效，因为它严重降低了模型生成的质量，而攻击成功率却仅有少量下降。</p>
-<p>白盒攻击往往会导致对抗 prompt 看起来毫无意义，因此可以<strong>通过困惑度检测</strong>出来。当然，通过明确地优化而降低困惑度，白盒攻击可以直接绕过这种检测方法，比如 UAT 的一种变体 UAT-LM。但是，这也可能会导致攻击成功率下降。</p>
+<p>白盒攻击通常会产生毫无意义的恶意提示，这些提示可以通过<strong>检查困惑度</strong>来识别。当然，白盒攻击可以通过专门优化以降低困惑度来规避这一检测，比如 UAT-LM，它是 UAT 的变体。不过，这种方法也有其权衡，可能会降低攻击的成功率。</p>
 <p>Jain et al. 2023 还测试了对文本输入进行预处理的方法，使得能在移除对抗性修改的同时维持语义含义。</p>
 <ul>
 <li>解释含义：使用 LLM 来解释输入文本的含义，这可能会对下游任务性能造成较小影响。</li>
@@ -2701,13 +3093,15 @@ TSS是一个特殊的段。在Linux中，CPU从系统态切换到用户态时，
 </ul>
 ]]></content>
       <categories>
+        <category>智能算法安全</category>
         <category>大模型</category>
         <category>大模型安全</category>
+        <category>大模型对抗攻击</category>
       </categories>
       <tags>
-        <tag>大模型</tag>
         <tag>智能算法安全</tag>
         <tag>生成式人工智能</tag>
+        <tag>大模型</tag>
       </tags>
   </entry>
   <entry>
