@@ -1,205 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>人工智能概述</title>
-    <url>/2022/09/01/AdvancedAI-LearningNotes1/</url>
-    <content><![CDATA[<blockquote>
-<p>三节课讲述的东西太多，这里仅记录相对来说稍重要的部分。</p>
-</blockquote>
-<h1 id="图灵测试">图灵测试</h1>
-<h2 id="什么是图灵测试">什么是图灵测试</h2>
-<p>测试者与被测试者（一个人和一台机器）隔开的情况下，通过一些装置（如键盘）向被测试者随意提问。进行多次测试后，如果机器让平均每个参与者做出超过30%的误判，那么这台机器就通过了测试，并被认为具有人类智能。</p>
-<blockquote>
-<p>图灵问题：Can Machine Think？（思考）</p>
-</blockquote>
-<h2 id="质疑">质疑</h2>
-<ul>
-<li>图灵测试是不可构造的：“完全不接触”环境难以构建</li>
-<li>图灵测试不可重现的：问题是开放的，答案正确性判断是主观的</li>
-<li>图灵测试无法进行数学分析：只是一种操作式测试，缺少形式化描述</li>
-</ul>
-<h1 id="人工智能三大学派">人工智能三大学派</h1>
-<h2 id="符号主义">符号主义</h2>
-<ul>
-<li>认为“人的认知基元是符号（语言文字），认知过程即符号操作过程”</li>
-<li>认为人工智能的<strong>核心是知识表示、知识推理和知识运用</strong></li>
-<li>衍生出：逻辑、专家系统、知识库、<strong>知识图谱</strong></li>
-</ul>
-<h2 id="联结主义">联结主义</h2>
-<ul>
-<li>又称<strong>仿生</strong>学派或生理学派</li>
-<li>认为人的思维基元是神经元，而不是符号处理过程</li>
-<li>原理：神经网络及神经网络间的连接机制和学习算法</li>
-<li>衍生出：<strong>人工神经网络</strong>，认知科学、类脑计算</li>
-</ul>
-<h2 id="行为主义">行为主义</h2>
-<ul>
-<li>又称进化主义或<strong>控制论学派</strong></li>
-<li>主张<strong>利用机器对环境作用后的响应或反馈为原型</strong>来实现智能化</li>
-<li>衍生出：动态规划、<strong>强化学习</strong>、多智能体</li>
-</ul>
-<h1 id="课程蓝图">课程蓝图</h1>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/01/AdvancedAI-LearningNotes1/p.png" class title="p">
-]]></content>
-      <categories>
-        <category>国科大课程笔记</category>
-        <category>高级人工智能</category>
-      </categories>
-      <tags>
-        <tag>人工智能</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>文本生成模型的对抗攻击</title>
-    <url>/2024/07/11/AI-Security1/</url>
-    <content><![CDATA[<p>对抗攻击（也称为对抗样本生成）是智能算法安全的子领域，最初是针对图像所提出，在计算机视觉领域取得了丰硕的研究成果，提出了很多实用的攻击算法。近几年，研究人员在不断寻找新的应用场景，积极探索对抗攻击在其他领域的应用，针对文本的对抗攻击已取得一些进展。</p>
-<h1 id="基本概念">基本概念</h1>
-<h2 id="对抗样本">对抗样本</h2>
-<p>对抗样本的概念最初是在2014年提出的，指的是一类人为构造的样本，通过对原始的样本数据添加针对性的微小扰动所得到，其不会影响人类的感知，但会使深度学习模型产生错误的判断[1]。对抗攻击即指构造对抗样本的过程。</p>
-<p>举个例子:</p>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2024/07/11/AI-Security1/p1.png" class title="p1">
-<p>语句（1）为原始样本，语句（2）为经过几个字符变换后得到的对抗样本。深度学习模型能正确地将原始样本判为正面评论，而将对抗样本误判为负面评论。而显然，这种微小扰动并不会影响人类的判断。</p>
-<p>关于对抗样本存在的原因，有学者认为是由于模型的<strong>高度非线性</strong>和<strong>过拟合</strong>，有学者认为是由于<strong>特征维度过高</strong>和<strong>模型的线性性质</strong>，至今还未达成共识，研究人员一般都会根据自己的研究成果来进行解释，每个人提出的观点往往仅适用于局部现象。但不管是线性解释还是非线性解释，究其<strong>本质是由于模型没有学到完美的判别规则，模型的判断边界与真实的决策边界不一致</strong>。深度学习模型由于能够自动学习特征的能力而得到广泛应用，但是这种由数据出发进行自主学习，所得到的特征并不一定就是我们所希望的特征，模型对数据的理解与人的理解有着很大的差异。因而模型学习到的特征，极有可能并非是人理解事物的特征，即对抗样本的存在是深度学习模型的固有缺陷。</p>
-<h2 id="文本对抗和图像对抗">文本对抗和图像对抗</h2>
-<p>文本数据与图像数据的不同，为文本领域的对抗攻击研究带来了巨大挑战。[2]</p>
-<ol>
-<li><strong>离散VS连续</strong>（Discrete VS Continucous）</li>
-</ol>
-<p>图像数据是连续的，易编码为数值向量，预处理操作线性、可微，通常使用lp范数来度量原始样本与对抗样本间的距离；而文本数据是符号化的数据，是<strong>离散</strong>的，预处理操作<strong>非线性、不可微</strong>，很难定义文本上的扰动及度量文本序列改变前后的差异。</p>
-<ol start="2">
-<li><strong>易感知VS不易感知</strong>（Preceivable VS Unperceivable）</li>
-</ol>
-<p>人类通常不容易察觉到图像像素的微小变化，因此图像的对抗样本不会改变人类的判断力，只会影响深度学习模型的判别结果；而文本上的变化则很<strong>容易影响文本可读性</strong>，在将文本数据输入DNN模型之前通过拼写检查和语法检查来识别或纠正更改，极有可能导致攻击失败。</p>
-<ol start="3">
-<li><strong>富有语义VS无语义</strong>（Semanic VS Semanic-less）</li>
-</ol>
-<p>像素的微小变化不会改变图像的语义，但对文本的扰动<strong>可轻易改变单词和句子的语义</strong>。例如，干扰单个像素不会将图像从猫变为另一种动物，而删除否定词将改变句子的情感。更改样本的语义有悖于对抗样本的定义，文本领域的对抗样本应在使深度学习模型发生误判的同时保持数据样本的真实标签不变。</p>
-<h2 id="算法分类">算法分类</h2>
-<h3 id="模型访问权限">模型访问权限</h3>
-<p>根据模型访问权限可以分为白盒攻击和黑盒攻击，白盒攻击需要获取模型的结构和参数等详细信息；而黑盒攻击不需要模型知识，只需访问模型获取输入的对应输出即可。</p>
-<h3 id="攻击目标">攻击目标</h3>
-<p>根据攻击目标设定可以分为有目标攻击和无目标攻击，无目标攻击旨在使模型的输出为偏离正确结果的任意错误预测；而有目标攻击旨在使模型的输出为某一特定结果。</p>
-<h2 id="添加扰动的粒度">添加扰动的粒度</h2>
-<p>根据添加扰动时所操作的文本粒度可以分为字符级、单词级和语句级攻击。字符级攻击通过插入、删除或替换字符，以及交换字符顺序实现；单词级攻击主要通过替换单词实现，基于近义词、形近词、错误拼写等建立候选词库；语句级攻击主要通过文本复述或插入句子实现。</p>
-<h2 id="攻击策略">攻击策略</h2>
-<p>根据攻击策略可以分为<strong>Image-to-Text</strong>（借鉴图像领域的经典算法）、<strong>基于优化</strong>的攻击、<strong>基于重要性</strong>的攻击以及<strong>基于神经网络</strong>的攻击。</p>
-<ul>
-<li>部分学者通过<strong>将文本数据映射到连续空间</strong>，然后借鉴图像领域的一些经典算法如FGSM、JSMA等，生成对抗样本；</li>
-<li>基于优化的攻击将对抗攻击表述为<strong>带约束的优化问题</strong>，利用现有的优化技术求解，如梯度优化、遗传算法优化；</li>
-<li>基于重要性的攻击通常首先利用梯度或文本特性设计评分函数<strong>锁定关键词</strong>，然后通过<strong>文本编辑</strong>添加扰动；</li>
-<li>基于神经网络的攻击训练神经网络模型<strong>自动学习对抗样本的特征</strong>，从而实现对抗样本的自动化生成。</li>
-</ul>
-<h1 id="代表性算法">代表性算法</h1>
-<p>文本领域的常见任务有文本分类、情感分析、机器翻译、阅读理解、问答系统、对话生成、文本蕴含等，其中文本分类与情感分析任务使用分类器模型，其他任务使用seq2seq模型。针对分类任务的研究较多，下文介绍几种代表性算法。</p>
-<table>
-<thead>
-<tr>
-<th>算法</th>
-<th>访问权限</th>
-<th>攻击形式</th>
-<th>操作粒度</th>
-<th>策略</th>
-<th>应用场景</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Papernot et al.</td>
-<td>白盒</td>
-<td>无目标攻击</td>
-<td>单词</td>
-<td>JSMA-based, FGSM-based</td>
-<td>文本分类</td>
-</tr>
-<tr>
-<td>TextFool</td>
-<td>白盒/黑盒</td>
-<td>有目标攻击</td>
-<td>单词</td>
-<td>FGSM-based</td>
-<td>文本分类</td>
-</tr>
-<tr>
-<td>HotFlip</td>
-<td>白盒</td>
-<td>无目标攻击</td>
-<td>字符</td>
-<td>Gradient-Optimization</td>
-<td>文本分类</td>
-</tr>
-<tr>
-<td>Alzantot et al.</td>
-<td>黑盒</td>
-<td>有目标攻击</td>
-<td>单词</td>
-<td>GA-Optimization</td>
-<td>情感分析</td>
-</tr>
-<tr>
-<td>DeepWordBug</td>
-<td>黑盒</td>
-<td>无目标攻击</td>
-<td>字符</td>
-<td>Importance-based</td>
-<td>文本分类</td>
-</tr>
-<tr>
-<td>TextBugger</td>
-<td>白盒/黑盒</td>
-<td>字符/单词</td>
-<td>字符</td>
-<td>Importance-based</td>
-<td>情感分析</td>
-</tr>
-<tr>
-<td>DISPTFLIP</td>
-<td>白盒</td>
-<td>无目标攻击</td>
-<td>字符</td>
-<td>Neural Network</td>
-<td>文本分类</td>
-</tr>
-<tr>
-<td>Zhao et al.</td>
-<td>黑盒</td>
-<td>无目标攻击</td>
-<td>单词</td>
-<td>GAN-based</td>
-<td>文本分类/机器翻译</td>
-</tr>
-</tbody>
-</table>
-<p>Papernot等人[3]最先研究了文本领域的对抗样本问题，提出了<strong>生成对抗性输入序列</strong>的概念。作者将图像对抗领域的JSMA算法迁移到文本领域，利用计算图展开技术来评估与单词序列的嵌入输入有关的前向导数，构建雅可比矩阵，并借鉴<strong>FGSM</strong>的思想计算对抗性扰动。由于词向量不能取任意实数值，作者建立了一个特定的词典来选择单词以替换原始序列中的随机词。</p>
-<p>Liang等人[4]提出了TextFool方法，首先针对白盒模型和黑盒模型使用不同的策略<strong>识别出对分类具有重要贡献的文本项</strong>（HTP、HSP），然后对这些重要的文本项通过单一或混合使用插入、修改和删除三种<strong>扰动</strong>策略，生成对抗样本。对于白盒模型，作者借鉴FGSM的思想来估算文本项的重要度，但是通过<strong>损失函数的梯度大小</strong>而不是梯度符号来度量；对于黑盒模型，通过<strong>遮挡文本</strong>的策略来识别重要文本项。</p>
-<p>Ebrahimi 等人[5]提出了HotFlip方法，<strong>基于one-hot表示的梯度来有效估计单个操作所造成的最大损失的变化</strong>，通过原子翻转操作（将一个字符替换为另一个字符）生成对抗样本，并通过一系列的字符翻转来支持插入和删除操作。考虑到梯度优化的局限性，Alzantot等人[6]提出使用最优化技术中的遗传算法（Genetic Algorithm, GA）来生成与原始样本具有相似语义和语法的对抗样本。</p>
-<p>Gao等人[7]提出了DeepWordBug方法，将对抗样本的生成分为两个阶段。首先使用针对文本数据特性设计的评分函数来<strong>识别关键的Token</strong>，根据重要性进行排名；然后对排名最高的m个Token通过简单的<strong>字符级操作</strong>（交换、替换、删除和插入）进行扰动，改变分类结果。</p>
-<p>Li等人[8]提出了TextBugger方法，首先针对白盒和黑盒模型通过不同策略<strong>识别影响模型分类结果的重要词</strong>，然后采取插入、删除、字符交换、字符替换、单词替换等五种扰动策略分别生成扰动从中选择一个最优扰动。在白盒场景下，通过计算分类器的雅可比矩阵来找到重要词；在黑盒场景下，首先根据分类置信度找到重要的句子，然后使用评分函数来找到重要单词。</p>
-<p>Gil 等人[9]提出了HotFlip的派生方法DISTFLIP，该算法<strong>提取HotFlip优化过程中的知识训练神经网络模型</strong>来模拟攻击从而生成对抗样本，极大地节省了运行时间，并可以迁移到黑盒场景下进行攻击。</p>
-<p>Zhao等人[10]设计的用于生成对抗样本的模型，首先使用一个逆变器<strong>将原始数据映射到向量空间</strong>，在数据对应的<strong>稠密向量空间</strong>中进行搜索<strong>添加扰动</strong>得到对抗样本；然后使用GAN作为生成器将向量空间中得到的对抗样本<strong>映射回原始数据类型</strong>。</p>
-<h1 id="参考文献">参考文献</h1>
-<p>[1]Szegedy C, Zaremba W, Sutskever I, et al. Intriguing Properties of Neural Networks[C] // Proceedings of the 2th International Conference on Learning Representations, 2014.<br>
-[2]Zhang W E, Sheng Q Z, Alhazmi A, et al. Adversarial Attacks on Deep Learning Models in Natural Language Processing: A Survey[J]. ACM Transactions on Intelligent Systems and Technology (TIST). 2020, 11(3): 1-41.<br>
-[3]Papernot N, McDaniel P, Swami A, et al. Crafting Adversarial Input Sequences for Recurrent Neural Networks[C]// Proceedings of MILCOM 2016-2016 IEEE Military Communications Conference. IEEE, 2016: 49-54.<br>
-[4]Liang B, Li H, Su M, et al. Deep Text Classification Can be Fooled[C]// Proceedings of the Twenty-Seventh International Joint Conference on Artificial Intelligence(IJCAI). 2018: 4208-4215.<br>
-[5]Ebrahimi J, Rao A, Lowd D, et al. HotFlip: White-Box Adversarial Examples for Text Classification[C]//Proceedings of the 56th Annual Meeting of the Association for Computational Linguistics (Volume 2: Short Papers). 2018: 31-36.<br>
-[6]Alzantot M, Sharma Y, Elgohary A, et al. Generating Natural Language Adversarial Examples[C]//Proceedings of the 2018 Conference on Empirical Methods in Natural Language Processing. 2018: 2890-2896.<br>
-[7]Gao J, Lanchantin J, Soffa M L, et al. Black-box Generation of Adversarial Text Sequences to Evade Deep Learning Classifiers[C]// Proceedings of 2018 IEEE Security and Privacy Workshops (SPW). IEEE, 2018: 50-56.<br>
-[8]Li J, Ji S, Du T, et al. TextBugger: Generating Adversarial Text Against Real-world Applications[C]// Proceedings of the 26th Annual Network and Distributed System Security Symposium. 2019.<br>
-[9]Gil Y, Chai Y, Gorodissky O, et al. White-to-Black: Efficient Distillation of Black-Box Adversarial Attacks[C]//Proceedings of the 2019 Conference of the North American Chapter of the Association for Computational Linguistics: Human Language Technologies, Volume 1 (Long and Short Papers). 2019: 1373-1379.<br>
-[10]Zhao Z, Dua D, Singh S. Generating Natural Adversarial Examples[C]// Proceedings of the International Conference on Learning Representations. 2018.<br>
-参考博客: <a href="https://www.secrss.com/articles/25644">https://www.secrss.com/articles/25644</a></p>
-<!-- <img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2024/07/11/AI-Security1/p1.png" class="" title="p1"> -->
-<!-- <img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="p1.png"  style="zoom:60%;" /> -->]]></content>
-      <categories>
-        <category>智能算法安全</category>
-        <category>对抗攻击</category>
-      </categories>
-      <tags>
-        <tag>智能算法安全</tag>
-        <tag>生成式人工智能</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>搜索算法</title>
     <url>/2022/10/02/AdvancedAI-LearningNotes2/</url>
     <content><![CDATA[<blockquote>
@@ -365,6 +166,55 @@ Qcm-有c个传教士，m个野人从右岸到左岸</p>
       </tags>
   </entry>
   <entry>
+    <title>人工智能概述</title>
+    <url>/2022/09/01/AdvancedAI-LearningNotes1/</url>
+    <content><![CDATA[<blockquote>
+<p>三节课讲述的东西太多，这里仅记录相对来说稍重要的部分。</p>
+</blockquote>
+<h1 id="图灵测试">图灵测试</h1>
+<h2 id="什么是图灵测试">什么是图灵测试</h2>
+<p>测试者与被测试者（一个人和一台机器）隔开的情况下，通过一些装置（如键盘）向被测试者随意提问。进行多次测试后，如果机器让平均每个参与者做出超过30%的误判，那么这台机器就通过了测试，并被认为具有人类智能。</p>
+<blockquote>
+<p>图灵问题：Can Machine Think？（思考）</p>
+</blockquote>
+<h2 id="质疑">质疑</h2>
+<ul>
+<li>图灵测试是不可构造的：“完全不接触”环境难以构建</li>
+<li>图灵测试不可重现的：问题是开放的，答案正确性判断是主观的</li>
+<li>图灵测试无法进行数学分析：只是一种操作式测试，缺少形式化描述</li>
+</ul>
+<h1 id="人工智能三大学派">人工智能三大学派</h1>
+<h2 id="符号主义">符号主义</h2>
+<ul>
+<li>认为“人的认知基元是符号（语言文字），认知过程即符号操作过程”</li>
+<li>认为人工智能的<strong>核心是知识表示、知识推理和知识运用</strong></li>
+<li>衍生出：逻辑、专家系统、知识库、<strong>知识图谱</strong></li>
+</ul>
+<h2 id="联结主义">联结主义</h2>
+<ul>
+<li>又称<strong>仿生</strong>学派或生理学派</li>
+<li>认为人的思维基元是神经元，而不是符号处理过程</li>
+<li>原理：神经网络及神经网络间的连接机制和学习算法</li>
+<li>衍生出：<strong>人工神经网络</strong>，认知科学、类脑计算</li>
+</ul>
+<h2 id="行为主义">行为主义</h2>
+<ul>
+<li>又称进化主义或<strong>控制论学派</strong></li>
+<li>主张<strong>利用机器对环境作用后的响应或反馈为原型</strong>来实现智能化</li>
+<li>衍生出：动态规划、<strong>强化学习</strong>、多智能体</li>
+</ul>
+<h1 id="课程蓝图">课程蓝图</h1>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/01/AdvancedAI-LearningNotes1/p.png" class title="p">
+]]></content>
+      <categories>
+        <category>国科大课程笔记</category>
+        <category>高级人工智能</category>
+      </categories>
+      <tags>
+        <tag>人工智能</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>深度学习</title>
     <url>/2022/10/03/AdvancedAI-LearningNotes4/</url>
     <content><![CDATA[<h1 id="一-玻尔兹曼机系列">一、玻尔兹曼机系列</h1>
@@ -491,6 +341,156 @@ GRU是LSTM的变体，相比LSTM有更简单的结构。GRU包括了重置门和
       </categories>
       <tags>
         <tag>计算机网络</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>文本生成模型的对抗攻击</title>
+    <url>/2024/07/11/AI-Security1/</url>
+    <content><![CDATA[<p>对抗攻击（也称为对抗样本生成）是智能算法安全的子领域，最初是针对图像所提出，在计算机视觉领域取得了丰硕的研究成果，提出了很多实用的攻击算法。近几年，研究人员在不断寻找新的应用场景，积极探索对抗攻击在其他领域的应用，针对文本的对抗攻击已取得一些进展。</p>
+<h1 id="基本概念">基本概念</h1>
+<h2 id="对抗样本">对抗样本</h2>
+<p>对抗样本的概念最初是在2014年提出的，指的是一类人为构造的样本，通过对原始的样本数据添加针对性的微小扰动所得到，其不会影响人类的感知，但会使深度学习模型产生错误的判断[1]。对抗攻击即指构造对抗样本的过程。</p>
+<p>举个例子:</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2024/07/11/AI-Security1/p1.png" class title="p1">
+<p>语句（1）为原始样本，语句（2）为经过几个字符变换后得到的对抗样本。深度学习模型能正确地将原始样本判为正面评论，而将对抗样本误判为负面评论。而显然，这种微小扰动并不会影响人类的判断。</p>
+<p>关于对抗样本存在的原因，有学者认为是由于模型的<strong>高度非线性</strong>和<strong>过拟合</strong>，有学者认为是由于<strong>特征维度过高</strong>和<strong>模型的线性性质</strong>，至今还未达成共识，研究人员一般都会根据自己的研究成果来进行解释，每个人提出的观点往往仅适用于局部现象。但不管是线性解释还是非线性解释，究其<strong>本质是由于模型没有学到完美的判别规则，模型的判断边界与真实的决策边界不一致</strong>。深度学习模型由于能够自动学习特征的能力而得到广泛应用，但是这种由数据出发进行自主学习，所得到的特征并不一定就是我们所希望的特征，模型对数据的理解与人的理解有着很大的差异。因而模型学习到的特征，极有可能并非是人理解事物的特征，即对抗样本的存在是深度学习模型的固有缺陷。</p>
+<h2 id="文本对抗和图像对抗">文本对抗和图像对抗</h2>
+<p>文本数据与图像数据的不同，为文本领域的对抗攻击研究带来了巨大挑战。[2]</p>
+<ol>
+<li><strong>离散VS连续</strong>（Discrete VS Continucous）</li>
+</ol>
+<p>图像数据是连续的，易编码为数值向量，预处理操作线性、可微，通常使用lp范数来度量原始样本与对抗样本间的距离；而文本数据是符号化的数据，是<strong>离散</strong>的，预处理操作<strong>非线性、不可微</strong>，很难定义文本上的扰动及度量文本序列改变前后的差异。</p>
+<ol start="2">
+<li><strong>易感知VS不易感知</strong>（Preceivable VS Unperceivable）</li>
+</ol>
+<p>人类通常不容易察觉到图像像素的微小变化，因此图像的对抗样本不会改变人类的判断力，只会影响深度学习模型的判别结果；而文本上的变化则很<strong>容易影响文本可读性</strong>，在将文本数据输入DNN模型之前通过拼写检查和语法检查来识别或纠正更改，极有可能导致攻击失败。</p>
+<ol start="3">
+<li><strong>富有语义VS无语义</strong>（Semanic VS Semanic-less）</li>
+</ol>
+<p>像素的微小变化不会改变图像的语义，但对文本的扰动<strong>可轻易改变单词和句子的语义</strong>。例如，干扰单个像素不会将图像从猫变为另一种动物，而删除否定词将改变句子的情感。更改样本的语义有悖于对抗样本的定义，文本领域的对抗样本应在使深度学习模型发生误判的同时保持数据样本的真实标签不变。</p>
+<h2 id="算法分类">算法分类</h2>
+<h3 id="模型访问权限">模型访问权限</h3>
+<p>根据模型访问权限可以分为白盒攻击和黑盒攻击，白盒攻击需要获取模型的结构和参数等详细信息；而黑盒攻击不需要模型知识，只需访问模型获取输入的对应输出即可。</p>
+<h3 id="攻击目标">攻击目标</h3>
+<p>根据攻击目标设定可以分为有目标攻击和无目标攻击，无目标攻击旨在使模型的输出为偏离正确结果的任意错误预测；而有目标攻击旨在使模型的输出为某一特定结果。</p>
+<h2 id="添加扰动的粒度">添加扰动的粒度</h2>
+<p>根据添加扰动时所操作的文本粒度可以分为字符级、单词级和语句级攻击。字符级攻击通过插入、删除或替换字符，以及交换字符顺序实现；单词级攻击主要通过替换单词实现，基于近义词、形近词、错误拼写等建立候选词库；语句级攻击主要通过文本复述或插入句子实现。</p>
+<h2 id="攻击策略">攻击策略</h2>
+<p>根据攻击策略可以分为<strong>Image-to-Text</strong>（借鉴图像领域的经典算法）、<strong>基于优化</strong>的攻击、<strong>基于重要性</strong>的攻击以及<strong>基于神经网络</strong>的攻击。</p>
+<ul>
+<li>部分学者通过<strong>将文本数据映射到连续空间</strong>，然后借鉴图像领域的一些经典算法如FGSM、JSMA等，生成对抗样本；</li>
+<li>基于优化的攻击将对抗攻击表述为<strong>带约束的优化问题</strong>，利用现有的优化技术求解，如梯度优化、遗传算法优化；</li>
+<li>基于重要性的攻击通常首先利用梯度或文本特性设计评分函数<strong>锁定关键词</strong>，然后通过<strong>文本编辑</strong>添加扰动；</li>
+<li>基于神经网络的攻击训练神经网络模型<strong>自动学习对抗样本的特征</strong>，从而实现对抗样本的自动化生成。</li>
+</ul>
+<h1 id="代表性算法">代表性算法</h1>
+<p>文本领域的常见任务有文本分类、情感分析、机器翻译、阅读理解、问答系统、对话生成、文本蕴含等，其中文本分类与情感分析任务使用分类器模型，其他任务使用seq2seq模型。针对分类任务的研究较多，下文介绍几种代表性算法。</p>
+<table>
+<thead>
+<tr>
+<th>算法</th>
+<th>访问权限</th>
+<th>攻击形式</th>
+<th>操作粒度</th>
+<th>策略</th>
+<th>应用场景</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Papernot et al.</td>
+<td>白盒</td>
+<td>无目标攻击</td>
+<td>单词</td>
+<td>JSMA-based, FGSM-based</td>
+<td>文本分类</td>
+</tr>
+<tr>
+<td>TextFool</td>
+<td>白盒/黑盒</td>
+<td>有目标攻击</td>
+<td>单词</td>
+<td>FGSM-based</td>
+<td>文本分类</td>
+</tr>
+<tr>
+<td>HotFlip</td>
+<td>白盒</td>
+<td>无目标攻击</td>
+<td>字符</td>
+<td>Gradient-Optimization</td>
+<td>文本分类</td>
+</tr>
+<tr>
+<td>Alzantot et al.</td>
+<td>黑盒</td>
+<td>有目标攻击</td>
+<td>单词</td>
+<td>GA-Optimization</td>
+<td>情感分析</td>
+</tr>
+<tr>
+<td>DeepWordBug</td>
+<td>黑盒</td>
+<td>无目标攻击</td>
+<td>字符</td>
+<td>Importance-based</td>
+<td>文本分类</td>
+</tr>
+<tr>
+<td>TextBugger</td>
+<td>白盒/黑盒</td>
+<td>字符/单词</td>
+<td>字符</td>
+<td>Importance-based</td>
+<td>情感分析</td>
+</tr>
+<tr>
+<td>DISPTFLIP</td>
+<td>白盒</td>
+<td>无目标攻击</td>
+<td>字符</td>
+<td>Neural Network</td>
+<td>文本分类</td>
+</tr>
+<tr>
+<td>Zhao et al.</td>
+<td>黑盒</td>
+<td>无目标攻击</td>
+<td>单词</td>
+<td>GAN-based</td>
+<td>文本分类/机器翻译</td>
+</tr>
+</tbody>
+</table>
+<p>Papernot等人[3]最先研究了文本领域的对抗样本问题，提出了<strong>生成对抗性输入序列</strong>的概念。作者将图像对抗领域的JSMA算法迁移到文本领域，利用计算图展开技术来评估与单词序列的嵌入输入有关的前向导数，构建雅可比矩阵，并借鉴<strong>FGSM</strong>的思想计算对抗性扰动。由于词向量不能取任意实数值，作者建立了一个特定的词典来选择单词以替换原始序列中的随机词。</p>
+<p>Liang等人[4]提出了TextFool方法，首先针对白盒模型和黑盒模型使用不同的策略<strong>识别出对分类具有重要贡献的文本项</strong>（HTP、HSP），然后对这些重要的文本项通过单一或混合使用插入、修改和删除三种<strong>扰动</strong>策略，生成对抗样本。对于白盒模型，作者借鉴FGSM的思想来估算文本项的重要度，但是通过<strong>损失函数的梯度大小</strong>而不是梯度符号来度量；对于黑盒模型，通过<strong>遮挡文本</strong>的策略来识别重要文本项。</p>
+<p>Ebrahimi 等人[5]提出了HotFlip方法，<strong>基于one-hot表示的梯度来有效估计单个操作所造成的最大损失的变化</strong>，通过原子翻转操作（将一个字符替换为另一个字符）生成对抗样本，并通过一系列的字符翻转来支持插入和删除操作。考虑到梯度优化的局限性，Alzantot等人[6]提出使用最优化技术中的遗传算法（Genetic Algorithm, GA）来生成与原始样本具有相似语义和语法的对抗样本。</p>
+<p>Gao等人[7]提出了DeepWordBug方法，将对抗样本的生成分为两个阶段。首先使用针对文本数据特性设计的评分函数来<strong>识别关键的Token</strong>，根据重要性进行排名；然后对排名最高的m个Token通过简单的<strong>字符级操作</strong>（交换、替换、删除和插入）进行扰动，改变分类结果。</p>
+<p>Li等人[8]提出了TextBugger方法，首先针对白盒和黑盒模型通过不同策略<strong>识别影响模型分类结果的重要词</strong>，然后采取插入、删除、字符交换、字符替换、单词替换等五种扰动策略分别生成扰动从中选择一个最优扰动。在白盒场景下，通过计算分类器的雅可比矩阵来找到重要词；在黑盒场景下，首先根据分类置信度找到重要的句子，然后使用评分函数来找到重要单词。</p>
+<p>Gil 等人[9]提出了HotFlip的派生方法DISTFLIP，该算法<strong>提取HotFlip优化过程中的知识训练神经网络模型</strong>来模拟攻击从而生成对抗样本，极大地节省了运行时间，并可以迁移到黑盒场景下进行攻击。</p>
+<p>Zhao等人[10]设计的用于生成对抗样本的模型，首先使用一个逆变器<strong>将原始数据映射到向量空间</strong>，在数据对应的<strong>稠密向量空间</strong>中进行搜索<strong>添加扰动</strong>得到对抗样本；然后使用GAN作为生成器将向量空间中得到的对抗样本<strong>映射回原始数据类型</strong>。</p>
+<h1 id="参考文献">参考文献</h1>
+<p>[1]Szegedy C, Zaremba W, Sutskever I, et al. Intriguing Properties of Neural Networks[C] // Proceedings of the 2th International Conference on Learning Representations, 2014.<br>
+[2]Zhang W E, Sheng Q Z, Alhazmi A, et al. Adversarial Attacks on Deep Learning Models in Natural Language Processing: A Survey[J]. ACM Transactions on Intelligent Systems and Technology (TIST). 2020, 11(3): 1-41.<br>
+[3]Papernot N, McDaniel P, Swami A, et al. Crafting Adversarial Input Sequences for Recurrent Neural Networks[C]// Proceedings of MILCOM 2016-2016 IEEE Military Communications Conference. IEEE, 2016: 49-54.<br>
+[4]Liang B, Li H, Su M, et al. Deep Text Classification Can be Fooled[C]// Proceedings of the Twenty-Seventh International Joint Conference on Artificial Intelligence(IJCAI). 2018: 4208-4215.<br>
+[5]Ebrahimi J, Rao A, Lowd D, et al. HotFlip: White-Box Adversarial Examples for Text Classification[C]//Proceedings of the 56th Annual Meeting of the Association for Computational Linguistics (Volume 2: Short Papers). 2018: 31-36.<br>
+[6]Alzantot M, Sharma Y, Elgohary A, et al. Generating Natural Language Adversarial Examples[C]//Proceedings of the 2018 Conference on Empirical Methods in Natural Language Processing. 2018: 2890-2896.<br>
+[7]Gao J, Lanchantin J, Soffa M L, et al. Black-box Generation of Adversarial Text Sequences to Evade Deep Learning Classifiers[C]// Proceedings of 2018 IEEE Security and Privacy Workshops (SPW). IEEE, 2018: 50-56.<br>
+[8]Li J, Ji S, Du T, et al. TextBugger: Generating Adversarial Text Against Real-world Applications[C]// Proceedings of the 26th Annual Network and Distributed System Security Symposium. 2019.<br>
+[9]Gil Y, Chai Y, Gorodissky O, et al. White-to-Black: Efficient Distillation of Black-Box Adversarial Attacks[C]//Proceedings of the 2019 Conference of the North American Chapter of the Association for Computational Linguistics: Human Language Technologies, Volume 1 (Long and Short Papers). 2019: 1373-1379.<br>
+[10]Zhao Z, Dua D, Singh S. Generating Natural Adversarial Examples[C]// Proceedings of the International Conference on Learning Representations. 2018.<br>
+参考博客: <a href="https://www.secrss.com/articles/25644">https://www.secrss.com/articles/25644</a></p>
+<!-- <img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2024/07/11/AI-Security1/p1.png" class="" title="p1"> -->
+<!-- <img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="p1.png"  style="zoom:60%;" /> -->]]></content>
+      <categories>
+        <category>智能算法安全</category>
+        <category>对抗攻击</category>
+      </categories>
+      <tags>
+        <tag>智能算法安全</tag>
+        <tag>生成式人工智能</tag>
       </tags>
   </entry>
   <entry>
@@ -1083,6 +1083,119 @@ Overall the consumption of the world’s resources is undergoing a dangerous rat
       </tags>
   </entry>
   <entry>
+    <title>RAG 应知必会</title>
+    <url>/2024/04/08/LLM-Learning1/</url>
+    <content><![CDATA[<blockquote>
+<p>参考：<a href="https://arxiv.org/abs/2312.10997">Retrieval-Augmented Generation for Large Language Models: A Survey</a></p>
+</blockquote>
+<h1 id="rag的发展">RAG的发展</h1>
+<p>RAG技术的发展可以从技术范式的角度分为几个阶段，主要包括：</p>
+<ul>
+<li><strong>朴素RAG(Naive RAG)</strong>:这是RAG技术的基出形式，包括三个基本步骤：索引(将文档库分割成较短的Chunk并通过编码器构建向量索引)、检索(根据问题和chunks的相似度检索相关文档片段)、生成(以检索到的上下文为条件，生成问题的回答)。</li>
+<li><strong>进阶的RAG(Advanced RAG)</strong>:为了解决Naive RAG在检索质量、响应生成质量以及增强过程中的挑战，Advanced RAG:范式被提出。它在数据索引、检索前和检索后都进行了额外处理，如更精细的数据清洗、设计文档结构和添加元数据等，以提升文本的<br>
+一致性、准确性和检索效率。</li>
+<li><strong>模块化RAG(Modular RAG)</strong>:随着RAG技术的进一步发展，模块化RAG概念被提出。它在结构上更加自由和灵活，引入了更多的具体功能模块，例如查询搜索引擎、融合多个回答。技术上将检索与微调分开，提供了更高的自定义性和灵活性。</li>
+</ul>
+<p>三个阶段之间是继承与发展的关系：</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2024/04/08/LLM-Learning1/p1.png" class title="p1">
+<h1 id="如何评价rag">如何评价RAG</h1>
+<blockquote>
+<p>🚩 <big><strong>评估指标</strong></big>：</p>
+<ol>
+<li>上下文相关性一一检索的上下文是否相关</li>
+<li>上下文回溯一评估检索到的上下文是否包含了问题的所有必要信息</li>
+<li>忠实度一一生成的答案是否与检索的内容一致，是否保留了原始信息</li>
+<li>答案相关性一一评估生成的答案是否与问题相关，以及是否提供了有用的信息</li>
+</ol>
+</blockquote>
+<h2 id="评估角度">评估角度</h2>
+<h3 id="rag三元组">RAG三元组</h3>
+<ul>
+<li><strong>Context Relevance</strong>：衡量召回的Context能够支持Query的程度。如果该得分低，反应出了召回了太多与Qury问题无关的内容，这些错误的召回知识会对LLM的最终回答造成一定影响。</li>
+<li><strong>Groundedness</strong>：衡量LLM的Response遵从召回的Context的程度。如果该得分低，反应出了LLM的回答不遵从召回的知识，那么回答出现幻觉的可能就越大。</li>
+<li><strong>Answer Relevance</strong>：衡量最终的Response回答对Query提问的相关度。如果该得分低，反应出了可能答不对题。</li>
+</ul>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2024/04/08/LLM-Learning1/p2.png" class title="p2">
+<h3 id="基于ground-truth的指标">基于Ground-truth的指标</h3>
+<ul>
+<li>Ground-truth是回答，那就可以<u>直接比较RAG应用的回答和ground-truth之间的相关性</u>，来端到端地进行衡量。</li>
+<li>让LLM生成评估测试集，来生成query和ground-truth,比如，在ragas的 <a href="https://docs.ragas.io/en/latest/concepts/testset_generation.html">Synthetic Test Data generation</a> 和 <a href="https://docs.llamaindex.ai/en/stable/examples/evaluation/QuestionGeneration.html">llama-index QuestionGeneration</a> 中都有一些集成好的方法，可以直接方便地使用。</li>
+<li>Ground-truth是知识文档中的chunks，对比ground-truth doc chunks和召回的contexts之间的相关性。</li>
+</ul>
+<h3 id="基于llm的定量评估">基于LLM的定量评估</h3>
+<ul>
+<li>有了GPT-4后，其可行性就提高了。我们只需设计好prompt,将要打分的一些文字放入prompt,访问GPT-4,就可以得到一个想要的得分结果。</li>
+</ul>
+<h2 id="评估工具">评估工具</h2>
+<ol>
+<li>RAGAs:<a href="https://docs.ragas.io/en/latest/concepts/metrics/context_recall.html">https://docs.ragas.io/en/latest/concepts/metrics/context_recall.html</a></li>
+<li>TruLens:<a href="https://www.trulens.org/trulens_eval/install/">https://www.trulens.org/trulens_eval/install/</a></li>
+<li>Llama-Index:<a href="https://docs.llamaindex.ai/en/stable/optimizing/evaluation/evaluation.html">https://docs.llamaindex.ai/en/stable/optimizing/evaluation/evaluation.html</a></li>
+<li>Phoenix:<a href="https://docs.arize.com/phoenix/">https://docs.arize.com/phoenix/</a></li>
+<li>DeepEval:<a href="https://github.com/confident-ai/deepeval">https://github.com/confident-ai/deepeval</a></li>
+<li>LangSmith:<a href="https://docs.smith.langchain.com/evaluation/evaluator-implementations">https://docs.smith.langchain.com/evaluation/evaluator-implementations</a></li>
+<li>OpenAI Evals:<a href="https://github.com/openai/evals">https://github.com/openai/evals</a></li>
+</ol>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2024/04/08/LLM-Learning1/p3.png" class title="p3">
+<h1 id="rag未来发展方向">RAG未来发展方向</h1>
+<h2 id="rag的垂直优化">RAG的垂直优化</h2>
+<ul>
+<li>长下文长度
+<ul>
+<li>检索内容过多，超过窗口限制怎么办？</li>
+<li>如果LLMs的上下文窗口不再受限制，RAG应该如何改进？</li>
+</ul>
+</li>
+<li>鲁棒性
+<ul>
+<li>检索到错误内容怎么处理？</li>
+<li>怎么对检索出来内容进行过滤和验证？</li>
+<li>怎么提高模型抗毒、抗噪声的能力。</li>
+</ul>
+</li>
+<li>与微调协同
+<ul>
+<li>如何同时发挥RAG和FT的效果，两者怎么协同，怎么组织，是串行、交替还是端到端？</li>
+</ul>
+</li>
+<li>Scaling-Law
+<ul>
+<li>RAG模型是否满足Scaling Law?</li>
+<li>RAG是否会，或是在什么场景下会出现Inverse Scaling Law的现象？</li>
+</ul>
+</li>
+<li>LLM的角色
+<ul>
+<li>LLMs可以用于检索(用LLMs的生成代替检索或检索LLMs记忆)、用于生成、用于评估。如何进一步挖掘LLMs在RAG中的潜力？</li>
+</ul>
+</li>
+</ul>
+<h2 id="工程实践">工程实践</h2>
+<ul>
+<li>如何降低超大规模语料的检索时延？</li>
+<li>如何保证检索出来内容不被大模型泄露？</li>
+</ul>
+<h2 id="rag的多模态的拓展">RAG的多模态的拓展</h2>
+<ul>
+<li>如何将RAG不断发展的技术和思想拓展到图片、音频、视频或代码等其他模态的数据中？</li>
+<li>一方面可以增强单一模态的任务，另一方面可以通过RAG的思想将多模态进行融合。</li>
+</ul>
+<h2 id="rag的生态">RAG的生态</h2>
+<ul>
+<li>RAG的应用已经不仅仅局限于问答系统，其影响力正在扩展到更多领域。现在，推荐系统、信息抽取和报告生成等多种任务都开始受益于RAG技术的应用。</li>
+<li>与此同时，RAG技术栈也在井喷。除了已知的Langchain和LlamaIndex等工具，市场上涌现出更多针对性的RAG工具，例如：用途定制化，满足更加聚焦场景的需求；使用简易化，进一步降低上手门槛的；功能专业化，逐渐面向生产环境。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>大模型</category>
+        <category>RAG</category>
+      </categories>
+      <tags>
+        <tag>大模型</tag>
+        <tag>RAG</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>RAG开发的痛点以及解决方案</title>
     <url>/2024/04/10/LLM-Learning2/</url>
     <content><![CDATA[<div class="hide-toggle" style="border: 1px solid bg"><div class="hide-button toggle-title" style="background-color: bg;color: color"><i class="fas fa-caret-right fa-fw"></i><span>参考</span></div>
@@ -1248,119 +1361,6 @@ Overall the consumption of the world’s resources is undergoing a dangerous rat
 <p><strong>解决方案</strong>：</p>
 <ul>
 <li>Llama Guard：保护大语言模型的新工具，借鉴7-B Llama 2的技术，Llama Guard旨在通过评估输入（例如分析提问的内容）和输出（即对回答的分类）来帮助大语言模型 (LLMs) 鉴别内容是否安全。它本身也使用了大语言模型技术，能够判断某个问题或回答是否安全，若发现不安全的内容，还会详细列出违反的具体规则。</li>
-</ul>
-]]></content>
-      <categories>
-        <category>大模型</category>
-        <category>RAG</category>
-      </categories>
-      <tags>
-        <tag>大模型</tag>
-        <tag>RAG</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>RAG 应知必会</title>
-    <url>/2024/04/08/LLM-Learning1/</url>
-    <content><![CDATA[<blockquote>
-<p>参考：<a href="https://arxiv.org/abs/2312.10997">Retrieval-Augmented Generation for Large Language Models: A Survey</a></p>
-</blockquote>
-<h1 id="rag的发展">RAG的发展</h1>
-<p>RAG技术的发展可以从技术范式的角度分为几个阶段，主要包括：</p>
-<ul>
-<li><strong>朴素RAG(Naive RAG)</strong>:这是RAG技术的基出形式，包括三个基本步骤：索引(将文档库分割成较短的Chunk并通过编码器构建向量索引)、检索(根据问题和chunks的相似度检索相关文档片段)、生成(以检索到的上下文为条件，生成问题的回答)。</li>
-<li><strong>进阶的RAG(Advanced RAG)</strong>:为了解决Naive RAG在检索质量、响应生成质量以及增强过程中的挑战，Advanced RAG:范式被提出。它在数据索引、检索前和检索后都进行了额外处理，如更精细的数据清洗、设计文档结构和添加元数据等，以提升文本的<br>
-一致性、准确性和检索效率。</li>
-<li><strong>模块化RAG(Modular RAG)</strong>:随着RAG技术的进一步发展，模块化RAG概念被提出。它在结构上更加自由和灵活，引入了更多的具体功能模块，例如查询搜索引擎、融合多个回答。技术上将检索与微调分开，提供了更高的自定义性和灵活性。</li>
-</ul>
-<p>三个阶段之间是继承与发展的关系：</p>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2024/04/08/LLM-Learning1/p1.png" class title="p1">
-<h1 id="如何评价rag">如何评价RAG</h1>
-<blockquote>
-<p>🚩 <big><strong>评估指标</strong></big>：</p>
-<ol>
-<li>上下文相关性一一检索的上下文是否相关</li>
-<li>上下文回溯一评估检索到的上下文是否包含了问题的所有必要信息</li>
-<li>忠实度一一生成的答案是否与检索的内容一致，是否保留了原始信息</li>
-<li>答案相关性一一评估生成的答案是否与问题相关，以及是否提供了有用的信息</li>
-</ol>
-</blockquote>
-<h2 id="评估角度">评估角度</h2>
-<h3 id="rag三元组">RAG三元组</h3>
-<ul>
-<li><strong>Context Relevance</strong>：衡量召回的Context能够支持Query的程度。如果该得分低，反应出了召回了太多与Qury问题无关的内容，这些错误的召回知识会对LLM的最终回答造成一定影响。</li>
-<li><strong>Groundedness</strong>：衡量LLM的Response遵从召回的Context的程度。如果该得分低，反应出了LLM的回答不遵从召回的知识，那么回答出现幻觉的可能就越大。</li>
-<li><strong>Answer Relevance</strong>：衡量最终的Response回答对Query提问的相关度。如果该得分低，反应出了可能答不对题。</li>
-</ul>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2024/04/08/LLM-Learning1/p2.png" class title="p2">
-<h3 id="基于ground-truth的指标">基于Ground-truth的指标</h3>
-<ul>
-<li>Ground-truth是回答，那就可以<u>直接比较RAG应用的回答和ground-truth之间的相关性</u>，来端到端地进行衡量。</li>
-<li>让LLM生成评估测试集，来生成query和ground-truth,比如，在ragas的 <a href="https://docs.ragas.io/en/latest/concepts/testset_generation.html">Synthetic Test Data generation</a> 和 <a href="https://docs.llamaindex.ai/en/stable/examples/evaluation/QuestionGeneration.html">llama-index QuestionGeneration</a> 中都有一些集成好的方法，可以直接方便地使用。</li>
-<li>Ground-truth是知识文档中的chunks，对比ground-truth doc chunks和召回的contexts之间的相关性。</li>
-</ul>
-<h3 id="基于llm的定量评估">基于LLM的定量评估</h3>
-<ul>
-<li>有了GPT-4后，其可行性就提高了。我们只需设计好prompt,将要打分的一些文字放入prompt,访问GPT-4,就可以得到一个想要的得分结果。</li>
-</ul>
-<h2 id="评估工具">评估工具</h2>
-<ol>
-<li>RAGAs:<a href="https://docs.ragas.io/en/latest/concepts/metrics/context_recall.html">https://docs.ragas.io/en/latest/concepts/metrics/context_recall.html</a></li>
-<li>TruLens:<a href="https://www.trulens.org/trulens_eval/install/">https://www.trulens.org/trulens_eval/install/</a></li>
-<li>Llama-Index:<a href="https://docs.llamaindex.ai/en/stable/optimizing/evaluation/evaluation.html">https://docs.llamaindex.ai/en/stable/optimizing/evaluation/evaluation.html</a></li>
-<li>Phoenix:<a href="https://docs.arize.com/phoenix/">https://docs.arize.com/phoenix/</a></li>
-<li>DeepEval:<a href="https://github.com/confident-ai/deepeval">https://github.com/confident-ai/deepeval</a></li>
-<li>LangSmith:<a href="https://docs.smith.langchain.com/evaluation/evaluator-implementations">https://docs.smith.langchain.com/evaluation/evaluator-implementations</a></li>
-<li>OpenAI Evals:<a href="https://github.com/openai/evals">https://github.com/openai/evals</a></li>
-</ol>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2024/04/08/LLM-Learning1/p3.png" class title="p3">
-<h1 id="rag未来发展方向">RAG未来发展方向</h1>
-<h2 id="rag的垂直优化">RAG的垂直优化</h2>
-<ul>
-<li>长下文长度
-<ul>
-<li>检索内容过多，超过窗口限制怎么办？</li>
-<li>如果LLMs的上下文窗口不再受限制，RAG应该如何改进？</li>
-</ul>
-</li>
-<li>鲁棒性
-<ul>
-<li>检索到错误内容怎么处理？</li>
-<li>怎么对检索出来内容进行过滤和验证？</li>
-<li>怎么提高模型抗毒、抗噪声的能力。</li>
-</ul>
-</li>
-<li>与微调协同
-<ul>
-<li>如何同时发挥RAG和FT的效果，两者怎么协同，怎么组织，是串行、交替还是端到端？</li>
-</ul>
-</li>
-<li>Scaling-Law
-<ul>
-<li>RAG模型是否满足Scaling Law?</li>
-<li>RAG是否会，或是在什么场景下会出现Inverse Scaling Law的现象？</li>
-</ul>
-</li>
-<li>LLM的角色
-<ul>
-<li>LLMs可以用于检索(用LLMs的生成代替检索或检索LLMs记忆)、用于生成、用于评估。如何进一步挖掘LLMs在RAG中的潜力？</li>
-</ul>
-</li>
-</ul>
-<h2 id="工程实践">工程实践</h2>
-<ul>
-<li>如何降低超大规模语料的检索时延？</li>
-<li>如何保证检索出来内容不被大模型泄露？</li>
-</ul>
-<h2 id="rag的多模态的拓展">RAG的多模态的拓展</h2>
-<ul>
-<li>如何将RAG不断发展的技术和思想拓展到图片、音频、视频或代码等其他模态的数据中？</li>
-<li>一方面可以增强单一模态的任务，另一方面可以通过RAG的思想将多模态进行融合。</li>
-</ul>
-<h2 id="rag的生态">RAG的生态</h2>
-<ul>
-<li>RAG的应用已经不仅仅局限于问答系统，其影响力正在扩展到更多领域。现在，推荐系统、信息抽取和报告生成等多种任务都开始受益于RAG技术的应用。</li>
-<li>与此同时，RAG技术栈也在井喷。除了已知的Langchain和LlamaIndex等工具，市场上涌现出更多针对性的RAG工具，例如：用途定制化，满足更加聚焦场景的需求；使用简易化，进一步降低上手门槛的；功能专业化，逐渐面向生产环境。</li>
 </ul>
 ]]></content>
       <categories>
@@ -2684,7 +2684,7 @@ TSS是一个特殊的段。在Linux中，CPU从系统态切换到用户态时，
       </tags>
   </entry>
   <entry>
-    <title>LLM-Learning3</title>
+    <title>LLM Agent 论文阅读</title>
     <url>/2024/07/19/LLM-Learning3/</url>
     <content><![CDATA[<h1 id="react">ReAct</h1>
 <p>ReAct: Synergizing Reasoning and Acting in Language Models</p>
