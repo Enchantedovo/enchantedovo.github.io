@@ -1392,6 +1392,11 @@ Overall the consumption of the world’s resources is undergoing a dangerous rat
 <li>Self-Notes：与链式思维（Chain-of-Thought）或草稿板（Scratchpad）方法不同，Self-Notes 允许模型<strong>在任何时候</strong>插入与输入上下文和问题交织的内部推理笔记。</li>
 <li>模型架构：考虑了一个自回归的变换器模型，该模型在生成最终输出之前，可以通过生成“笔记标记”来丰富上下文。</li>
 </ul>
+<h2 id="思考">思考</h2>
+<ul>
+<li>优势：可以帮助语言模型更好地处理长序列或复杂任务，且不需要太多的监督信号。</li>
+<li>关键思路：与草稿板方法不同，本论文中的模型可以随时偏离输入上下文以明确思考。这种方法允许模型在阅读上下文的同时回忆信息并进行推理，从而扩展其记忆并实现多步推理。相比当前领域的研究状况，这篇论文的思路在于通过自我笔记的方式来解决有限上下文记忆和多步推理的问题。</li>
+</ul>
 <h1 id="dup">DUP</h1>
 <p>Achieving &gt;97% on GSM8K: Deeply Understanding the Problems Makes LLMs Better Solvers for Math Word Problems</p>
 <ul>
