@@ -1388,6 +1388,7 @@ Overall the consumption of the world’s resources is undergoing a dangerous rat
 <h2 id="解决的问题">解决的问题</h2>
 <p>论文提出了一种名为“Self-Notes”的方法，旨在解决上述问题。这种方法允许<strong>模型在阅读上下文时，随时偏离输入内容生成明确的推理标记（即“Self-Notes”）</strong>，以增强其记忆并实现多步推理。</p>
 <h2 id="方法">方法</h2>
+<p>（需要微调）</p>
 <ul>
 <li>Self-Notes：与链式思维（Chain-of-Thought）或草稿板（Scratchpad）方法不同，Self-Notes 允许模型<strong>在任何时候</strong>插入与输入上下文和问题交织的内部推理笔记。</li>
 <li>模型架构：考虑了一个自回归的变换器模型，该模型在生成最终输出之前，可以通过生成“笔记标记”来丰富上下文。</li>
@@ -1477,6 +1478,20 @@ Overall the consumption of the world’s resources is undergoing a dangerous rat
 </li>
 </ul>
  <!-- <img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2024/07/20/LLM-Learning4/p1.png" class="" title="p1"> -->
+<h1 id="re-reading-improves-reasoning-in-large-language-models">Re-Reading Improves Reasoning in Large Language Models</h1>
+<p>重读能提升大模型推理能力</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2024/07/20/LLM-Learning4/p3.png" style="zoom:45%;">
+<h2 id="研究背景">研究背景</h2>
+<p>本文旨在介绍一种简单有效的提示方法“重复阅读(RE2)”以提升大型语言模型(LLMs)的推理能力。这一方法受到人类在学习和解决问题时倾向于<strong>重复阅读问题以提高理解</strong>的观察启发。</p>
+<h2 id="研究目标和假设">研究目标和假设</h2>
+<p>本文旨在探讨重复阅读问题是否能提升LLMs的推理性能。关键假设是，重复阅读问题可以帮助LLMs更深入地理解输入，从而提高推理能力。</p>
+<h2 id="研究方法">研究方法</h2>
+<p>本文介绍了“RE2”<strong>提示</strong>方法，即在提示中重复两次输入问题。这可以作为一个“即插即用”模块，与各种诱导思考的提示策略（如思维链和程序辅助语言）集成使用。</p>
+<h2 id="结果和发现">结果和发现</h2>
+<p>论文评估了RE2在各种推理基准测试(包括算术、常识和符号推理任务)上的有效性。<br>
+研究结果显示，RE2 能够持续提升LLMs的推理性能，包括ChatGPT等指令微调(IFT)模型和 LLaMA-2 等非IFT模型。RE2与各种诱导思考的提示方法兼容,也可以有效地与少样本提示和自一致性方法相结合。</p>
+<h2 id="思考">思考</h2>
+<p>很简单的方法，可以学习其写作技巧。</p>
 ]]></content>
       <categories>
         <category>大模型</category>
