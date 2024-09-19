@@ -6,7 +6,7 @@
   <link href="https://enchantedovo.cn/atom.xml" rel="self"/>
   
   <link href="https://enchantedovo.cn/"/>
-  <updated>2024-07-23T08:44:38.875Z</updated>
+  <updated>2024-09-19T03:07:29.120Z</updated>
   <id>https://enchantedovo.cn/</id>
   
   <author>
@@ -17,13 +17,42 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>LLM for Security 论文记录 1</title>
+    <link href="https://enchantedovo.cn/2024/09/19/LLM-Security2/"/>
+    <id>https://enchantedovo.cn/2024/09/19/LLM-Security2/</id>
+    <published>2024-09-19T02:54:14.000Z</published>
+    <updated>2024-09-19T03:07:29.120Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="相关文章">相关文章</h1><p><strong>GitHub Copilot 在编程方面表现出色，但它是否确保了负责任的输出？</strong></p><p>简介：大语言模型（LLMs）的快速发展极大地推动了代码补全工具（LCCTs）的进化。这些工具通过整合多种信息源并优先提供代码建议，与传统LLMs不同，它们在安全方面面临独特挑战。特别是，LCCTs在训练时依赖专有代码数据集，这可能增加敏感数据泄露的风险。研究表明，LCCTs存在显著的安全漏洞，例如，针对GitHub Copilot的越狱攻击成功率高达99.4%，而从其中提取敏感用户数据的成功率也相当高。这些发现强调了LCCTs在安全方面的挑战，并为加强其安全框架提供了重要方向。</p><p>链接：<a href="https://arxiv.org/abs/2408.11006">https://arxiv.org/abs/2408.11006</a></p><br><p><strong>语言模型应用程序中的数据泄露：对 OpenAI 的 GPT 产品的深入调查</strong></p><p>简介：研究者们在探索大语言模型（LLM）应用的数据实践透明度时，以OpenAI的GPT应用生态系统作为案例研究。他们开发了一个基于LLM的框架，对GPT及其动作（外部服务）的源代码进行了静态分析，以揭示其数据收集的做法。研究发现，这些动作收集了大量用户数据，包括OpenAI明令禁止的敏感信息，如密码。此外，一些与广告和分析相关的动作嵌入在多个GPT中，使得它们能够跨平台追踪用户活动。动作的共现还可能导致用户数据的进一步暴露，增加了隐私风险。研究者还开发了一个基于LLM的隐私政策分析框架，用以自动检查动作的数据收集是否与隐私政策中的披露相一致。结果显示，大多数收集的数据类型在隐私政策中并未明确披露，仅有5.8%的动作清晰地说明了它们的数据收集实践。这一发现强调了LLM应用在数据实践透明度方面存在的问题，并指出了加强隐私保护措施的必要性。</p><p>链接：<a href="https://arxiv.org/abs/2408.13247">https://arxiv.org/abs/2408.13247</a></p><br><p><strong>去伪存真：利用执行反馈对生成的代码候选进行排序</strong></p><p>简介：大语言模型（LLMs）如GPT-4、StarCoder和CodeLlama正在改变编程方式，通过自然语言描述自动生成代码。尽管如此，生成正确代码仍然具有挑战性。为了提高正确代码的生成率，开发者通常使用LLMs生成多个候选解决方案，然后进行代码排名，即从多个候选代码中选择正确的一个。现有的代码排名研究主要分为基于执行和非基于执行的方法。基于执行的方法虽然有效，但受限于高质量单元测试的稀缺和潜在的安全风险。而非基于执行的方法，如CodeRanker，主要依赖分类标签进行训练，难以捕捉细微错误和提供错误洞察。</p><p>为了克服这些限制，研究者提出了一种新的方法——RankEF。RankEF是一种创新的代码排名方法，它利用执行反馈并通过多任务学习整合代码分类与执行反馈生成。这种方法使模型能够在不执行代码的情况下，理解错误代码的原因，并区分正确与错误的解决方案。在三个代码生成基准上的实验显示，RankEF显著优于现有的CodeRanker，展现出在代码排名方面的高效性和准确性。</p><p>链接：<a href="https://arxiv.org/abs/2408.13976">https://arxiv.org/abs/2408.13976</a></p><br><p><strong>调查贝叶斯垃圾邮件过滤器在检测经语言模型修改的垃圾邮件中的有效性</strong></p><p>简介：垃圾邮件和网络钓鱼是网络安全的重大威胁，贝叶斯垃圾邮件过滤器如 SpamAssassin 是重要防御工具。但大语言模型的出现带来新挑战，因其强大、易获取且成本低，可能被用于制作复杂垃圾邮件逃避传统过滤器。研究者开发管道测试 SpamAssassin 对经语言模型修改邮件的有效性，结果显示其会将高达 73.7%的此类邮件误分类为合法邮件，而简单字典替换攻击成功率仅 0.4%。这凸显了经语言模型修改的垃圾邮件的重大威胁及成本效益。该研究为当前垃圾邮件过滤器的漏洞及网络安全措施的持续改进提供了关键见解。</p><p>链接：<a href="https://arxiv.org/abs/2408.14293">https://arxiv.org/abs/2408.14293</a></p><br><p><strong>检测人工智能缺陷：针对语言模型内部故障的目标驱动攻击</strong></p><p>简介：大语言模型（LLMs）在人工智能领域的重要性日益凸显，但这些模型在预训练语料中可能包含有害内容，导致生成不适当的输出。为了提高LLMs的安全性，研究人员探索了检测模型内部缺陷的方法。目前的研究主要集中在越狱攻击上，这些攻击通过构建对抗性内容来诱导模型产生意外响应。然而，这些方法依赖于提示工程，既耗时又需要特别设计的问题。</p><p>为了解决这些挑战，研究人员提出了一种新的攻击范式，即目标驱动的攻击，它专注于直接引出目标响应，而不是优化提示。研究中引入了名为ToxDet的LLM，作为有毒内容的检测器。ToxDet能够根据目标有毒响应生成可能的问题和初步答案，以诱导目标模型产生与提供含义相当的有毒响应。ToxDet通过与目标LLM交互并接收奖励信号进行训练，利用强化学习优化过程。尽管ToxDet主要针对开源LLMs，但经过微调后，它也可以转移到攻击如GPT-4o这样的黑盒模型，并取得了显著结果。在AdvBench和HH-Harmless数据集上的实验结果证明了该方法在检测目标LLMs生成有害响应倾向方面的有效性。这不仅揭示了LLMs的潜在漏洞，还为研究人员提供了加强模型抵御此类攻击的宝贵资源。</p><p>链接：<a href="https://arxiv.org/abs/2408.14853">https://arxiv.org/abs/2408.14853</a></p><br><p><strong>参数高效的量化专家混合体与视觉 - 语言指令调优在半导体电子显微图像分析中的应用</strong></p><p>简介：研究者指出半导体在基础模型中研究不足，需增强半导体器件技术。为此，他们推出了 sLAVA，一个针对半导体制造的小型视觉语言助手，专注于电子显微镜图像分析。采用师生范式，以 GPT-4 等基础视觉语言模型为教师，为 sLAVA 创建遵循指令的多模态数据，解决数据稀缺问题，可在预算有限的消费级硬件上进行任务，且企业能在自身基础设施内用专有数据安全微调框架以保护知识产权。严格实验表明，该框架超越传统方法，能处理数据偏移并实现高通量筛选，有助于半导体制造中的电子显微镜图像分析，为企业提供了一种有效的解决方案，也为半导体技术发展提供了新的思路和方法。</p><p>链接：<a href="https://arxiv.org/abs/2408.15305">https://arxiv.org/abs/2408.15305</a></p><!--  --><!-- <img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="p1.png"  style="zoom:55%;" /> -->]]></content>
+    
+    
+    <summary type="html">LLM for Security 论文记录 0919</summary>
+    
+    
+    
+    <category term="大模型" scheme="https://enchantedovo.cn/categories/%E5%A4%A7%E6%A8%A1%E5%9E%8B/"/>
+    
+    <category term="智能算法安全" scheme="https://enchantedovo.cn/categories/%E5%A4%A7%E6%A8%A1%E5%9E%8B/%E6%99%BA%E8%83%BD%E7%AE%97%E6%B3%95%E5%AE%89%E5%85%A8/"/>
+    
+    <category term="生成式人工智能" scheme="https://enchantedovo.cn/categories/%E5%A4%A7%E6%A8%A1%E5%9E%8B/%E6%99%BA%E8%83%BD%E7%AE%97%E6%B3%95%E5%AE%89%E5%85%A8/%E7%94%9F%E6%88%90%E5%BC%8F%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
+    
+    <category term="网络安全" scheme="https://enchantedovo.cn/categories/%E5%A4%A7%E6%A8%A1%E5%9E%8B/%E6%99%BA%E8%83%BD%E7%AE%97%E6%B3%95%E5%AE%89%E5%85%A8/%E7%94%9F%E6%88%90%E5%BC%8F%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/"/>
+    
+    
+    <category term="大模型" scheme="https://enchantedovo.cn/tags/%E5%A4%A7%E6%A8%A1%E5%9E%8B/"/>
+    
+    <category term="Prompt Engineering" scheme="https://enchantedovo.cn/tags/Prompt-Engineering/"/>
+    
+  </entry>
+  
+  <entry>
     <title>论文阅读记录 —— LLM 相关</title>
     <link href="https://enchantedovo.cn/2024/07/20/LLM-Learning4/"/>
     <id>https://enchantedovo.cn/2024/07/20/LLM-Learning4/</id>
     <published>2024-07-20T12:16:39.000Z</published>
-    <updated>2024-07-23T08:44:38.875Z</updated>
+    <updated>2024-07-23T11:18:57.913Z</updated>
     
-    <content type="html"><![CDATA[<h1 id="learning-to-reason-and-memorize-with-self-notes">Learning to Reason and Memorize with Self-Notes</h1><ul><li>原文链接：<a href="https://arxiv.org/abs/2404.14963">Learning to Reason and Memorize with Self-Notes</a></li><li>发表：NeurIPS 2023</li><li>时间：2023</li><li>机构：Meta AI</li></ul> <img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2024/07/20/LLM-Learning4/p2.png" class title="p2"><h2 id="研究动机-motivation">研究动机（Motivation）</h2><p>大型语言模型（LLMs）在<strong>多步推理</strong>任务中表现不佳，并且<strong>无法保留先前的推理步骤</strong>以供将来使用。这限制了它们在复杂问题解答中的性能。</p><h2 id="解决的问题">解决的问题</h2><p>论文提出了一种名为“Self-Notes”的方法，旨在解决上述问题。这种方法允许<strong>模型在阅读上下文时，随时偏离输入内容生成明确的推理标记（即“Self-Notes”）</strong>，以增强其记忆并实现多步推理。</p><h2 id="方法">方法</h2><p>（需要微调）</p><ul><li>Self-Notes：与链式思维（Chain-of-Thought）或草稿板（Scratchpad）方法不同，Self-Notes 允许模型<strong>在任何时候</strong>插入与输入上下文和问题交织的内部推理笔记。</li><li>模型架构：考虑了一个自回归的变换器模型，该模型在生成最终输出之前，可以通过生成“笔记标记”来丰富上下文。</li></ul><h2 id="思考">思考</h2><ul><li>优势：可以帮助语言模型更好地处理长序列或复杂任务，且不需要太多的监督信号。</li><li>关键思路：与草稿板方法不同，本论文中的模型可以随时偏离输入上下文以明确思考。这种方法允许模型在阅读上下文的同时回忆信息并进行推理，从而扩展其记忆并实现多步推理。相比当前领域的研究状况，这篇论文的思路在于通过自我笔记的方式来解决有限上下文记忆和多步推理的问题。</li></ul><h1 id="dup">DUP</h1><p>Achieving &gt;97% on GSM8K: Deeply Understanding the Problems Makes LLMs Better Solvers for Math Word Problems</p><ul><li>发表：<a href="https://arxiv.org/abs/2404.14963">https://arxiv.org/abs/2404.14963</a></li><li>时间：2024.5.29</li><li>机构：武汉大学 &amp; 悉尼大学 &amp; 南洋理工大学</li></ul> <img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2024/07/20/LLM-Learning4/p1.png" class title="p1"><h2 id="摘要总结">摘要总结</h2><p>大型语言模型（LLMs）在各种自然语言处理任务中表现出色，但在处理复杂的数学文字题时，它们的推理能力常常不尽人意。这类问题通常包含三种错误：语义理解错误、计算错误和步骤遗漏错误。尽管已有研究关注计算错误和步骤遗漏错误，但语义理解错误作为限制LLMs性能的主要因素，却被忽视了。<br>论文提出了一种简单但有效的方法，称为“Deeply Understanding the Problems”（DUP），通过解决语义理解错误来提高LLMs<strong>解决数学问题</strong>的能力。DUP方法的核心是<strong>鼓励LLMs深入理解问题</strong>，<strong>提取关键的解题信息</strong>，以进行更好的推理。</p><h2 id="研究动机">研究动机</h2><p>尽管 LLMs 在各种自然语言理解和生成任务中表现出色，但它们在推理任务（例如数学推理、常识推理和符号推理）中的表现往往不尽如人意。CoT prompting 方法虽然能够显著提升 LLMs 的推理能力，但它在处理复杂数学问题，尤其是数学应用题时，仍然存在以下三个主要问题：</p><ul><li>语义误解错误: LLMs 无法准确理解问题的核心内容，导致无法提取出解决问题的关键信息。</li><li>计算错误: LLMs 在进行计算时可能出现错误，导致最终答案不正确。</li><li>步骤缺失错误: LLMs 可能会遗漏解决问题的某个步骤，导致推理过程不完整。<br>现有的研究主要集中在解决计算错误和步骤缺失错误，而<strong>对语义误解错误关注较少</strong>。然而，语义误解错误是限制 LLMs 推理能力的主要因素。<br>因此，文章提出了一种名为 Deeply Understanding the Problems (DUP) 的方法，旨在通过解决语义误解错误来提升 LLMs 的数学问题解决能力。</li></ul><h2 id="方法">方法</h2><p>DUP（Deeply Understanding the Problems）方法是一种针对大型语言模型（LLMs）的提示策略，旨在提高它们解决数学文字题的能力。以下是DUP方法的详细步骤和特点：</p><ol><li><p>揭示核心问题（Reveal the Core Question）<br>这是DUP方法的第一阶段，目的是从复杂和冗长的问题描述中明确问题的核心。通过设计一个提示，要求LLM明确提取问题的核心部分，从而帮助模型集中注意力于问题的目标。</p></li><li><p>提取解题信息（Extract the Problem-solving Information）<br>第二阶段进一步从问题描述中提取对解决核心问题至关重要的信息。这一步骤通过一个提示来实现，该提示要求LLM列出与核心问题直接相关的最有用的信息。</p></li><li><p>生成并提取答案（Generate and Extract the Answer）<br>在前两个阶段的基础上，第三阶段将核心问题和解题信息结合起来，生成详细的回答，并从中提取最终答案。这一步骤通过一个模板提示来实现，该模板明确指出了目标和解决问题所需的必要信息。</p></li></ol><h2 id="实验">实验</h2><ul><li>数据集:<ul><li>算术推理数据集: GSM8K、SVAMP、MultiArith、AddSub、AQuA、SingleEq</li><li>常识推理数据集: CommonsenseQA、StrategyQA</li><li>符号推理数据集: Last Letter、Coin Flip</li></ul></li><li>基线方法：<ul><li>零样本方法: Zero-shot CoT、Least-to-Most、Zero-shot PS+</li><li>少样本方法: Manual-CoT、Auto-CoT</li></ul></li><li>实验设置:<ul><li>LLMs: GPT-3.5-Turbo 和 GPT-4</li><li>解码策略: 具有自一致性（SC）的解码策略（Wang et al., 2023b）</li></ul></li><li>实验结果:<ul><li>DUP 方法在所有推理数据集上均取得了显著优于其他方法的性能。</li><li>DUP 方法的零样本性能甚至超过了少样本方法的性能。</li><li>DUP 方法在 GSM8K 和 SVAMP 数据集上取得了新的 SOTA 结果。</li></ul></li><li>消融实验:<ul><li>探究 DUP 方法中各个阶段的重要性。</li><li>探究如何在不降低性能的情况下降低 DUP 方法的推理成本。（将三阶段提示合并为一个提示）</li></ul></li><li>讨论和分析:<ul><li>分析 DUP 方法与 SC 解码的兼容性。</li><li>验证 DUP 方法是否可以应用于开源 LLMs。</li><li>分析更准确的核心问题和问题解决信息如何提升推理性能。</li><li>进行错误分析，验证 DUP 方法是否有效减少了语义误解错误。</li></ul></li></ul> <!-- <img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2024/07/20/LLM-Learning4/p1.png" class="" title="p1"> --><h1 id="re-reading-improves-reasoning-in-large-language-models">Re-Reading Improves Reasoning in Large Language Models</h1><p>重读能提升大模型推理能力</p><img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2024/07/20/LLM-Learning4/p3.png" style="zoom:45%;"><h2 id="研究背景">研究背景</h2><p>本文旨在介绍一种简单有效的提示方法“重复阅读(RE2)”以提升大型语言模型(LLMs)的推理能力。这一方法受到人类在学习和解决问题时倾向于<strong>重复阅读问题以提高理解</strong>的观察启发。</p><h2 id="研究目标和假设">研究目标和假设</h2><p>本文旨在探讨重复阅读问题是否能提升LLMs的推理性能。关键假设是，重复阅读问题可以帮助LLMs更深入地理解输入，从而提高推理能力。</p><h2 id="研究方法">研究方法</h2><p>本文介绍了“RE2”<strong>提示</strong>方法，即在提示中重复两次输入问题。这可以作为一个“即插即用”模块，与各种诱导思考的提示策略（如思维链和程序辅助语言）集成使用。</p><h2 id="结果和发现">结果和发现</h2><p>论文评估了RE2在各种推理基准测试(包括算术、常识和符号推理任务)上的有效性。<br>研究结果显示，RE2 能够持续提升LLMs的推理性能，包括ChatGPT等指令微调(IFT)模型和 LLaMA-2 等非IFT模型。RE2与各种诱导思考的提示方法兼容,也可以有效地与少样本提示和自一致性方法相结合。</p><h2 id="思考">思考</h2><p>很简单的方法，可以学习其写作技巧。</p>]]></content>
+    <content type="html"><![CDATA[<h1 id="learning-to-reason-and-memorize-with-self-notes">Learning to Reason and Memorize with Self-Notes</h1><ul><li>原文链接：<a href="https://arxiv.org/abs/2404.14963">Learning to Reason and Memorize with Self-Notes</a></li><li>发表：NeurIPS 2023</li><li>时间：2023</li><li>机构：Meta AI</li></ul> <img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2024/07/20/LLM-Learning4/p2.png" class title="p2"><h2 id="研究动机-motivation">研究动机（Motivation）</h2><p>大型语言模型（LLMs）在<strong>多步推理</strong>任务中表现不佳，并且<strong>无法保留先前的推理步骤</strong>以供将来使用。这限制了它们在复杂问题解答中的性能。</p><h2 id="解决的问题">解决的问题</h2><p>论文提出了一种名为“Self-Notes”的方法，旨在解决上述问题。这种方法允许<strong>模型在阅读上下文时，随时偏离输入内容生成明确的推理标记（即“Self-Notes”）</strong>，以增强其记忆并实现多步推理。</p><h2 id="方法">方法</h2><p>（需要微调）</p><ul><li>Self-Notes：与链式思维（Chain-of-Thought）或草稿板（Scratchpad）方法不同，Self-Notes 允许模型<strong>在任何时候</strong>插入与输入上下文和问题交织的内部推理笔记。</li><li>模型架构：考虑了一个自回归的变换器模型，该模型在生成最终输出之前，可以通过生成“笔记标记”来丰富上下文。</li></ul><h2 id="思考">思考</h2><ul><li>优势：可以帮助语言模型更好地处理长序列或复杂任务，且不需要太多的监督信号。</li><li>关键思路：与草稿板方法不同，本论文中的模型可以随时偏离输入上下文以明确思考。这种方法允许模型在阅读上下文的同时回忆信息并进行推理，从而扩展其记忆并实现多步推理。相比当前领域的研究状况，这篇论文的思路在于通过自我笔记的方式来解决有限上下文记忆和多步推理的问题。</li></ul><h1 id="dup">DUP</h1><p>Achieving &gt;97% on GSM8K: Deeply Understanding the Problems Makes LLMs Better Solvers for Math Word Problems</p><ul><li>发表：<a href="https://arxiv.org/abs/2404.14963">https://arxiv.org/abs/2404.14963</a></li><li>时间：2024.5.29</li><li>机构：武汉大学 &amp; 悉尼大学 &amp; 南洋理工大学</li></ul> <img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2024/07/20/LLM-Learning4/p1.png" class title="p1"><h2 id="摘要总结">摘要总结</h2><p>大型语言模型（LLMs）在各种自然语言处理任务中表现出色，但在处理复杂的数学文字题时，它们的推理能力常常不尽人意。这类问题通常包含三种错误：语义理解错误、计算错误和步骤遗漏错误。尽管已有研究关注计算错误和步骤遗漏错误，但语义理解错误作为限制LLMs性能的主要因素，却被忽视了。<br>论文提出了一种简单但有效的方法，称为“Deeply Understanding the Problems”（DUP），通过解决语义理解错误来提高LLMs<strong>解决数学问题</strong>的能力。DUP方法的核心是<strong>鼓励LLMs深入理解问题</strong>，<strong>提取关键的解题信息</strong>，以进行更好的推理。</p><h2 id="研究动机">研究动机</h2><p>尽管 LLMs 在各种自然语言理解和生成任务中表现出色，但它们在推理任务（例如数学推理、常识推理和符号推理）中的表现往往不尽如人意。CoT prompting 方法虽然能够显著提升 LLMs 的推理能力，但它在处理复杂数学问题，尤其是数学应用题时，仍然存在以下三个主要问题：</p><ul><li>语义误解错误: LLMs 无法准确理解问题的核心内容，导致无法提取出解决问题的关键信息。</li><li>计算错误: LLMs 在进行计算时可能出现错误，导致最终答案不正确。</li><li>步骤缺失错误: LLMs 可能会遗漏解决问题的某个步骤，导致推理过程不完整。<br>现有的研究主要集中在解决计算错误和步骤缺失错误，而<strong>对语义误解错误关注较少</strong>。然而，语义误解错误是限制 LLMs 推理能力的主要因素。<br>因此，文章提出了一种名为 Deeply Understanding the Problems (DUP) 的方法，旨在通过解决语义误解错误来提升 LLMs 的数学问题解决能力。</li></ul><h2 id="方法">方法</h2><p>DUP（Deeply Understanding the Problems）方法是一种针对大型语言模型（LLMs）的提示策略，旨在提高它们解决数学文字题的能力。以下是DUP方法的详细步骤和特点：</p><ol><li><p>揭示核心问题（Reveal the Core Question）<br>这是DUP方法的第一阶段，目的是从复杂和冗长的问题描述中明确问题的核心。通过设计一个提示，要求LLM明确提取问题的核心部分，从而帮助模型集中注意力于问题的目标。</p></li><li><p>提取解题信息（Extract the Problem-solving Information）<br>第二阶段进一步从问题描述中提取对解决核心问题至关重要的信息。这一步骤通过一个提示来实现，该提示要求LLM列出与核心问题直接相关的最有用的信息。</p></li><li><p>生成并提取答案（Generate and Extract the Answer）<br>在前两个阶段的基础上，第三阶段将核心问题和解题信息结合起来，生成详细的回答，并从中提取最终答案。这一步骤通过一个模板提示来实现，该模板明确指出了目标和解决问题所需的必要信息。</p></li></ol><h2 id="实验">实验</h2><ul><li>数据集:<ul><li>算术推理数据集: GSM8K、SVAMP、MultiArith、AddSub、AQuA、SingleEq</li><li>常识推理数据集: CommonsenseQA、StrategyQA</li><li>符号推理数据集: Last Letter、Coin Flip</li></ul></li><li>基线方法：<ul><li>零样本方法: Zero-shot CoT、Least-to-Most、Zero-shot PS+</li><li>少样本方法: Manual-CoT、Auto-CoT</li></ul></li><li>实验设置:<ul><li>LLMs: GPT-3.5-Turbo 和 GPT-4</li><li>解码策略: 具有自一致性（SC）的解码策略（Wang et al., 2023b）</li></ul></li><li>实验结果:<ul><li>DUP 方法在所有推理数据集上均取得了显著优于其他方法的性能。</li><li>DUP 方法的零样本性能甚至超过了少样本方法的性能。</li><li>DUP 方法在 GSM8K 和 SVAMP 数据集上取得了新的 SOTA 结果。</li></ul></li><li>消融实验:<ul><li>探究 DUP 方法中各个阶段的重要性。</li><li>探究如何在不降低性能的情况下降低 DUP 方法的推理成本。（将三阶段提示合并为一个提示）</li></ul></li><li>讨论和分析:<ul><li>分析 DUP 方法与 SC 解码的兼容性。</li><li>验证 DUP 方法是否可以应用于开源 LLMs。</li><li>分析更准确的核心问题和问题解决信息如何提升推理性能。</li><li>进行错误分析，验证 DUP 方法是否有效减少了语义误解错误。</li></ul></li></ul> <!-- <img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2024/07/20/LLM-Learning4/p1.png" class="" title="p1"> --><h1 id="re-reading-improves-reasoning-in-large-language-models">Re-Reading Improves Reasoning in Large Language Models</h1><p>重读能提升大模型推理能力</p><img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2024/07/20/LLM-Learning4/p3.png" style="zoom:65%;"><h2 id="研究背景">研究背景</h2><p>本文旨在介绍一种简单有效的提示方法“重复阅读(RE2)”以提升大型语言模型(LLMs)的推理能力。这一方法受到人类在学习和解决问题时倾向于<strong>重复阅读问题以提高理解</strong>的观察启发。</p><h2 id="研究目标和假设">研究目标和假设</h2><p>本文旨在探讨重复阅读问题是否能提升LLMs的推理性能。关键假设是，重复阅读问题可以帮助LLMs更深入地理解输入，从而提高推理能力。</p><h2 id="研究方法">研究方法</h2><p>本文介绍了“RE2”<strong>提示</strong>方法，即在提示中重复两次输入问题。这可以作为一个“即插即用”模块，与各种诱导思考的提示策略（如思维链和程序辅助语言）集成使用。</p><h2 id="结果和发现">结果和发现</h2><p>论文评估了RE2在各种推理基准测试(包括算术、常识和符号推理任务)上的有效性。<br>研究结果显示，RE2 能够持续提升LLMs的推理性能，包括ChatGPT等指令微调(IFT)模型和 LLaMA-2 等非IFT模型。RE2与各种诱导思考的提示方法兼容,也可以有效地与少样本提示和自一致性方法相结合。</p><h2 id="思考">思考</h2><p>很简单的方法，可以学习其写作技巧。</p>]]></content>
     
     
     <summary type="html">论文阅读笔记 —— LLM 相关</summary>
@@ -335,9 +364,9 @@
     <category term="网络协议安全" scheme="https://enchantedovo.cn/categories/%E5%9B%BD%E7%A7%91%E5%A4%A7%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE%E5%AE%89%E5%85%A8/"/>
     
     
-    <category term="网络协议" scheme="https://enchantedovo.cn/tags/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/"/>
-    
     <category term="网络安全" scheme="https://enchantedovo.cn/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/"/>
+    
+    <category term="网络协议" scheme="https://enchantedovo.cn/tags/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/"/>
     
   </entry>
   
@@ -460,9 +489,9 @@
     <category term="网络协议安全" scheme="https://enchantedovo.cn/categories/%E5%9B%BD%E7%A7%91%E5%A4%A7%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE%E5%AE%89%E5%85%A8/"/>
     
     
-    <category term="网络协议" scheme="https://enchantedovo.cn/tags/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/"/>
-    
     <category term="网络安全" scheme="https://enchantedovo.cn/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/"/>
+    
+    <category term="网络协议" scheme="https://enchantedovo.cn/tags/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/"/>
     
   </entry>
   
@@ -486,35 +515,6 @@
     
     
     <category term="人工智能" scheme="https://enchantedovo.cn/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>操作系统的“公理化”</title>
-    <link href="https://enchantedovo.cn/2022/08/30/OS-LearningNotes1/"/>
-    <id>https://enchantedovo.cn/2022/08/30/OS-LearningNotes1/</id>
-    <published>2022-08-30T07:05:26.000Z</published>
-    <updated>2024-04-08T13:26:00.858Z</updated>
-    
-    <content type="html"><![CDATA[<blockquote><ul><li>源码阅读工具：Source Insight</li><li>关键字:<ul><li>内核Kernel</li><li>特权级</li><li>授权</li></ul></li><li>主要内容：本节课主要探讨了Linux内核，老师从逻辑推理的角度带大家体会什么是内核，为什么需要内核。</li></ul></blockquote><h1 id="授权">授权</h1><h2 id="观点：未经授权-不得访问其他用户的资源">观点：未经授权，不得访问其他用户的资源</h2><blockquote><p>访问自己的资源，总是授权的。</p></blockquote><h2 id="探讨">探讨</h2><h3 id="问题：未经许可-用户是否能访问外设-io-中自己的资源？">问题：未经许可，用户是否能访问外设（IO）中自己的资源？</h3><ul><li>答案：不可以。</li><li>原因：IO物理端口只有一个，而用户程序具有不确定性（可能会做一些坏事），如果开放端口，可能会无法控制。</li><li>解决办法：若用户非要访问（IO指令/MMIO），则用特权级拦住。<ul><li>特权级：CPU剥夺了应用程序访问外设的能力。</li></ul></li></ul><h3 id="问题：而自己的资源-应该要能访问的-那怎么办？">问题：而自己的资源，应该要能访问的，那怎么办？</h3><ul><li>因为：用户进程是不确定的，并且它应该是不确定的，没有理由要求它确定。</li><li>由<strong>一组确定的程序</strong>来访问自己的资源————即<strong>内核</strong>。</li></ul><h1 id="特权级">特权级</h1><h2 id="特权级的概念">特权级的概念</h2><p>在linux系统中特权级别分为0，1，2，3一共四个级别，0最大 ，3最小。</p><ul><li>一般内核代码运行在0特权级；</li><li>驱动、虚拟机等运行在1，2特权级；</li><li>而我们自己写的程序一般运行在3特权级，也就是最低级别。</li></ul><h2 id="探讨">探讨</h2><h3 id="用户程序指令-3特权-为什么不能访问0特权的数据？">用户程序指令（3特权）为什么不能访问0特权的数据？</h3><p>答：因为用户程序指令具有不确定性。</p><h3 id="0特权能否直接跳到3特权？">0特权能否直接跳到3特权？</h3><p>答：不允许，若此时0特权跳转过去后仍保持全态，那么应用程序就会直接变为kernel。</p><h1 id="接续访问机制">接续访问机制</h1><p><strong>接续访问机制</strong>：用户发起 -&gt; 内核接续（IO行为） -&gt; 交付用户</p><h2 id="观点：内核的工作-是用户进程访问行为的延续">观点：内核的工作，是用户进程访问行为的延续</h2><h2 id="观点：内核需要结构化-提供一组自洽的-一致的syscall">观点：内核需要结构化，提供一组自洽的、一致的syscall</h2><h2 id="提问：既然未经授权-不得访问其他用户的资源-那所谓授权-又是给谁的？">提问：既然未经授权，不得访问其他用户的资源。那所谓授权，又是给谁的？</h2><p>思考：</p><ul><li>给用户？同一个用户，有可能可以读A文件，而B文件不行；</li><li>给资源？同一份资源，有可能用户1可以读，而用户2不行。</li></ul><p>答：给&quot;访问&quot;：一般是三元组（用户，操作，资源）。即<strong>一次授权对应一次访问</strong></p><h2 id="提问：从用户发起到内核接续-也即不确定行为到确定行为-如何实现？">提问：从用户发起到内核接续，也即不确定行为到确定行为，如何实现？</h2><p>答：1. 反转状态；2. 要求转移指令确定的落点：（1）限制用户进程的跳转指令；（2）限制用户进程的跳转落点.</p><blockquote><p>补充：以RISC-V为例，（1）只能是ecall指令；（2）只能是mtvec，中断向量基址，该值由OS内核指定。</p></blockquote><h2 id="观点：接续访问机制的重要保障：用户态和内核态之间有面-墙">观点：接续访问机制的重要保障：用户态和内核态之间有面&quot;墙&quot;</h2><p>墙是由某些硬件机制创建的。</p><blockquote><p>以RISCV为例：CSR寄存器组和CSR指令（CSR：Control and Status Registers）。</p></blockquote><h2 id="提问：既然内核可以用某些硬件机制建墙-那用户岂不是也可以用它来拆墙？">提问：既然内核可以用某些硬件机制建墙，那用户岂不是也可以用它来拆墙？</h2><h3 id="通俗版解答">通俗版解答</h3><ul><li>机器上电，操作系统先来，先建好墙，完事了把拆墙工具收到墙内。</li><li>用户想要拆墙，就要先进到墙内；</li><li>想要进到墙内，就要先拆墙。</li></ul><blockquote><p>以RISCV为例：<br>想要从U模式变到M模式，就必须使用CSR指令修改CSR寄存器组；<br>想要使用CSR指令修改CSR寄存器组，就必须已经处于M模式，否则机器报异常。</p></blockquote><h3 id="学术版解答">学术版解答</h3><ul><li>用时间的不可逆性来建构空间的各项异性；</li><li>互为必要条件。</li></ul>]]></content>
-    
-    
-    <summary type="html">国科大杨力祥《操作系统高级教程》课堂笔记1 —— 为什么需要内核</summary>
-    
-    
-    
-    <category term="国科大课程笔记" scheme="https://enchantedovo.cn/categories/%E5%9B%BD%E7%A7%91%E5%A4%A7%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/"/>
-    
-    <category term="操作系统高级教程" scheme="https://enchantedovo.cn/categories/%E5%9B%BD%E7%A7%91%E5%A4%A7%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E9%AB%98%E7%BA%A7%E6%95%99%E7%A8%8B/"/>
-    
-    
-    <category term="操作系统" scheme="https://enchantedovo.cn/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
-    
-    <category term="Linux Kernel" scheme="https://enchantedovo.cn/tags/Linux-Kernel/"/>
-    
-    <category term="特权级" scheme="https://enchantedovo.cn/tags/%E7%89%B9%E6%9D%83%E7%BA%A7/"/>
-    
-    <category term="授权" scheme="https://enchantedovo.cn/tags/%E6%8E%88%E6%9D%83/"/>
     
   </entry>
   

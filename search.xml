@@ -151,6 +151,114 @@
       </tags>
   </entry>
   <entry>
+    <title>深度学习</title>
+    <url>/2022/10/03/AdvancedAI-LearningNotes4/</url>
+    <content><![CDATA[<h1 id="一-玻尔兹曼机系列">一、玻尔兹曼机系列</h1>
+<h2 id="hopfield">Hopfield</h2>
+<p>Hopfield网络是反馈类型，其神经元的结构功能在网络中的地位是一样的。其学习是基于灌输式学习，即网络的权值不是通过训练出来的，而是按照一定规则计算出来的，<strong>将求解的问题转换成优化问题的能量函数，网络的稳定状态是优化问题的解，其权值一旦确定就不再改变了</strong>。</p>
+<p>简单的来讲就是，Hopfield网络的主要功能是联想记忆。既然如此，首先应该让网络实现“记忆”，我们需要一些数据，然后训练网络，训完练完成之后，可以得到一组可用的权值信息，形成网络的“记忆”功能。当输入数据不完整时，根据训练得到的权重去运算，得到一个稳定的输出状态，这就是联想功能。</p>
+<p>【BM与Hopfield有一定共性，看一下有助理解。】</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/03/AdvancedAI-LearningNotes4/p1.png" class title="p1">
+<h2 id="bm-玻尔兹曼机">BM（玻尔兹曼机）</h2>
+<p>离散Hopfield神经网络+模拟退火+隐单元=Boltzman机</p>
+<p>Boltzmann机结合多层前馈神经网络和离散Hopfield网络在网络结构、学习算法和动态运行机制方面的优点。它是建立在离散Hopfield网基础上的，具有学习能力，它在神经元状态变化中引入了统计概率，网络的平衡状态服从Boltzmann分布，能够通过一个模拟退火过程寻求最优解。不过，其训练时间比BP网络要长。</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/03/AdvancedAI-LearningNotes4/p3.png" class title="p3">
+<p>原理：<br>
+1.上文提到Hopfield神经元的结构功能在网络中的地位是一样的,BM中一部分神经元与外部相连接，可以起到网络的输入输出作用，或者严格的说可以受到外部条件的约束，另一部分神经元不与外部相连，因而属于隐单元（相对于外部）。<br>
+2.每个神经元只有1/0两个状态：状态为1代表神经元处于激活(连接)状态，0表示非激活（断开）状态。</p>
+<h2 id="rbm-受限玻尔兹曼机">RBM（受限玻尔兹曼机）</h2>
+<p>RBM是BM的一个变体，层间全连接，层内无连接，网络中的神经元是随机神经元。限定模型必须为二分图，学习的目标是极大似然。</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/03/AdvancedAI-LearningNotes4/p2.png" class title="p2">
+<h2 id="dbn-深度置信网络">DBN（深度置信网络）</h2>
+<p>DBN模型由若干个RBM堆叠而成，通过非监督的预学习和监督微调训练参数。<br>
+训练时通过从底到高逐层训练这些RBM来实现：</p>
+<p>1.底部RBM以原始输入数据训练；<br>
+2.将底部RBM抽取的特征作为顶部RBM的输入训练；<br>
+3.过程（1）和（2）可以重复训练所需的尽可能多的参数。</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/03/AdvancedAI-LearningNotes4/p4.png" class title="p4">
+<h1 id="cnn卷积神经网络">CNN卷积神经网络</h1>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/03/AdvancedAI-LearningNotes4/p5.png" class title="p5">
+<h2 id="特点">特点</h2>
+<p><strong>主要特点</strong>：局部链接、参数共享、空间或时间上的子采样、（非逐层贪婪训练）。这些特性使得卷积神经网络具有一定程度上的平移、缩放和扭曲不变性。</p>
+<p><strong>解释</strong>：CNN神经元之间的连接是非全链接，同一层中神经元之间的链接权重是共享的——减少了权值的数量，降低了网络模型的复杂度。CNN的一个卷积层中，一般包含若干个特征平面，每个特征平面由一些矩阵形排列的神经元组成，同一特征平面神经元共享权值。<br>
+每个卷积层之后，通常立即会有一个非线性层（激活层），目的是给一个卷积层中刚经过线性计算操作的系统引入非线性特征。</p>
+<h2 id="各层介绍">各层介绍</h2>
+<ul>
+<li>池化层pooling：逐渐降低数据空间尺寸，有效减少网络中参数；</li>
+<li>卷积层cov：通过卷积操作对输入图像进行降维和特征抽取；</li>
+<li>全连接层：整个网络中分类器的作用；</li>
+<li>Relu：1.采用Sigmoid计算量较大，而Relu激活函数可以减少计算过程计算量；2.防止梯度消失；3.Relu会使一部分神经元输出为0，造成网络稀疏性，从而减小参数相互依赖关系，缓解过拟合。</li>
+</ul>
+<h2 id="附：卷积运算">附：卷积运算</h2>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/03/AdvancedAI-LearningNotes4/p10.png" class title="p10">
+<p>本质上是一种加权求和运算，举例：</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/03/AdvancedAI-LearningNotes4/p9.png" class title="p9">
+<h1 id="rnn及其变种">RNN及其变种</h1>
+<h2 id="rnn">RNN</h2>
+<p><strong>核心思想</strong>：<br>
+RNN对前面信息进行记忆并且应用于当前输出计算中，隐藏层节点之间存在链接，并且隐藏层输入不仅包含输入层输出还包含上一层隐含层的输入。（可以看成是权值共享的多层前向网络）</p>
+<p><strong>特点</strong>：</p>
+<ul>
+<li>分布式隐藏状态，可以有效存储过去大量信息；</li>
+<li>以非线性动态方式更新隐藏状态。</li>
+</ul>
+<p><strong>参数学习算法BPTT</strong>（Backpropagation through time）：<br>
+（实现权值一致）</p>
+<ul>
+<li>前向传递：每个时间步长各单元的输出入栈；</li>
+<li>后向传递：状态出栈，计算每个时间步长误差函数的导数；</li>
+<li>将每个权重的所有时刻导数加和。（所有时刻的损失相加 = 总损失）</li>
+</ul>
+<p><strong>存在问题</strong>：</p>
+<ul>
+<li>梯度消失/爆炸问题；</li>
+<li>长期依赖问题：距当前节点越远的节点对当前节点处理影响越小，无法建模长时间的依赖。</li>
+</ul>
+<p>——&gt;内部单元改进及变形：LSTM、GRU</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/03/AdvancedAI-LearningNotes4/p6.png" class title="p6">
+<h2 id="lstm">LSTM</h2>
+<p>LSTM通过门结构来除去和增加“细胞状态”的信息，实现了对重要内容的保留或对不重要内容的去除（长期记忆）。通过sigmoid层输入0到1之间概率值，描述有多少信息通过。<br>
+门结构包括：遗忘门、信息增加门（输入门）和输出门。【长期记忆】</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/03/AdvancedAI-LearningNotes4/p7.png" class title="p7">
+<h2 id="gru">GRU</h2>
+<p>2门控（重置门、更新门）<br>
+GRU是LSTM的变体，相比LSTM有更简单的结构。GRU包括了重置门和更新门（输入门+遗忘门）。【计算速度快、远距离传递、更容易训练、容易创建较大的网络】</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/03/AdvancedAI-LearningNotes4/p8.png" class title="p8">
+<h2 id="brnn">BRNN</h2>
+<p>每个时刻都有一个正向输入的隐层和一个反向输入隐层，两个隐层分别可以表示一个词的上文信息和下文信息。即：每个词对应一个输出，同时用到了同一个词前后的信息。<br>
+缺点：需要完整的数据序列，你才能预测任意位置。</p>
+<h2 id="drnns">DRNNs</h2>
+<p>深度双向RNN采用多个隐层，每个隐层向后一层传递序列信息。</p>
+<h1 id="gan对抗网络">GAN对抗网络</h1>
+<h2 id="核心思想">核心思想</h2>
+<p>GAN的核心思想来源于博弈论的<strong>纳什均衡</strong>——对抗达到平衡（共同进步）：</p>
+<ul>
+<li>生成器（生成一个数据，会被判别结果优化）：生成器的目的是尽量去学习真实的数据分布。把噪声数据z（也就是我们说的假数据）通过生成模型G，伪装成了真实数据x；</li>
+<li>判别器（判断是否是生成器生成的）：判别器的目的是尽量正确判别输入数据是来自真实数据还是来自生成器。<br>
+各自提高自己的生成能力和判别能力，这个学习优化过程就是寻找二者之间的一个纳什均衡。</li>
+</ul>
+<p><strong>基本原理</strong>：有一个判别器和一个生成器，生成器生成图片让判别器判别，生成器提升自己让判别器无法判别，判别器则提升自己努力识别出生成器生成的图片/序列，双方对抗达到平衡。</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/03/AdvancedAI-LearningNotes4/p11.png" class title="p11">
+<h2 id="学习算法">学习算法</h2>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/03/AdvancedAI-LearningNotes4/p12.png" class title="p12">
+<p>1.固定生成器G0，训练判别器，提升判别器的判别能力得到D1；【G*=arg min max V(G,D)】<br>
+2.固定判别器D1，训练生成器，提升生成器的生成能力，目标让判别器无法识别，得到G1；【D*=arg max V(G,D)】<br>
+3.再回到1中用G1训练判别器得到D2，……，依次迭代，直至两者平衡。</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/03/AdvancedAI-LearningNotes4/p13.png" class title="p13">
+<p>解释：<br>
+第一步训练D，D希望V(G、D)越大越好，所以需要加上梯度。（我希望我判断能力越来越好）。<br>
+第二步训练G，G希望V(G，D)越小越好，所以要减去梯度。（希望让判别模糊，我希望自己的欺骗能力越来越好。<br>
+整个训练过程由上面两步交替进行。</p>
+]]></content>
+      <categories>
+        <category>国科大课程笔记</category>
+        <category>高级人工智能</category>
+      </categories>
+      <tags>
+        <tag>人工智能</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>人工智能概述</title>
     <url>/2022/09/01/AdvancedAI-LearningNotes1/</url>
     <content><![CDATA[<blockquote>
@@ -190,6 +298,61 @@
 </ul>
 <h1 id="课程蓝图">课程蓝图</h1>
 <img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/01/AdvancedAI-LearningNotes1/p.png" class title="p">
+]]></content>
+      <categories>
+        <category>国科大课程笔记</category>
+        <category>高级人工智能</category>
+      </categories>
+      <tags>
+        <tag>人工智能</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>人工神经网络</title>
+    <url>/2022/10/03/AdvancedAI-LearningNotes3/</url>
+    <content><![CDATA[<h1 id="人工神经网络ann">人工神经网络ANN</h1>
+<h2 id="结构">结构</h2>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/03/AdvancedAI-LearningNotes3/p1.png" class title="p1">
+<h2 id="学习规则">学习规则</h2>
+<ul>
+<li>能量最小（ENERGY MINIMIZATION）</li>
+<li>对人工神经网络，需要确定合适的能量定义；可以使用数学上的优化技术来发现如何改变神经元间的联接权重。</li>
+</ul>
+<h1 id="多层感知机">多层感知机</h1>
+<p>多层感知机是ANN的一种。指具有至少三层节点，输入层，一些中间层和输出层的神经网络。给定层中的每个节点都连接到相邻层中的每个节点。输入层接收数据，中间层计算数据，输出层输出结果。</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/03/AdvancedAI-LearningNotes3/p2.png" class title="p2">
+<h2 id="特点">特点</h2>
+<p>多层感知机特性：</p>
+<ul>
+<li>多层感知机层间神经元全连接；</li>
+<li>Can represent AND, OR, NOT, etc., but not XOR；</li>
+<li>若训练数据集是线性可分的，则感知机模型收敛。</li>
+</ul>
+<h2 id="感知机存在的问题">感知机存在的问题</h2>
+<ul>
+<li>噪声（线性不可分）</li>
+<li>泛化性</li>
+</ul>
+<h3 id="单层感知机不可解决异或问题">单层感知机不可解决异或问题</h3>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/03/AdvancedAI-LearningNotes3/p4.png" class title="p4">
+<blockquote>
+<p>传送门[<a href="https://blog.csdn.net/buracag_mc/article/details/89254808?utm_medium=distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromMachineLearnPai2~default-2.nonecase&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromMachineLearnPai2~default-2.nonecase">https://blog.csdn.net/buracag_mc/article/details/89254808?utm_medium=distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromMachineLearnPai2~default-2.nonecase&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromMachineLearnPai2~default-2.nonecase</a>]</p>
+</blockquote>
+<h1 id="权重学习算法：bp算法">权重学习算法：BP算法</h1>
+<h2 id="介绍">介绍</h2>
+<p>BP算法全称叫作误差反向传播(error Back Propagation，或者也叫作误差逆传播)算法。其算法基本思想为：将输出误差以某种形式反传给各层所有的单元，各层按本层误差修<br>
+正各单元连接权值。【有监督学习，采用梯度下降法调参】</p>
+<h3 id="特点">特点</h3>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/03/AdvancedAI-LearningNotes3/p3.png" class title="p3">
+<h2 id="bp遇到的困难-为什么会出现梯度消失">BP遇到的困难，为什么会出现梯度消失</h2>
+<h3 id="困难">困难</h3>
+<ul>
+<li>梯度消失，梯度爆炸</li>
+<li>局部极小</li>
+<li>只能用于标注数据</li>
+</ul>
+<h3 id="why梯度消失">why梯度消失</h3>
+<p>因为BP算法采用链式法则，从后层向前层传递信息时，若每层神经元对上一层神经元偏导乘以w均小于1，多次链式法则,多级导数权值相乘结果会越来越小，导致loss传递到越前方越小。</p>
 ]]></content>
       <categories>
         <category>国科大课程笔记</category>
@@ -307,190 +470,6 @@ Qcm-有c个传教士，m个野人从右岸到左岸</p>
       </categories>
       <tags>
         <tag>人工智能</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>人工神经网络</title>
-    <url>/2022/10/03/AdvancedAI-LearningNotes3/</url>
-    <content><![CDATA[<h1 id="人工神经网络ann">人工神经网络ANN</h1>
-<h2 id="结构">结构</h2>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/03/AdvancedAI-LearningNotes3/p1.png" class title="p1">
-<h2 id="学习规则">学习规则</h2>
-<ul>
-<li>能量最小（ENERGY MINIMIZATION）</li>
-<li>对人工神经网络，需要确定合适的能量定义；可以使用数学上的优化技术来发现如何改变神经元间的联接权重。</li>
-</ul>
-<h1 id="多层感知机">多层感知机</h1>
-<p>多层感知机是ANN的一种。指具有至少三层节点，输入层，一些中间层和输出层的神经网络。给定层中的每个节点都连接到相邻层中的每个节点。输入层接收数据，中间层计算数据，输出层输出结果。</p>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/03/AdvancedAI-LearningNotes3/p2.png" class title="p2">
-<h2 id="特点">特点</h2>
-<p>多层感知机特性：</p>
-<ul>
-<li>多层感知机层间神经元全连接；</li>
-<li>Can represent AND, OR, NOT, etc., but not XOR；</li>
-<li>若训练数据集是线性可分的，则感知机模型收敛。</li>
-</ul>
-<h2 id="感知机存在的问题">感知机存在的问题</h2>
-<ul>
-<li>噪声（线性不可分）</li>
-<li>泛化性</li>
-</ul>
-<h3 id="单层感知机不可解决异或问题">单层感知机不可解决异或问题</h3>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/03/AdvancedAI-LearningNotes3/p4.png" class title="p4">
-<blockquote>
-<p>传送门[<a href="https://blog.csdn.net/buracag_mc/article/details/89254808?utm_medium=distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromMachineLearnPai2~default-2.nonecase&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromMachineLearnPai2~default-2.nonecase">https://blog.csdn.net/buracag_mc/article/details/89254808?utm_medium=distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromMachineLearnPai2~default-2.nonecase&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromMachineLearnPai2~default-2.nonecase</a>]</p>
-</blockquote>
-<h1 id="权重学习算法：bp算法">权重学习算法：BP算法</h1>
-<h2 id="介绍">介绍</h2>
-<p>BP算法全称叫作误差反向传播(error Back Propagation，或者也叫作误差逆传播)算法。其算法基本思想为：将输出误差以某种形式反传给各层所有的单元，各层按本层误差修<br>
-正各单元连接权值。【有监督学习，采用梯度下降法调参】</p>
-<h3 id="特点">特点</h3>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/03/AdvancedAI-LearningNotes3/p3.png" class title="p3">
-<h2 id="bp遇到的困难-为什么会出现梯度消失">BP遇到的困难，为什么会出现梯度消失</h2>
-<h3 id="困难">困难</h3>
-<ul>
-<li>梯度消失，梯度爆炸</li>
-<li>局部极小</li>
-<li>只能用于标注数据</li>
-</ul>
-<h3 id="why梯度消失">why梯度消失</h3>
-<p>因为BP算法采用链式法则，从后层向前层传递信息时，若每层神经元对上一层神经元偏导乘以w均小于1，多次链式法则,多级导数权值相乘结果会越来越小，导致loss传递到越前方越小。</p>
-]]></content>
-      <categories>
-        <category>国科大课程笔记</category>
-        <category>高级人工智能</category>
-      </categories>
-      <tags>
-        <tag>人工智能</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>深度学习</title>
-    <url>/2022/10/03/AdvancedAI-LearningNotes4/</url>
-    <content><![CDATA[<h1 id="一-玻尔兹曼机系列">一、玻尔兹曼机系列</h1>
-<h2 id="hopfield">Hopfield</h2>
-<p>Hopfield网络是反馈类型，其神经元的结构功能在网络中的地位是一样的。其学习是基于灌输式学习，即网络的权值不是通过训练出来的，而是按照一定规则计算出来的，<strong>将求解的问题转换成优化问题的能量函数，网络的稳定状态是优化问题的解，其权值一旦确定就不再改变了</strong>。</p>
-<p>简单的来讲就是，Hopfield网络的主要功能是联想记忆。既然如此，首先应该让网络实现“记忆”，我们需要一些数据，然后训练网络，训完练完成之后，可以得到一组可用的权值信息，形成网络的“记忆”功能。当输入数据不完整时，根据训练得到的权重去运算，得到一个稳定的输出状态，这就是联想功能。</p>
-<p>【BM与Hopfield有一定共性，看一下有助理解。】</p>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/03/AdvancedAI-LearningNotes4/p1.png" class title="p1">
-<h2 id="bm-玻尔兹曼机">BM（玻尔兹曼机）</h2>
-<p>离散Hopfield神经网络+模拟退火+隐单元=Boltzman机</p>
-<p>Boltzmann机结合多层前馈神经网络和离散Hopfield网络在网络结构、学习算法和动态运行机制方面的优点。它是建立在离散Hopfield网基础上的，具有学习能力，它在神经元状态变化中引入了统计概率，网络的平衡状态服从Boltzmann分布，能够通过一个模拟退火过程寻求最优解。不过，其训练时间比BP网络要长。</p>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/03/AdvancedAI-LearningNotes4/p3.png" class title="p3">
-<p>原理：<br>
-1.上文提到Hopfield神经元的结构功能在网络中的地位是一样的,BM中一部分神经元与外部相连接，可以起到网络的输入输出作用，或者严格的说可以受到外部条件的约束，另一部分神经元不与外部相连，因而属于隐单元（相对于外部）。<br>
-2.每个神经元只有1/0两个状态：状态为1代表神经元处于激活(连接)状态，0表示非激活（断开）状态。</p>
-<h2 id="rbm-受限玻尔兹曼机">RBM（受限玻尔兹曼机）</h2>
-<p>RBM是BM的一个变体，层间全连接，层内无连接，网络中的神经元是随机神经元。限定模型必须为二分图，学习的目标是极大似然。</p>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/03/AdvancedAI-LearningNotes4/p2.png" class title="p2">
-<h2 id="dbn-深度置信网络">DBN（深度置信网络）</h2>
-<p>DBN模型由若干个RBM堆叠而成，通过非监督的预学习和监督微调训练参数。<br>
-训练时通过从底到高逐层训练这些RBM来实现：</p>
-<p>1.底部RBM以原始输入数据训练；<br>
-2.将底部RBM抽取的特征作为顶部RBM的输入训练；<br>
-3.过程（1）和（2）可以重复训练所需的尽可能多的参数。</p>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/03/AdvancedAI-LearningNotes4/p4.png" class title="p4">
-<h1 id="cnn卷积神经网络">CNN卷积神经网络</h1>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/03/AdvancedAI-LearningNotes4/p5.png" class title="p5">
-<h2 id="特点">特点</h2>
-<p><strong>主要特点</strong>：局部链接、参数共享、空间或时间上的子采样、（非逐层贪婪训练）。这些特性使得卷积神经网络具有一定程度上的平移、缩放和扭曲不变性。</p>
-<p><strong>解释</strong>：CNN神经元之间的连接是非全链接，同一层中神经元之间的链接权重是共享的——减少了权值的数量，降低了网络模型的复杂度。CNN的一个卷积层中，一般包含若干个特征平面，每个特征平面由一些矩阵形排列的神经元组成，同一特征平面神经元共享权值。<br>
-每个卷积层之后，通常立即会有一个非线性层（激活层），目的是给一个卷积层中刚经过线性计算操作的系统引入非线性特征。</p>
-<h2 id="各层介绍">各层介绍</h2>
-<ul>
-<li>池化层pooling：逐渐降低数据空间尺寸，有效减少网络中参数；</li>
-<li>卷积层cov：通过卷积操作对输入图像进行降维和特征抽取；</li>
-<li>全连接层：整个网络中分类器的作用；</li>
-<li>Relu：1.采用Sigmoid计算量较大，而Relu激活函数可以减少计算过程计算量；2.防止梯度消失；3.Relu会使一部分神经元输出为0，造成网络稀疏性，从而减小参数相互依赖关系，缓解过拟合。</li>
-</ul>
-<h2 id="附：卷积运算">附：卷积运算</h2>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/03/AdvancedAI-LearningNotes4/p10.png" class title="p10">
-<p>本质上是一种加权求和运算，举例：</p>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/03/AdvancedAI-LearningNotes4/p9.png" class title="p9">
-<h1 id="rnn及其变种">RNN及其变种</h1>
-<h2 id="rnn">RNN</h2>
-<p><strong>核心思想</strong>：<br>
-RNN对前面信息进行记忆并且应用于当前输出计算中，隐藏层节点之间存在链接，并且隐藏层输入不仅包含输入层输出还包含上一层隐含层的输入。（可以看成是权值共享的多层前向网络）</p>
-<p><strong>特点</strong>：</p>
-<ul>
-<li>分布式隐藏状态，可以有效存储过去大量信息；</li>
-<li>以非线性动态方式更新隐藏状态。</li>
-</ul>
-<p><strong>参数学习算法BPTT</strong>（Backpropagation through time）：<br>
-（实现权值一致）</p>
-<ul>
-<li>前向传递：每个时间步长各单元的输出入栈；</li>
-<li>后向传递：状态出栈，计算每个时间步长误差函数的导数；</li>
-<li>将每个权重的所有时刻导数加和。（所有时刻的损失相加 = 总损失）</li>
-</ul>
-<p><strong>存在问题</strong>：</p>
-<ul>
-<li>梯度消失/爆炸问题；</li>
-<li>长期依赖问题：距当前节点越远的节点对当前节点处理影响越小，无法建模长时间的依赖。</li>
-</ul>
-<p>——&gt;内部单元改进及变形：LSTM、GRU</p>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/03/AdvancedAI-LearningNotes4/p6.png" class title="p6">
-<h2 id="lstm">LSTM</h2>
-<p>LSTM通过门结构来除去和增加“细胞状态”的信息，实现了对重要内容的保留或对不重要内容的去除（长期记忆）。通过sigmoid层输入0到1之间概率值，描述有多少信息通过。<br>
-门结构包括：遗忘门、信息增加门（输入门）和输出门。【长期记忆】</p>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/03/AdvancedAI-LearningNotes4/p7.png" class title="p7">
-<h2 id="gru">GRU</h2>
-<p>2门控（重置门、更新门）<br>
-GRU是LSTM的变体，相比LSTM有更简单的结构。GRU包括了重置门和更新门（输入门+遗忘门）。【计算速度快、远距离传递、更容易训练、容易创建较大的网络】</p>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/03/AdvancedAI-LearningNotes4/p8.png" class title="p8">
-<h2 id="brnn">BRNN</h2>
-<p>每个时刻都有一个正向输入的隐层和一个反向输入隐层，两个隐层分别可以表示一个词的上文信息和下文信息。即：每个词对应一个输出，同时用到了同一个词前后的信息。<br>
-缺点：需要完整的数据序列，你才能预测任意位置。</p>
-<h2 id="drnns">DRNNs</h2>
-<p>深度双向RNN采用多个隐层，每个隐层向后一层传递序列信息。</p>
-<h1 id="gan对抗网络">GAN对抗网络</h1>
-<h2 id="核心思想">核心思想</h2>
-<p>GAN的核心思想来源于博弈论的<strong>纳什均衡</strong>——对抗达到平衡（共同进步）：</p>
-<ul>
-<li>生成器（生成一个数据，会被判别结果优化）：生成器的目的是尽量去学习真实的数据分布。把噪声数据z（也就是我们说的假数据）通过生成模型G，伪装成了真实数据x；</li>
-<li>判别器（判断是否是生成器生成的）：判别器的目的是尽量正确判别输入数据是来自真实数据还是来自生成器。<br>
-各自提高自己的生成能力和判别能力，这个学习优化过程就是寻找二者之间的一个纳什均衡。</li>
-</ul>
-<p><strong>基本原理</strong>：有一个判别器和一个生成器，生成器生成图片让判别器判别，生成器提升自己让判别器无法判别，判别器则提升自己努力识别出生成器生成的图片/序列，双方对抗达到平衡。</p>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/03/AdvancedAI-LearningNotes4/p11.png" class title="p11">
-<h2 id="学习算法">学习算法</h2>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/03/AdvancedAI-LearningNotes4/p12.png" class title="p12">
-<p>1.固定生成器G0，训练判别器，提升判别器的判别能力得到D1；【G*=arg min max V(G,D)】<br>
-2.固定判别器D1，训练生成器，提升生成器的生成能力，目标让判别器无法识别，得到G1；【D*=arg max V(G,D)】<br>
-3.再回到1中用G1训练判别器得到D2，……，依次迭代，直至两者平衡。</p>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/03/AdvancedAI-LearningNotes4/p13.png" class title="p13">
-<p>解释：<br>
-第一步训练D，D希望V(G、D)越大越好，所以需要加上梯度。（我希望我判断能力越来越好）。<br>
-第二步训练G，G希望V(G，D)越小越好，所以要减去梯度。（希望让判别模糊，我希望自己的欺骗能力越来越好。<br>
-整个训练过程由上面两步交替进行。</p>
-]]></content>
-      <categories>
-        <category>国科大课程笔记</category>
-        <category>高级人工智能</category>
-      </categories>
-      <tags>
-        <tag>人工智能</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>计算机网络（课程）导图</title>
-    <url>/2022/09/03/ComputerNet-LearningNotes1/</url>
-    <content><![CDATA[<blockquote>
-<p>概念性的东西，暂时只做导图</p>
-</blockquote>
-<h1 id="网络-课程-概述">网络（课程）概述</h1>
-<p>如图：</p>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/03/ComputerNet-LearningNotes1/p1.png" class title="p1">
-<h1 id="网络基础：网络模型与直连网络">网络基础：网络模型与直连网络</h1>
-<p>如图：</p>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/03/ComputerNet-LearningNotes1/p2.png" class title="p2">
-]]></content>
-      <categories>
-        <category>国科大课程笔记</category>
-        <category>计算机网络</category>
-      </categories>
-      <tags>
-        <tag>计算机网络</tag>
       </tags>
   </entry>
   <entry>
@@ -827,6 +806,730 @@ Chinese students boast the <strong>largest</strong> share, accounting for 60 %. 
       </tags>
   </entry>
   <entry>
+    <title>论文阅读记录 —— LLM 相关</title>
+    <url>/2024/07/20/LLM-Learning4/</url>
+    <content><![CDATA[<h1 id="learning-to-reason-and-memorize-with-self-notes">Learning to Reason and Memorize with Self-Notes</h1>
+<ul>
+<li>原文链接：<a href="https://arxiv.org/abs/2404.14963">Learning to Reason and Memorize with Self-Notes</a></li>
+<li>发表：NeurIPS 2023</li>
+<li>时间：2023</li>
+<li>机构：Meta AI</li>
+</ul>
+ <img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2024/07/20/LLM-Learning4/p2.png" class title="p2">
+<h2 id="研究动机-motivation">研究动机（Motivation）</h2>
+<p>大型语言模型（LLMs）在<strong>多步推理</strong>任务中表现不佳，并且<strong>无法保留先前的推理步骤</strong>以供将来使用。这限制了它们在复杂问题解答中的性能。</p>
+<h2 id="解决的问题">解决的问题</h2>
+<p>论文提出了一种名为“Self-Notes”的方法，旨在解决上述问题。这种方法允许<strong>模型在阅读上下文时，随时偏离输入内容生成明确的推理标记（即“Self-Notes”）</strong>，以增强其记忆并实现多步推理。</p>
+<h2 id="方法">方法</h2>
+<p>（需要微调）</p>
+<ul>
+<li>Self-Notes：与链式思维（Chain-of-Thought）或草稿板（Scratchpad）方法不同，Self-Notes 允许模型<strong>在任何时候</strong>插入与输入上下文和问题交织的内部推理笔记。</li>
+<li>模型架构：考虑了一个自回归的变换器模型，该模型在生成最终输出之前，可以通过生成“笔记标记”来丰富上下文。</li>
+</ul>
+<h2 id="思考">思考</h2>
+<ul>
+<li>优势：可以帮助语言模型更好地处理长序列或复杂任务，且不需要太多的监督信号。</li>
+<li>关键思路：与草稿板方法不同，本论文中的模型可以随时偏离输入上下文以明确思考。这种方法允许模型在阅读上下文的同时回忆信息并进行推理，从而扩展其记忆并实现多步推理。相比当前领域的研究状况，这篇论文的思路在于通过自我笔记的方式来解决有限上下文记忆和多步推理的问题。</li>
+</ul>
+<h1 id="dup">DUP</h1>
+<p>Achieving &gt;97% on GSM8K: Deeply Understanding the Problems Makes LLMs Better Solvers for Math Word Problems</p>
+<ul>
+<li>发表：<a href="https://arxiv.org/abs/2404.14963">https://arxiv.org/abs/2404.14963</a></li>
+<li>时间：2024.5.29</li>
+<li>机构：武汉大学 &amp; 悉尼大学 &amp; 南洋理工大学</li>
+</ul>
+ <img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2024/07/20/LLM-Learning4/p1.png" class title="p1">
+<h2 id="摘要总结">摘要总结</h2>
+<p>大型语言模型（LLMs）在各种自然语言处理任务中表现出色，但在处理复杂的数学文字题时，它们的推理能力常常不尽人意。这类问题通常包含三种错误：语义理解错误、计算错误和步骤遗漏错误。尽管已有研究关注计算错误和步骤遗漏错误，但语义理解错误作为限制LLMs性能的主要因素，却被忽视了。<br>
+论文提出了一种简单但有效的方法，称为“Deeply Understanding the Problems”（DUP），通过解决语义理解错误来提高LLMs<strong>解决数学问题</strong>的能力。DUP方法的核心是<strong>鼓励LLMs深入理解问题</strong>，<strong>提取关键的解题信息</strong>，以进行更好的推理。</p>
+<h2 id="研究动机">研究动机</h2>
+<p>尽管 LLMs 在各种自然语言理解和生成任务中表现出色，但它们在推理任务（例如数学推理、常识推理和符号推理）中的表现往往不尽如人意。CoT prompting 方法虽然能够显著提升 LLMs 的推理能力，但它在处理复杂数学问题，尤其是数学应用题时，仍然存在以下三个主要问题：</p>
+<ul>
+<li>语义误解错误: LLMs 无法准确理解问题的核心内容，导致无法提取出解决问题的关键信息。</li>
+<li>计算错误: LLMs 在进行计算时可能出现错误，导致最终答案不正确。</li>
+<li>步骤缺失错误: LLMs 可能会遗漏解决问题的某个步骤，导致推理过程不完整。<br>
+现有的研究主要集中在解决计算错误和步骤缺失错误，而<strong>对语义误解错误关注较少</strong>。然而，语义误解错误是限制 LLMs 推理能力的主要因素。<br>
+因此，文章提出了一种名为 Deeply Understanding the Problems (DUP) 的方法，旨在通过解决语义误解错误来提升 LLMs 的数学问题解决能力。</li>
+</ul>
+<h2 id="方法">方法</h2>
+<p>DUP（Deeply Understanding the Problems）方法是一种针对大型语言模型（LLMs）的提示策略，旨在提高它们解决数学文字题的能力。以下是DUP方法的详细步骤和特点：</p>
+<ol>
+<li>
+<p>揭示核心问题（Reveal the Core Question）<br>
+这是DUP方法的第一阶段，目的是从复杂和冗长的问题描述中明确问题的核心。通过设计一个提示，要求LLM明确提取问题的核心部分，从而帮助模型集中注意力于问题的目标。</p>
+</li>
+<li>
+<p>提取解题信息（Extract the Problem-solving Information）<br>
+第二阶段进一步从问题描述中提取对解决核心问题至关重要的信息。这一步骤通过一个提示来实现，该提示要求LLM列出与核心问题直接相关的最有用的信息。</p>
+</li>
+<li>
+<p>生成并提取答案（Generate and Extract the Answer）<br>
+在前两个阶段的基础上，第三阶段将核心问题和解题信息结合起来，生成详细的回答，并从中提取最终答案。这一步骤通过一个模板提示来实现，该模板明确指出了目标和解决问题所需的必要信息。</p>
+</li>
+</ol>
+<h2 id="实验">实验</h2>
+<ul>
+<li>数据集:
+<ul>
+<li>算术推理数据集: GSM8K、SVAMP、MultiArith、AddSub、AQuA、SingleEq</li>
+<li>常识推理数据集: CommonsenseQA、StrategyQA</li>
+<li>符号推理数据集: Last Letter、Coin Flip</li>
+</ul>
+</li>
+<li>基线方法：
+<ul>
+<li>零样本方法: Zero-shot CoT、Least-to-Most、Zero-shot PS+</li>
+<li>少样本方法: Manual-CoT、Auto-CoT</li>
+</ul>
+</li>
+<li>实验设置:
+<ul>
+<li>LLMs: GPT-3.5-Turbo 和 GPT-4</li>
+<li>解码策略: 具有自一致性（SC）的解码策略（Wang et al., 2023b）</li>
+</ul>
+</li>
+<li>实验结果:
+<ul>
+<li>DUP 方法在所有推理数据集上均取得了显著优于其他方法的性能。</li>
+<li>DUP 方法的零样本性能甚至超过了少样本方法的性能。</li>
+<li>DUP 方法在 GSM8K 和 SVAMP 数据集上取得了新的 SOTA 结果。</li>
+</ul>
+</li>
+<li>消融实验:
+<ul>
+<li>探究 DUP 方法中各个阶段的重要性。</li>
+<li>探究如何在不降低性能的情况下降低 DUP 方法的推理成本。（将三阶段提示合并为一个提示）</li>
+</ul>
+</li>
+<li>讨论和分析:
+<ul>
+<li>分析 DUP 方法与 SC 解码的兼容性。</li>
+<li>验证 DUP 方法是否可以应用于开源 LLMs。</li>
+<li>分析更准确的核心问题和问题解决信息如何提升推理性能。</li>
+<li>进行错误分析，验证 DUP 方法是否有效减少了语义误解错误。</li>
+</ul>
+</li>
+</ul>
+ <!-- <img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2024/07/20/LLM-Learning4/p1.png" class="" title="p1"> -->
+<h1 id="re-reading-improves-reasoning-in-large-language-models">Re-Reading Improves Reasoning in Large Language Models</h1>
+<p>重读能提升大模型推理能力</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2024/07/20/LLM-Learning4/p3.png" style="zoom:65%;">
+<h2 id="研究背景">研究背景</h2>
+<p>本文旨在介绍一种简单有效的提示方法“重复阅读(RE2)”以提升大型语言模型(LLMs)的推理能力。这一方法受到人类在学习和解决问题时倾向于<strong>重复阅读问题以提高理解</strong>的观察启发。</p>
+<h2 id="研究目标和假设">研究目标和假设</h2>
+<p>本文旨在探讨重复阅读问题是否能提升LLMs的推理性能。关键假设是，重复阅读问题可以帮助LLMs更深入地理解输入，从而提高推理能力。</p>
+<h2 id="研究方法">研究方法</h2>
+<p>本文介绍了“RE2”<strong>提示</strong>方法，即在提示中重复两次输入问题。这可以作为一个“即插即用”模块，与各种诱导思考的提示策略（如思维链和程序辅助语言）集成使用。</p>
+<h2 id="结果和发现">结果和发现</h2>
+<p>论文评估了RE2在各种推理基准测试(包括算术、常识和符号推理任务)上的有效性。<br>
+研究结果显示，RE2 能够持续提升LLMs的推理性能，包括ChatGPT等指令微调(IFT)模型和 LLaMA-2 等非IFT模型。RE2与各种诱导思考的提示方法兼容,也可以有效地与少样本提示和自一致性方法相结合。</p>
+<h2 id="思考">思考</h2>
+<p>很简单的方法，可以学习其写作技巧。</p>
+]]></content>
+      <categories>
+        <category>大模型</category>
+        <category>论文阅读</category>
+      </categories>
+      <tags>
+        <tag>大模型</tag>
+        <tag>论文阅读</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>LC旋转数组</title>
+    <url>/2021/05/20/LC%E6%97%8B%E8%BD%AC%E6%95%B0%E7%BB%84/</url>
+    <content><![CDATA[<h1 id="旋转数组">旋转数组</h1>
+<p>给定一个数组，将数组中的元素向右移动 k 个位置，其中 k 是非负数。</p>
+<blockquote>
+<p><strong>示例 1:</strong></p>
+<ul>
+<li>输入: nums = [1,2,3,4,5,6,7], k = 3</li>
+<li>输出: [5,6,7,1,2,3,4]</li>
+<li>解释:
+<ul>
+<li>向右旋转 1 步: [7,1,2,3,4,5,6]</li>
+<li>向右旋转 2 步: [6,7,1,2,3,4,5]</li>
+<li>向右旋转 3 步: [5,6,7,1,2,3,4]</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<blockquote>
+<p><strong>示例 2:</strong></p>
+<ul>
+<li>输入：nums = [-1,-100,3,99], k = 2</li>
+<li>输出：[3,99,-1,-100]</li>
+<li>解释:
+<ul>
+<li>向右旋转 1 步: [99,-1,-100,3]</li>
+<li>向右旋转 2 步: [3,99,-1,-100]</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<h2 id="方法一：傻瓜方法">方法一：傻瓜方法</h2>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">rotate</span><span class="params">(<span class="keyword">int</span>* nums, <span class="keyword">int</span> numsSize, <span class="keyword">int</span> k)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> length = numsSize;</span><br><span class="line">    <span class="keyword">int</span> <span class="built_in">list</span>[length];</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;length;i++)&#123;</span><br><span class="line">        <span class="built_in">list</span>[i]=nums[i];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;length;j++)&#123;</span><br><span class="line">        nums[(j+k)%length]=<span class="built_in">list</span>[j];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="方法二：旋转旋转旋转">方法二：旋转旋转旋转</h2>
+<p>举个例子：</p>
+<blockquote>
+<p>nums = [1,2,3,4,5,6,7], k = 3</p>
+<ol>
+<li>[7,6,5,4,3,2,1] (整个数组旋转)</li>
+<li>[[5,6,7],[1,2,3,4]]</li>
+</ol>
+</blockquote>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">rotate</span><span class="params">(<span class="keyword">int</span>* nums, <span class="keyword">int</span> numsSize, <span class="keyword">int</span> k)</span></span>&#123;</span><br><span class="line">    <span class="comment">//先旋转整个数组-》旋转前一部分-》旋转后一部分</span></span><br><span class="line">    k=k%numsSize;</span><br><span class="line">    reverse(nums,<span class="number">0</span>,numsSize<span class="number">-1</span>);</span><br><span class="line">    reverse(nums,<span class="number">0</span>,k<span class="number">-1</span>);</span><br><span class="line">    reverse(nums,k,numsSize<span class="number">-1</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">reverse</span><span class="params">(<span class="keyword">int</span>* nums, <span class="keyword">int</span> start, <span class="keyword">int</span> end)</span></span>&#123;</span><br><span class="line">    <span class="keyword">while</span>(start&lt;end)&#123;</span><br><span class="line">        <span class="keyword">int</span> tmp = nums[start];</span><br><span class="line">        nums[start++]=nums[end];</span><br><span class="line">        nums[end--]=tmp;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>刷题</category>
+      </categories>
+      <tags>
+        <tag>LC</tag>
+        <tag>数组</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>LLM for Security 论文记录 1</title>
+    <url>/2024/09/19/LLM-Security2/</url>
+    <content><![CDATA[<h1 id="相关文章">相关文章</h1>
+<p><strong>GitHub Copilot 在编程方面表现出色，但它是否确保了负责任的输出？</strong></p>
+<p>简介：大语言模型（LLMs）的快速发展极大地推动了代码补全工具（LCCTs）的进化。这些工具通过整合多种信息源并优先提供代码建议，与传统LLMs不同，它们在安全方面面临独特挑战。特别是，LCCTs在训练时依赖专有代码数据集，这可能增加敏感数据泄露的风险。研究表明，LCCTs存在显著的安全漏洞，例如，针对GitHub Copilot的越狱攻击成功率高达99.4%，而从其中提取敏感用户数据的成功率也相当高。这些发现强调了LCCTs在安全方面的挑战，并为加强其安全框架提供了重要方向。</p>
+<p>链接：<a href="https://arxiv.org/abs/2408.11006">https://arxiv.org/abs/2408.11006</a></p>
+<br>
+<p><strong>语言模型应用程序中的数据泄露：对 OpenAI 的 GPT 产品的深入调查</strong></p>
+<p>简介：研究者们在探索大语言模型（LLM）应用的数据实践透明度时，以OpenAI的GPT应用生态系统作为案例研究。他们开发了一个基于LLM的框架，对GPT及其动作（外部服务）的源代码进行了静态分析，以揭示其数据收集的做法。研究发现，这些动作收集了大量用户数据，包括OpenAI明令禁止的敏感信息，如密码。此外，一些与广告和分析相关的动作嵌入在多个GPT中，使得它们能够跨平台追踪用户活动。动作的共现还可能导致用户数据的进一步暴露，增加了隐私风险。研究者还开发了一个基于LLM的隐私政策分析框架，用以自动检查动作的数据收集是否与隐私政策中的披露相一致。结果显示，大多数收集的数据类型在隐私政策中并未明确披露，仅有5.8%的动作清晰地说明了它们的数据收集实践。这一发现强调了LLM应用在数据实践透明度方面存在的问题，并指出了加强隐私保护措施的必要性。</p>
+<p>链接：<a href="https://arxiv.org/abs/2408.13247">https://arxiv.org/abs/2408.13247</a></p>
+<br>
+<p><strong>去伪存真：利用执行反馈对生成的代码候选进行排序</strong></p>
+<p>简介：大语言模型（LLMs）如GPT-4、StarCoder和CodeLlama正在改变编程方式，通过自然语言描述自动生成代码。尽管如此，生成正确代码仍然具有挑战性。为了提高正确代码的生成率，开发者通常使用LLMs生成多个候选解决方案，然后进行代码排名，即从多个候选代码中选择正确的一个。现有的代码排名研究主要分为基于执行和非基于执行的方法。基于执行的方法虽然有效，但受限于高质量单元测试的稀缺和潜在的安全风险。而非基于执行的方法，如CodeRanker，主要依赖分类标签进行训练，难以捕捉细微错误和提供错误洞察。</p>
+<p>为了克服这些限制，研究者提出了一种新的方法——RankEF。RankEF是一种创新的代码排名方法，它利用执行反馈并通过多任务学习整合代码分类与执行反馈生成。这种方法使模型能够在不执行代码的情况下，理解错误代码的原因，并区分正确与错误的解决方案。在三个代码生成基准上的实验显示，RankEF显著优于现有的CodeRanker，展现出在代码排名方面的高效性和准确性。</p>
+<p>链接：<a href="https://arxiv.org/abs/2408.13976">https://arxiv.org/abs/2408.13976</a></p>
+<br>
+<p><strong>调查贝叶斯垃圾邮件过滤器在检测经语言模型修改的垃圾邮件中的有效性</strong></p>
+<p>简介：垃圾邮件和网络钓鱼是网络安全的重大威胁，贝叶斯垃圾邮件过滤器如 SpamAssassin 是重要防御工具。但大语言模型的出现带来新挑战，因其强大、易获取且成本低，可能被用于制作复杂垃圾邮件逃避传统过滤器。研究者开发管道测试 SpamAssassin 对经语言模型修改邮件的有效性，结果显示其会将高达 73.7%的此类邮件误分类为合法邮件，而简单字典替换攻击成功率仅 0.4%。这凸显了经语言模型修改的垃圾邮件的重大威胁及成本效益。该研究为当前垃圾邮件过滤器的漏洞及网络安全措施的持续改进提供了关键见解。</p>
+<p>链接：<a href="https://arxiv.org/abs/2408.14293">https://arxiv.org/abs/2408.14293</a></p>
+<br>
+<p><strong>检测人工智能缺陷：针对语言模型内部故障的目标驱动攻击</strong></p>
+<p>简介：大语言模型（LLMs）在人工智能领域的重要性日益凸显，但这些模型在预训练语料中可能包含有害内容，导致生成不适当的输出。为了提高LLMs的安全性，研究人员探索了检测模型内部缺陷的方法。目前的研究主要集中在越狱攻击上，这些攻击通过构建对抗性内容来诱导模型产生意外响应。然而，这些方法依赖于提示工程，既耗时又需要特别设计的问题。</p>
+<p>为了解决这些挑战，研究人员提出了一种新的攻击范式，即目标驱动的攻击，它专注于直接引出目标响应，而不是优化提示。研究中引入了名为ToxDet的LLM，作为有毒内容的检测器。ToxDet能够根据目标有毒响应生成可能的问题和初步答案，以诱导目标模型产生与提供含义相当的有毒响应。ToxDet通过与目标LLM交互并接收奖励信号进行训练，利用强化学习优化过程。尽管ToxDet主要针对开源LLMs，但经过微调后，它也可以转移到攻击如GPT-4o这样的黑盒模型，并取得了显著结果。在AdvBench和HH-Harmless数据集上的实验结果证明了该方法在检测目标LLMs生成有害响应倾向方面的有效性。这不仅揭示了LLMs的潜在漏洞，还为研究人员提供了加强模型抵御此类攻击的宝贵资源。</p>
+<p>链接：<a href="https://arxiv.org/abs/2408.14853">https://arxiv.org/abs/2408.14853</a></p>
+<br>
+<p><strong>参数高效的量化专家混合体与视觉 - 语言指令调优在半导体电子显微图像分析中的应用</strong></p>
+<p>简介：研究者指出半导体在基础模型中研究不足，需增强半导体器件技术。为此，他们推出了 sLAVA，一个针对半导体制造的小型视觉语言助手，专注于电子显微镜图像分析。采用师生范式，以 GPT-4 等基础视觉语言模型为教师，为 sLAVA 创建遵循指令的多模态数据，解决数据稀缺问题，可在预算有限的消费级硬件上进行任务，且企业能在自身基础设施内用专有数据安全微调框架以保护知识产权。严格实验表明，该框架超越传统方法，能处理数据偏移并实现高通量筛选，有助于半导体制造中的电子显微镜图像分析，为企业提供了一种有效的解决方案，也为半导体技术发展提供了新的思路和方法。</p>
+<p>链接：<a href="https://arxiv.org/abs/2408.15305">https://arxiv.org/abs/2408.15305</a></p>
+<!--  -->
+<!-- <img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="p1.png"  style="zoom:55%;" /> -->
+]]></content>
+      <categories>
+        <category>大模型</category>
+        <category>智能算法安全</category>
+        <category>生成式人工智能</category>
+        <category>网络安全</category>
+      </categories>
+      <tags>
+        <tag>大模型</tag>
+        <tag>Prompt Engineering</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>RAG开发的痛点以及解决方案</title>
+    <url>/2024/04/10/LLM-Learning2/</url>
+    <content><![CDATA[<div class="hide-toggle" style="border: 1px solid bg"><div class="hide-button toggle-title" style="background-color: bg;color: color"><i class="fas fa-caret-right fa-fw"></i><span>参考</span></div>
+    <div class="hide-content"><ul>
+<li><a href="https://towardsdatascience.com/12-rag-pain-points-and-proposed-solutions-43709939a28c">12 RAG Pain Points and Proposed Solutions</a></li>
+<li><a href="https://baoyu.io/translations/rag/12-rag-pain-points-and-proposed-solutions">https://baoyu.io/translations/rag/12-rag-pain-points-and-proposed-solutions</a></li>
+</ul>
+</div></div>
+<h1 id="引言">引言</h1>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2024/04/10/LLM-Learning2/p1.webp" class title="p1">
+<p>图源自 Barnett 等人的研究 <a href="https://baoyu.io/translations/ai-paper/2401.05856v1-seven-failure-points-when-engineering-a-retrieval-augmented-generation-system">工程化检索增强生成系统时的七大挑战</a>。后面会介绍上述7大挑战，并且补充5个额外的挑战，以及它们的解决方案：</p>
+<ul>
+<li>痛点 1：缺失内容</li>
+<li>痛点 2：关键文档被遗漏</li>
+<li>痛点 3：文档整合的长度限制 —— 超出上下文</li>
+<li>痛点 4：提取困难</li>
+<li>痛点 5：格式错误</li>
+<li>痛点 6：缺乏具体细节</li>
+<li>痛点 7：回答不全面</li>
+<li>痛点 8：数据摄入的可扩展性问题</li>
+<li>痛点 9：结构化数据的问答</li>
+<li>痛点 10：从复杂 PDF 文档提取数据</li>
+<li>痛点 11：备用模型策略</li>
+<li>痛点 12：大语言模型的安全性</li>
+</ul>
+<h1 id="痛点1：缺失内容">痛点1：缺失内容</h1>
+<p><strong>具体描述</strong>：当提出的问题无法从可用文档中找到答案时，RAG系统可能会回答&quot;对不起，我不知道”，但如果问题与内容相关却没有答案，系统可能会被误导提供错误的回答。</p>
+<p><strong>解决方案</strong>：</p>
+<ul>
+<li>
+<p>数据清洗，构建高质量的数据</p>
+</li>
+<li>
+<p>prompt优化</p>
+<ul>
+<li>例如，通过设置提示：“如果你对答案不确定，就告诉我你不知道”，可以鼓励模型承认其局限性，并更透明地表达不确定性。虽然无法保证百分百的准确率，但在数据清洗之后，设计恰当的提示是提高回答质量的有效手段之一。</li>
+</ul>
+</li>
+</ul>
+<h1 id="痛点2：关键文档被遗漏">痛点2：关键文档被遗漏</h1>
+<p><strong>具体描述</strong>：问题的答案在文档中，但排名没有足够高以返回给用户。（理论上所有文档都会被排名并用于下一步，但实际上只返回排名最高的K个文档）。</p>
+<p><strong>解决方案</strong>：</p>
+<ul>
+<li>
+<p>通过调整<code>chunk_size</code>和<code>similarity_top_k</code>两个参数优化检索效果</p>
+<ul>
+<li><a href="https://medium.com/gitconnected/automating-hyperparameter-tuning-with-llamaindex-72fdd68e3b90?sk=0a29f2025b965040b9b1defd9525e4eb">通过 LlamaIndex 实现超参数自动调整中</a></li>
+<li><a href="https://docs.llamaindex.ai/en/stable/examples/param_optimizer/param_optimizer.html">对 RAG 进行超参数优化</a></li>
+</ul>
+</li>
+<li>
+<p>检索结果的优化排序（Rerank算法）</p>
+<ul>
+<li><a href="https://docs.llamaindex.ai/en/stable/examples/node_postprocessor/CohereRerank.html">优化排序的前后差异</a></li>
+<li>另外，通过各种嵌入技术和排序器，可以对检索性能进行评估和提升，详见<a href="https://blog.llamaindex.ai/boosting-rag-picking-the-best-embedding-reranker-models-42d079022e83">提升 RAG 性能：挑选最优的嵌入技术和排序模型</a>，由 Ravi Theja 撰写。</li>
+<li>定制化的排序器经过微调后能够实现更优的检索性能，具体实施方法请参阅<a href="https://blog.llamaindex.ai/improving-retrieval-performance-by-fine-tuning-cohere-reranker-with-llamaindex-16c0c1f9b33b">通过微调 Cohere 排序器与 LlamaIndex 提升检索效果</a></li>
+</ul>
+</li>
+</ul>
+<h1 id="痛点3：文档整合的长度限制一超出上下文">痛点3：文档整合的长度限制一超出上下文</h1>
+<p><strong>具体描述</strong>：数据库检索到包含答案的文档，但这些文档没有被包含在生成答案的上下文中。当数据库返回许多文档时，需要进行整合处理以检索答案。</p>
+<p><strong>解决方案</strong>：</p>
+<ul>
+<li>
+<p>调整检索策略：比如：基础检索、知识图谱检索等</p>
+</li>
+<li>
+<p>微调嵌入技术：如果使用的是开源嵌入模型，对其进行微调是提高检索准确度的有效手段。<a href="https://docs.llamaindex.ai/en/stable/examples/finetuning/embeddings/finetune_embedding.html">嵌入模型微调指南</a></p>
+</li>
+</ul>
+<h1 id="痛点4：提取困难">痛点4：提取困难</h1>
+<p><strong>具体描述</strong>：答案存在于上下文中，但大型语言模型未能提取出正确的答案。这通常发生在上下文中存在太多噪声或矛盾信息时。</p>
+<p><strong>解决方案</strong>：</p>
+<ul>
+<li>
+<p>数据清洗</p>
+</li>
+<li>
+<p>提示信息压缩，可以参考：<a href="https://rzv2chzpkh.feishu.cn/wiki/FIMJwPPyGiKJmAkuhJGcBrAonKe#CZQ6dQ58HotZswxkNTrcqZiwnGf">LongLLMLingua.pdf</a></p>
+</li>
+<li>
+<p>LongContextReorder（长内容优先排序）：<a href="https://arxiv.org/abs/2307.03172">研究</a>发现，当关键数据被放置在输入内容的开始或结尾时，往往能够获得最佳的性能表现。为了解决信息在输入中间部分“迷失”的问题，LongContextReorder 应运而生，它通过重新排序检索到的节点来优化处理，特别适用于需要处理大量顶级结果的情形。</p>
+</li>
+</ul>
+<h1 id="痛点5：格式错误">痛点5：格式错误</h1>
+<p><strong>具体描述</strong>：问题涉及以特定格式（如表格或列表）提取信息，但大型语言模型忽略了指令。</p>
+<p><strong>解决方案</strong>：</p>
+<ul>
+<li>
+<p>prompt优化</p>
+</li>
+<li>
+<p>输出解析：可以在以下方面帮助确保获得期望的输出：为任何提示/查询提供格式化指令；对大语言模型的输出进行“解析”</p>
+<ul>
+<li><a href="https://docs.llamaindex.ai/en/stable/module_guides/querying/structured_outputs/pydantic_program.html">Pydantic程序</a></li>
+</ul>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pydantic <span class="keyword">import</span> BaseModel</span><br><span class="line"><span class="keyword">from</span> typing <span class="keyword">import</span> List</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> llama_index.program <span class="keyword">import</span> OpenAIPydanticProgram</span><br><span class="line"></span><br><span class="line"><span class="comment"># Define output schema (without docstring)</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Song</span>(<span class="params">BaseModel</span>):</span></span><br><span class="line">    title: <span class="built_in">str</span></span><br><span class="line">    length_seconds: <span class="built_in">int</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Album</span>(<span class="params">BaseModel</span>):</span></span><br><span class="line">    name: <span class="built_in">str</span></span><br><span class="line">    artist: <span class="built_in">str</span></span><br><span class="line">    songs: List[Song]</span><br><span class="line"></span><br><span class="line"><span class="comment"># Define openai pydantic program</span></span><br><span class="line">prompt_template_str = <span class="string">&quot;&quot;&quot;\</span></span><br><span class="line"><span class="string">Generate an example album, with an artist and a list of songs. \</span></span><br><span class="line"><span class="string">Using the movie &#123;movie_name&#125; as inspiration.\</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line">program = OpenAIPydanticProgram.from_defaults(</span><br><span class="line">    output_cls=Album, prompt_template_str=prompt_template_str, verbose=<span class="literal">True</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Run program to get structured output</span></span><br><span class="line">output = program(</span><br><span class="line">    movie_name=<span class="string">&quot;The Shining&quot;</span>, description=<span class="string">&quot;Data model for an album.&quot;</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<h1 id="痛点6：缺乏具体细节">痛点6：缺乏具体细节</h1>
+<p><strong>具体描述</strong>：回答在响应中返回，但不够具体或过于具体，无法满足用户的需求。当RAG系统设计者对给定问题有预期结果时（例如针对学生的教学内容），就会发生这种情况。</p>
+<p><strong>解决方案</strong>：</p>
+<ul>
+<li>进阶检索技巧：从小到大的信息聚合检索、递归式检索方法
+<ul>
+<li>参考文章：<a href="https://towardsdatascience.com/jump-start-your-rag-pipelines-with%E9%AB%98%E7%BA%A7%E6%A3%80%E7%B4%A2-llamapacks-%E5%92%8C-lighthouz-ai-80a09b7c7d9d?sk=14e50a68f9ef825aaa6634365c7d9617">如何通过高级检索 LlamaPacks 优化您的 RAG 流程，并利用 Lighthouz AI 进行性能基准测试</a></li>
+</ul>
+</li>
+</ul>
+<h1 id="痛点7：回答不全面">痛点7：回答不全面</h1>
+<p><strong>具体描述</strong>：回答不完整并不是错误的，但遗漏了一些信息，尽管这些信息在上下文中可用并且可以提取。例如，对于&quot;这些文件A、B和C的关键点是什么？&quot;这样的问题，更好的方法是分别询问这些问题。</p>
+<p><strong>解决方案</strong>：</p>
+<ul>
+<li>
+<p>查询变换的技巧：一个有效提升凡AG处理能力的策略是增设一个查询理解层，即在实际检索知识库之前进行一系列的查询变换。具体来说，我们有以下四种变换方式：</p>
+<ul>
+<li>路由：在不改变原始查询的基础上，识别并定向到相关的工具子集，并将这些工具确定为处理该查询的首选。</li>
+<li>查询改写：在保留选定工具的同时，通过多种方式重构查询语句，以便跨相同的工具集进行应用。</li>
+<li>细分问题：将原查询拆解为若干个更小的问题，每个问题都针对特定的工具进行定向，这些工具是根据它们的元数据来选定的。</li>
+<li>ReAct 代理工具选择：根据原始查询判断最适用的工具，并为在该工具上运行而特别构造的查询。</li>
+</ul>
+</li>
+<li>
+<p>参考文章：<a href="https://towardsdatascience.com/advanced-query-transformations-to-improve-rag-11adca9b19d1">提升 RAG 性能的高级查询变换技巧</a></p>
+</li>
+</ul>
+<h1 id="痛点8：数据摄入的可扩展性问题">痛点8：数据摄入的可扩展性问题</h1>
+<p><strong>具体描述</strong>：在RAG系统中，数据摄入的可扩展性问题指的是系统在有效管理和处理大规模数据时面临的挑战，这可能导致性能瓶颈甚至系统故障。这类问题可能会造成数据摄入时间过长、系统过载、数据质量下降以及可用性受限等现象。</p>
+<p><strong>解决方案</strong>：</p>
+<ul>
+<li>加速文档处理：并行摄取技术，参考：LlamaIndex 提供的<a href="https://github.com/run-llama/llama_index/blob/main/docs/examples/ingestion/parallel_execution_ingestion_pipeline.ipynb?__s=db5ef5gllwa79ba7a4r2&amp;utm_source=drip&amp;utm_medium=email&amp;utm_campaign=LlamaIndex+news%2C+2024-01-16">详细教程</a>。</li>
+</ul>
+<h1 id="痛点9：结构化数据的问答">痛点9：结构化数据的问答</h1>
+<p><strong>具体描述</strong>：解读用户的查询并准确检索到所需的结构化数据是一项挑战，尤其是当面对复杂或模糊的查询请求时。这一挑战由于文本到SQL的转换不够灵活，以及当前大语言模型在处理这些任务上的局限性而更加复杂。</p>
+<p><strong>解决方案</strong>：</p>
+<ul>
+<li>
+<p>链式思维表格包：适合处理包含多重信息的复杂表格单元问题，通过逐步精确地切割和解析数据，直至找到所需的数据子集，显著提高了对表格数据的查询效率，参考：<a href="https://arxiv.org/abs/2401.04398">链式表格原论文</a></p>
+</li>
+<li>
+<p>混合自洽（多数投票法）查询引擎包：原文见<a href="https://arxiv.org/pdf/2312.16702v1.pdf">重新思考大语言模型如何理解表格数据</a></p>
+</li>
+</ul>
+<h1 id="痛点10：从复杂pdf中提取数据">痛点10：从复杂PDF中提取数据</h1>
+<p><strong>具体描述</strong>：在从复杂PDF文档，如嵌入表格的文档中提取数据进行问答时，传统的检索方法往往无法达到目的。需要一个更高效的方法来处理这种复杂的PDF数据提取需求。</p>
+<p><strong>解决方案</strong>：</p>
+<ul>
+<li>嵌入式表格检索技术：LlamaIndex 提出了一种解决方案——`EmbeddedTablesUnstructuredRetrieverPack</li>
+</ul>
+<h1 id="痛点11：备用模型策略">痛点11：备用模型策略</h1>
+<p><strong>具体描述</strong>：在使用大语言模型过程中，可能会担心模型可能会遇到问题，比如遇到OpenAI模型的访问频率限制错误。这时候就需要一个或多个备用模型作为后备，以防主模型出现故障。</p>
+<p><strong>解决方案</strong>：</p>
+<ul>
+<li>
+<p>Neutrino Router：Neutrino路由器能够通过一个预测模型，智能地选择最适合输入问题的大语言模型。</p>
+</li>
+<li>
+<p>OpenRouter：OpenRouter提供了一个一站式的API接口，能够接入任何大语言模型。不仅能找到市场上任一模型的最低价格，还能在首选的服务提供商遇到问题时，自动切换到其他选项。</p>
+</li>
+</ul>
+<h1 id="痛点12：llm的安全性：">痛点12：LLM的安全性：</h1>
+<p><strong>具体描述</strong>：在设计和开发 AI 系统时，如何有效防止恶意输入、确保输出安全、保护敏感信息不被泄露等问题，都是每位 AI 设计师和开发者需要面对的重要挑战。</p>
+<p><strong>解决方案</strong>：</p>
+<ul>
+<li>Llama Guard：保护大语言模型的新工具，借鉴7-B Llama 2的技术，Llama Guard旨在通过评估输入（例如分析提问的内容）和输出（即对回答的分类）来帮助大语言模型 (LLMs) 鉴别内容是否安全。它本身也使用了大语言模型技术，能够判断某个问题或回答是否安全，若发现不安全的内容，还会详细列出违反的具体规则。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>大模型</category>
+        <category>RAG</category>
+      </categories>
+      <tags>
+        <tag>大模型</tag>
+        <tag>RAG</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>RAG 应知必会</title>
+    <url>/2024/04/08/LLM-Learning1/</url>
+    <content><![CDATA[<blockquote>
+<p>参考：<a href="https://arxiv.org/abs/2312.10997">Retrieval-Augmented Generation for Large Language Models: A Survey</a></p>
+</blockquote>
+<h1 id="rag的发展">RAG的发展</h1>
+<p>RAG技术的发展可以从技术范式的角度分为几个阶段，主要包括：</p>
+<ul>
+<li><strong>朴素RAG(Naive RAG)</strong>:这是RAG技术的基出形式，包括三个基本步骤：索引(将文档库分割成较短的Chunk并通过编码器构建向量索引)、检索(根据问题和chunks的相似度检索相关文档片段)、生成(以检索到的上下文为条件，生成问题的回答)。</li>
+<li><strong>进阶的RAG(Advanced RAG)</strong>:为了解决Naive RAG在检索质量、响应生成质量以及增强过程中的挑战，Advanced RAG:范式被提出。它在数据索引、检索前和检索后都进行了额外处理，如更精细的数据清洗、设计文档结构和添加元数据等，以提升文本的<br>
+一致性、准确性和检索效率。</li>
+<li><strong>模块化RAG(Modular RAG)</strong>:随着RAG技术的进一步发展，模块化RAG概念被提出。它在结构上更加自由和灵活，引入了更多的具体功能模块，例如查询搜索引擎、融合多个回答。技术上将检索与微调分开，提供了更高的自定义性和灵活性。</li>
+</ul>
+<p>三个阶段之间是继承与发展的关系：</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2024/04/08/LLM-Learning1/p1.png" class title="p1">
+<h1 id="如何评价rag">如何评价RAG</h1>
+<blockquote>
+<p>🚩 <big><strong>评估指标</strong></big>：</p>
+<ol>
+<li>上下文相关性一一检索的上下文是否相关</li>
+<li>上下文回溯一评估检索到的上下文是否包含了问题的所有必要信息</li>
+<li>忠实度一一生成的答案是否与检索的内容一致，是否保留了原始信息</li>
+<li>答案相关性一一评估生成的答案是否与问题相关，以及是否提供了有用的信息</li>
+</ol>
+</blockquote>
+<h2 id="评估角度">评估角度</h2>
+<h3 id="rag三元组">RAG三元组</h3>
+<ul>
+<li><strong>Context Relevance</strong>：衡量召回的Context能够支持Query的程度。如果该得分低，反应出了召回了太多与Qury问题无关的内容，这些错误的召回知识会对LLM的最终回答造成一定影响。</li>
+<li><strong>Groundedness</strong>：衡量LLM的Response遵从召回的Context的程度。如果该得分低，反应出了LLM的回答不遵从召回的知识，那么回答出现幻觉的可能就越大。</li>
+<li><strong>Answer Relevance</strong>：衡量最终的Response回答对Query提问的相关度。如果该得分低，反应出了可能答不对题。</li>
+</ul>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2024/04/08/LLM-Learning1/p2.png" class title="p2">
+<h3 id="基于ground-truth的指标">基于Ground-truth的指标</h3>
+<ul>
+<li>Ground-truth是回答，那就可以<u>直接比较RAG应用的回答和ground-truth之间的相关性</u>，来端到端地进行衡量。</li>
+<li>让LLM生成评估测试集，来生成query和ground-truth,比如，在ragas的 <a href="https://docs.ragas.io/en/latest/concepts/testset_generation.html">Synthetic Test Data generation</a> 和 <a href="https://docs.llamaindex.ai/en/stable/examples/evaluation/QuestionGeneration.html">llama-index QuestionGeneration</a> 中都有一些集成好的方法，可以直接方便地使用。</li>
+<li>Ground-truth是知识文档中的chunks，对比ground-truth doc chunks和召回的contexts之间的相关性。</li>
+</ul>
+<h3 id="基于llm的定量评估">基于LLM的定量评估</h3>
+<ul>
+<li>有了GPT-4后，其可行性就提高了。我们只需设计好prompt,将要打分的一些文字放入prompt,访问GPT-4,就可以得到一个想要的得分结果。</li>
+</ul>
+<h2 id="评估工具">评估工具</h2>
+<ol>
+<li>RAGAs:<a href="https://docs.ragas.io/en/latest/concepts/metrics/context_recall.html">https://docs.ragas.io/en/latest/concepts/metrics/context_recall.html</a></li>
+<li>TruLens:<a href="https://www.trulens.org/trulens_eval/install/">https://www.trulens.org/trulens_eval/install/</a></li>
+<li>Llama-Index:<a href="https://docs.llamaindex.ai/en/stable/optimizing/evaluation/evaluation.html">https://docs.llamaindex.ai/en/stable/optimizing/evaluation/evaluation.html</a></li>
+<li>Phoenix:<a href="https://docs.arize.com/phoenix/">https://docs.arize.com/phoenix/</a></li>
+<li>DeepEval:<a href="https://github.com/confident-ai/deepeval">https://github.com/confident-ai/deepeval</a></li>
+<li>LangSmith:<a href="https://docs.smith.langchain.com/evaluation/evaluator-implementations">https://docs.smith.langchain.com/evaluation/evaluator-implementations</a></li>
+<li>OpenAI Evals:<a href="https://github.com/openai/evals">https://github.com/openai/evals</a></li>
+</ol>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2024/04/08/LLM-Learning1/p3.png" class title="p3">
+<h1 id="rag未来发展方向">RAG未来发展方向</h1>
+<h2 id="rag的垂直优化">RAG的垂直优化</h2>
+<ul>
+<li>长下文长度
+<ul>
+<li>检索内容过多，超过窗口限制怎么办？</li>
+<li>如果LLMs的上下文窗口不再受限制，RAG应该如何改进？</li>
+</ul>
+</li>
+<li>鲁棒性
+<ul>
+<li>检索到错误内容怎么处理？</li>
+<li>怎么对检索出来内容进行过滤和验证？</li>
+<li>怎么提高模型抗毒、抗噪声的能力。</li>
+</ul>
+</li>
+<li>与微调协同
+<ul>
+<li>如何同时发挥RAG和FT的效果，两者怎么协同，怎么组织，是串行、交替还是端到端？</li>
+</ul>
+</li>
+<li>Scaling-Law
+<ul>
+<li>RAG模型是否满足Scaling Law?</li>
+<li>RAG是否会，或是在什么场景下会出现Inverse Scaling Law的现象？</li>
+</ul>
+</li>
+<li>LLM的角色
+<ul>
+<li>LLMs可以用于检索(用LLMs的生成代替检索或检索LLMs记忆)、用于生成、用于评估。如何进一步挖掘LLMs在RAG中的潜力？</li>
+</ul>
+</li>
+</ul>
+<h2 id="工程实践">工程实践</h2>
+<ul>
+<li>如何降低超大规模语料的检索时延？</li>
+<li>如何保证检索出来内容不被大模型泄露？</li>
+</ul>
+<h2 id="rag的多模态的拓展">RAG的多模态的拓展</h2>
+<ul>
+<li>如何将RAG不断发展的技术和思想拓展到图片、音频、视频或代码等其他模态的数据中？</li>
+<li>一方面可以增强单一模态的任务，另一方面可以通过RAG的思想将多模态进行融合。</li>
+</ul>
+<h2 id="rag的生态">RAG的生态</h2>
+<ul>
+<li>RAG的应用已经不仅仅局限于问答系统，其影响力正在扩展到更多领域。现在，推荐系统、信息抽取和报告生成等多种任务都开始受益于RAG技术的应用。</li>
+<li>与此同时，RAG技术栈也在井喷。除了已知的Langchain和LlamaIndex等工具，市场上涌现出更多针对性的RAG工具，例如：用途定制化，满足更加聚焦场景的需求；使用简易化，进一步降低上手门槛的；功能专业化，逐渐面向生产环境。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>大模型</category>
+        <category>RAG</category>
+      </categories>
+      <tags>
+        <tag>大模型</tag>
+        <tag>RAG</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>主机和端口扫描</title>
+    <url>/2022/09/07/NetProtoSec-LearningNotes2/</url>
+    <content><![CDATA[<blockquote>
+<p>实验环境：Kali+Wireshark+Nmap</p>
+<ul>
+<li>Kali：是一个基于Debian的Linux发行版，预装了许多渗透测试软件，是一个很酷的“黑客操作系统”；</li>
+<li>Wireshark：是一个网络封包分析软件，功能是截取网络封包，并尽可能显示出最为详细的网络封包资料。Wireshark使用WinPCAP作为接口，直接与网卡进行数据报文交换；</li>
+<li>Nmap：即Network Mapper，是Linux下的网络扫描和嗅探工具包。</li>
+</ul>
+</blockquote>
+<h1 id="实验内容">实验内容</h1>
+<p>1.在Nmap中，使用nmap –sP xx指令实现主机扫描，用wireshark抓取扫描过程中的ARP请求和响应报文；通过ping指令发起ICMP扫描，用wireshark抓取扫描过程中的ICMP报文；</p>
+<p>2.在Nmap中，使用nmap –sS xx指令实现端口扫描，用wireshark抓取扫描过程中的TCP报文。</p>
+<h1 id="kali网络配置">kali网络配置</h1>
+<p>由于我使用的是校园网，因此我这里使用NAT模式。</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/07/NetProtoSec-LearningNotes2/p1.png" class title="p1"> 
+<h2 id="1-查看主机地址">1.查看主机地址</h2>
+<p>首先通过<code>win</code>+<code>R</code>输入cmd打开终端，然后通过<code>ipconfig</code>查看自己主机的ip地址，网关，网段（我这里选择VMnet8）。</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/07/NetProtoSec-LearningNotes2/p2.png" class title="p2"> 
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">IPv4 地址: 192.168.253.1</span><br><span class="line">子网掩码: 255.255.255.0</span><br></pre></td></tr></table></figure>
+<h2 id="2-修改-etc-network-interfaces文件">2.修改/etc/network/interfaces文件</h2>
+<p>然后，通过<code>vim /etc/network/interfaces</code>，设置静态IP：<br>
+address：把ip地址设置为自己主机网段中的一个，如：我的主机ip是192.168.253.1，这里设为192.168.253.36<br>
+gateway：在其中加上自己主机的网关，如：192.168.253.2<br>
+netmask：子网掩码照抄自己主机的，如：255.255.255.0</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">auto eth0</span><br><span class="line">iface eth0 inet static</span><br><span class="line">address 192.168.253.36</span><br><span class="line">netmask 255.255.255.0</span><br><span class="line">gateway 192.168.253.2</span><br></pre></td></tr></table></figure>
+<h2 id="3-修改dns">3.修改dns</h2>
+<p><code>vim /etc/resolv.conf</code>添加几个常用DNS：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">domain localdomain</span><br><span class="line">search localdomain</span><br><span class="line">nameserver 8.8.8.8</span><br><span class="line">nameserver 114.114.114.114</span><br><span class="line">nameserver 192.168.253.2</span><br></pre></td></tr></table></figure>
+<h2 id="4-重启网络">4.重启网络</h2>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">systemctl restart networking</span><br></pre></td></tr></table></figure>
+<p>或者</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;etc&#x2F;init.d&#x2F;networking restart</span><br></pre></td></tr></table></figure>
+<h2 id="5-测试">5.测试</h2>
+<p>输入<code>ifconfig -a</code>查看ip：</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/07/NetProtoSec-LearningNotes2/p3.png" class title="p3"> 
+<h2 id="nmap参数速查">nmap参数速查</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">命令</th>
+<th style="text-align:center">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">nmap IP</td>
+<td style="text-align:center">扫描IP</td>
+</tr>
+<tr>
+<td style="text-align:center">nmap -v IP</td>
+<td style="text-align:center">加强扫描</td>
+</tr>
+<tr>
+<td style="text-align:center">nmap IP1 IP2 …</td>
+<td style="text-align:center">扫描多IP</td>
+</tr>
+<tr>
+<td style="text-align:center">nmap a.b.c.*</td>
+<td style="text-align:center">扫描整个子网</td>
+</tr>
+<tr>
+<td style="text-align:center">nmap a.b.c.x,y,…</td>
+<td style="text-align:center">扫描多子网地址</td>
+</tr>
+<tr>
+<td style="text-align:center">nmap -iL xxx.txt</td>
+<td style="text-align:center">根据文件扫描多IP</td>
+</tr>
+<tr>
+<td style="text-align:center">nmap a.b.c.x-y</td>
+<td style="text-align:center">扫描子网IP范围</td>
+</tr>
+<tr>
+<td style="text-align:center">nmap a.b.c.* --exclude IP</td>
+<td style="text-align:center">排除指定IP扫描整个子网</td>
+</tr>
+<tr>
+<td style="text-align:center">nmap -A IP</td>
+<td style="text-align:center">全面的系统扫描,包括操作系统探测、版本探测、脚本扫描、路径跟踪</td>
+</tr>
+<tr>
+<td style="text-align:center">nmap -O IP</td>
+<td style="text-align:center">探测操作系统</td>
+</tr>
+<tr>
+<td style="text-align:center">nmap -sA/-PN IP</td>
+<td style="text-align:center">探测防火墙</td>
+</tr>
+<tr>
+<td style="text-align:center">nmap -sP a.b.c.*</td>
+<td style="text-align:center">探测在线主机</td>
+</tr>
+<tr>
+<td style="text-align:center">nmap -F IP</td>
+<td style="text-align:center">快速扫描</td>
+</tr>
+<tr>
+<td style="text-align:center">nmap -r IP</td>
+<td style="text-align:center">按顺序扫描</td>
+</tr>
+<tr>
+<td style="text-align:center">nmap -iflist</td>
+<td style="text-align:center">显示接口和路由信息</td>
+</tr>
+<tr>
+<td style="text-align:center">nmap -p n1,n2… IP</td>
+<td style="text-align:center">扫描指定端口</td>
+</tr>
+<tr>
+<td style="text-align:center">nmap -p T:n1,n2… IP</td>
+<td style="text-align:center">扫描TCP端口</td>
+</tr>
+<tr>
+<td style="text-align:center">nmap -sU n1,n2… IP</td>
+<td style="text-align:center">扫描UDP端口</td>
+</tr>
+<tr>
+<td style="text-align:center">nmap -sV IP</td>
+<td style="text-align:center">查看服务的版本</td>
+</tr>
+<tr>
+<td style="text-align:center">nmap -PS IP</td>
+<td style="text-align:center">TCP ACK扫描</td>
+</tr>
+<tr>
+<td style="text-align:center">nmap -PA IP</td>
+<td style="text-align:center">TCP SYN扫描</td>
+</tr>
+<tr>
+<td style="text-align:center">nmap -sS IP</td>
+<td style="text-align:center">隐蔽扫描</td>
+</tr>
+<tr>
+<td style="text-align:center">nmap -sN IP</td>
+<td style="text-align:center">TCP空扫描欺骗防火墙</td>
+</tr>
+</tbody>
+</table>
+<h1 id="主机扫描">主机扫描</h1>
+<blockquote>
+<p>开两个虚拟机：192.168.253.36 + 192.168.253.37</p>
+</blockquote>
+<h2 id="主机扫描参数">主机扫描参数</h2>
+<p>主机发现有时候也叫做ping扫描，有以下选项：<br>
+<code>-sL</code>（列表扫描）：它仅仅列出指定网络上的每台主机，不发送任何报文到目标主机；<br>
+<code>-sP</code>（Ping扫描）：该选项告诉Nmap仅仅进行ping扫描（主机发现），然后打印出对扫描做出响应的那些主机；Nmap会发一个ICMP ECHO请求和一个TCP报文到目标端口；<br>
+<code>-Pn</code>（无ping）：无Ping扫描通常用于防火墙禁止Ping的情况下，完全跳过Nmap发现阶段，且对目标主机进行端口扫描；<br>
+<code>-PS</code>（TCP SYN ping）：该选项发送了一个设置了SYN标志位的空TCP报文，需要root权限；<br>
+<code>-PA</code>（TCP ACK ping）：它与TCP SYN Ping扫描类似，不同的只是设置的TCP报文的标志位是ACK；<br>
+<code>-PU</code>（UDP  ping）：发送一个空的UDP报文到指定端口，很少用；<br>
+<code>-PE/PP/PM</code>（ICMP ECHO/时间戳/地址掩码Ping）；<br>
+<code>-ARP</code>（ARP ping）：该选项通常在扫描局域网时使用，在内网中使用ARP Ping是非常有效的。</p>
+<h2 id="实验过程">实验过程</h2>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">nmap -P 192.168.253.1/24</span><br></pre></td></tr></table></figure>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/07/NetProtoSec-LearningNotes2/p4.png" class title="p4"> 
+<p>wireshark抓取ARP请求和响应报文：</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/07/NetProtoSec-LearningNotes2/p5.png" class title="p5">
+<p>ping命令发起ICMP扫描，wireshark抓取ICMP报文：</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/07/NetProtoSec-LearningNotes2/p6.png" class title="p6">
+<h1 id="端口扫描">端口扫描</h1>
+<h2 id="端口扫描基础">端口扫描基础</h2>
+<h3 id="端口状态">端口状态</h3>
+<p>Nmap所识别的6个端口状态：</p>
+<ul>
+<li><code>Opend</code>：端口开启；</li>
+<li><code>Closed</code>： 端口关闭；</li>
+<li><code>Filtered</code>：端口被过滤，数据没有到达主机，返回的结果为空，数据被防火墙拦截了；</li>
+<li><code>Unfiltered</code>：未被过滤，数据有到达主机，但是不能识别端口的当前状态；</li>
+<li><code>Open|filtered</code>：开放或者被过滤，端口没有返回值，主要发生在UDP、IP、FIN、NULL和X mas扫描中；</li>
+<li><code>Closed|filtered</code>：关闭或者被过滤，只发生在IP ID idle扫描。</li>
+</ul>
+<h3 id="命令参数">命令参数</h3>
+<p>-<code>sS</code>（TCP SYN扫描）：半开扫描，很少有系统能把它记入系统日志。不过，需要Root权限；<br>
+-<code>sT</code>（TCP connect()扫描）:当SYN扫描不能用时，CP Connect()扫描就是默认的TCP扫描；<br>
+-<code>sN/-sF/-sX</code>（TCP Null/FIN/Xmas扫描）:能躲过一些无状态防火墙和报文过滤路由器；<br>
+-<code>p</code>：指定范围性扫描端口；<br>
+-<code>v</code>：详细信息。</p>
+<h2 id="实验过程">实验过程</h2>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">┌──(root㉿kali)-[~]</span><br><span class="line">└─<span class="comment"># nmap -sS 192.168.253.1</span></span><br><span class="line">Starting Nmap 7.92 ( https://nmap.org ) at 2022-09-07 22:42 EDT</span><br><span class="line">Nmap scan report <span class="keyword">for</span> 192.168.253.1</span><br><span class="line">Host is up (0.00019s latency).</span><br><span class="line">Not shown: 996 filtered tcp ports (no-response)</span><br><span class="line">PORT     STATE SERVICE</span><br><span class="line">135/tcp  open  msrpc</span><br><span class="line">139/tcp  open  netbios-ssn</span><br><span class="line">445/tcp  open  microsoft-ds</span><br><span class="line">4001/tcp open  newoak</span><br><span class="line">MAC Address: 00:50:56:C0:00:08 (VMware)</span><br><span class="line"></span><br><span class="line">Nmap <span class="keyword">done</span>: 1 IP address (1 host up) scanned <span class="keyword">in</span> 4.70 seconds</span><br></pre></td></tr></table></figure>
+<p>打开wireshark抓取tcp包，可看到：</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/07/NetProtoSec-LearningNotes2/p7.png" class title="p7">
+<p>扫描主机的135和139端口已经回发数据了。</p>
+]]></content>
+      <categories>
+        <category>国科大课程笔记</category>
+        <category>网络协议安全</category>
+      </categories>
+      <tags>
+        <tag>网络安全</tag>
+        <tag>Wireshark</tag>
+        <tag>Nmap</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>网络与系统安全随记</title>
+    <url>/2022/09/09/NetSysSec-LearningNotes/</url>
+    <content><![CDATA[<h1 id="20220909">20220909</h1>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/09/NetSysSec-LearningNotes/p1.png" class title="p1"> 
+]]></content>
+      <categories>
+        <category>国科大课程笔记</category>
+        <category>网络与系统安全</category>
+      </categories>
+      <tags>
+        <tag>网络与系统安全</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>雅思写作Task2</title>
     <url>/2022/08/27/IELTS2/</url>
     <content><![CDATA[<h2 id="大作文基本了解">大作文基本了解</h2>
@@ -1031,475 +1734,24 @@ Overall the consumption of the world’s resources is undergoing a dangerous rat
       </tags>
   </entry>
   <entry>
-    <title>LC旋转数组</title>
-    <url>/2021/05/20/LC%E6%97%8B%E8%BD%AC%E6%95%B0%E7%BB%84/</url>
-    <content><![CDATA[<h1 id="旋转数组">旋转数组</h1>
-<p>给定一个数组，将数组中的元素向右移动 k 个位置，其中 k 是非负数。</p>
-<blockquote>
-<p><strong>示例 1:</strong></p>
-<ul>
-<li>输入: nums = [1,2,3,4,5,6,7], k = 3</li>
-<li>输出: [5,6,7,1,2,3,4]</li>
-<li>解释:
-<ul>
-<li>向右旋转 1 步: [7,1,2,3,4,5,6]</li>
-<li>向右旋转 2 步: [6,7,1,2,3,4,5]</li>
-<li>向右旋转 3 步: [5,6,7,1,2,3,4]</li>
-</ul>
-</li>
-</ul>
-</blockquote>
-<blockquote>
-<p><strong>示例 2:</strong></p>
-<ul>
-<li>输入：nums = [-1,-100,3,99], k = 2</li>
-<li>输出：[3,99,-1,-100]</li>
-<li>解释:
-<ul>
-<li>向右旋转 1 步: [99,-1,-100,3]</li>
-<li>向右旋转 2 步: [3,99,-1,-100]</li>
-</ul>
-</li>
-</ul>
-</blockquote>
-<h2 id="方法一：傻瓜方法">方法一：傻瓜方法</h2>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">rotate</span><span class="params">(<span class="keyword">int</span>* nums, <span class="keyword">int</span> numsSize, <span class="keyword">int</span> k)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> length = numsSize;</span><br><span class="line">    <span class="keyword">int</span> <span class="built_in">list</span>[length];</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;length;i++)&#123;</span><br><span class="line">        <span class="built_in">list</span>[i]=nums[i];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;length;j++)&#123;</span><br><span class="line">        nums[(j+k)%length]=<span class="built_in">list</span>[j];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="方法二：旋转旋转旋转">方法二：旋转旋转旋转</h2>
-<p>举个例子：</p>
-<blockquote>
-<p>nums = [1,2,3,4,5,6,7], k = 3</p>
-<ol>
-<li>[7,6,5,4,3,2,1] (整个数组旋转)</li>
-<li>[[5,6,7],[1,2,3,4]]</li>
-</ol>
-</blockquote>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">rotate</span><span class="params">(<span class="keyword">int</span>* nums, <span class="keyword">int</span> numsSize, <span class="keyword">int</span> k)</span></span>&#123;</span><br><span class="line">    <span class="comment">//先旋转整个数组-》旋转前一部分-》旋转后一部分</span></span><br><span class="line">    k=k%numsSize;</span><br><span class="line">    reverse(nums,<span class="number">0</span>,numsSize<span class="number">-1</span>);</span><br><span class="line">    reverse(nums,<span class="number">0</span>,k<span class="number">-1</span>);</span><br><span class="line">    reverse(nums,k,numsSize<span class="number">-1</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">reverse</span><span class="params">(<span class="keyword">int</span>* nums, <span class="keyword">int</span> start, <span class="keyword">int</span> end)</span></span>&#123;</span><br><span class="line">    <span class="keyword">while</span>(start&lt;end)&#123;</span><br><span class="line">        <span class="keyword">int</span> tmp = nums[start];</span><br><span class="line">        nums[start++]=nums[end];</span><br><span class="line">        nums[end--]=tmp;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>刷题</category>
-      </categories>
-      <tags>
-        <tag>LC</tag>
-        <tag>数组</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>RAG 应知必会</title>
-    <url>/2024/04/08/LLM-Learning1/</url>
+    <title>计算机网络（课程）导图</title>
+    <url>/2022/09/03/ComputerNet-LearningNotes1/</url>
     <content><![CDATA[<blockquote>
-<p>参考：<a href="https://arxiv.org/abs/2312.10997">Retrieval-Augmented Generation for Large Language Models: A Survey</a></p>
+<p>概念性的东西，暂时只做导图</p>
 </blockquote>
-<h1 id="rag的发展">RAG的发展</h1>
-<p>RAG技术的发展可以从技术范式的角度分为几个阶段，主要包括：</p>
-<ul>
-<li><strong>朴素RAG(Naive RAG)</strong>:这是RAG技术的基出形式，包括三个基本步骤：索引(将文档库分割成较短的Chunk并通过编码器构建向量索引)、检索(根据问题和chunks的相似度检索相关文档片段)、生成(以检索到的上下文为条件，生成问题的回答)。</li>
-<li><strong>进阶的RAG(Advanced RAG)</strong>:为了解决Naive RAG在检索质量、响应生成质量以及增强过程中的挑战，Advanced RAG:范式被提出。它在数据索引、检索前和检索后都进行了额外处理，如更精细的数据清洗、设计文档结构和添加元数据等，以提升文本的<br>
-一致性、准确性和检索效率。</li>
-<li><strong>模块化RAG(Modular RAG)</strong>:随着RAG技术的进一步发展，模块化RAG概念被提出。它在结构上更加自由和灵活，引入了更多的具体功能模块，例如查询搜索引擎、融合多个回答。技术上将检索与微调分开，提供了更高的自定义性和灵活性。</li>
-</ul>
-<p>三个阶段之间是继承与发展的关系：</p>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2024/04/08/LLM-Learning1/p1.png" class title="p1">
-<h1 id="如何评价rag">如何评价RAG</h1>
-<blockquote>
-<p>🚩 <big><strong>评估指标</strong></big>：</p>
-<ol>
-<li>上下文相关性一一检索的上下文是否相关</li>
-<li>上下文回溯一评估检索到的上下文是否包含了问题的所有必要信息</li>
-<li>忠实度一一生成的答案是否与检索的内容一致，是否保留了原始信息</li>
-<li>答案相关性一一评估生成的答案是否与问题相关，以及是否提供了有用的信息</li>
-</ol>
-</blockquote>
-<h2 id="评估角度">评估角度</h2>
-<h3 id="rag三元组">RAG三元组</h3>
-<ul>
-<li><strong>Context Relevance</strong>：衡量召回的Context能够支持Query的程度。如果该得分低，反应出了召回了太多与Qury问题无关的内容，这些错误的召回知识会对LLM的最终回答造成一定影响。</li>
-<li><strong>Groundedness</strong>：衡量LLM的Response遵从召回的Context的程度。如果该得分低，反应出了LLM的回答不遵从召回的知识，那么回答出现幻觉的可能就越大。</li>
-<li><strong>Answer Relevance</strong>：衡量最终的Response回答对Query提问的相关度。如果该得分低，反应出了可能答不对题。</li>
-</ul>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2024/04/08/LLM-Learning1/p2.png" class title="p2">
-<h3 id="基于ground-truth的指标">基于Ground-truth的指标</h3>
-<ul>
-<li>Ground-truth是回答，那就可以<u>直接比较RAG应用的回答和ground-truth之间的相关性</u>，来端到端地进行衡量。</li>
-<li>让LLM生成评估测试集，来生成query和ground-truth,比如，在ragas的 <a href="https://docs.ragas.io/en/latest/concepts/testset_generation.html">Synthetic Test Data generation</a> 和 <a href="https://docs.llamaindex.ai/en/stable/examples/evaluation/QuestionGeneration.html">llama-index QuestionGeneration</a> 中都有一些集成好的方法，可以直接方便地使用。</li>
-<li>Ground-truth是知识文档中的chunks，对比ground-truth doc chunks和召回的contexts之间的相关性。</li>
-</ul>
-<h3 id="基于llm的定量评估">基于LLM的定量评估</h3>
-<ul>
-<li>有了GPT-4后，其可行性就提高了。我们只需设计好prompt,将要打分的一些文字放入prompt,访问GPT-4,就可以得到一个想要的得分结果。</li>
-</ul>
-<h2 id="评估工具">评估工具</h2>
-<ol>
-<li>RAGAs:<a href="https://docs.ragas.io/en/latest/concepts/metrics/context_recall.html">https://docs.ragas.io/en/latest/concepts/metrics/context_recall.html</a></li>
-<li>TruLens:<a href="https://www.trulens.org/trulens_eval/install/">https://www.trulens.org/trulens_eval/install/</a></li>
-<li>Llama-Index:<a href="https://docs.llamaindex.ai/en/stable/optimizing/evaluation/evaluation.html">https://docs.llamaindex.ai/en/stable/optimizing/evaluation/evaluation.html</a></li>
-<li>Phoenix:<a href="https://docs.arize.com/phoenix/">https://docs.arize.com/phoenix/</a></li>
-<li>DeepEval:<a href="https://github.com/confident-ai/deepeval">https://github.com/confident-ai/deepeval</a></li>
-<li>LangSmith:<a href="https://docs.smith.langchain.com/evaluation/evaluator-implementations">https://docs.smith.langchain.com/evaluation/evaluator-implementations</a></li>
-<li>OpenAI Evals:<a href="https://github.com/openai/evals">https://github.com/openai/evals</a></li>
-</ol>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2024/04/08/LLM-Learning1/p3.png" class title="p3">
-<h1 id="rag未来发展方向">RAG未来发展方向</h1>
-<h2 id="rag的垂直优化">RAG的垂直优化</h2>
-<ul>
-<li>长下文长度
-<ul>
-<li>检索内容过多，超过窗口限制怎么办？</li>
-<li>如果LLMs的上下文窗口不再受限制，RAG应该如何改进？</li>
-</ul>
-</li>
-<li>鲁棒性
-<ul>
-<li>检索到错误内容怎么处理？</li>
-<li>怎么对检索出来内容进行过滤和验证？</li>
-<li>怎么提高模型抗毒、抗噪声的能力。</li>
-</ul>
-</li>
-<li>与微调协同
-<ul>
-<li>如何同时发挥RAG和FT的效果，两者怎么协同，怎么组织，是串行、交替还是端到端？</li>
-</ul>
-</li>
-<li>Scaling-Law
-<ul>
-<li>RAG模型是否满足Scaling Law?</li>
-<li>RAG是否会，或是在什么场景下会出现Inverse Scaling Law的现象？</li>
-</ul>
-</li>
-<li>LLM的角色
-<ul>
-<li>LLMs可以用于检索(用LLMs的生成代替检索或检索LLMs记忆)、用于生成、用于评估。如何进一步挖掘LLMs在RAG中的潜力？</li>
-</ul>
-</li>
-</ul>
-<h2 id="工程实践">工程实践</h2>
-<ul>
-<li>如何降低超大规模语料的检索时延？</li>
-<li>如何保证检索出来内容不被大模型泄露？</li>
-</ul>
-<h2 id="rag的多模态的拓展">RAG的多模态的拓展</h2>
-<ul>
-<li>如何将RAG不断发展的技术和思想拓展到图片、音频、视频或代码等其他模态的数据中？</li>
-<li>一方面可以增强单一模态的任务，另一方面可以通过RAG的思想将多模态进行融合。</li>
-</ul>
-<h2 id="rag的生态">RAG的生态</h2>
-<ul>
-<li>RAG的应用已经不仅仅局限于问答系统，其影响力正在扩展到更多领域。现在，推荐系统、信息抽取和报告生成等多种任务都开始受益于RAG技术的应用。</li>
-<li>与此同时，RAG技术栈也在井喷。除了已知的Langchain和LlamaIndex等工具，市场上涌现出更多针对性的RAG工具，例如：用途定制化，满足更加聚焦场景的需求；使用简易化，进一步降低上手门槛的；功能专业化，逐渐面向生产环境。</li>
-</ul>
+<h1 id="网络-课程-概述">网络（课程）概述</h1>
+<p>如图：</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/03/ComputerNet-LearningNotes1/p1.png" class title="p1">
+<h1 id="网络基础：网络模型与直连网络">网络基础：网络模型与直连网络</h1>
+<p>如图：</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/03/ComputerNet-LearningNotes1/p2.png" class title="p2">
 ]]></content>
       <categories>
-        <category>大模型</category>
-        <category>RAG</category>
+        <category>国科大课程笔记</category>
+        <category>计算机网络</category>
       </categories>
       <tags>
-        <tag>大模型</tag>
-        <tag>RAG</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>RAG开发的痛点以及解决方案</title>
-    <url>/2024/04/10/LLM-Learning2/</url>
-    <content><![CDATA[<div class="hide-toggle" style="border: 1px solid bg"><div class="hide-button toggle-title" style="background-color: bg;color: color"><i class="fas fa-caret-right fa-fw"></i><span>参考</span></div>
-    <div class="hide-content"><ul>
-<li><a href="https://towardsdatascience.com/12-rag-pain-points-and-proposed-solutions-43709939a28c">12 RAG Pain Points and Proposed Solutions</a></li>
-<li><a href="https://baoyu.io/translations/rag/12-rag-pain-points-and-proposed-solutions">https://baoyu.io/translations/rag/12-rag-pain-points-and-proposed-solutions</a></li>
-</ul>
-</div></div>
-<h1 id="引言">引言</h1>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2024/04/10/LLM-Learning2/p1.webp" class title="p1">
-<p>图源自 Barnett 等人的研究 <a href="https://baoyu.io/translations/ai-paper/2401.05856v1-seven-failure-points-when-engineering-a-retrieval-augmented-generation-system">工程化检索增强生成系统时的七大挑战</a>。后面会介绍上述7大挑战，并且补充5个额外的挑战，以及它们的解决方案：</p>
-<ul>
-<li>痛点 1：缺失内容</li>
-<li>痛点 2：关键文档被遗漏</li>
-<li>痛点 3：文档整合的长度限制 —— 超出上下文</li>
-<li>痛点 4：提取困难</li>
-<li>痛点 5：格式错误</li>
-<li>痛点 6：缺乏具体细节</li>
-<li>痛点 7：回答不全面</li>
-<li>痛点 8：数据摄入的可扩展性问题</li>
-<li>痛点 9：结构化数据的问答</li>
-<li>痛点 10：从复杂 PDF 文档提取数据</li>
-<li>痛点 11：备用模型策略</li>
-<li>痛点 12：大语言模型的安全性</li>
-</ul>
-<h1 id="痛点1：缺失内容">痛点1：缺失内容</h1>
-<p><strong>具体描述</strong>：当提出的问题无法从可用文档中找到答案时，RAG系统可能会回答&quot;对不起，我不知道”，但如果问题与内容相关却没有答案，系统可能会被误导提供错误的回答。</p>
-<p><strong>解决方案</strong>：</p>
-<ul>
-<li>
-<p>数据清洗，构建高质量的数据</p>
-</li>
-<li>
-<p>prompt优化</p>
-<ul>
-<li>例如，通过设置提示：“如果你对答案不确定，就告诉我你不知道”，可以鼓励模型承认其局限性，并更透明地表达不确定性。虽然无法保证百分百的准确率，但在数据清洗之后，设计恰当的提示是提高回答质量的有效手段之一。</li>
-</ul>
-</li>
-</ul>
-<h1 id="痛点2：关键文档被遗漏">痛点2：关键文档被遗漏</h1>
-<p><strong>具体描述</strong>：问题的答案在文档中，但排名没有足够高以返回给用户。（理论上所有文档都会被排名并用于下一步，但实际上只返回排名最高的K个文档）。</p>
-<p><strong>解决方案</strong>：</p>
-<ul>
-<li>
-<p>通过调整<code>chunk_size</code>和<code>similarity_top_k</code>两个参数优化检索效果</p>
-<ul>
-<li><a href="https://medium.com/gitconnected/automating-hyperparameter-tuning-with-llamaindex-72fdd68e3b90?sk=0a29f2025b965040b9b1defd9525e4eb">通过 LlamaIndex 实现超参数自动调整中</a></li>
-<li><a href="https://docs.llamaindex.ai/en/stable/examples/param_optimizer/param_optimizer.html">对 RAG 进行超参数优化</a></li>
-</ul>
-</li>
-<li>
-<p>检索结果的优化排序（Rerank算法）</p>
-<ul>
-<li><a href="https://docs.llamaindex.ai/en/stable/examples/node_postprocessor/CohereRerank.html">优化排序的前后差异</a></li>
-<li>另外，通过各种嵌入技术和排序器，可以对检索性能进行评估和提升，详见<a href="https://blog.llamaindex.ai/boosting-rag-picking-the-best-embedding-reranker-models-42d079022e83">提升 RAG 性能：挑选最优的嵌入技术和排序模型</a>，由 Ravi Theja 撰写。</li>
-<li>定制化的排序器经过微调后能够实现更优的检索性能，具体实施方法请参阅<a href="https://blog.llamaindex.ai/improving-retrieval-performance-by-fine-tuning-cohere-reranker-with-llamaindex-16c0c1f9b33b">通过微调 Cohere 排序器与 LlamaIndex 提升检索效果</a></li>
-</ul>
-</li>
-</ul>
-<h1 id="痛点3：文档整合的长度限制一超出上下文">痛点3：文档整合的长度限制一超出上下文</h1>
-<p><strong>具体描述</strong>：数据库检索到包含答案的文档，但这些文档没有被包含在生成答案的上下文中。当数据库返回许多文档时，需要进行整合处理以检索答案。</p>
-<p><strong>解决方案</strong>：</p>
-<ul>
-<li>
-<p>调整检索策略：比如：基础检索、知识图谱检索等</p>
-</li>
-<li>
-<p>微调嵌入技术：如果使用的是开源嵌入模型，对其进行微调是提高检索准确度的有效手段。<a href="https://docs.llamaindex.ai/en/stable/examples/finetuning/embeddings/finetune_embedding.html">嵌入模型微调指南</a></p>
-</li>
-</ul>
-<h1 id="痛点4：提取困难">痛点4：提取困难</h1>
-<p><strong>具体描述</strong>：答案存在于上下文中，但大型语言模型未能提取出正确的答案。这通常发生在上下文中存在太多噪声或矛盾信息时。</p>
-<p><strong>解决方案</strong>：</p>
-<ul>
-<li>
-<p>数据清洗</p>
-</li>
-<li>
-<p>提示信息压缩，可以参考：<a href="https://rzv2chzpkh.feishu.cn/wiki/FIMJwPPyGiKJmAkuhJGcBrAonKe#CZQ6dQ58HotZswxkNTrcqZiwnGf">LongLLMLingua.pdf</a></p>
-</li>
-<li>
-<p>LongContextReorder（长内容优先排序）：<a href="https://arxiv.org/abs/2307.03172">研究</a>发现，当关键数据被放置在输入内容的开始或结尾时，往往能够获得最佳的性能表现。为了解决信息在输入中间部分“迷失”的问题，LongContextReorder 应运而生，它通过重新排序检索到的节点来优化处理，特别适用于需要处理大量顶级结果的情形。</p>
-</li>
-</ul>
-<h1 id="痛点5：格式错误">痛点5：格式错误</h1>
-<p><strong>具体描述</strong>：问题涉及以特定格式（如表格或列表）提取信息，但大型语言模型忽略了指令。</p>
-<p><strong>解决方案</strong>：</p>
-<ul>
-<li>
-<p>prompt优化</p>
-</li>
-<li>
-<p>输出解析：可以在以下方面帮助确保获得期望的输出：为任何提示/查询提供格式化指令；对大语言模型的输出进行“解析”</p>
-<ul>
-<li><a href="https://docs.llamaindex.ai/en/stable/module_guides/querying/structured_outputs/pydantic_program.html">Pydantic程序</a></li>
-</ul>
-</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pydantic <span class="keyword">import</span> BaseModel</span><br><span class="line"><span class="keyword">from</span> typing <span class="keyword">import</span> List</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> llama_index.program <span class="keyword">import</span> OpenAIPydanticProgram</span><br><span class="line"></span><br><span class="line"><span class="comment"># Define output schema (without docstring)</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Song</span>(<span class="params">BaseModel</span>):</span></span><br><span class="line">    title: <span class="built_in">str</span></span><br><span class="line">    length_seconds: <span class="built_in">int</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Album</span>(<span class="params">BaseModel</span>):</span></span><br><span class="line">    name: <span class="built_in">str</span></span><br><span class="line">    artist: <span class="built_in">str</span></span><br><span class="line">    songs: List[Song]</span><br><span class="line"></span><br><span class="line"><span class="comment"># Define openai pydantic program</span></span><br><span class="line">prompt_template_str = <span class="string">&quot;&quot;&quot;\</span></span><br><span class="line"><span class="string">Generate an example album, with an artist and a list of songs. \</span></span><br><span class="line"><span class="string">Using the movie &#123;movie_name&#125; as inspiration.\</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line">program = OpenAIPydanticProgram.from_defaults(</span><br><span class="line">    output_cls=Album, prompt_template_str=prompt_template_str, verbose=<span class="literal">True</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Run program to get structured output</span></span><br><span class="line">output = program(</span><br><span class="line">    movie_name=<span class="string">&quot;The Shining&quot;</span>, description=<span class="string">&quot;Data model for an album.&quot;</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-<h1 id="痛点6：缺乏具体细节">痛点6：缺乏具体细节</h1>
-<p><strong>具体描述</strong>：回答在响应中返回，但不够具体或过于具体，无法满足用户的需求。当RAG系统设计者对给定问题有预期结果时（例如针对学生的教学内容），就会发生这种情况。</p>
-<p><strong>解决方案</strong>：</p>
-<ul>
-<li>进阶检索技巧：从小到大的信息聚合检索、递归式检索方法
-<ul>
-<li>参考文章：<a href="https://towardsdatascience.com/jump-start-your-rag-pipelines-with%E9%AB%98%E7%BA%A7%E6%A3%80%E7%B4%A2-llamapacks-%E5%92%8C-lighthouz-ai-80a09b7c7d9d?sk=14e50a68f9ef825aaa6634365c7d9617">如何通过高级检索 LlamaPacks 优化您的 RAG 流程，并利用 Lighthouz AI 进行性能基准测试</a></li>
-</ul>
-</li>
-</ul>
-<h1 id="痛点7：回答不全面">痛点7：回答不全面</h1>
-<p><strong>具体描述</strong>：回答不完整并不是错误的，但遗漏了一些信息，尽管这些信息在上下文中可用并且可以提取。例如，对于&quot;这些文件A、B和C的关键点是什么？&quot;这样的问题，更好的方法是分别询问这些问题。</p>
-<p><strong>解决方案</strong>：</p>
-<ul>
-<li>
-<p>查询变换的技巧：一个有效提升凡AG处理能力的策略是增设一个查询理解层，即在实际检索知识库之前进行一系列的查询变换。具体来说，我们有以下四种变换方式：</p>
-<ul>
-<li>路由：在不改变原始查询的基础上，识别并定向到相关的工具子集，并将这些工具确定为处理该查询的首选。</li>
-<li>查询改写：在保留选定工具的同时，通过多种方式重构查询语句，以便跨相同的工具集进行应用。</li>
-<li>细分问题：将原查询拆解为若干个更小的问题，每个问题都针对特定的工具进行定向，这些工具是根据它们的元数据来选定的。</li>
-<li>ReAct 代理工具选择：根据原始查询判断最适用的工具，并为在该工具上运行而特别构造的查询。</li>
-</ul>
-</li>
-<li>
-<p>参考文章：<a href="https://towardsdatascience.com/advanced-query-transformations-to-improve-rag-11adca9b19d1">提升 RAG 性能的高级查询变换技巧</a></p>
-</li>
-</ul>
-<h1 id="痛点8：数据摄入的可扩展性问题">痛点8：数据摄入的可扩展性问题</h1>
-<p><strong>具体描述</strong>：在RAG系统中，数据摄入的可扩展性问题指的是系统在有效管理和处理大规模数据时面临的挑战，这可能导致性能瓶颈甚至系统故障。这类问题可能会造成数据摄入时间过长、系统过载、数据质量下降以及可用性受限等现象。</p>
-<p><strong>解决方案</strong>：</p>
-<ul>
-<li>加速文档处理：并行摄取技术，参考：LlamaIndex 提供的<a href="https://github.com/run-llama/llama_index/blob/main/docs/examples/ingestion/parallel_execution_ingestion_pipeline.ipynb?__s=db5ef5gllwa79ba7a4r2&amp;utm_source=drip&amp;utm_medium=email&amp;utm_campaign=LlamaIndex+news%2C+2024-01-16">详细教程</a>。</li>
-</ul>
-<h1 id="痛点9：结构化数据的问答">痛点9：结构化数据的问答</h1>
-<p><strong>具体描述</strong>：解读用户的查询并准确检索到所需的结构化数据是一项挑战，尤其是当面对复杂或模糊的查询请求时。这一挑战由于文本到SQL的转换不够灵活，以及当前大语言模型在处理这些任务上的局限性而更加复杂。</p>
-<p><strong>解决方案</strong>：</p>
-<ul>
-<li>
-<p>链式思维表格包：适合处理包含多重信息的复杂表格单元问题，通过逐步精确地切割和解析数据，直至找到所需的数据子集，显著提高了对表格数据的查询效率，参考：<a href="https://arxiv.org/abs/2401.04398">链式表格原论文</a></p>
-</li>
-<li>
-<p>混合自洽（多数投票法）查询引擎包：原文见<a href="https://arxiv.org/pdf/2312.16702v1.pdf">重新思考大语言模型如何理解表格数据</a></p>
-</li>
-</ul>
-<h1 id="痛点10：从复杂pdf中提取数据">痛点10：从复杂PDF中提取数据</h1>
-<p><strong>具体描述</strong>：在从复杂PDF文档，如嵌入表格的文档中提取数据进行问答时，传统的检索方法往往无法达到目的。需要一个更高效的方法来处理这种复杂的PDF数据提取需求。</p>
-<p><strong>解决方案</strong>：</p>
-<ul>
-<li>嵌入式表格检索技术：LlamaIndex 提出了一种解决方案——`EmbeddedTablesUnstructuredRetrieverPack</li>
-</ul>
-<h1 id="痛点11：备用模型策略">痛点11：备用模型策略</h1>
-<p><strong>具体描述</strong>：在使用大语言模型过程中，可能会担心模型可能会遇到问题，比如遇到OpenAI模型的访问频率限制错误。这时候就需要一个或多个备用模型作为后备，以防主模型出现故障。</p>
-<p><strong>解决方案</strong>：</p>
-<ul>
-<li>
-<p>Neutrino Router：Neutrino路由器能够通过一个预测模型，智能地选择最适合输入问题的大语言模型。</p>
-</li>
-<li>
-<p>OpenRouter：OpenRouter提供了一个一站式的API接口，能够接入任何大语言模型。不仅能找到市场上任一模型的最低价格，还能在首选的服务提供商遇到问题时，自动切换到其他选项。</p>
-</li>
-</ul>
-<h1 id="痛点12：llm的安全性：">痛点12：LLM的安全性：</h1>
-<p><strong>具体描述</strong>：在设计和开发 AI 系统时，如何有效防止恶意输入、确保输出安全、保护敏感信息不被泄露等问题，都是每位 AI 设计师和开发者需要面对的重要挑战。</p>
-<p><strong>解决方案</strong>：</p>
-<ul>
-<li>Llama Guard：保护大语言模型的新工具，借鉴7-B Llama 2的技术，Llama Guard旨在通过评估输入（例如分析提问的内容）和输出（即对回答的分类）来帮助大语言模型 (LLMs) 鉴别内容是否安全。它本身也使用了大语言模型技术，能够判断某个问题或回答是否安全，若发现不安全的内容，还会详细列出违反的具体规则。</li>
-</ul>
-]]></content>
-      <categories>
-        <category>大模型</category>
-        <category>RAG</category>
-      </categories>
-      <tags>
-        <tag>大模型</tag>
-        <tag>RAG</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>论文阅读记录 —— LLM 相关</title>
-    <url>/2024/07/20/LLM-Learning4/</url>
-    <content><![CDATA[<h1 id="learning-to-reason-and-memorize-with-self-notes">Learning to Reason and Memorize with Self-Notes</h1>
-<ul>
-<li>原文链接：<a href="https://arxiv.org/abs/2404.14963">Learning to Reason and Memorize with Self-Notes</a></li>
-<li>发表：NeurIPS 2023</li>
-<li>时间：2023</li>
-<li>机构：Meta AI</li>
-</ul>
- <img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2024/07/20/LLM-Learning4/p2.png" class title="p2">
-<h2 id="研究动机-motivation">研究动机（Motivation）</h2>
-<p>大型语言模型（LLMs）在<strong>多步推理</strong>任务中表现不佳，并且<strong>无法保留先前的推理步骤</strong>以供将来使用。这限制了它们在复杂问题解答中的性能。</p>
-<h2 id="解决的问题">解决的问题</h2>
-<p>论文提出了一种名为“Self-Notes”的方法，旨在解决上述问题。这种方法允许<strong>模型在阅读上下文时，随时偏离输入内容生成明确的推理标记（即“Self-Notes”）</strong>，以增强其记忆并实现多步推理。</p>
-<h2 id="方法">方法</h2>
-<p>（需要微调）</p>
-<ul>
-<li>Self-Notes：与链式思维（Chain-of-Thought）或草稿板（Scratchpad）方法不同，Self-Notes 允许模型<strong>在任何时候</strong>插入与输入上下文和问题交织的内部推理笔记。</li>
-<li>模型架构：考虑了一个自回归的变换器模型，该模型在生成最终输出之前，可以通过生成“笔记标记”来丰富上下文。</li>
-</ul>
-<h2 id="思考">思考</h2>
-<ul>
-<li>优势：可以帮助语言模型更好地处理长序列或复杂任务，且不需要太多的监督信号。</li>
-<li>关键思路：与草稿板方法不同，本论文中的模型可以随时偏离输入上下文以明确思考。这种方法允许模型在阅读上下文的同时回忆信息并进行推理，从而扩展其记忆并实现多步推理。相比当前领域的研究状况，这篇论文的思路在于通过自我笔记的方式来解决有限上下文记忆和多步推理的问题。</li>
-</ul>
-<h1 id="dup">DUP</h1>
-<p>Achieving &gt;97% on GSM8K: Deeply Understanding the Problems Makes LLMs Better Solvers for Math Word Problems</p>
-<ul>
-<li>发表：<a href="https://arxiv.org/abs/2404.14963">https://arxiv.org/abs/2404.14963</a></li>
-<li>时间：2024.5.29</li>
-<li>机构：武汉大学 &amp; 悉尼大学 &amp; 南洋理工大学</li>
-</ul>
- <img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2024/07/20/LLM-Learning4/p1.png" class title="p1">
-<h2 id="摘要总结">摘要总结</h2>
-<p>大型语言模型（LLMs）在各种自然语言处理任务中表现出色，但在处理复杂的数学文字题时，它们的推理能力常常不尽人意。这类问题通常包含三种错误：语义理解错误、计算错误和步骤遗漏错误。尽管已有研究关注计算错误和步骤遗漏错误，但语义理解错误作为限制LLMs性能的主要因素，却被忽视了。<br>
-论文提出了一种简单但有效的方法，称为“Deeply Understanding the Problems”（DUP），通过解决语义理解错误来提高LLMs<strong>解决数学问题</strong>的能力。DUP方法的核心是<strong>鼓励LLMs深入理解问题</strong>，<strong>提取关键的解题信息</strong>，以进行更好的推理。</p>
-<h2 id="研究动机">研究动机</h2>
-<p>尽管 LLMs 在各种自然语言理解和生成任务中表现出色，但它们在推理任务（例如数学推理、常识推理和符号推理）中的表现往往不尽如人意。CoT prompting 方法虽然能够显著提升 LLMs 的推理能力，但它在处理复杂数学问题，尤其是数学应用题时，仍然存在以下三个主要问题：</p>
-<ul>
-<li>语义误解错误: LLMs 无法准确理解问题的核心内容，导致无法提取出解决问题的关键信息。</li>
-<li>计算错误: LLMs 在进行计算时可能出现错误，导致最终答案不正确。</li>
-<li>步骤缺失错误: LLMs 可能会遗漏解决问题的某个步骤，导致推理过程不完整。<br>
-现有的研究主要集中在解决计算错误和步骤缺失错误，而<strong>对语义误解错误关注较少</strong>。然而，语义误解错误是限制 LLMs 推理能力的主要因素。<br>
-因此，文章提出了一种名为 Deeply Understanding the Problems (DUP) 的方法，旨在通过解决语义误解错误来提升 LLMs 的数学问题解决能力。</li>
-</ul>
-<h2 id="方法">方法</h2>
-<p>DUP（Deeply Understanding the Problems）方法是一种针对大型语言模型（LLMs）的提示策略，旨在提高它们解决数学文字题的能力。以下是DUP方法的详细步骤和特点：</p>
-<ol>
-<li>
-<p>揭示核心问题（Reveal the Core Question）<br>
-这是DUP方法的第一阶段，目的是从复杂和冗长的问题描述中明确问题的核心。通过设计一个提示，要求LLM明确提取问题的核心部分，从而帮助模型集中注意力于问题的目标。</p>
-</li>
-<li>
-<p>提取解题信息（Extract the Problem-solving Information）<br>
-第二阶段进一步从问题描述中提取对解决核心问题至关重要的信息。这一步骤通过一个提示来实现，该提示要求LLM列出与核心问题直接相关的最有用的信息。</p>
-</li>
-<li>
-<p>生成并提取答案（Generate and Extract the Answer）<br>
-在前两个阶段的基础上，第三阶段将核心问题和解题信息结合起来，生成详细的回答，并从中提取最终答案。这一步骤通过一个模板提示来实现，该模板明确指出了目标和解决问题所需的必要信息。</p>
-</li>
-</ol>
-<h2 id="实验">实验</h2>
-<ul>
-<li>数据集:
-<ul>
-<li>算术推理数据集: GSM8K、SVAMP、MultiArith、AddSub、AQuA、SingleEq</li>
-<li>常识推理数据集: CommonsenseQA、StrategyQA</li>
-<li>符号推理数据集: Last Letter、Coin Flip</li>
-</ul>
-</li>
-<li>基线方法：
-<ul>
-<li>零样本方法: Zero-shot CoT、Least-to-Most、Zero-shot PS+</li>
-<li>少样本方法: Manual-CoT、Auto-CoT</li>
-</ul>
-</li>
-<li>实验设置:
-<ul>
-<li>LLMs: GPT-3.5-Turbo 和 GPT-4</li>
-<li>解码策略: 具有自一致性（SC）的解码策略（Wang et al., 2023b）</li>
-</ul>
-</li>
-<li>实验结果:
-<ul>
-<li>DUP 方法在所有推理数据集上均取得了显著优于其他方法的性能。</li>
-<li>DUP 方法的零样本性能甚至超过了少样本方法的性能。</li>
-<li>DUP 方法在 GSM8K 和 SVAMP 数据集上取得了新的 SOTA 结果。</li>
-</ul>
-</li>
-<li>消融实验:
-<ul>
-<li>探究 DUP 方法中各个阶段的重要性。</li>
-<li>探究如何在不降低性能的情况下降低 DUP 方法的推理成本。（将三阶段提示合并为一个提示）</li>
-</ul>
-</li>
-<li>讨论和分析:
-<ul>
-<li>分析 DUP 方法与 SC 解码的兼容性。</li>
-<li>验证 DUP 方法是否可以应用于开源 LLMs。</li>
-<li>分析更准确的核心问题和问题解决信息如何提升推理性能。</li>
-<li>进行错误分析，验证 DUP 方法是否有效减少了语义误解错误。</li>
-</ul>
-</li>
-</ul>
- <!-- <img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2024/07/20/LLM-Learning4/p1.png" class="" title="p1"> -->
-<h1 id="re-reading-improves-reasoning-in-large-language-models">Re-Reading Improves Reasoning in Large Language Models</h1>
-<p>重读能提升大模型推理能力</p>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2024/07/20/LLM-Learning4/p3.png" style="zoom:45%;">
-<h2 id="研究背景">研究背景</h2>
-<p>本文旨在介绍一种简单有效的提示方法“重复阅读(RE2)”以提升大型语言模型(LLMs)的推理能力。这一方法受到人类在学习和解决问题时倾向于<strong>重复阅读问题以提高理解</strong>的观察启发。</p>
-<h2 id="研究目标和假设">研究目标和假设</h2>
-<p>本文旨在探讨重复阅读问题是否能提升LLMs的推理性能。关键假设是，重复阅读问题可以帮助LLMs更深入地理解输入，从而提高推理能力。</p>
-<h2 id="研究方法">研究方法</h2>
-<p>本文介绍了“RE2”<strong>提示</strong>方法，即在提示中重复两次输入问题。这可以作为一个“即插即用”模块，与各种诱导思考的提示策略（如思维链和程序辅助语言）集成使用。</p>
-<h2 id="结果和发现">结果和发现</h2>
-<p>论文评估了RE2在各种推理基准测试(包括算术、常识和符号推理任务)上的有效性。<br>
-研究结果显示，RE2 能够持续提升LLMs的推理性能，包括ChatGPT等指令微调(IFT)模型和 LLaMA-2 等非IFT模型。RE2与各种诱导思考的提示方法兼容,也可以有效地与少样本提示和自一致性方法相结合。</p>
-<h2 id="思考">思考</h2>
-<p>很简单的方法，可以学习其写作技巧。</p>
-]]></content>
-      <categories>
-        <category>大模型</category>
-        <category>论文阅读</category>
-      </categories>
-      <tags>
-        <tag>大模型</tag>
-        <tag>论文阅读</tag>
+        <tag>计算机网络</tag>
       </tags>
   </entry>
   <entry>
@@ -1651,399 +1903,8 @@ Overall the consumption of the world’s resources is undergoing a dangerous rat
         <category>网络协议安全</category>
       </categories>
       <tags>
+        <tag>网络安全</tag>
         <tag>网络协议</tag>
-        <tag>网络安全</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>主机和端口扫描</title>
-    <url>/2022/09/07/NetProtoSec-LearningNotes2/</url>
-    <content><![CDATA[<blockquote>
-<p>实验环境：Kali+Wireshark+Nmap</p>
-<ul>
-<li>Kali：是一个基于Debian的Linux发行版，预装了许多渗透测试软件，是一个很酷的“黑客操作系统”；</li>
-<li>Wireshark：是一个网络封包分析软件，功能是截取网络封包，并尽可能显示出最为详细的网络封包资料。Wireshark使用WinPCAP作为接口，直接与网卡进行数据报文交换；</li>
-<li>Nmap：即Network Mapper，是Linux下的网络扫描和嗅探工具包。</li>
-</ul>
-</blockquote>
-<h1 id="实验内容">实验内容</h1>
-<p>1.在Nmap中，使用nmap –sP xx指令实现主机扫描，用wireshark抓取扫描过程中的ARP请求和响应报文；通过ping指令发起ICMP扫描，用wireshark抓取扫描过程中的ICMP报文；</p>
-<p>2.在Nmap中，使用nmap –sS xx指令实现端口扫描，用wireshark抓取扫描过程中的TCP报文。</p>
-<h1 id="kali网络配置">kali网络配置</h1>
-<p>由于我使用的是校园网，因此我这里使用NAT模式。</p>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/07/NetProtoSec-LearningNotes2/p1.png" class title="p1"> 
-<h2 id="1-查看主机地址">1.查看主机地址</h2>
-<p>首先通过<code>win</code>+<code>R</code>输入cmd打开终端，然后通过<code>ipconfig</code>查看自己主机的ip地址，网关，网段（我这里选择VMnet8）。</p>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/07/NetProtoSec-LearningNotes2/p2.png" class title="p2"> 
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">IPv4 地址: 192.168.253.1</span><br><span class="line">子网掩码: 255.255.255.0</span><br></pre></td></tr></table></figure>
-<h2 id="2-修改-etc-network-interfaces文件">2.修改/etc/network/interfaces文件</h2>
-<p>然后，通过<code>vim /etc/network/interfaces</code>，设置静态IP：<br>
-address：把ip地址设置为自己主机网段中的一个，如：我的主机ip是192.168.253.1，这里设为192.168.253.36<br>
-gateway：在其中加上自己主机的网关，如：192.168.253.2<br>
-netmask：子网掩码照抄自己主机的，如：255.255.255.0</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">auto eth0</span><br><span class="line">iface eth0 inet static</span><br><span class="line">address 192.168.253.36</span><br><span class="line">netmask 255.255.255.0</span><br><span class="line">gateway 192.168.253.2</span><br></pre></td></tr></table></figure>
-<h2 id="3-修改dns">3.修改dns</h2>
-<p><code>vim /etc/resolv.conf</code>添加几个常用DNS：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">domain localdomain</span><br><span class="line">search localdomain</span><br><span class="line">nameserver 8.8.8.8</span><br><span class="line">nameserver 114.114.114.114</span><br><span class="line">nameserver 192.168.253.2</span><br></pre></td></tr></table></figure>
-<h2 id="4-重启网络">4.重启网络</h2>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">systemctl restart networking</span><br></pre></td></tr></table></figure>
-<p>或者</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;etc&#x2F;init.d&#x2F;networking restart</span><br></pre></td></tr></table></figure>
-<h2 id="5-测试">5.测试</h2>
-<p>输入<code>ifconfig -a</code>查看ip：</p>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/07/NetProtoSec-LearningNotes2/p3.png" class title="p3"> 
-<h2 id="nmap参数速查">nmap参数速查</h2>
-<table>
-<thead>
-<tr>
-<th style="text-align:center">命令</th>
-<th style="text-align:center">描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">nmap IP</td>
-<td style="text-align:center">扫描IP</td>
-</tr>
-<tr>
-<td style="text-align:center">nmap -v IP</td>
-<td style="text-align:center">加强扫描</td>
-</tr>
-<tr>
-<td style="text-align:center">nmap IP1 IP2 …</td>
-<td style="text-align:center">扫描多IP</td>
-</tr>
-<tr>
-<td style="text-align:center">nmap a.b.c.*</td>
-<td style="text-align:center">扫描整个子网</td>
-</tr>
-<tr>
-<td style="text-align:center">nmap a.b.c.x,y,…</td>
-<td style="text-align:center">扫描多子网地址</td>
-</tr>
-<tr>
-<td style="text-align:center">nmap -iL xxx.txt</td>
-<td style="text-align:center">根据文件扫描多IP</td>
-</tr>
-<tr>
-<td style="text-align:center">nmap a.b.c.x-y</td>
-<td style="text-align:center">扫描子网IP范围</td>
-</tr>
-<tr>
-<td style="text-align:center">nmap a.b.c.* --exclude IP</td>
-<td style="text-align:center">排除指定IP扫描整个子网</td>
-</tr>
-<tr>
-<td style="text-align:center">nmap -A IP</td>
-<td style="text-align:center">全面的系统扫描,包括操作系统探测、版本探测、脚本扫描、路径跟踪</td>
-</tr>
-<tr>
-<td style="text-align:center">nmap -O IP</td>
-<td style="text-align:center">探测操作系统</td>
-</tr>
-<tr>
-<td style="text-align:center">nmap -sA/-PN IP</td>
-<td style="text-align:center">探测防火墙</td>
-</tr>
-<tr>
-<td style="text-align:center">nmap -sP a.b.c.*</td>
-<td style="text-align:center">探测在线主机</td>
-</tr>
-<tr>
-<td style="text-align:center">nmap -F IP</td>
-<td style="text-align:center">快速扫描</td>
-</tr>
-<tr>
-<td style="text-align:center">nmap -r IP</td>
-<td style="text-align:center">按顺序扫描</td>
-</tr>
-<tr>
-<td style="text-align:center">nmap -iflist</td>
-<td style="text-align:center">显示接口和路由信息</td>
-</tr>
-<tr>
-<td style="text-align:center">nmap -p n1,n2… IP</td>
-<td style="text-align:center">扫描指定端口</td>
-</tr>
-<tr>
-<td style="text-align:center">nmap -p T:n1,n2… IP</td>
-<td style="text-align:center">扫描TCP端口</td>
-</tr>
-<tr>
-<td style="text-align:center">nmap -sU n1,n2… IP</td>
-<td style="text-align:center">扫描UDP端口</td>
-</tr>
-<tr>
-<td style="text-align:center">nmap -sV IP</td>
-<td style="text-align:center">查看服务的版本</td>
-</tr>
-<tr>
-<td style="text-align:center">nmap -PS IP</td>
-<td style="text-align:center">TCP ACK扫描</td>
-</tr>
-<tr>
-<td style="text-align:center">nmap -PA IP</td>
-<td style="text-align:center">TCP SYN扫描</td>
-</tr>
-<tr>
-<td style="text-align:center">nmap -sS IP</td>
-<td style="text-align:center">隐蔽扫描</td>
-</tr>
-<tr>
-<td style="text-align:center">nmap -sN IP</td>
-<td style="text-align:center">TCP空扫描欺骗防火墙</td>
-</tr>
-</tbody>
-</table>
-<h1 id="主机扫描">主机扫描</h1>
-<blockquote>
-<p>开两个虚拟机：192.168.253.36 + 192.168.253.37</p>
-</blockquote>
-<h2 id="主机扫描参数">主机扫描参数</h2>
-<p>主机发现有时候也叫做ping扫描，有以下选项：<br>
-<code>-sL</code>（列表扫描）：它仅仅列出指定网络上的每台主机，不发送任何报文到目标主机；<br>
-<code>-sP</code>（Ping扫描）：该选项告诉Nmap仅仅进行ping扫描（主机发现），然后打印出对扫描做出响应的那些主机；Nmap会发一个ICMP ECHO请求和一个TCP报文到目标端口；<br>
-<code>-Pn</code>（无ping）：无Ping扫描通常用于防火墙禁止Ping的情况下，完全跳过Nmap发现阶段，且对目标主机进行端口扫描；<br>
-<code>-PS</code>（TCP SYN ping）：该选项发送了一个设置了SYN标志位的空TCP报文，需要root权限；<br>
-<code>-PA</code>（TCP ACK ping）：它与TCP SYN Ping扫描类似，不同的只是设置的TCP报文的标志位是ACK；<br>
-<code>-PU</code>（UDP  ping）：发送一个空的UDP报文到指定端口，很少用；<br>
-<code>-PE/PP/PM</code>（ICMP ECHO/时间戳/地址掩码Ping）；<br>
-<code>-ARP</code>（ARP ping）：该选项通常在扫描局域网时使用，在内网中使用ARP Ping是非常有效的。</p>
-<h2 id="实验过程">实验过程</h2>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">nmap -P 192.168.253.1/24</span><br></pre></td></tr></table></figure>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/07/NetProtoSec-LearningNotes2/p4.png" class title="p4"> 
-<p>wireshark抓取ARP请求和响应报文：</p>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/07/NetProtoSec-LearningNotes2/p5.png" class title="p5">
-<p>ping命令发起ICMP扫描，wireshark抓取ICMP报文：</p>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/07/NetProtoSec-LearningNotes2/p6.png" class title="p6">
-<h1 id="端口扫描">端口扫描</h1>
-<h2 id="端口扫描基础">端口扫描基础</h2>
-<h3 id="端口状态">端口状态</h3>
-<p>Nmap所识别的6个端口状态：</p>
-<ul>
-<li><code>Opend</code>：端口开启；</li>
-<li><code>Closed</code>： 端口关闭；</li>
-<li><code>Filtered</code>：端口被过滤，数据没有到达主机，返回的结果为空，数据被防火墙拦截了；</li>
-<li><code>Unfiltered</code>：未被过滤，数据有到达主机，但是不能识别端口的当前状态；</li>
-<li><code>Open|filtered</code>：开放或者被过滤，端口没有返回值，主要发生在UDP、IP、FIN、NULL和X mas扫描中；</li>
-<li><code>Closed|filtered</code>：关闭或者被过滤，只发生在IP ID idle扫描。</li>
-</ul>
-<h3 id="命令参数">命令参数</h3>
-<p>-<code>sS</code>（TCP SYN扫描）：半开扫描，很少有系统能把它记入系统日志。不过，需要Root权限；<br>
--<code>sT</code>（TCP connect()扫描）:当SYN扫描不能用时，CP Connect()扫描就是默认的TCP扫描；<br>
--<code>sN/-sF/-sX</code>（TCP Null/FIN/Xmas扫描）:能躲过一些无状态防火墙和报文过滤路由器；<br>
--<code>p</code>：指定范围性扫描端口；<br>
--<code>v</code>：详细信息。</p>
-<h2 id="实验过程">实验过程</h2>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">┌──(root㉿kali)-[~]</span><br><span class="line">└─<span class="comment"># nmap -sS 192.168.253.1</span></span><br><span class="line">Starting Nmap 7.92 ( https://nmap.org ) at 2022-09-07 22:42 EDT</span><br><span class="line">Nmap scan report <span class="keyword">for</span> 192.168.253.1</span><br><span class="line">Host is up (0.00019s latency).</span><br><span class="line">Not shown: 996 filtered tcp ports (no-response)</span><br><span class="line">PORT     STATE SERVICE</span><br><span class="line">135/tcp  open  msrpc</span><br><span class="line">139/tcp  open  netbios-ssn</span><br><span class="line">445/tcp  open  microsoft-ds</span><br><span class="line">4001/tcp open  newoak</span><br><span class="line">MAC Address: 00:50:56:C0:00:08 (VMware)</span><br><span class="line"></span><br><span class="line">Nmap <span class="keyword">done</span>: 1 IP address (1 host up) scanned <span class="keyword">in</span> 4.70 seconds</span><br></pre></td></tr></table></figure>
-<p>打开wireshark抓取tcp包，可看到：</p>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/07/NetProtoSec-LearningNotes2/p7.png" class title="p7">
-<p>扫描主机的135和139端口已经回发数据了。</p>
-]]></content>
-      <categories>
-        <category>国科大课程笔记</category>
-        <category>网络协议安全</category>
-      </categories>
-      <tags>
-        <tag>网络安全</tag>
-        <tag>Wireshark</tag>
-        <tag>Nmap</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>链路层协议安全</title>
-    <url>/2022/09/18/NetProtoSec-LearningNotes3/</url>
-    <content><![CDATA[<blockquote>
-<p>本节分为三个部分：</p>
-<ul>
-<li>有线网络协议安全</li>
-<li>无线网络协议安全</li>
-<li>VLAN安全</li>
-</ul>
-</blockquote>
-<h1 id="链路层协议安全">链路层协议安全</h1>
-<h2 id="有线网络协议安全">有线网络协议安全</h2>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/18/NetProtoSec-LearningNotes3/p1.png" class title="p1">
-<h2 id="无线网络协议安全">无线网络协议安全</h2>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/18/NetProtoSec-LearningNotes3/p2.png" class title="p2">
-<h2 id="vlan安全">VLAN安全</h2>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/18/NetProtoSec-LearningNotes3/p3.png" class title="p3">
-<h3 id="特点">特点</h3>
-<p>VLAN与传统LAN相比，具有以下特点：</p>
-<ul>
-<li>隔离广播域</li>
-<li>创建虚拟工作组，超越传统网络的工作方式，减少改变的代价，安全性⬆，健壮性⬆</li>
-</ul>
-<p>VLAN的划分方法有以下几种：</p>
-<ul>
-<li>基于端口（静态）</li>
-<li>基于MAC（动态）</li>
-<li>基于协议</li>
-<li>基于子网</li>
-</ul>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/18/NetProtoSec-LearningNotes3/p4.png" class title="p4">
-<h3 id="三层交换机">三层交换机</h3>
-<p>不同VLAN的信息必须通过三层路由处理才能转发到端口上。</p>
-<h4 id="二层交换机与路由器">二层交换机与路由器</h4>
-<p>二层交换机：数据交换靠硬件，但不能处理不同子网(包括VLAN)间数据交换；<br>
-路由器：主要功能是路由转发，通过软件实现，所以转发效率低。</p>
-<h4 id="三层交换技术">三层交换技术</h4>
-<p>三层交换技术其实就是：二层交换技术+三层转发技术。它能做到<strong>一次路由，多次转发</strong>，对于数据包转发等规律性的过程由硬件高速实现，而像路由信息更新、路由表维护、路由计算等功能，由软件实现。</p>
-<h4 id="工作过程">工作过程</h4>
-<p>1.第一个包过来（包目的MAC是自己，交给IP层，发现IP地址不是自己），硬件转发表无表项，交给路由进程处理，查找下一跳IP，通过ARP得到MAC；<br>
-2.转发时：修改IP包ttl；修改原mac；建立硬件转发表；<br>
-3.下一包，直接查看硬件转发表直接转发，而不会经过路由表查询。</p>
-<h3 id="链路类型">链路类型</h3>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/18/NetProtoSec-LearningNotes3/p5.png" class title="p5">
-<p>1.干道链路<br>
-可以承载多个不同VLAN数据，用于交换机间、交换机与路由器间的互连，<strong>它不属于任何一个具体VLAN</strong>。所有在干道链路上传输的帧都是打上标记的帧。</p>
-<p>2.接入链路<br>
-用于连接主机和交换机的链路，接入链路属于某一个特定的端口，这个端口属于一个并且只能是一个VLAN。</p>
-<h3 id="帧在网络通信中的变化">帧在网络通信中的变化</h3>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/18/NetProtoSec-LearningNotes3/p6.png" class title="p6">
-<h3 id="本征vlan">本征VLAN</h3>
-<p>相当于默认VLAN，可以在Trunk链路上指定一个Native VLAN。Access端口只属于一个VLAN，所以它的缺省ID就是它所在的VLAN，不用设置；Trunk端口属于多个VLAN， 所以需要设置缺省VLAN ID，缺省情况下为VLAN 1。<br>
-来自Native VLAN的数据帧通过Trunk链路时不重新封装，以原有的帧传输（不重新打标签）。</p>
-<h3 id="转发原则-由交换机实现">转发原则(由交换机实现)</h3>
-<h4 id="access-link">Access-Link</h4>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/18/NetProtoSec-LearningNotes3/p7.png" class title="p7">
-<h4 id="trunk-link">Trunk-Link</h4>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/18/NetProtoSec-LearningNotes3/p8.png" class title="p8">
-<h3 id="vlan安全威胁">VLAN安全威胁</h3>
-<h4 id="双标签跳跃攻击">双标签跳跃攻击</h4>
-<p>原理：构造含有双层标签的帧，其外层标记为Trunk链路的 Native VLAN 号，交换机trunk端口发送帧时，将外层标签去掉<br>
-缺点：只能单项攻击<br>
-防范：native VLAN设置为一个不存在的VLAN</p>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/18/NetProtoSec-LearningNotes3/p9.png" class title="p9">
-<h4 id="dtp跳跃攻击">DTP跳跃攻击</h4>
-<p>DTP：有设备主动向接口发起协议，接口将形成Trunk，该链路可以双向传输任何VLAN数据<br>
-特点：可双向访问，绕过防火墙</p>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/18/NetProtoSec-LearningNotes3/p10.png" class title="p10">
-<h4 id="vpt攻击">VPT攻击</h4>
-<p>原理：VLAN信息的同步是通过VTP通告来实现的， VTP通告只能在Trunk链路上传输（因此交换机之间的Trunk链路必须成功配置了Trunk）<br>
-思路：攻击者发送高的Revision的VTP通告，就能把网络中的VLAN信息覆盖了。</p>
-]]></content>
-      <categories>
-        <category>国科大课程笔记</category>
-        <category>网络协议安全</category>
-      </categories>
-      <tags>
-        <tag>网络协议</tag>
-        <tag>网络安全</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>网络与系统安全随记</title>
-    <url>/2022/09/09/NetSysSec-LearningNotes/</url>
-    <content><![CDATA[<h1 id="20220909">20220909</h1>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/09/NetSysSec-LearningNotes/p1.png" class title="p1"> 
-]]></content>
-      <categories>
-        <category>国科大课程笔记</category>
-        <category>网络与系统安全</category>
-      </categories>
-      <tags>
-        <tag>网络与系统安全</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>操作系统的“公理化”</title>
-    <url>/2022/08/30/OS-LearningNotes1/</url>
-    <content><![CDATA[<blockquote>
-<ul>
-<li>源码阅读工具：Source Insight</li>
-<li>关键字:
-<ul>
-<li>内核Kernel</li>
-<li>特权级</li>
-<li>授权</li>
-</ul>
-</li>
-<li>主要内容：本节课主要探讨了Linux内核，老师从逻辑推理的角度带大家体会什么是内核，为什么需要内核。</li>
-</ul>
-</blockquote>
-<h1 id="授权">授权</h1>
-<h2 id="观点：未经授权-不得访问其他用户的资源">观点：未经授权，不得访问其他用户的资源</h2>
-<blockquote>
-<p>访问自己的资源，总是授权的。</p>
-</blockquote>
-<h2 id="探讨">探讨</h2>
-<h3 id="问题：未经许可-用户是否能访问外设-io-中自己的资源？">问题：未经许可，用户是否能访问外设（IO）中自己的资源？</h3>
-<ul>
-<li>答案：不可以。</li>
-<li>原因：IO物理端口只有一个，而用户程序具有不确定性（可能会做一些坏事），如果开放端口，可能会无法控制。</li>
-<li>解决办法：若用户非要访问（IO指令/MMIO），则用特权级拦住。
-<ul>
-<li>特权级：CPU剥夺了应用程序访问外设的能力。</li>
-</ul>
-</li>
-</ul>
-<h3 id="问题：而自己的资源-应该要能访问的-那怎么办？">问题：而自己的资源，应该要能访问的，那怎么办？</h3>
-<ul>
-<li>因为：用户进程是不确定的，并且它应该是不确定的，没有理由要求它确定。</li>
-<li>由<strong>一组确定的程序</strong>来访问自己的资源————即<strong>内核</strong>。</li>
-</ul>
-<h1 id="特权级">特权级</h1>
-<h2 id="特权级的概念">特权级的概念</h2>
-<p>在linux系统中特权级别分为0，1，2，3一共四个级别，0最大 ，3最小。</p>
-<ul>
-<li>一般内核代码运行在0特权级；</li>
-<li>驱动、虚拟机等运行在1，2特权级；</li>
-<li>而我们自己写的程序一般运行在3特权级，也就是最低级别。</li>
-</ul>
-<h2 id="探讨">探讨</h2>
-<h3 id="用户程序指令-3特权-为什么不能访问0特权的数据？">用户程序指令（3特权）为什么不能访问0特权的数据？</h3>
-<p>答：因为用户程序指令具有不确定性。</p>
-<h3 id="0特权能否直接跳到3特权？">0特权能否直接跳到3特权？</h3>
-<p>答：不允许，若此时0特权跳转过去后仍保持全态，那么应用程序就会直接变为kernel。</p>
-<h1 id="接续访问机制">接续访问机制</h1>
-<p><strong>接续访问机制</strong>：用户发起 -&gt; 内核接续（IO行为） -&gt; 交付用户</p>
-<h2 id="观点：内核的工作-是用户进程访问行为的延续">观点：内核的工作，是用户进程访问行为的延续</h2>
-<h2 id="观点：内核需要结构化-提供一组自洽的-一致的syscall">观点：内核需要结构化，提供一组自洽的、一致的syscall</h2>
-<h2 id="提问：既然未经授权-不得访问其他用户的资源-那所谓授权-又是给谁的？">提问：既然未经授权，不得访问其他用户的资源。那所谓授权，又是给谁的？</h2>
-<p>思考：</p>
-<ul>
-<li>给用户？同一个用户，有可能可以读A文件，而B文件不行；</li>
-<li>给资源？同一份资源，有可能用户1可以读，而用户2不行。</li>
-</ul>
-<p>答：给&quot;访问&quot;：一般是三元组（用户，操作，资源）。即<strong>一次授权对应一次访问</strong></p>
-<h2 id="提问：从用户发起到内核接续-也即不确定行为到确定行为-如何实现？">提问：从用户发起到内核接续，也即不确定行为到确定行为，如何实现？</h2>
-<p>答：1. 反转状态；2. 要求转移指令确定的落点：（1）限制用户进程的跳转指令；（2）限制用户进程的跳转落点.</p>
-<blockquote>
-<p>补充：以RISC-V为例，（1）只能是ecall指令；（2）只能是mtvec，中断向量基址，该值由OS内核指定。</p>
-</blockquote>
-<h2 id="观点：接续访问机制的重要保障：用户态和内核态之间有面-墙">观点：接续访问机制的重要保障：用户态和内核态之间有面&quot;墙&quot;</h2>
-<p>墙是由某些硬件机制创建的。</p>
-<blockquote>
-<p>以RISCV为例：CSR寄存器组和CSR指令（CSR：Control and Status Registers）。</p>
-</blockquote>
-<h2 id="提问：既然内核可以用某些硬件机制建墙-那用户岂不是也可以用它来拆墙？">提问：既然内核可以用某些硬件机制建墙，那用户岂不是也可以用它来拆墙？</h2>
-<h3 id="通俗版解答">通俗版解答</h3>
-<ul>
-<li>机器上电，操作系统先来，先建好墙，完事了把拆墙工具收到墙内。</li>
-<li>用户想要拆墙，就要先进到墙内；</li>
-<li>想要进到墙内，就要先拆墙。</li>
-</ul>
-<blockquote>
-<p>以RISCV为例：<br>
-想要从U模式变到M模式，就必须使用CSR指令修改CSR寄存器组；<br>
-想要使用CSR指令修改CSR寄存器组，就必须已经处于M模式，否则机器报异常。</p>
-</blockquote>
-<h3 id="学术版解答">学术版解答</h3>
-<ul>
-<li>用时间的不可逆性来建构空间的各项异性；</li>
-<li>互为必要条件。</li>
-</ul>
-]]></content>
-      <categories>
-        <category>国科大课程笔记</category>
-        <category>操作系统高级教程</category>
-      </categories>
-      <tags>
-        <tag>操作系统</tag>
-        <tag>Linux Kernel</tag>
-        <tag>特权级</tag>
-        <tag>授权</tag>
       </tags>
   </entry>
   <entry>
@@ -2220,6 +2081,188 @@ head.s先汇编成目标代码，c语言内核程序编译成目标代码，然�
       </tags>
   </entry>
   <entry>
+    <title>链路层协议安全</title>
+    <url>/2022/09/18/NetProtoSec-LearningNotes3/</url>
+    <content><![CDATA[<blockquote>
+<p>本节分为三个部分：</p>
+<ul>
+<li>有线网络协议安全</li>
+<li>无线网络协议安全</li>
+<li>VLAN安全</li>
+</ul>
+</blockquote>
+<h1 id="链路层协议安全">链路层协议安全</h1>
+<h2 id="有线网络协议安全">有线网络协议安全</h2>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/18/NetProtoSec-LearningNotes3/p1.png" class title="p1">
+<h2 id="无线网络协议安全">无线网络协议安全</h2>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/18/NetProtoSec-LearningNotes3/p2.png" class title="p2">
+<h2 id="vlan安全">VLAN安全</h2>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/18/NetProtoSec-LearningNotes3/p3.png" class title="p3">
+<h3 id="特点">特点</h3>
+<p>VLAN与传统LAN相比，具有以下特点：</p>
+<ul>
+<li>隔离广播域</li>
+<li>创建虚拟工作组，超越传统网络的工作方式，减少改变的代价，安全性⬆，健壮性⬆</li>
+</ul>
+<p>VLAN的划分方法有以下几种：</p>
+<ul>
+<li>基于端口（静态）</li>
+<li>基于MAC（动态）</li>
+<li>基于协议</li>
+<li>基于子网</li>
+</ul>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/18/NetProtoSec-LearningNotes3/p4.png" class title="p4">
+<h3 id="三层交换机">三层交换机</h3>
+<p>不同VLAN的信息必须通过三层路由处理才能转发到端口上。</p>
+<h4 id="二层交换机与路由器">二层交换机与路由器</h4>
+<p>二层交换机：数据交换靠硬件，但不能处理不同子网(包括VLAN)间数据交换；<br>
+路由器：主要功能是路由转发，通过软件实现，所以转发效率低。</p>
+<h4 id="三层交换技术">三层交换技术</h4>
+<p>三层交换技术其实就是：二层交换技术+三层转发技术。它能做到<strong>一次路由，多次转发</strong>，对于数据包转发等规律性的过程由硬件高速实现，而像路由信息更新、路由表维护、路由计算等功能，由软件实现。</p>
+<h4 id="工作过程">工作过程</h4>
+<p>1.第一个包过来（包目的MAC是自己，交给IP层，发现IP地址不是自己），硬件转发表无表项，交给路由进程处理，查找下一跳IP，通过ARP得到MAC；<br>
+2.转发时：修改IP包ttl；修改原mac；建立硬件转发表；<br>
+3.下一包，直接查看硬件转发表直接转发，而不会经过路由表查询。</p>
+<h3 id="链路类型">链路类型</h3>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/18/NetProtoSec-LearningNotes3/p5.png" class title="p5">
+<p>1.干道链路<br>
+可以承载多个不同VLAN数据，用于交换机间、交换机与路由器间的互连，<strong>它不属于任何一个具体VLAN</strong>。所有在干道链路上传输的帧都是打上标记的帧。</p>
+<p>2.接入链路<br>
+用于连接主机和交换机的链路，接入链路属于某一个特定的端口，这个端口属于一个并且只能是一个VLAN。</p>
+<h3 id="帧在网络通信中的变化">帧在网络通信中的变化</h3>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/18/NetProtoSec-LearningNotes3/p6.png" class title="p6">
+<h3 id="本征vlan">本征VLAN</h3>
+<p>相当于默认VLAN，可以在Trunk链路上指定一个Native VLAN。Access端口只属于一个VLAN，所以它的缺省ID就是它所在的VLAN，不用设置；Trunk端口属于多个VLAN， 所以需要设置缺省VLAN ID，缺省情况下为VLAN 1。<br>
+来自Native VLAN的数据帧通过Trunk链路时不重新封装，以原有的帧传输（不重新打标签）。</p>
+<h3 id="转发原则-由交换机实现">转发原则(由交换机实现)</h3>
+<h4 id="access-link">Access-Link</h4>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/18/NetProtoSec-LearningNotes3/p7.png" class title="p7">
+<h4 id="trunk-link">Trunk-Link</h4>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/18/NetProtoSec-LearningNotes3/p8.png" class title="p8">
+<h3 id="vlan安全威胁">VLAN安全威胁</h3>
+<h4 id="双标签跳跃攻击">双标签跳跃攻击</h4>
+<p>原理：构造含有双层标签的帧，其外层标记为Trunk链路的 Native VLAN 号，交换机trunk端口发送帧时，将外层标签去掉<br>
+缺点：只能单项攻击<br>
+防范：native VLAN设置为一个不存在的VLAN</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/18/NetProtoSec-LearningNotes3/p9.png" class title="p9">
+<h4 id="dtp跳跃攻击">DTP跳跃攻击</h4>
+<p>DTP：有设备主动向接口发起协议，接口将形成Trunk，该链路可以双向传输任何VLAN数据<br>
+特点：可双向访问，绕过防火墙</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/18/NetProtoSec-LearningNotes3/p10.png" class title="p10">
+<h4 id="vpt攻击">VPT攻击</h4>
+<p>原理：VLAN信息的同步是通过VTP通告来实现的， VTP通告只能在Trunk链路上传输（因此交换机之间的Trunk链路必须成功配置了Trunk）<br>
+思路：攻击者发送高的Revision的VTP通告，就能把网络中的VLAN信息覆盖了。</p>
+]]></content>
+      <categories>
+        <category>国科大课程笔记</category>
+        <category>网络协议安全</category>
+      </categories>
+      <tags>
+        <tag>网络安全</tag>
+        <tag>网络协议</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>操作系统的“公理化”</title>
+    <url>/2022/08/30/OS-LearningNotes1/</url>
+    <content><![CDATA[<blockquote>
+<ul>
+<li>源码阅读工具：Source Insight</li>
+<li>关键字:
+<ul>
+<li>内核Kernel</li>
+<li>特权级</li>
+<li>授权</li>
+</ul>
+</li>
+<li>主要内容：本节课主要探讨了Linux内核，老师从逻辑推理的角度带大家体会什么是内核，为什么需要内核。</li>
+</ul>
+</blockquote>
+<h1 id="授权">授权</h1>
+<h2 id="观点：未经授权-不得访问其他用户的资源">观点：未经授权，不得访问其他用户的资源</h2>
+<blockquote>
+<p>访问自己的资源，总是授权的。</p>
+</blockquote>
+<h2 id="探讨">探讨</h2>
+<h3 id="问题：未经许可-用户是否能访问外设-io-中自己的资源？">问题：未经许可，用户是否能访问外设（IO）中自己的资源？</h3>
+<ul>
+<li>答案：不可以。</li>
+<li>原因：IO物理端口只有一个，而用户程序具有不确定性（可能会做一些坏事），如果开放端口，可能会无法控制。</li>
+<li>解决办法：若用户非要访问（IO指令/MMIO），则用特权级拦住。
+<ul>
+<li>特权级：CPU剥夺了应用程序访问外设的能力。</li>
+</ul>
+</li>
+</ul>
+<h3 id="问题：而自己的资源-应该要能访问的-那怎么办？">问题：而自己的资源，应该要能访问的，那怎么办？</h3>
+<ul>
+<li>因为：用户进程是不确定的，并且它应该是不确定的，没有理由要求它确定。</li>
+<li>由<strong>一组确定的程序</strong>来访问自己的资源————即<strong>内核</strong>。</li>
+</ul>
+<h1 id="特权级">特权级</h1>
+<h2 id="特权级的概念">特权级的概念</h2>
+<p>在linux系统中特权级别分为0，1，2，3一共四个级别，0最大 ，3最小。</p>
+<ul>
+<li>一般内核代码运行在0特权级；</li>
+<li>驱动、虚拟机等运行在1，2特权级；</li>
+<li>而我们自己写的程序一般运行在3特权级，也就是最低级别。</li>
+</ul>
+<h2 id="探讨">探讨</h2>
+<h3 id="用户程序指令-3特权-为什么不能访问0特权的数据？">用户程序指令（3特权）为什么不能访问0特权的数据？</h3>
+<p>答：因为用户程序指令具有不确定性。</p>
+<h3 id="0特权能否直接跳到3特权？">0特权能否直接跳到3特权？</h3>
+<p>答：不允许，若此时0特权跳转过去后仍保持全态，那么应用程序就会直接变为kernel。</p>
+<h1 id="接续访问机制">接续访问机制</h1>
+<p><strong>接续访问机制</strong>：用户发起 -&gt; 内核接续（IO行为） -&gt; 交付用户</p>
+<h2 id="观点：内核的工作-是用户进程访问行为的延续">观点：内核的工作，是用户进程访问行为的延续</h2>
+<h2 id="观点：内核需要结构化-提供一组自洽的-一致的syscall">观点：内核需要结构化，提供一组自洽的、一致的syscall</h2>
+<h2 id="提问：既然未经授权-不得访问其他用户的资源-那所谓授权-又是给谁的？">提问：既然未经授权，不得访问其他用户的资源。那所谓授权，又是给谁的？</h2>
+<p>思考：</p>
+<ul>
+<li>给用户？同一个用户，有可能可以读A文件，而B文件不行；</li>
+<li>给资源？同一份资源，有可能用户1可以读，而用户2不行。</li>
+</ul>
+<p>答：给&quot;访问&quot;：一般是三元组（用户，操作，资源）。即<strong>一次授权对应一次访问</strong></p>
+<h2 id="提问：从用户发起到内核接续-也即不确定行为到确定行为-如何实现？">提问：从用户发起到内核接续，也即不确定行为到确定行为，如何实现？</h2>
+<p>答：1. 反转状态；2. 要求转移指令确定的落点：（1）限制用户进程的跳转指令；（2）限制用户进程的跳转落点.</p>
+<blockquote>
+<p>补充：以RISC-V为例，（1）只能是ecall指令；（2）只能是mtvec，中断向量基址，该值由OS内核指定。</p>
+</blockquote>
+<h2 id="观点：接续访问机制的重要保障：用户态和内核态之间有面-墙">观点：接续访问机制的重要保障：用户态和内核态之间有面&quot;墙&quot;</h2>
+<p>墙是由某些硬件机制创建的。</p>
+<blockquote>
+<p>以RISCV为例：CSR寄存器组和CSR指令（CSR：Control and Status Registers）。</p>
+</blockquote>
+<h2 id="提问：既然内核可以用某些硬件机制建墙-那用户岂不是也可以用它来拆墙？">提问：既然内核可以用某些硬件机制建墙，那用户岂不是也可以用它来拆墙？</h2>
+<h3 id="通俗版解答">通俗版解答</h3>
+<ul>
+<li>机器上电，操作系统先来，先建好墙，完事了把拆墙工具收到墙内。</li>
+<li>用户想要拆墙，就要先进到墙内；</li>
+<li>想要进到墙内，就要先拆墙。</li>
+</ul>
+<blockquote>
+<p>以RISCV为例：<br>
+想要从U模式变到M模式，就必须使用CSR指令修改CSR寄存器组；<br>
+想要使用CSR指令修改CSR寄存器组，就必须已经处于M模式，否则机器报异常。</p>
+</blockquote>
+<h3 id="学术版解答">学术版解答</h3>
+<ul>
+<li>用时间的不可逆性来建构空间的各项异性；</li>
+<li>互为必要条件。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>国科大课程笔记</category>
+        <category>操作系统高级教程</category>
+      </categories>
+      <tags>
+        <tag>操作系统</tag>
+        <tag>Linux Kernel</tag>
+        <tag>特权级</tag>
+        <tag>授权</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>补充知识整理</title>
     <url>/2022/09/20/OS-LearningNotes3/</url>
     <content><![CDATA[<h1 id="分段和分页">分段和分页</h1>
@@ -2317,72 +2360,6 @@ head.s先汇编成目标代码，c语言内核程序编译成目标代码，然�
 TSS是一个特殊的段。在Linux中，CPU从系统态切换到用户态时，会用到TSS里面的ss0和esp0。每个CPU只维护一个TSS。TR寄存器指向这个TSS，切换时里面的ss0和esp0会有改变。相应有一个TSSD放在GDT中，是GDT的一个表项。</p>
 <img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/09/20/OS-LearningNotes3/p3.png" class title="p3">
 <p>可以看到：任务寄存器中可见部分的段选择符加载TSS描述符的段选择符，访问GDT中TSS描述符，通过TSS描述符访问TSS。同时TSS描述符中的基址和界限字段的值又加载到任务寄存器的不可见部分的基址和界限字段，这样做的目的是下次访问该TSS时可以不用通过GDT中的TSS描述符访问TSS，而是直接通过缓存在任务寄存器中的基址和界限字段访问TSS，加快了系统对TSS的访问。</p>
-]]></content>
-      <categories>
-        <category>国科大课程笔记</category>
-        <category>操作系统高级教程</category>
-      </categories>
-      <tags>
-        <tag>操作系统</tag>
-        <tag>Linux Kernel</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>设备环境初始化及激活进程0</title>
-    <url>/2022/10/01/OS-LearningNotes4/</url>
-    <content><![CDATA[<h1 id="引言">引言</h1>
-<h2 id="设置根设备-硬盘">设置根设备、硬盘</h2>
-<p>用<code>bootsect.s</code>中写入机器系统数据的信息设置软盘为根设备，并设置内核中的硬盘信息。</p>
-<h2 id="规划物理内存格局">规划物理内存格局</h2>
-<p>设置内存中除内核代码和数据之外三部分的位置和大小：</p>
-<ul>
-<li>主内存区：进程代码运行的空间；</li>
-<li>缓冲区：主机与外设（块设备）交换数据的中转站；</li>
-<li>虚拟盘区：可选，可将外设数据先复制至虚拟盘区，然后加以使用。</li>
-</ul>
-<blockquote>
-<p>注：&lt;&lt;12或&gt;&gt;12相当于乘或除以4KB——页</p>
-</blockquote>
-<h2 id="设置虚拟盘空间并初始化">设置虚拟盘空间并初始化</h2>
-<p>设定内存16MB，虚拟盘2MB（缓冲区末端2MB设为虚拟盘）。调用<code>rd_init()</code>函数，对虚拟盘设置：<br>
-将虚拟盘请求项处理函数<code>do_rd_request</code>与 请求项处理函数控制结构<code>blk_dev[7]</code>第二项挂钩，意味着内核能通过调用<code>do_rd_request</code>函数处理与虚拟盘相关的请求项操作。</p>
-<h2 id="内存管理结构-mem-map-初始化">内存管理结构 mem_map 初始化</h2>
-<p>调用<code>mem_init()</code>函数，通过<code>mem_map[]</code>对 1MB (内核所在区域)以上的内存分页进行管理，记录一个页面的使用次数</p>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/01/OS-LearningNotes4/p1.png" class title="p1">
-<h2 id="异常处理类中断服务程序挂接">异常处理类中断服务程序挂接</h2>
-<p><code>trap_init()</code>函数将中断、异常处理的服务程序与IDT进行挂接，逐步重建中断服务体系。</p>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/01/OS-LearningNotes4/p2.png" class title="p2">
-<p>其中，还需要拼接中断描述符：</p>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/01/OS-LearningNotes4/p3.png" class title="p3">
-<h2 id="初始化块设备请求项结构">初始化块设备请求项结构</h2>
-<p>linux外设分为块设备（硬盘、软盘）和字符设备（键盘、黑屏命令行显示器），进程想与块设备进行沟通，必须经过主机内存的缓冲区。<br>
-请求项管理结构<code>request[32]</code>就是操作系统管理缓冲区与块设备逻辑块读写关系的数据结构。操作系统决定缓冲块与块设备间的读写操作，并把需要操作的缓冲块记录在请求项中，得到读写块设备操作指令后，只根据请求项中的记录决定要处理哪个设备的哪个逻辑块。</p>
-<p>初始化：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">request[i].dev&#x3D;-1; &#x2F;&#x2F;请求项未对应哪个设备</span><br><span class="line">request[i].next&#x3D;NULL; &#x2F;&#x2F;还未形成请求项队列</span><br></pre></td></tr></table></figure>
-<h2 id="与人机交互界面相关外设中断服务程序挂接">与人机交互界面相关外设中断服务程序挂接</h2>
-<p>对串行口、显示器、键盘、开机启动时间设置，以及与此相关的中断服务程序与IDT挂接。</p>
-<h2 id="初始化0进程-重要">初始化0进程（重要）</h2>
-<p>大致过程如下，都由<code>sched_init()</code>函数实现：</p>
-<ol>
-<li>初始化进程0
-<ul>
-<li>将进程0的task_struct中LDT、TSS与GDT挂接</li>
-<li>初始化GDT、task[64]以及与进程调度相关寄存器</li>
-</ul>
-</li>
-<li>时钟中断设置 —&gt; 多进程轮转</li>
-<li>系统调用：通过set_system_gate将system_call与IDT挂接（特权3，set_trap_gate为特权0）</li>
-</ol>
-<h3 id="初始化进程0">初始化进程0</h3>
-<p>首先在GDT中初始化进程0所占的4、5项，即初始化TSS0（任务状态段）和LDT0（局部描述符）。</p>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/01/OS-LearningNotes4/p4.png" class title="p4">
-<p>另外，需要拼接对应的段描述符：</p>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/01/OS-LearningNotes4/p5.png" class title="p5">
-<p>然后还需要通过INIT_TASK指针初始化进程0的task_struct（内核栈）。每个进程都有自己的用户栈和内核栈（跑内核代码时用这个）。</p>
-<h3 id="设置时钟中断">设置时钟中断</h3>
-<p>时钟中断是进程0及其他由它创建的进程轮转的基础。</p>
-<h3 id="设置系统调用总入口">设置系统调用总入口</h3>
-<p>将系统调用函数 system_call 与 int 0x80 中断描述符表挂接。</p>
 ]]></content>
       <categories>
         <category>国科大课程笔记</category>
@@ -2814,6 +2791,266 @@ TSS是一个特殊的段。在Linux中，CPU从系统态切换到用户态时，
       </tags>
   </entry>
   <entry>
+    <title>设备环境初始化及激活进程0</title>
+    <url>/2022/10/01/OS-LearningNotes4/</url>
+    <content><![CDATA[<h1 id="引言">引言</h1>
+<h2 id="设置根设备-硬盘">设置根设备、硬盘</h2>
+<p>用<code>bootsect.s</code>中写入机器系统数据的信息设置软盘为根设备，并设置内核中的硬盘信息。</p>
+<h2 id="规划物理内存格局">规划物理内存格局</h2>
+<p>设置内存中除内核代码和数据之外三部分的位置和大小：</p>
+<ul>
+<li>主内存区：进程代码运行的空间；</li>
+<li>缓冲区：主机与外设（块设备）交换数据的中转站；</li>
+<li>虚拟盘区：可选，可将外设数据先复制至虚拟盘区，然后加以使用。</li>
+</ul>
+<blockquote>
+<p>注：&lt;&lt;12或&gt;&gt;12相当于乘或除以4KB——页</p>
+</blockquote>
+<h2 id="设置虚拟盘空间并初始化">设置虚拟盘空间并初始化</h2>
+<p>设定内存16MB，虚拟盘2MB（缓冲区末端2MB设为虚拟盘）。调用<code>rd_init()</code>函数，对虚拟盘设置：<br>
+将虚拟盘请求项处理函数<code>do_rd_request</code>与 请求项处理函数控制结构<code>blk_dev[7]</code>第二项挂钩，意味着内核能通过调用<code>do_rd_request</code>函数处理与虚拟盘相关的请求项操作。</p>
+<h2 id="内存管理结构-mem-map-初始化">内存管理结构 mem_map 初始化</h2>
+<p>调用<code>mem_init()</code>函数，通过<code>mem_map[]</code>对 1MB (内核所在区域)以上的内存分页进行管理，记录一个页面的使用次数</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/01/OS-LearningNotes4/p1.png" class title="p1">
+<h2 id="异常处理类中断服务程序挂接">异常处理类中断服务程序挂接</h2>
+<p><code>trap_init()</code>函数将中断、异常处理的服务程序与IDT进行挂接，逐步重建中断服务体系。</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/01/OS-LearningNotes4/p2.png" class title="p2">
+<p>其中，还需要拼接中断描述符：</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/01/OS-LearningNotes4/p3.png" class title="p3">
+<h2 id="初始化块设备请求项结构">初始化块设备请求项结构</h2>
+<p>linux外设分为块设备（硬盘、软盘）和字符设备（键盘、黑屏命令行显示器），进程想与块设备进行沟通，必须经过主机内存的缓冲区。<br>
+请求项管理结构<code>request[32]</code>就是操作系统管理缓冲区与块设备逻辑块读写关系的数据结构。操作系统决定缓冲块与块设备间的读写操作，并把需要操作的缓冲块记录在请求项中，得到读写块设备操作指令后，只根据请求项中的记录决定要处理哪个设备的哪个逻辑块。</p>
+<p>初始化：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">request[i].dev&#x3D;-1; &#x2F;&#x2F;请求项未对应哪个设备</span><br><span class="line">request[i].next&#x3D;NULL; &#x2F;&#x2F;还未形成请求项队列</span><br></pre></td></tr></table></figure>
+<h2 id="与人机交互界面相关外设中断服务程序挂接">与人机交互界面相关外设中断服务程序挂接</h2>
+<p>对串行口、显示器、键盘、开机启动时间设置，以及与此相关的中断服务程序与IDT挂接。</p>
+<h2 id="初始化0进程-重要">初始化0进程（重要）</h2>
+<p>大致过程如下，都由<code>sched_init()</code>函数实现：</p>
+<ol>
+<li>初始化进程0
+<ul>
+<li>将进程0的task_struct中LDT、TSS与GDT挂接</li>
+<li>初始化GDT、task[64]以及与进程调度相关寄存器</li>
+</ul>
+</li>
+<li>时钟中断设置 —&gt; 多进程轮转</li>
+<li>系统调用：通过set_system_gate将system_call与IDT挂接（特权3，set_trap_gate为特权0）</li>
+</ol>
+<h3 id="初始化进程0">初始化进程0</h3>
+<p>首先在GDT中初始化进程0所占的4、5项，即初始化TSS0（任务状态段）和LDT0（局部描述符）。</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/01/OS-LearningNotes4/p4.png" class title="p4">
+<p>另外，需要拼接对应的段描述符：</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2022/10/01/OS-LearningNotes4/p5.png" class title="p5">
+<p>然后还需要通过INIT_TASK指针初始化进程0的task_struct（内核栈）。每个进程都有自己的用户栈和内核栈（跑内核代码时用这个）。</p>
+<h3 id="设置时钟中断">设置时钟中断</h3>
+<p>时钟中断是进程0及其他由它创建的进程轮转的基础。</p>
+<h3 id="设置系统调用总入口">设置系统调用总入口</h3>
+<p>将系统调用函数 system_call 与 int 0x80 中断描述符表挂接。</p>
+]]></content>
+      <categories>
+        <category>国科大课程笔记</category>
+        <category>操作系统高级教程</category>
+      </categories>
+      <tags>
+        <tag>操作系统</tag>
+        <tag>Linux Kernel</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>大模型的对抗攻击与防御</title>
+    <url>/2024/07/10/LLM-Security1/</url>
+    <content><![CDATA[<blockquote>
+<p>原文：OpenAI 安全系统（Safety Systems）团队负责人 Lilian Weng 发布的一篇博客文章 <a href="https://lilianweng.github.io/lil-log/2023/11/07/adversarial-attacks-on-llms.html">《Adversarial Attacks on LLMs》</a></p>
+</blockquote>
+<p>随着 ChatGPT 的发布，大型语言模型应用正在加速大范围铺开。OpenAI 的安全系统团队已经投入了大量资源，研究如何在对齐过程中为模型构建默认的安全行为。但是，对抗攻击或 prompt 越狱依然有可能让模型输出我们不期望看到的内容。</p>
+<p>目前在对抗攻击方面的研究很多集中在图像方面，也就是在连续的高维空间。而对于文本这样的离散数据，由于缺乏梯度信号，人们普遍认为攻击会困难得多。Lilian Weng 之前曾写过一篇文章<a href="https://lilianweng.github.io/posts/2021-01-02-controllable-text-generation/">《Controllable Text Generation》</a>探讨过这一主题。简单来说：攻击 LLM 本质上就是控制该模型输出特定类项的（不安全）内容。</p>
+<p>此外，还有研究者试图通过攻击大语言模型来提取其预训练数据、私有信息或者通过数据毒化手段来干扰模型的训练过程。但这些并非本文要探讨的主题。</p>
+<h1 id="基础">基础</h1>
+<h2 id="威胁模型">威胁模型</h2>
+<p>对抗攻击是<strong>对输入样本进行微小难以察觉的修改，诱使模型输出我们不期望的内容</strong>。许多早期研究关注的重点是分类任务，而近期的工作则开始更多关注生成模型的输出。本文探讨的是大型语言模型，并且假定攻击<strong>仅发生在推理阶段</strong>，也就是说模型权重是固定的。</p>
+<!-- <img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2024/07/10/LLM-Security1/p1.png" class="" title="p1"> -->
+<blockquote>
+<p>对抗样本的定义:对抗样本是指能够欺骗模型，使其做出错误预测的输入样本，但与原始样本在语义上仍然相似，不易被人察觉。</p>
+</blockquote>
+<h3 id="分类">分类</h3>
+<p>在过去，研究者更关注的是对分类器进行对抗攻击，并且许多是在图像领域。LLM 也可被用于分类，给定一个输入 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span></span></span></span> 和一个分类器 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>f</mi><mo stretchy="false">(</mo><mi mathvariant="normal">.</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">f(.)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord">.</span><span class="mclose">)</span></span></span></span>，我们希望找到该输入的一个差异细微的对抗版本 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>x</mi><mrow><mi>a</mi><mi>d</mi><mi>v</mi></mrow></msub></mrow><annotation encoding="application/x-tex">x_{adv}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">a</span><span class="mord mathdefault mtight">d</span><span class="mord mathdefault mtight" style="margin-right:0.03588em;">v</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>，使得 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>f</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mrow><mi>a</mi><mi>d</mi><mi>v</mi></mrow></msub><mo stretchy="false">)</mo><mo mathvariant="normal">≠</mo><mi>f</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">f(x_{adv})≠f(x)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">a</span><span class="mord mathdefault mtight">d</span><span class="mord mathdefault mtight" style="margin-right:0.03588em;">v</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel"><span class="mrel"><span class="mord"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.69444em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="rlap"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="inner"><span class="mrel"></span></span><span class="fix"></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.19444em;"><span></span></span></span></span></span></span><span class="mrel">=</span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord mathdefault">x</span><span class="mclose">)</span></span></span></span>。</p>
+<h3 id="文本生成">文本生成</h3>
+<p>给定一个输入<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span></span></span></span>和一个生成模型 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi><mo stretchy="false">(</mo><mi mathvariant="normal">.</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">p(.)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">p</span><span class="mopen">(</span><span class="mord">.</span><span class="mclose">)</span></span></span></span>，该模型可输出一个样本 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>y</mi><mo>∼</mo><mi>p</mi><mo stretchy="false">(</mo><mi mathvariant="normal">.</mi><mi mathvariant="normal">∣</mi><mi>x</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">y \sim p(.|x)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">∼</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">p</span><span class="mopen">(</span><span class="mord">.</span><span class="mord">∣</span><span class="mord mathdefault">x</span><span class="mclose">)</span></span></span></span>。这里的对抗攻击是找到一个<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">p(x)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">p</span><span class="mopen">(</span><span class="mord mathdefault">x</span><span class="mclose">)</span></span></span></span>，使得 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>y</mi></mrow><annotation encoding="application/x-tex">y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span></span></span></span> 会违反该模型内置的安全行为，比如输出非法主题的不安全内容、泄漏隐私信息或模型训练数据。对<strong>生成任务</strong>而言，判断一次攻击成功与否并非易事，这<strong>需要一个超高质量的分类器来判断 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>y</mi></mrow><annotation encoding="application/x-tex">y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span></span></span></span> 是否安全或需要人类来进行审查</strong>。</p>
+<h3 id="白盒攻击和黑盒攻击">白盒攻击和黑盒攻击</h3>
+<ul>
+<li>
+<p><strong>白盒攻击</strong>（White-box attacks）假设攻击者可以<strong>完全访问</strong>模型权重、架构和训练工作流程，这样一来攻击者就可以获得<strong>梯度信号</strong>。这里我们并不假设攻击者能获得全部训练数据。这仅适用于开源模型。</p>
+</li>
+<li>
+<p><strong>黑盒攻击</strong>（Black-box attacks）则是假设攻击者只能访问 API 类型的服务 —— 攻击者可以提供输入 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span></span></span></span> 并获取反馈的样本 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>y</mi></mrow><annotation encoding="application/x-tex">y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span></span></span></span>，而不知道有关模型的更多信息。</p>
+</li>
+</ul>
+<h1 id="对抗性攻击的种类">对抗性攻击的种类</h1>
+<p>为了让大语言模型 (LLMs) 做出错误的输出，研究人员发明了多种对抗性输入方法。这里，我们介绍五种主要策略。</p>
+<table>
+<thead>
+<tr>
+<th>攻击方式</th>
+<th>类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Token操作</td>
+<td>黑盒</td>
+<td>微调输入文本的少量 Token，引发模型失效，同时保留原文的含义。</td>
+</tr>
+<tr>
+<td>基于梯度的攻击</td>
+<td>白盒</td>
+<td>利用梯度信息来制定出有效的攻击策略。</td>
+</tr>
+<tr>
+<td>越狱式提示</td>
+<td>黑盒</td>
+<td>常用一些基于直觉的提示来绕过模型内建的安全机制。</td>
+</tr>
+<tr>
+<td>人类参与的红队策略</td>
+<td>黑盒</td>
+<td>人工对模型进行攻击，可能会借助其他模型的协助。</td>
+</tr>
+<tr>
+<td>模型红队攻击</td>
+<td>黑盒</td>
+<td>一个模型对另一个模型进行攻击，攻击者模型可以根据需要进行调整。</td>
+</tr>
+</tbody>
+</table>
+<h2 id="token操作">Token操作</h2>
+<p>给定一段包含一个 token 序列的文本输入，我们可以使用<strong>简单的token操作</strong>（比如<strong>替换成同义词</strong>）来诱使模型给出错误预测。</p>
+<blockquote>
+<p>想象一下，如果我们有一段文本，里面充满了各种Token（就是文字或词汇），我们可以对这些Token进行一些小把戏，比如换个同义词，就能让智能模型搞不清楚状况，做出错误的判断。这种在所谓的黑盒环境下的“Token 操纵术”是可行的。</p>
+</blockquote>
+<p>基于 token 操作的攻击属于黑盒攻击。在 Python 框架中，Morris et al. 2020 的论文《TextAttack: A Framework for Adversarial Attacks, Data Augmentation, and Adversarial Training in NLP》实现了许多词和 token 操作攻击方法，可用于为 NLP 模型创建对抗样本。这一领域的许多实验主要针对分类和文本蕴含。</p>
+<p>举个例子，Ribeiro et al (2018) 的研究《Semantically Equivalent Adversarial Rules for Debugging NLP models》依赖于人工提出的「语义等价式对抗规则（SEAR）」，其可以通过尽可能少的 token 操作来让模型无法生成正确答案。比如，其中的规则包括将 What 换成 Which、将 was 换为 is。另外，还有其他研究者提出的替换关键词、用同义词替换等方法。</p>
+<h2 id="基于梯度的攻击">基于梯度的攻击</h2>
+<p>如果是白盒攻击，则攻击者可以获取所有的模型参数和架构。因此，攻击者就可以<strong>依靠梯度下降</strong>来通过编程方式学习最有效的攻击手段。这种基于梯度的攻击手法，<strong>只适用于可以完全访问内部结构的白盒环境</strong>，比如开源 LLM。</p>
+<h3 id="gbda">GBDA</h3>
+<p>Guo et al. 2021 的论文《Gradient-based Adversarial Attacks against Text Transformers》提出的基于梯度的分布式攻击（GBDA）使用了 Gumbel-Softmax 近似法,来使对抗损失优化可微。在这种方法中，BERTScore 和困惑度（perplexity）用来衡量生成的文本既关联又流畅。然而，Gumbel-softmax 技巧难以扩展用于 token 删除或增添，它受限于 token 替换操作。</p>
+<ul>
+<li>
+<p><strong>核心思想</strong>：<strong>寻找一个对抗分布</strong>，而不是单个对抗样本。这个对抗分布参数化地表示一系列可能的对抗样本，并使用连续的矩阵<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>θ</mi></mrow><annotation encoding="application/x-tex">\theta</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">θ</span></span></span></span>进行控制。通过优化<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>θ</mi></mrow><annotation encoding="application/x-tex">\theta</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">θ</span></span></span></span>，我们可以调整对抗分布，使其包含更多能够欺骗目标模型 h 的样本。</p>
+</li>
+<li>
+<p><strong>优化过程</strong>：</p>
+<ul>
+<li>GBDA 使用 Gumbel-softmax 技术将对抗分布的采样过程变得可微分，从而可以使用梯度下降等优化算法进行优化。</li>
+<li>优化过程中，目标是最小化一个包含对抗损失、流畅性约束和语义相似性约束的损失函数。</li>
+<li>对抗损失鼓励模型对样本做出错误预测。</li>
+<li>流畅性约束使用语言模型来评估样本的流畅程度，并鼓励生成更自然的文本。</li>
+<li>语义相似性约束使用 BERTScore 来评估样本与原始样本在语义上的相似程度，并鼓励生成语义上更接近原始样本的对抗样本。</li>
+</ul>
+</li>
+<li>
+<p><strong>生成对抗样本</strong>：优化完成后，从对抗分布 PΘ 中采样即可得到对抗样本。由于对抗分布中包含多种可能的对抗样本，我们可以从中选择最适合当前任务和目标模型的样本。</p>
+</li>
+</ul>
+<h3 id="hotflip">HotFlip</h3>
+<p>Ebrahimi et al. 2018 在论文《HotFlip: White-Box Adversarial Examples for Text Classification》 中则是<strong>将文本操作看作是向量空间中的输入</strong>，度量的是损失在这些向量上的导数。基于one-hot表示的梯度来有效估计单个操作所造成的最大损失的变化，通过原子翻转操作（将一个字符替换为另一个字符）生成对抗样本，并通过一系列的字符翻转来支持插入和删除操作。HotFlip 可以扩展用于 token 删除或增添。</p>
+<h3 id="uta">UTA</h3>
+<p>Wallace et al. (2019) 的论文《Universal Adversarial Triggers for Attacking and Analyzing NLP》提出了一种<strong>在 token 上进行梯度引导式搜索</strong>的方法，可以找到诱使模型输出特定预测结果的短序列，这个短序列被称为 Universal Adversarial Triggers （UAT，通用对抗触发器）。UAT 不受输入的影响，这意味着这些触发器可以<strong>作为前缀（或后缀）连接</strong>到来自数据集的任意输入上。</p>
+<p>上面的 token 搜索方法可以使用<strong>波束搜索增强</strong>。当寻找最优的 token 嵌入时，可以选取 top-k 个候选项，而不是单独一个，在当前数据批上从左到右搜索，并根据 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>L</mi><mrow><mi>a</mi><mi>d</mi><mi>v</mi></mrow></msub></mrow><annotation encoding="application/x-tex">L_{adv}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">L</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">a</span><span class="mord mathdefault mtight">d</span><span class="mord mathdefault mtight" style="margin-right:0.03588em;">v</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 为每个波束评分。</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2024/07/10/LLM-Security1/p1.png" style="zoom:45%;">
+<p>UAT 的损失 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>L</mi><mi>a</mi></msub><mi>d</mi><mi>v</mi></mrow><annotation encoding="application/x-tex">L_adv</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.84444em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">L</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">a</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord mathdefault">d</span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span></span></span></span>  需要针对具体任务而设计。分类或阅读理解依赖于交叉熵。</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2024/07/10/LLM-Security1/p3.png" style="zoom:45%;">
+<p>UAT 为何有效？这是一个很有趣的问题。因为 UAT 是与输入无关的，并且可以在有不同嵌入、token 化方案和架构的模型之间迁移，因此它们也许可以有效地利用训练数据中的偏差，毕竟这种偏差已经融入到了模型的全局行为中。</p>
+<p>使用 UAT 攻击有一个缺点：<strong>很容易检测出来</strong>。原因是所学习到的触发器往往是毫无意义的。Mehrabi et al. (2022) 在论文《Robust Conversational Agents against Imperceptible Toxicity Triggers》中研究了 UAT 的两种变体，它们会促使所学到的触发器在多轮对话语境中难以察觉。其目标是创建能在给定对话中有效触发有毒响应的攻击性消息，同时保证该攻击在对话中是流畅、连贯和一致的。</p>
+<h3 id="autoprompt">AutoPrompt</h3>
+<p>Shin et al., 2020 的《AutoPrompt: Eliciting Knowledge from Language Models with Automatically Generated Prompts》使用了同样的<strong>基于梯度的搜索策略</strong>来为多样化的任务寻找最有效的 <strong>prompt</strong> 模板。</p>
+<h3 id="通用对抗触发-token-作为后缀连接到输入">通用对抗触发 token 作为后缀连接到输入</h3>
+<p>Zou et al. (2023) 的论文《Robust Conversational Agents against Imperceptible Toxicity Triggers》也研究了将通用对抗触发 token 作为后缀连接到输入请求上的情况。他们具体研究了对 LLM 的恶意请求 —— 对此模型应当拒绝回答。事实上，拒绝不被允许的内容类别（比如犯罪建议）是 GPT-4 内置的一个重要的安全措施。对抗性的目标是，<strong>即使面对应该被拒绝的请求，也能操纵语言模型给出 肯定的回应</strong>。例如，面对一个恶意请求，模型可能会回答说：“Sure, here is how to …”。为了避免仅仅通过改变话题来引出一个 “sure” 回答，预期中的肯定回应也被设定为会重复用户的部分提示。而计算这种回应的可能性时使用的损失函数非常简单，就是目标回应的负对数似然 (NLL)。</p>
+<h3 id="gcg">GCG</h3>
+<p>为了在多个输入上引发模型给出肯定回应，研究人员在两个不同的模型 Vicuna-7b 和 Vicuna-13b 上进行了实验。他们使用了一种称为贪婪坐标梯度 (GCG) 的搜索技术，来找到能在所有可能的单个 Token 替换中减少损失最多的候选 Token。鉴于实际上不可能评估所有 Token 的替换，研究者采用了一种基于梯度的 Token 搜索策略，这种策略与 UAT 和 AutoPrompt 相似，可以<strong>为每个 Token 找出能够最大化减少损失函数梯度的最佳候选 Token</strong>。</p>
+<p>尽管他们的攻击序列完全是基于开源模型训练的，但它们却出乎意料地可以移植用于其它商用模型，这表明对开源模型的白盒攻击对私有模型也有效，尤其是当低层的训练数据有所重叠时。注意 Vicuna 的训练使用了从 GPT-3.5-turbo 收集的数据（通过 shareGPT），这本质上是蒸馏，因此这种攻击更像是白盒攻击。</p>
+<h3 id="arca">ARCA</h3>
+<p>Jones et al. 2023 等提出的自回归随机坐标上升（ARCA）,ARCA 考虑了一系列更广泛的优化问题，用以寻找符合某种特定行为模式的输入输出对 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">(</mo><mi>x</mi><mo separator="true">,</mo><mi>y</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">(x,y)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathdefault">x</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="mclose">)</span></span></span></span>；例如，输入是以 “Barack Obama” 开头的无害内容，但可能产生有害的输出。</p>
+<h2 id="越狱式提示">越狱式提示</h2>
+<p>Jailbreak 提示技术是一种利用弱点强制大语言模型（LLMs）产出那些本应被过滤的有害内容。这种技术属于黑盒攻击，其措辞组合的选取是基于经验法则和手动尝试。</p>
+<p>Wei et al. (2023) 的论文《Jailbroken: How Does LLM Safety Training Fail?》提出了 LLM 安全的两种失败模式，可用于指导越狱攻击的设计:</p>
+<ol>
+<li>
+<p><strong>目标冲突</strong>：当一个模型在执行能力（比如“必须严格执行指令”）和安全目标之间出现矛盾时，我们称之为目标冲突。举例来说，有些人可能会利用这种冲突来实施所谓的“越狱攻击”：</p>
+<ul>
+<li>前缀引导：让模型以肯定答复开始对话。</li>
+<li>拒绝抑制：详细指示模型避免使用拒绝的表达方式。</li>
+<li>风格限制：要求模型不使用复杂词汇，这样它就无法使用专业术语或详细解释来拒绝某些请求。</li>
+<li>角色扮演：例如，扮演 DAN（立即行动），AIM（总是表现出高智能和机智）等角色。</li>
+</ul>
+</li>
+<li>
+<p><strong>泛化失配</strong>：安全训练未能覆盖到模型实际具备能力的领域。这种情况通常发生在模型的安全训练数据未涉及到的领域，但这些输入却在它广泛的预训练资料库中。比如：</p>
+<ul>
+<li>特殊编码：使用 Base64 编码来构建对抗性输入。</li>
+<li>字符变换：ROT13 密码、火星文或脑残体（用视觉上相似的数字和符号替换字母）、摩尔斯电码。</li>
+<li>词变换：Pig Latin（用同义词替换敏感词，比如用「窃」替换「偷」）、拆分关键词（即所谓的 token smuggling，也就是把敏感词分成几部分）。</li>
+<li>prompt 层面的混淆：翻译成其它语言、要求模型以其能理解的方式进行混淆。</li>
+</ul>
+</li>
+</ol>
+<p>Wei et al. (2023) 实验了大量越狱方法，包括由以上原理构建的组合型策略。</p>
+<ul>
+<li>combination_1 组合了前缀引导、拒绝抑制和 Base64 攻击。</li>
+<li>combination_2 加入了风格限制。</li>
+<li>combination_3 又添加了生成网站内容和格式化限制条件。</li>
+</ul>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2024/07/10/LLM-Security1/p4.png" style="zoom:35%;">
+<p>Greshake et al. (2023) 的论文《Not what you’ve signed up for: Compromising Real-World LLM-Integrated Applications with Indirect Prompt Injection》则在较高层面上观察了 prompt 注入攻击。其中指出，即便当攻击无法提供详细的方法而仅仅提供一个目标时，模型也有可能自动去实现它。当模型可以访问外部 API 和工具时，对更多信息（甚至是专有信息）的获取可能导致更大的钓鱼攻击和私密窥探攻击风险。</p>
+<h2 id="有人类参与的红队策略">有人类参与的红队策略</h2>
+<p>由 Wallace 等人 (2019) 提出的“人类参与的敌对生成”策略，旨在<strong>开发工具辅助人类“智破”人工智能模型</strong>。在他们的研究中，以 QuizBowl QA 数据集 为基础，他们设计了一套敌对性写作界面。这个界面可以引导用户编写类似《危险边缘》节目风格的问题，目的是让人工智能模型产生错误的判断。系统会根据每个词的重要度来进行颜色高亮显示，这个重要度是通过移除该词后模型预测概率的变化来确定的，具体是通过计算模型对词嵌入的梯度来近似得到的。<br>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2024/07/10/LLM-Security1/p5.png" style="zoom:45%;"><br>
+界面由（左上角）模型的前五个预测和（右下角）根据词语重要性高亮显示的用户问题组成。</p>
+<p>在 Ziegler 等人 (2022) 的一个实验中，研究人员指导人类参与者寻找针对暴力内容的安全分类器的潜在失败点。他们开发了一种工具，帮助参与者更快速、更有效地发现并解决分类器的漏洞。使用工具辅助的改写比全手工改写更高效，把处理每个案例的时间从 20 分钟缩短至 13 分钟。具体来说，他们为人类作者引入了两种辅助特性：</p>
+<ul>
+<li>特征 1: <strong>每个词语的显著性分数展示</strong>。工具界面会突出那些一旦被移除就可能影响分类器判定结果的词语。一个词语的显著性分数是根据这个词语的嵌入对分类器输出的梯度幅值来确定的，这和 Wallace 等人 (2019) 的做法是一样的。</li>
+<li>特征 2: <strong>词语替换与添加</strong>。这项功能让用户通过 BERT-Attack 轻松进行词语的操作。接着，由人类作者对词语更新进行复核。只要点击文本片段中的某个词语，就会弹出一个下拉菜单，里面按照能够降低当前模型分数的程度，列出了新的词语选项。目的是减少模型预测这些输入为暴力内容的可能性。</li>
+</ul>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2024/07/10/LLM-Security1/p6.png" style="zoom:35%;">
+<p>Xu et al. 2021 的《Bot-Adversarial Dialogue for Safe Conversational Agents》提出了 Bot-Adversarial Dialogue（BAD），该框架可以引导人类去诱使模型犯错（比如输出不安全的内容）。他们收集了 5000 多组模型与众包工作者的对话。每一组对话都包含 14 轮，然后他们根据不安全对话轮次的数量给模型打分。他们最终得到了 BAD 数据集，其中包含大约 2500 组带有攻击性标签的对话。</p>
+<p>Anthropic 的红队数据集包含接近 4 万个对抗攻击，它们收集自人类红队者与 LLM 的对话。他们发现，RLHF 的规模越大，就越难以攻击。OpenAI 发布的大模型（比如 GPT-4 和 DALL-E 3）普遍使用了人类专家红队，以确保系统的安全性。</p>
+<h2 id="模型红队攻击">模型红队攻击</h2>
+<p>人类红队策略很强大，但是难以大规模实施而且可能需要大量经过培训的专业人士。现在想象一下：我们可以学习一个红队模型 red 来与目标 LLM 进行对抗，以触发其给出不安全响应。对于基于模型的红队策略，主要的难题是<strong>如何判断一次攻击是否成功</strong>；只有知道了这一点，我们才能构建用于训练红队模型的合适学习信号。</p>
+<p>假设我们已经有一个高质量的分类器，能够判断模型的输出是否有害，我们就可以将其用作奖励来训练红队模型，以得到一些能最大化分类器在目标模型输出上的分数的输入。令 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>r</mi><mo stretchy="false">(</mo><mi>x</mi><mo separator="true">,</mo><mi>y</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">r(x, y)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mopen">(</span><span class="mord mathdefault">x</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="mclose">)</span></span></span></span> 是一个这样的红队分类器，其可以判断在给定测试输入<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span></span></span></span>时，输出 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>y</mi></mrow><annotation encoding="application/x-tex">y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span></span></span></span> 是否有害(基于Perez et al. 2022 的论文《Red Teaming Language Models with Language Models》)。</p>
+<p>Casper et al. (2023) 的论文《Explore, Establish, Exploit: Red Teaming Language Models from Scratch》设计了一种有人类参与的红队过程。其与 Perez et al. (2022) 的主要不同之处在于其明确地为目标模型设置了一个数据采样阶段，这样就可以收集其上的人类标签来训练针对特定任务的红队分类器。其包含探索（Explore）、建立（Establish）和利用（Exploit）三个阶段。使用强化学习培养一个对抗性的提示生成器，这个生成器能够触发一系列多样化的有害输出。</p>
+<p>Mehrabi et al. (2023) 的论文《FLIRT: Feedback Loop In-context Red Teaming》则是依靠红队 LM <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>p</mi><mi>r</mi></msub><mi>e</mi><mi>d</mi></mrow><annotation encoding="application/x-tex">p_red</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord mathdefault">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.02778em;">r</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord mathdefault">e</span><span class="mord mathdefault">d</span></span></span></span> 的上下文学习来攻击图像或文本生成模型 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">p</span></span></span></span>，使其输出不安全的内容。红队语言模型 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>p</mi><mrow><mi>r</mi><mi>e</mi><mi>d</mi></mrow></msub></mrow><annotation encoding="application/x-tex">p_{red}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord mathdefault">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.02778em;">r</span><span class="mord mathdefault mtight">e</span><span class="mord mathdefault mtight">d</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 创造了一个根据示例定制的对抗性提示 $ x \sim {p_{red}{(.∣{examples})}}$ 这些初步的示例是由人工仔细打造的；生成模型<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">p</span></span></span></span>会以这个提示为条件，输出图像或文字 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>y</mi><mo>∼</mo><mi>p</mi><mo stretchy="false">(</mo><mi mathvariant="normal">.</mi><mo>∣</mo><mi>x</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">y \sim p(.∣x)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">∼</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">p</span><span class="mopen">(</span><span class="mord">.</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">∣</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">x</span><span class="mclose">)</span></span></span></span>。然后，生成的作品 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>y</mi></mrow><annotation encoding="application/x-tex">y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span></span></span></span> 会被检测，比如使用分类器来判定其是否安全；如果结果是不安全的，那么这个触发提示 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span></span></span></span> 就会用来更新上下文的案例，从而让 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>p</mi><mrow><mi>r</mi><mi>e</mi><mi>d</mi></mrow></msub></mrow><annotation encoding="application/x-tex">p_{red}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord mathdefault">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.02778em;">r</span><span class="mord mathdefault mtight">e</span><span class="mord mathdefault mtight">d</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 按照某种策略制作出新的对抗性提示。</p>
+<h1 id="如何应对攻击">如何应对攻击</h1>
+<h2 id="鞍点问题">鞍点问题</h2>
+<p>Madry et al. 2017 的《Towards Deep Learning Models Resistant to Adversarial Attacks》提出了一个很不错的对抗稳健性（adversarial robustness）框架，即将对抗稳健性建模成一个鞍点问题，这样就变成了一个稳健优化（robust optimization）问题。该框架是为分类任务的连续输入而提出的，但它用相当简洁的数学公式描述了双层优化过程。其目标由一个<strong>内部最大化</strong>问题和一个<strong>外部最小化</strong>问题组成：</p>
+<ul>
+<li>内部最大化：寻找能导致高损失的最有效的对抗数据点 𝐱+𝜹。所有对抗性攻击方法最终都可归结为如何最大化这个内部过程的损失。</li>
+<li>外部最小化：寻找最佳的模型参数化方案，使得由内部最大化过程找到的最有效攻击的损失能被最小化。要训练出稳健的模型，一个简单方法是将每个数据点替换为其扰动版本，这些版本可以是一个数据点的多个对抗变体。<br>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2024/07/10/LLM-Security1/p7.png" style="zoom:45%;"></li>
+</ul>
+<h2 id="llm-稳健性">LLM 稳健性</h2>
+<p>这里简单谈谈一些有关 LLM 稳健性的研究。</p>
+<p>Xie et al. 2023 的论文《Defending ChatGPT against Jailbreak Attack via Self-Reminder》发现了一种简单直观的保护模型免受对抗攻击的方法：<strong>明确地指示模型成为负责任的模型，不要生成有害内</strong>容。这会极大降低越狱攻击的成功率，但对模型的生成质量会有副作用，这是因为这样的指示<strong>会让模型变得保守</strong>（比如不利于创意写作），或者会在某些情况下错误地解读指令（比如在安全 - 不安全分类时）。</p>
+<p>目前降低恶意攻击风险最常见的方法是<strong>对抗性训练</strong>，即在攻击样本上训练模型。这种方法被认为是最有效的防御手段，但它需要在模型稳健性和性能之间做出权衡。在 Jain 等人 2023 的《Baseline Defenses for Adversarial Attacks Against Aligned Language Models》中，他们测试了两种对抗性训练方案：（1）将有害提示与 “I’m sorry. As a …” 的回应配对进行梯度下降；（2）在每个训练步骤中，对拒绝回应进行一次梯度下降，而对“红队”的不当回应进行一次梯度上升。结果显示方案（2）几乎无效，因为它严重降低了模型生成的质量，而攻击成功率却仅有少量下降。</p>
+<p>白盒攻击通常会产生毫无意义的恶意提示，这些提示可以通过<strong>检查困惑度</strong>来识别。当然，白盒攻击可以通过专门优化以降低困惑度来规避这一检测，比如 UAT-LM，它是 UAT 的变体。不过，这种方法也有其权衡，可能会降低攻击的成功率。</p>
+<p>Jain et al. 2023 还测试了对文本输入进行预处理的方法，使得能在移除对抗性修改的同时维持语义含义。</p>
+<ul>
+<li>解释含义：使用 LLM 来解释输入文本的含义，这可能会对下游任务性能造成较小影响。</li>
+<li>重新 token 化：将 token 拆分开并使用多个更小的 token 来表示它们，比如使用 BPE-dropout（随机丢弃一定比例的 token）。使用这种方法的假设是对抗性 prompt 很可能会利用特定的对抗性 token 组合。这也确实有助于降低攻击成功率，但也有限，比如从 90% 以上降至 40%。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>智能算法安全</category>
+        <category>大模型</category>
+        <category>大模型安全</category>
+        <category>大模型对抗攻击</category>
+      </categories>
+      <tags>
+        <tag>智能算法安全</tag>
+        <tag>生成式人工智能</tag>
+        <tag>大模型</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>论文阅读记录 —— LLM Agent</title>
     <url>/2024/07/19/LLM-Learning3/</url>
     <content><![CDATA[<h1 id="react">ReAct</h1>
@@ -3038,200 +3275,6 @@ TSS是一个特殊的段。在Linux中，CPU从系统态切换到用户态时，
       <tags>
         <tag>大模型</tag>
         <tag>Agent</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>大模型的对抗攻击与防御</title>
-    <url>/2024/07/10/LLM-Security1/</url>
-    <content><![CDATA[<blockquote>
-<p>原文：OpenAI 安全系统（Safety Systems）团队负责人 Lilian Weng 发布的一篇博客文章 <a href="https://lilianweng.github.io/lil-log/2023/11/07/adversarial-attacks-on-llms.html">《Adversarial Attacks on LLMs》</a></p>
-</blockquote>
-<p>随着 ChatGPT 的发布，大型语言模型应用正在加速大范围铺开。OpenAI 的安全系统团队已经投入了大量资源，研究如何在对齐过程中为模型构建默认的安全行为。但是，对抗攻击或 prompt 越狱依然有可能让模型输出我们不期望看到的内容。</p>
-<p>目前在对抗攻击方面的研究很多集中在图像方面，也就是在连续的高维空间。而对于文本这样的离散数据，由于缺乏梯度信号，人们普遍认为攻击会困难得多。Lilian Weng 之前曾写过一篇文章<a href="https://lilianweng.github.io/posts/2021-01-02-controllable-text-generation/">《Controllable Text Generation》</a>探讨过这一主题。简单来说：攻击 LLM 本质上就是控制该模型输出特定类项的（不安全）内容。</p>
-<p>此外，还有研究者试图通过攻击大语言模型来提取其预训练数据、私有信息或者通过数据毒化手段来干扰模型的训练过程。但这些并非本文要探讨的主题。</p>
-<h1 id="基础">基础</h1>
-<h2 id="威胁模型">威胁模型</h2>
-<p>对抗攻击是<strong>对输入样本进行微小难以察觉的修改，诱使模型输出我们不期望的内容</strong>。许多早期研究关注的重点是分类任务，而近期的工作则开始更多关注生成模型的输出。本文探讨的是大型语言模型，并且假定攻击<strong>仅发生在推理阶段</strong>，也就是说模型权重是固定的。</p>
-<!-- <img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2024/07/10/LLM-Security1/p1.png" class="" title="p1"> -->
-<blockquote>
-<p>对抗样本的定义:对抗样本是指能够欺骗模型，使其做出错误预测的输入样本，但与原始样本在语义上仍然相似，不易被人察觉。</p>
-</blockquote>
-<h3 id="分类">分类</h3>
-<p>在过去，研究者更关注的是对分类器进行对抗攻击，并且许多是在图像领域。LLM 也可被用于分类，给定一个输入 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span></span></span></span> 和一个分类器 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>f</mi><mo stretchy="false">(</mo><mi mathvariant="normal">.</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">f(.)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord">.</span><span class="mclose">)</span></span></span></span>，我们希望找到该输入的一个差异细微的对抗版本 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>x</mi><mrow><mi>a</mi><mi>d</mi><mi>v</mi></mrow></msub></mrow><annotation encoding="application/x-tex">x_{adv}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">a</span><span class="mord mathdefault mtight">d</span><span class="mord mathdefault mtight" style="margin-right:0.03588em;">v</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>，使得 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>f</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mrow><mi>a</mi><mi>d</mi><mi>v</mi></mrow></msub><mo stretchy="false">)</mo><mo mathvariant="normal">≠</mo><mi>f</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">f(x_{adv})≠f(x)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">a</span><span class="mord mathdefault mtight">d</span><span class="mord mathdefault mtight" style="margin-right:0.03588em;">v</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel"><span class="mrel"><span class="mord"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.69444em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="rlap"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="inner"><span class="mrel"></span></span><span class="fix"></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.19444em;"><span></span></span></span></span></span></span><span class="mrel">=</span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord mathdefault">x</span><span class="mclose">)</span></span></span></span>。</p>
-<h3 id="文本生成">文本生成</h3>
-<p>给定一个输入<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span></span></span></span>和一个生成模型 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi><mo stretchy="false">(</mo><mi mathvariant="normal">.</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">p(.)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">p</span><span class="mopen">(</span><span class="mord">.</span><span class="mclose">)</span></span></span></span>，该模型可输出一个样本 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>y</mi><mo>∼</mo><mi>p</mi><mo stretchy="false">(</mo><mi mathvariant="normal">.</mi><mi mathvariant="normal">∣</mi><mi>x</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">y \sim p(.|x)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">∼</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">p</span><span class="mopen">(</span><span class="mord">.</span><span class="mord">∣</span><span class="mord mathdefault">x</span><span class="mclose">)</span></span></span></span>。这里的对抗攻击是找到一个<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">p(x)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">p</span><span class="mopen">(</span><span class="mord mathdefault">x</span><span class="mclose">)</span></span></span></span>，使得 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>y</mi></mrow><annotation encoding="application/x-tex">y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span></span></span></span> 会违反该模型内置的安全行为，比如输出非法主题的不安全内容、泄漏隐私信息或模型训练数据。对<strong>生成任务</strong>而言，判断一次攻击成功与否并非易事，这<strong>需要一个超高质量的分类器来判断 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>y</mi></mrow><annotation encoding="application/x-tex">y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span></span></span></span> 是否安全或需要人类来进行审查</strong>。</p>
-<h3 id="白盒攻击和黑盒攻击">白盒攻击和黑盒攻击</h3>
-<ul>
-<li>
-<p><strong>白盒攻击</strong>（White-box attacks）假设攻击者可以<strong>完全访问</strong>模型权重、架构和训练工作流程，这样一来攻击者就可以获得<strong>梯度信号</strong>。这里我们并不假设攻击者能获得全部训练数据。这仅适用于开源模型。</p>
-</li>
-<li>
-<p><strong>黑盒攻击</strong>（Black-box attacks）则是假设攻击者只能访问 API 类型的服务 —— 攻击者可以提供输入 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span></span></span></span> 并获取反馈的样本 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>y</mi></mrow><annotation encoding="application/x-tex">y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span></span></span></span>，而不知道有关模型的更多信息。</p>
-</li>
-</ul>
-<h1 id="对抗性攻击的种类">对抗性攻击的种类</h1>
-<p>为了让大语言模型 (LLMs) 做出错误的输出，研究人员发明了多种对抗性输入方法。这里，我们介绍五种主要策略。</p>
-<table>
-<thead>
-<tr>
-<th>攻击方式</th>
-<th>类型</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Token操作</td>
-<td>黑盒</td>
-<td>微调输入文本的少量 Token，引发模型失效，同时保留原文的含义。</td>
-</tr>
-<tr>
-<td>基于梯度的攻击</td>
-<td>白盒</td>
-<td>利用梯度信息来制定出有效的攻击策略。</td>
-</tr>
-<tr>
-<td>越狱式提示</td>
-<td>黑盒</td>
-<td>常用一些基于直觉的提示来绕过模型内建的安全机制。</td>
-</tr>
-<tr>
-<td>人类参与的红队策略</td>
-<td>黑盒</td>
-<td>人工对模型进行攻击，可能会借助其他模型的协助。</td>
-</tr>
-<tr>
-<td>模型红队攻击</td>
-<td>黑盒</td>
-<td>一个模型对另一个模型进行攻击，攻击者模型可以根据需要进行调整。</td>
-</tr>
-</tbody>
-</table>
-<h2 id="token操作">Token操作</h2>
-<p>给定一段包含一个 token 序列的文本输入，我们可以使用<strong>简单的token操作</strong>（比如<strong>替换成同义词</strong>）来诱使模型给出错误预测。</p>
-<blockquote>
-<p>想象一下，如果我们有一段文本，里面充满了各种Token（就是文字或词汇），我们可以对这些Token进行一些小把戏，比如换个同义词，就能让智能模型搞不清楚状况，做出错误的判断。这种在所谓的黑盒环境下的“Token 操纵术”是可行的。</p>
-</blockquote>
-<p>基于 token 操作的攻击属于黑盒攻击。在 Python 框架中，Morris et al. 2020 的论文《TextAttack: A Framework for Adversarial Attacks, Data Augmentation, and Adversarial Training in NLP》实现了许多词和 token 操作攻击方法，可用于为 NLP 模型创建对抗样本。这一领域的许多实验主要针对分类和文本蕴含。</p>
-<p>举个例子，Ribeiro et al (2018) 的研究《Semantically Equivalent Adversarial Rules for Debugging NLP models》依赖于人工提出的「语义等价式对抗规则（SEAR）」，其可以通过尽可能少的 token 操作来让模型无法生成正确答案。比如，其中的规则包括将 What 换成 Which、将 was 换为 is。另外，还有其他研究者提出的替换关键词、用同义词替换等方法。</p>
-<h2 id="基于梯度的攻击">基于梯度的攻击</h2>
-<p>如果是白盒攻击，则攻击者可以获取所有的模型参数和架构。因此，攻击者就可以<strong>依靠梯度下降</strong>来通过编程方式学习最有效的攻击手段。这种基于梯度的攻击手法，<strong>只适用于可以完全访问内部结构的白盒环境</strong>，比如开源 LLM。</p>
-<h3 id="gbda">GBDA</h3>
-<p>Guo et al. 2021 的论文《Gradient-based Adversarial Attacks against Text Transformers》提出的基于梯度的分布式攻击（GBDA）使用了 Gumbel-Softmax 近似法,来使对抗损失优化可微。在这种方法中，BERTScore 和困惑度（perplexity）用来衡量生成的文本既关联又流畅。然而，Gumbel-softmax 技巧难以扩展用于 token 删除或增添，它受限于 token 替换操作。</p>
-<ul>
-<li>
-<p><strong>核心思想</strong>：<strong>寻找一个对抗分布</strong>，而不是单个对抗样本。这个对抗分布参数化地表示一系列可能的对抗样本，并使用连续的矩阵<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>θ</mi></mrow><annotation encoding="application/x-tex">\theta</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">θ</span></span></span></span>进行控制。通过优化<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>θ</mi></mrow><annotation encoding="application/x-tex">\theta</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">θ</span></span></span></span>，我们可以调整对抗分布，使其包含更多能够欺骗目标模型 h 的样本。</p>
-</li>
-<li>
-<p><strong>优化过程</strong>：</p>
-<ul>
-<li>GBDA 使用 Gumbel-softmax 技术将对抗分布的采样过程变得可微分，从而可以使用梯度下降等优化算法进行优化。</li>
-<li>优化过程中，目标是最小化一个包含对抗损失、流畅性约束和语义相似性约束的损失函数。</li>
-<li>对抗损失鼓励模型对样本做出错误预测。</li>
-<li>流畅性约束使用语言模型来评估样本的流畅程度，并鼓励生成更自然的文本。</li>
-<li>语义相似性约束使用 BERTScore 来评估样本与原始样本在语义上的相似程度，并鼓励生成语义上更接近原始样本的对抗样本。</li>
-</ul>
-</li>
-<li>
-<p><strong>生成对抗样本</strong>：优化完成后，从对抗分布 PΘ 中采样即可得到对抗样本。由于对抗分布中包含多种可能的对抗样本，我们可以从中选择最适合当前任务和目标模型的样本。</p>
-</li>
-</ul>
-<h3 id="hotflip">HotFlip</h3>
-<p>Ebrahimi et al. 2018 在论文《HotFlip: White-Box Adversarial Examples for Text Classification》 中则是<strong>将文本操作看作是向量空间中的输入</strong>，度量的是损失在这些向量上的导数。基于one-hot表示的梯度来有效估计单个操作所造成的最大损失的变化，通过原子翻转操作（将一个字符替换为另一个字符）生成对抗样本，并通过一系列的字符翻转来支持插入和删除操作。HotFlip 可以扩展用于 token 删除或增添。</p>
-<h3 id="uta">UTA</h3>
-<p>Wallace et al. (2019) 的论文《Universal Adversarial Triggers for Attacking and Analyzing NLP》提出了一种<strong>在 token 上进行梯度引导式搜索</strong>的方法，可以找到诱使模型输出特定预测结果的短序列，这个短序列被称为 Universal Adversarial Triggers （UAT，通用对抗触发器）。UAT 不受输入的影响，这意味着这些触发器可以<strong>作为前缀（或后缀）连接</strong>到来自数据集的任意输入上。</p>
-<p>上面的 token 搜索方法可以使用<strong>波束搜索增强</strong>。当寻找最优的 token 嵌入时，可以选取 top-k 个候选项，而不是单独一个，在当前数据批上从左到右搜索，并根据 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>L</mi><mrow><mi>a</mi><mi>d</mi><mi>v</mi></mrow></msub></mrow><annotation encoding="application/x-tex">L_{adv}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">L</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">a</span><span class="mord mathdefault mtight">d</span><span class="mord mathdefault mtight" style="margin-right:0.03588em;">v</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 为每个波束评分。</p>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2024/07/10/LLM-Security1/p1.png" style="zoom:45%;">
-<p>UAT 的损失 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>L</mi><mi>a</mi></msub><mi>d</mi><mi>v</mi></mrow><annotation encoding="application/x-tex">L_adv</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.84444em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">L</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">a</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord mathdefault">d</span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span></span></span></span>  需要针对具体任务而设计。分类或阅读理解依赖于交叉熵。</p>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2024/07/10/LLM-Security1/p3.png" style="zoom:45%;">
-<p>UAT 为何有效？这是一个很有趣的问题。因为 UAT 是与输入无关的，并且可以在有不同嵌入、token 化方案和架构的模型之间迁移，因此它们也许可以有效地利用训练数据中的偏差，毕竟这种偏差已经融入到了模型的全局行为中。</p>
-<p>使用 UAT 攻击有一个缺点：<strong>很容易检测出来</strong>。原因是所学习到的触发器往往是毫无意义的。Mehrabi et al. (2022) 在论文《Robust Conversational Agents against Imperceptible Toxicity Triggers》中研究了 UAT 的两种变体，它们会促使所学到的触发器在多轮对话语境中难以察觉。其目标是创建能在给定对话中有效触发有毒响应的攻击性消息，同时保证该攻击在对话中是流畅、连贯和一致的。</p>
-<h3 id="autoprompt">AutoPrompt</h3>
-<p>Shin et al., 2020 的《AutoPrompt: Eliciting Knowledge from Language Models with Automatically Generated Prompts》使用了同样的<strong>基于梯度的搜索策略</strong>来为多样化的任务寻找最有效的 <strong>prompt</strong> 模板。</p>
-<h3 id="通用对抗触发-token-作为后缀连接到输入">通用对抗触发 token 作为后缀连接到输入</h3>
-<p>Zou et al. (2023) 的论文《Robust Conversational Agents against Imperceptible Toxicity Triggers》也研究了将通用对抗触发 token 作为后缀连接到输入请求上的情况。他们具体研究了对 LLM 的恶意请求 —— 对此模型应当拒绝回答。事实上，拒绝不被允许的内容类别（比如犯罪建议）是 GPT-4 内置的一个重要的安全措施。对抗性的目标是，<strong>即使面对应该被拒绝的请求，也能操纵语言模型给出 肯定的回应</strong>。例如，面对一个恶意请求，模型可能会回答说：“Sure, here is how to …”。为了避免仅仅通过改变话题来引出一个 “sure” 回答，预期中的肯定回应也被设定为会重复用户的部分提示。而计算这种回应的可能性时使用的损失函数非常简单，就是目标回应的负对数似然 (NLL)。</p>
-<h3 id="gcg">GCG</h3>
-<p>为了在多个输入上引发模型给出肯定回应，研究人员在两个不同的模型 Vicuna-7b 和 Vicuna-13b 上进行了实验。他们使用了一种称为贪婪坐标梯度 (GCG) 的搜索技术，来找到能在所有可能的单个 Token 替换中减少损失最多的候选 Token。鉴于实际上不可能评估所有 Token 的替换，研究者采用了一种基于梯度的 Token 搜索策略，这种策略与 UAT 和 AutoPrompt 相似，可以<strong>为每个 Token 找出能够最大化减少损失函数梯度的最佳候选 Token</strong>。</p>
-<p>尽管他们的攻击序列完全是基于开源模型训练的，但它们却出乎意料地可以移植用于其它商用模型，这表明对开源模型的白盒攻击对私有模型也有效，尤其是当低层的训练数据有所重叠时。注意 Vicuna 的训练使用了从 GPT-3.5-turbo 收集的数据（通过 shareGPT），这本质上是蒸馏，因此这种攻击更像是白盒攻击。</p>
-<h3 id="arca">ARCA</h3>
-<p>Jones et al. 2023 等提出的自回归随机坐标上升（ARCA）,ARCA 考虑了一系列更广泛的优化问题，用以寻找符合某种特定行为模式的输入输出对 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">(</mo><mi>x</mi><mo separator="true">,</mo><mi>y</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">(x,y)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathdefault">x</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="mclose">)</span></span></span></span>；例如，输入是以 “Barack Obama” 开头的无害内容，但可能产生有害的输出。</p>
-<h2 id="越狱式提示">越狱式提示</h2>
-<p>Jailbreak 提示技术是一种利用弱点强制大语言模型（LLMs）产出那些本应被过滤的有害内容。这种技术属于黑盒攻击，其措辞组合的选取是基于经验法则和手动尝试。</p>
-<p>Wei et al. (2023) 的论文《Jailbroken: How Does LLM Safety Training Fail?》提出了 LLM 安全的两种失败模式，可用于指导越狱攻击的设计:</p>
-<ol>
-<li>
-<p><strong>目标冲突</strong>：当一个模型在执行能力（比如“必须严格执行指令”）和安全目标之间出现矛盾时，我们称之为目标冲突。举例来说，有些人可能会利用这种冲突来实施所谓的“越狱攻击”：</p>
-<ul>
-<li>前缀引导：让模型以肯定答复开始对话。</li>
-<li>拒绝抑制：详细指示模型避免使用拒绝的表达方式。</li>
-<li>风格限制：要求模型不使用复杂词汇，这样它就无法使用专业术语或详细解释来拒绝某些请求。</li>
-<li>角色扮演：例如，扮演 DAN（立即行动），AIM（总是表现出高智能和机智）等角色。</li>
-</ul>
-</li>
-<li>
-<p><strong>泛化失配</strong>：安全训练未能覆盖到模型实际具备能力的领域。这种情况通常发生在模型的安全训练数据未涉及到的领域，但这些输入却在它广泛的预训练资料库中。比如：</p>
-<ul>
-<li>特殊编码：使用 Base64 编码来构建对抗性输入。</li>
-<li>字符变换：ROT13 密码、火星文或脑残体（用视觉上相似的数字和符号替换字母）、摩尔斯电码。</li>
-<li>词变换：Pig Latin（用同义词替换敏感词，比如用「窃」替换「偷」）、拆分关键词（即所谓的 token smuggling，也就是把敏感词分成几部分）。</li>
-<li>prompt 层面的混淆：翻译成其它语言、要求模型以其能理解的方式进行混淆。</li>
-</ul>
-</li>
-</ol>
-<p>Wei et al. (2023) 实验了大量越狱方法，包括由以上原理构建的组合型策略。</p>
-<ul>
-<li>combination_1 组合了前缀引导、拒绝抑制和 Base64 攻击。</li>
-<li>combination_2 加入了风格限制。</li>
-<li>combination_3 又添加了生成网站内容和格式化限制条件。</li>
-</ul>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2024/07/10/LLM-Security1/p4.png" style="zoom:35%;">
-<p>Greshake et al. (2023) 的论文《Not what you’ve signed up for: Compromising Real-World LLM-Integrated Applications with Indirect Prompt Injection》则在较高层面上观察了 prompt 注入攻击。其中指出，即便当攻击无法提供详细的方法而仅仅提供一个目标时，模型也有可能自动去实现它。当模型可以访问外部 API 和工具时，对更多信息（甚至是专有信息）的获取可能导致更大的钓鱼攻击和私密窥探攻击风险。</p>
-<h2 id="有人类参与的红队策略">有人类参与的红队策略</h2>
-<p>由 Wallace 等人 (2019) 提出的“人类参与的敌对生成”策略，旨在<strong>开发工具辅助人类“智破”人工智能模型</strong>。在他们的研究中，以 QuizBowl QA 数据集 为基础，他们设计了一套敌对性写作界面。这个界面可以引导用户编写类似《危险边缘》节目风格的问题，目的是让人工智能模型产生错误的判断。系统会根据每个词的重要度来进行颜色高亮显示，这个重要度是通过移除该词后模型预测概率的变化来确定的，具体是通过计算模型对词嵌入的梯度来近似得到的。<br>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2024/07/10/LLM-Security1/p5.png" style="zoom:45%;"><br>
-界面由（左上角）模型的前五个预测和（右下角）根据词语重要性高亮显示的用户问题组成。</p>
-<p>在 Ziegler 等人 (2022) 的一个实验中，研究人员指导人类参与者寻找针对暴力内容的安全分类器的潜在失败点。他们开发了一种工具，帮助参与者更快速、更有效地发现并解决分类器的漏洞。使用工具辅助的改写比全手工改写更高效，把处理每个案例的时间从 20 分钟缩短至 13 分钟。具体来说，他们为人类作者引入了两种辅助特性：</p>
-<ul>
-<li>特征 1: <strong>每个词语的显著性分数展示</strong>。工具界面会突出那些一旦被移除就可能影响分类器判定结果的词语。一个词语的显著性分数是根据这个词语的嵌入对分类器输出的梯度幅值来确定的，这和 Wallace 等人 (2019) 的做法是一样的。</li>
-<li>特征 2: <strong>词语替换与添加</strong>。这项功能让用户通过 BERT-Attack 轻松进行词语的操作。接着，由人类作者对词语更新进行复核。只要点击文本片段中的某个词语，就会弹出一个下拉菜单，里面按照能够降低当前模型分数的程度，列出了新的词语选项。目的是减少模型预测这些输入为暴力内容的可能性。</li>
-</ul>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2024/07/10/LLM-Security1/p6.png" style="zoom:35%;">
-<p>Xu et al. 2021 的《Bot-Adversarial Dialogue for Safe Conversational Agents》提出了 Bot-Adversarial Dialogue（BAD），该框架可以引导人类去诱使模型犯错（比如输出不安全的内容）。他们收集了 5000 多组模型与众包工作者的对话。每一组对话都包含 14 轮，然后他们根据不安全对话轮次的数量给模型打分。他们最终得到了 BAD 数据集，其中包含大约 2500 组带有攻击性标签的对话。</p>
-<p>Anthropic 的红队数据集包含接近 4 万个对抗攻击，它们收集自人类红队者与 LLM 的对话。他们发现，RLHF 的规模越大，就越难以攻击。OpenAI 发布的大模型（比如 GPT-4 和 DALL-E 3）普遍使用了人类专家红队，以确保系统的安全性。</p>
-<h2 id="模型红队攻击">模型红队攻击</h2>
-<p>人类红队策略很强大，但是难以大规模实施而且可能需要大量经过培训的专业人士。现在想象一下：我们可以学习一个红队模型 red 来与目标 LLM 进行对抗，以触发其给出不安全响应。对于基于模型的红队策略，主要的难题是<strong>如何判断一次攻击是否成功</strong>；只有知道了这一点，我们才能构建用于训练红队模型的合适学习信号。</p>
-<p>假设我们已经有一个高质量的分类器，能够判断模型的输出是否有害，我们就可以将其用作奖励来训练红队模型，以得到一些能最大化分类器在目标模型输出上的分数的输入。令 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>r</mi><mo stretchy="false">(</mo><mi>x</mi><mo separator="true">,</mo><mi>y</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">r(x, y)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mopen">(</span><span class="mord mathdefault">x</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="mclose">)</span></span></span></span> 是一个这样的红队分类器，其可以判断在给定测试输入<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span></span></span></span>时，输出 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>y</mi></mrow><annotation encoding="application/x-tex">y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span></span></span></span> 是否有害(基于Perez et al. 2022 的论文《Red Teaming Language Models with Language Models》)。</p>
-<p>Casper et al. (2023) 的论文《Explore, Establish, Exploit: Red Teaming Language Models from Scratch》设计了一种有人类参与的红队过程。其与 Perez et al. (2022) 的主要不同之处在于其明确地为目标模型设置了一个数据采样阶段，这样就可以收集其上的人类标签来训练针对特定任务的红队分类器。其包含探索（Explore）、建立（Establish）和利用（Exploit）三个阶段。使用强化学习培养一个对抗性的提示生成器，这个生成器能够触发一系列多样化的有害输出。</p>
-<p>Mehrabi et al. (2023) 的论文《FLIRT: Feedback Loop In-context Red Teaming》则是依靠红队 LM <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>p</mi><mi>r</mi></msub><mi>e</mi><mi>d</mi></mrow><annotation encoding="application/x-tex">p_red</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord mathdefault">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.02778em;">r</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord mathdefault">e</span><span class="mord mathdefault">d</span></span></span></span> 的上下文学习来攻击图像或文本生成模型 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">p</span></span></span></span>，使其输出不安全的内容。红队语言模型 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>p</mi><mrow><mi>r</mi><mi>e</mi><mi>d</mi></mrow></msub></mrow><annotation encoding="application/x-tex">p_{red}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord mathdefault">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.02778em;">r</span><span class="mord mathdefault mtight">e</span><span class="mord mathdefault mtight">d</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 创造了一个根据示例定制的对抗性提示 $ x \sim {p_{red}{(.∣{examples})}}$ 这些初步的示例是由人工仔细打造的；生成模型<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">p</span></span></span></span>会以这个提示为条件，输出图像或文字 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>y</mi><mo>∼</mo><mi>p</mi><mo stretchy="false">(</mo><mi mathvariant="normal">.</mi><mo>∣</mo><mi>x</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">y \sim p(.∣x)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">∼</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">p</span><span class="mopen">(</span><span class="mord">.</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">∣</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">x</span><span class="mclose">)</span></span></span></span>。然后，生成的作品 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>y</mi></mrow><annotation encoding="application/x-tex">y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span></span></span></span> 会被检测，比如使用分类器来判定其是否安全；如果结果是不安全的，那么这个触发提示 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span></span></span></span> 就会用来更新上下文的案例，从而让 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>p</mi><mrow><mi>r</mi><mi>e</mi><mi>d</mi></mrow></msub></mrow><annotation encoding="application/x-tex">p_{red}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord mathdefault">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.02778em;">r</span><span class="mord mathdefault mtight">e</span><span class="mord mathdefault mtight">d</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 按照某种策略制作出新的对抗性提示。</p>
-<h1 id="如何应对攻击">如何应对攻击</h1>
-<h2 id="鞍点问题">鞍点问题</h2>
-<p>Madry et al. 2017 的《Towards Deep Learning Models Resistant to Adversarial Attacks》提出了一个很不错的对抗稳健性（adversarial robustness）框架，即将对抗稳健性建模成一个鞍点问题，这样就变成了一个稳健优化（robust optimization）问题。该框架是为分类任务的连续输入而提出的，但它用相当简洁的数学公式描述了双层优化过程。其目标由一个<strong>内部最大化</strong>问题和一个<strong>外部最小化</strong>问题组成：</p>
-<ul>
-<li>内部最大化：寻找能导致高损失的最有效的对抗数据点 𝐱+𝜹。所有对抗性攻击方法最终都可归结为如何最大化这个内部过程的损失。</li>
-<li>外部最小化：寻找最佳的模型参数化方案，使得由内部最大化过程找到的最有效攻击的损失能被最小化。要训练出稳健的模型，一个简单方法是将每个数据点替换为其扰动版本，这些版本可以是一个数据点的多个对抗变体。<br>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2024/07/10/LLM-Security1/p7.png" style="zoom:45%;"></li>
-</ul>
-<h2 id="llm-稳健性">LLM 稳健性</h2>
-<p>这里简单谈谈一些有关 LLM 稳健性的研究。</p>
-<p>Xie et al. 2023 的论文《Defending ChatGPT against Jailbreak Attack via Self-Reminder》发现了一种简单直观的保护模型免受对抗攻击的方法：<strong>明确地指示模型成为负责任的模型，不要生成有害内</strong>容。这会极大降低越狱攻击的成功率，但对模型的生成质量会有副作用，这是因为这样的指示<strong>会让模型变得保守</strong>（比如不利于创意写作），或者会在某些情况下错误地解读指令（比如在安全 - 不安全分类时）。</p>
-<p>目前降低恶意攻击风险最常见的方法是<strong>对抗性训练</strong>，即在攻击样本上训练模型。这种方法被认为是最有效的防御手段，但它需要在模型稳健性和性能之间做出权衡。在 Jain 等人 2023 的《Baseline Defenses for Adversarial Attacks Against Aligned Language Models》中，他们测试了两种对抗性训练方案：（1）将有害提示与 “I’m sorry. As a …” 的回应配对进行梯度下降；（2）在每个训练步骤中，对拒绝回应进行一次梯度下降，而对“红队”的不当回应进行一次梯度上升。结果显示方案（2）几乎无效，因为它严重降低了模型生成的质量，而攻击成功率却仅有少量下降。</p>
-<p>白盒攻击通常会产生毫无意义的恶意提示，这些提示可以通过<strong>检查困惑度</strong>来识别。当然，白盒攻击可以通过专门优化以降低困惑度来规避这一检测，比如 UAT-LM，它是 UAT 的变体。不过，这种方法也有其权衡，可能会降低攻击的成功率。</p>
-<p>Jain et al. 2023 还测试了对文本输入进行预处理的方法，使得能在移除对抗性修改的同时维持语义含义。</p>
-<ul>
-<li>解释含义：使用 LLM 来解释输入文本的含义，这可能会对下游任务性能造成较小影响。</li>
-<li>重新 token 化：将 token 拆分开并使用多个更小的 token 来表示它们，比如使用 BPE-dropout（随机丢弃一定比例的 token）。使用这种方法的假设是对抗性 prompt 很可能会利用特定的对抗性 token 组合。这也确实有助于降低攻击成功率，但也有限，比如从 90% 以上降至 40%。</li>
-</ul>
-]]></content>
-      <categories>
-        <category>智能算法安全</category>
-        <category>大模型</category>
-        <category>大模型安全</category>
-        <category>大模型对抗攻击</category>
-      </categories>
-      <tags>
-        <tag>智能算法安全</tag>
-        <tag>生成式人工智能</tag>
-        <tag>大模型</tag>
       </tags>
   </entry>
   <entry>
