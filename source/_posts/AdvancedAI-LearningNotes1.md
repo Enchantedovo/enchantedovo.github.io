@@ -3,8 +3,7 @@ title: 人工智能概述
 date: 2022-09-01 23:03:53
 tags: 
   - 人工智能
-categories:
-  - 高级人工智能学习笔记
+categories: [国科大课程笔记,高级人工智能]
 description: 国科大《高级人工智能》课堂笔记1 —— 人工智能概述
 cover: https://s3.bmp.ovh/imgs/2022/09/03/f51220518329aecb.jpg
 ---

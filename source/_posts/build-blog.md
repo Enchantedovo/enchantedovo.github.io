@@ -4,7 +4,7 @@ date: 2021-1-31 12:16:12
 tags:
  - Hexo
  - Markdown
-categories: 其他
+categories: Hexo
 description: 搭建博客试水(〃'▽'〃)
 ---
 

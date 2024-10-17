@@ -5,9 +5,9 @@
 # Site
 title: Enchanted to Meet U
 subtitle: ''
-description: '———— 🦋的个人博客'
+description: '———— 🦋的个人小站'
 keywords:
-author: HattieHD
+author: Die Hu
 language: zh-CN
 timezone: Asia/Shanghai
 
@@ -118,11 +118,21 @@ deploy:
 
 
 markdown:
+  render:
+    html: true
+    xhtmlOut: false
+    breaks: true
+    linkify: true
+    typographer: true
   plugins:
-    - plugin:
-      name: '@neilsustc/markdown-it-katex'
-      options:
-        strict: false
+  anchors:
+    level: 1
+    collisionSuffix: '' 
+  # plugins:
+  #   - plugin:
+  #     name: '@neilsustc/markdown-it-katex'
+  #     options:
+  #       strict: false
 
 
 server:

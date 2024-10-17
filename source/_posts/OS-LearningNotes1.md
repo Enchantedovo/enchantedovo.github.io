@@ -6,7 +6,7 @@ tags:
   - Linux Kernel
   - 特权级
   - 授权
-categories: 操作系统高级教程学习笔记
+categories: [国科大课程笔记,操作系统高级教程]
 description: 国科大杨力祥《操作系统高级教程》课堂笔记1 —— 为什么需要内核
 cover: https://s3.bmp.ovh/imgs/2022/08/30/57e6003529c041b7.webp
 ---

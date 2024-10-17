@@ -5,8 +5,7 @@ tags:
   - 网络安全
   - Wireshark
   - Nmap
-categories:
-  - 网络协议安全学习笔记
+categories: [国科大课程笔记,网络协议安全]
 description: 国科大《网络协议安全》实验1 —— 主机和端口扫描
 cover: https://s3.bmp.ovh/imgs/2022/09/03/532c30c044da0f35.jpg
 ---

@@ -3,8 +3,7 @@ title: 人工神经网络
 date: 2022-10-03 10:26:08
 tags: 
   - 人工智能
-categories:
-  - 高级人工智能学习笔记
+categories: [国科大课程笔记,高级人工智能]
 description: 国科大《高级人工智能》笔记2 —— 人工神经网络
 cover: https://s3.bmp.ovh/imgs/2022/09/03/f51220518329aecb.jpg
 ---

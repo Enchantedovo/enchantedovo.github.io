@@ -4,7 +4,7 @@ date: 2022-11-16 19:54:20
 tags: 
   - 操作系统
   - Linux Kernel
-categories: 操作系统高级教程学习笔记
+categories: [国科大课程笔记,操作系统高级教程]
 description: 国科大杨力祥《操作系统高级教程》思考题整理
 cover: https://s3.bmp.ovh/imgs/2022/08/30/57e6003529c041b7.webp
 ---
