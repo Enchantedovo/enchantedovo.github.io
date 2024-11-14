@@ -2,7 +2,43 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://enchantedovo.cn/2024/11/14/LLM-Learning6/</loc>
+    
+    <lastmod>2024-11-14</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://enchantedovo.cn/2024/11/14/LLM-Security4/</loc>
+    
+    <lastmod>2024-11-14</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://enchantedovo.cn/2024/09/19/LLM-Security2/</loc>
+    
+    <lastmod>2024-11-14</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://enchantedovo.cn/2024/11/14/LLM-Security3/</loc>
+    
+    <lastmod>2024-11-14</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://enchantedovo.cn/2024/07/10/LLM-Security1/</loc>
     
     <lastmod>2024-11-14</lastmod>
     
@@ -14,15 +50,6 @@
     <loc>https://enchantedovo.cn/2024/10/17/LLM-Learning5/</loc>
     
     <lastmod>2024-10-17</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://enchantedovo.cn/2024/09/19/LLM-Security2/</loc>
-    
-    <lastmod>2024-09-19</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -41,15 +68,6 @@
     <loc>https://enchantedovo.cn/2024/07/19/LLM-Learning3/</loc>
     
     <lastmod>2024-07-20</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://enchantedovo.cn/2024/07/10/LLM-Security1/</loc>
-    
-    <lastmod>2024-07-14</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -410,13 +428,6 @@
   </url>
   
   <url>
-    <loc>https://enchantedovo.cn/tags/Prompt-Engineering/</loc>
-    <lastmod>2024-11-14</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://enchantedovo.cn/tags/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/</loc>
     <lastmod>2024-11-14</lastmod>
     <changefreq>weekly</changefreq>
@@ -542,6 +553,13 @@
     <priority>0.2</priority>
   </url>
   
+  <url>
+    <loc>https://enchantedovo.cn/tags/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%AE%89%E5%85%A8/</loc>
+    <lastmod>2024-11-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
 
   
   <url>
@@ -643,27 +661,6 @@
   </url>
   
   <url>
-    <loc>https://enchantedovo.cn/categories/%E5%A4%A7%E6%A8%A1%E5%9E%8B/%E6%99%BA%E8%83%BD%E7%AE%97%E6%B3%95%E5%AE%89%E5%85%A8/</loc>
-    <lastmod>2024-11-14</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://enchantedovo.cn/categories/%E5%A4%A7%E6%A8%A1%E5%9E%8B/%E6%99%BA%E8%83%BD%E7%AE%97%E6%B3%95%E5%AE%89%E5%85%A8/%E7%94%9F%E6%88%90%E5%BC%8F%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/</loc>
-    <lastmod>2024-11-14</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://enchantedovo.cn/categories/%E5%A4%A7%E6%A8%A1%E5%9E%8B/%E6%99%BA%E8%83%BD%E7%AE%97%E6%B3%95%E5%AE%89%E5%85%A8/%E7%94%9F%E6%88%90%E5%BC%8F%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/</loc>
-    <lastmod>2024-11-14</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://enchantedovo.cn/categories/%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86/</loc>
     <lastmod>2024-11-14</lastmod>
     <changefreq>weekly</changefreq>
@@ -692,14 +689,14 @@
   </url>
   
   <url>
-    <loc>https://enchantedovo.cn/categories/%E5%A4%A7%E6%A8%A1%E5%9E%8B/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%AE%89%E5%85%A8/</loc>
+    <loc>https://enchantedovo.cn/categories/%E6%99%BA%E8%83%BD%E7%AE%97%E6%B3%95%E5%AE%89%E5%85%A8/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%AF%B9%E6%8A%97%E6%94%BB%E5%87%BB/</loc>
     <lastmod>2024-11-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://enchantedovo.cn/categories/%E6%99%BA%E8%83%BD%E7%AE%97%E6%B3%95%E5%AE%89%E5%85%A8/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%AF%B9%E6%8A%97%E6%94%BB%E5%87%BB/</loc>
+    <loc>https://enchantedovo.cn/categories/%E5%A4%A7%E6%A8%A1%E5%9E%8B/%E5%A4%A7%E6%A8%A1%E5%9E%8B-%E5%AE%89%E5%85%A8/</loc>
     <lastmod>2024-11-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>

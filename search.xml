@@ -1641,9 +1641,12 @@ TrafficLLM是使用自然语言和流量数据的流量大模型微调框架。�
       </tags>
   </entry>
   <entry>
-    <title>LLM for Security 论文记录 1</title>
+    <title>LLM for Security 论文记录 0919</title>
     <url>/2024/09/19/LLM-Security2/</url>
-    <content><![CDATA[<h1 id="相关文章">相关文章</h1>
+    <content><![CDATA[<blockquote>
+<p>放一些大模型与安全相关的论文（涵盖范围比较广，比较杂）</p>
+</blockquote>
+<h1 id="相关文章">相关文章</h1>
 <p><strong>GitHub Copilot 在编程方面表现出色，但它是否确保了负责任的输出？</strong></p>
 <p>简介：大语言模型（LLMs）的快速发展极大地推动了代码补全工具（LCCTs）的进化。这些工具通过整合多种信息源并优先提供代码建议，与传统LLMs不同，它们在安全方面面临独特挑战。特别是，LCCTs在训练时依赖专有代码数据集，这可能增加敏感数据泄露的风险。研究表明，LCCTs存在显著的安全漏洞，例如，针对GitHub Copilot的越狱攻击成功率高达99.4%，而从其中提取敏感用户数据的成功率也相当高。这些发现强调了LCCTs在安全方面的挑战，并为加强其安全框架提供了重要方向。</p>
 <p>链接：<a href="https://arxiv.org/abs/2408.11006">https://arxiv.org/abs/2408.11006</a></p>
@@ -1674,13 +1677,14 @@ TrafficLLM是使用自然语言和流量数据的流量大模型微调框架。�
 ]]></content>
       <categories>
         <category>大模型</category>
-        <category>智能算法安全</category>
-        <category>生成式人工智能</category>
-        <category>网络安全</category>
+        <category>论文阅读</category>
+        <category>大模型&amp;安全</category>
       </categories>
       <tags>
+        <tag>生成式人工智能</tag>
         <tag>大模型</tag>
-        <tag>Prompt Engineering</tag>
+        <tag>网络安全</tag>
+        <tag>大模型安全</tag>
       </tags>
   </entry>
   <entry>
@@ -3406,8 +3410,8 @@ TSS是一个特殊的段。在Linux中，CPU从系统态切换到用户态时，
       <categories>
         <category>智能算法安全</category>
         <category>大模型</category>
-        <category>大模型安全</category>
         <category>大模型对抗攻击</category>
+        <category>大模型&amp;安全</category>
       </categories>
       <tags>
         <tag>智能算法安全</tag>
@@ -3670,10 +3674,10 @@ break：接下来，如果缓冲头指针bh为空，或者tmp所指的缓冲头�
 <li>优化反馈：用户使用仪表板后，如果发现某个组件不够突出，模型可以根据这个反馈进行调整，提升用户体验。</li>
 </ul>
 <h2 id="检测规则自动生成">检测规则自动生成</h2>
-<h3 id="简介">简介</h3>
+<h3 id="简介-2">简介</h3>
 <p><strong>效率提升：1天 -&gt; 分钟级</strong></p>
 <p>漏洞被披露后，安全厂商生产漏洞检测和防护规则包、客户下载升级并应用周期较长。绿盟风云卫大模型可以<strong>提交对应POC或恶意样本，自动编排检测规则，自动下发</strong>，几分钟完成漏洞应急工作，大大降低风险。</p>
-<h3 id="理解">理解</h3>
+<h3 id="理解-2">理解</h3>
 <p>在网络安全领域，<strong>漏洞利用代码（Proof of Concept, POC）</strong> 是指一个小型的程序或代码片段，展示如何利用特定漏洞进行攻击。<strong>恶意样本</strong> 则是指攻击者实际使用的恶意软件或代码，用于破坏系统或窃取数据。</p>
 <p>传统情况下，当一个新的漏洞被公开（例如一个影响软件系统的安全漏洞），安全厂商需要开发相应的检测和防护规则，来帮助企业应对该漏洞。这包括：</p>
 <ol>
@@ -3703,10 +3707,10 @@ break：接下来，如果缓冲头指针bh为空，或者tmp所指的缓冲头�
 <p>通过缓冲区溢出，攻击者可以利用软件中的漏洞，改变程序的执行流，实现对系统的控制和恶意操作。这种攻击方式通常用于获取未经授权的访问、数据窃取或其他恶意行为。</p>
 </blockquote>
 <h2 id="分析研判处置自动化">分析研判处置自动化</h2>
-<h3 id="简介">简介</h3>
+<h3 id="简介-3">简介</h3>
 <p><strong>效率提升：6小时 -&gt; 分钟级</strong></p>
 <p>高级威胁、复杂事件分析研判响应需要高级专家数天时间。绿盟风云卫大模型能够<strong>生成式引导</strong>运营人员去做分析和响应，降低安全运营门槛。另一方面，<strong>大模型能够将分析此类型事件的固定模式</strong>给记录下来，实现后续自动化分析和响应全过程。同时可以自动化生成SOAR响应处置脚本，自动应用到各类检测和防护设备中。</p>
-<h3 id="理解">理解</h3>
+<h3 id="理解-3">理解</h3>
 <p>具体过程：</p>
 <ul>
 <li>事件监测： 安全系统实时监测网络流量、用户行为、系统日志等，识别潜在的安全事件。这些事件可能包括入侵尝试、恶意软件活动或异常流量。</li>
@@ -3741,10 +3745,10 @@ SOAR脚本的主要功能包括：</p>
 <p>SOAR脚本通过自动化响应流程，提高了安全事件的处理速度和效率，减轻了安全团队的负担，使他们能更专注于复杂的安全挑战。</p>
 </blockquote>
 <h2 id="渗透-评估自动化">渗透/评估自动化</h2>
-<h3 id="简介">简介</h3>
+<h3 id="简介-4">简介</h3>
 <p><strong>效率提升：1-3天 -&gt; 分钟级</strong></p>
 <p>安全服务人员渗透测试工作需要一天甚至几天时间，绿盟风云卫大模型可以辅助服务人员进行渗透测试，自动化生成测试报告，提升安全服务效率。</p>
-<h3 id="理解">理解</h3>
+<h3 id="理解-4">理解</h3>
 <p>假设一个公司希望对其网络安全进行全面评估。安全服务人员通常会按照以下步骤进行渗透测试：</p>
 <ol>
 <li><strong>信息收集</strong>：手动查找目标公司的公开信息，包括域名、IP地址、员工信息等。</li>
@@ -3760,10 +3764,10 @@ SOAR脚本的主要功能包括：</p>
 <li><strong>自动生成报告</strong>：测试完成后，模型能够自动整理测试结果，生成结构化的报告，包括发现的漏洞、攻击路径及改进建议，减少服务人员的文书工作。</li>
 </ul>
 <h2 id="红队工作支撑">红队工作支撑</h2>
-<h3 id="简介">简介</h3>
+<h3 id="简介-5">简介</h3>
 <p><strong>效率提升：高级专家3-5天 -&gt; 小时级</strong></p>
 <p>红队工具、红队样本、红队路径等生成的工作，红队需要大量时间做数据准备，工具生成等相关工作，通过绿盟风云卫大模型的辅助，快速生成相应红队工具。</p>
-<h3 id="理解">理解</h3>
+<h3 id="理解-5">理解</h3>
 <p>在网络安全中，红队负责模拟攻击，以测试系统和网络的安全性。他们需要使用各种工具和技术来执行攻击，发现安全漏洞。这个过程通常需要大量的准备工作，包括生成攻击工具、创建样本和确定攻击路径。<br>
 <strong>具体过程</strong>：</p>
 <ol>
@@ -3778,7 +3782,7 @@ SOAR脚本的主要功能包括：</p>
 <li><strong>生成攻击样本</strong>： 红队希望模拟一种新型的网络攻击。通过输入攻击类型（如DDoS攻击或钓鱼攻击），模型可以自动生成相关的恶意样本，这些样本能够模仿真实攻击者的行为。</li>
 <li><strong>确定攻击路径</strong>： 红队想要评估一个新的目标系统的安全性。模型可以分析目标系统的结构，基于现有的安全研究，自动生成可能的攻击路径，包括初始访问、横向移动和权限提升的步骤。</li>
 </ol>
-<h3 id="示例">示例</h3>
+<h3 id="示例-2">示例</h3>
 <p>假设一家金融机构邀请红队进行渗透测试，以下是如何通过绿盟风云卫大模型进行准备的示例：</p>
 <ol>
 <li><strong>需求输入</strong>： 红队成员输入需要模拟的攻击类型和目标系统的基本信息。</li>
@@ -3790,11 +3794,155 @@ SOAR脚本的主要功能包括：</p>
 ]]></content>
       <categories>
         <category>大模型</category>
-        <category>大模型安全</category>
+        <category>大模型&amp;安全</category>
       </categories>
       <tags>
         <tag>大模型</tag>
+        <tag>网络安全</tag>
         <tag>安全大模型</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>LLM for Security 论文记录 1114</title>
+    <url>/2024/11/14/LLM-Security4/</url>
+    <content><![CDATA[<blockquote>
+<p>更新一下论文阅读记录，一直写在了本地的编辑器上，现在更新到博客中（持续更新ing，打算以月为单位更新博客了）</p>
+</blockquote>
+<h1 id="agent-in-security">Agent in Security</h1>
+<!--  -->
+<!-- <img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="p1.png"  style="zoom:55%;" /> -->
+<h2 id="pentestgpt">PentestGPT</h2>
+<p>占坑</p>
+<h2 id="autoattacker">AUTOATTACKER</h2>
+<p>AUTOATTACKER: A Large Language Model Guided System to Implement Automatic Cyber-attacks</p>
+<blockquote>
+<p>论文：<a href="https://arxiv.org/abs/2403.01038">https://arxiv.org/abs/2403.01038</a><br>
+代码：<a href="https://github.com/binarybrain-009/AUTOATTACKER">https://github.com/binarybrain-009/AUTOATTACKER</a> （核心代码放的是一个注释，差评）</p>
+</blockquote>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2024/11/14/LLM-Security4/autoattack.png" style="zoom:80%;">
+<p><strong>研究内容</strong><br>
+利用基于 LLM 的系统来模拟在各种攻击技术和环境下通常为人为操作或“手动键盘”攻击的攻击后阶段。</p>
+<p><strong>研究意义</strong></p>
+<ul>
+<li>首先，基于 LLM 的自动化漏洞后利用框架可以<strong>帮助分析师快速测试</strong>并持续改进其组织的网络安全态势，以抵御以前未曾见过的攻击。</li>
+<li>其次，基于LLM的渗透测试系统可以通过有限数量的分析师来<strong>扩展红队的有效性</strong>。</li>
+<li>最后，这项研究可以帮助防御系统和团队在实际使用之前学会<strong>先发制人地检测新的攻击行为</strong>。</li>
+</ul>
+<p><strong>研究动机/挑战</strong><br>
+基于问题引入了独特的挑战，包括：<br>
+1）<strong>复杂的攻击任务链</strong>：高级攻击可能需要许多子任务，甚至一个失败的子任务会破坏整个链；<br>
+2）<strong>动作空间的高密度可变性</strong>：bash或Metasploit中的命令具有许多参数，其中一些参数与系统信息或文件夹路径密切相关，其中一个拼写错误可能会破坏攻击命令。</p>
+<p><strong>贡献</strong><br>
+1）提出了一种<strong>模块化</strong> Agent 设计，以在不同点利用LLM的不同功能，例如规划、总结和代码生成，即使在生成单个攻击命令时也是如此。通过这种设计，我们可以更好地利用 LLM 来得出精确的答案。<br>
+2）借用**检索增强生成（RAG）**的想法，在生成下一个动作之前用先前攻击动作（称为经验）的知识库来增强LLM，因此成功攻击的机会会增加，因为它们的组合子任务可以重复使用。</p>
+<p><strong>方法</strong><br>
+设计了 4 个模块，即<strong>总结器</strong>、<strong>规划器</strong>、<strong>导航器</strong>和<strong>经验管理器</strong>，以与 LLM 迭代交互。还精心设计了每个模块的<strong>提示</strong>模板，因此LLM的回答具有高度可控性。为了绕过使用策略，我们开发了一种 <strong>LLM 越狱技术</strong>来引出攻击命令。</p>
+]]></content>
+      <categories>
+        <category>大模型</category>
+        <category>论文阅读</category>
+        <category>Agent</category>
+        <category>大模型&amp;安全</category>
+      </categories>
+      <tags>
+        <tag>生成式人工智能</tag>
+        <tag>大模型</tag>
+        <tag>网络安全</tag>
+        <tag>大模型安全</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>LLM-Learning6</title>
+    <url>/2024/11/14/LLM-Learning6/</url>
+    <content><![CDATA[<blockquote>
+<p>争取每月更新一次在博客中💪💪💪</p>
+</blockquote>
+<h1 id="agent-in-computer-control">Agent in Computer Control</h1>
+<p>主要还是 Web Agent 的相关论文</p>
+<!-- ## 标题二 -->
+<!--  -->
+<!-- <img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="p1.png"  style="zoom:55%;" /> -->
+<h2 id="webvoyager">WebVoyager</h2>
+<p>WebVoyager : Building an End-to-End Web Agent with Large Multimodal Models</p>
+<blockquote>
+<p>论文：<a href="https://arxiv.org/abs/2401.13919">https://arxiv.org/abs/2401.13919</a><br>
+代码：<a href="https://github.com/MinorJerry/WebVoyager">https://github.com/MinorJerry/WebVoyager</a></p>
+</blockquote>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2024/11/14/LLM-Learning6/webvoyager.png" style="zoom:80%;">
+<p><strong>研究内容</strong><br>
+Web Agent：借助 GPT-4V 这样的多模态模型，与开放网络中的网站交互，自动化完成用户的各项指令。<br>
+目标：构建一个能够在没有任何人工干预的情况下，<strong>自主浏览开放网页</strong>并<strong>完成用户指令</strong>的Agent。</p>
+<p><strong>研究动机</strong><br>
+现有的Agent通常用于处理复杂且冗长的HTML文本这一<strong>单一输入模态</strong>，而忽视了可以将HTML渲染为<strong>视觉网页</strong>这一要点，并且仅在<strong>简化</strong>的网络模拟器或<strong>静态</strong>网络快照中进行评估，很大程度上限制了Agent在现实世界场景中的适用性。</p>
+<p><strong>作者的工作</strong><br>
+作者提出了一种新的<strong>多模态 Web Agent</strong>——WebVoyager，旨在以<strong>端到端</strong>的方式<strong>在线</strong>处理网络任务，即在没有人工介入的情况下从开始到结束自主管理整个过程。</p>
+<p>另外还构建了一个<strong>新的评估数据集</strong>，包含来自15个常用网站的300个网络任务；并提出了一种自动评估的方法，在在线导航过程中保存屏幕截图，使用GPT-4V自动评估轨迹和最终结果，同时进行人工评估以验证结果，通过实验验证了GPT-4V评估器与人类评估的一致性，从而减轻人工评估员的负担，显著降低实验的成本。</p>
+<p>结果显示，WebVoyager 的任务成功率为55.7%， 显著优于GPT-4（All Tools）的32.7%和纯文本设置的39.0%。</p>
+<p><strong>方法</strong></p>
+<p>WebVoyager 整体工作流程如上所示。</p>
+<p>WebVoyager 的目标是构建一个可以自主浏览开放网页的 Agent，无需人工干预即可完成用户指令。根据指令，WebVoyager 首先实例化一个 Web 浏览器，然后使用来自 Web 的视觉（即屏幕截图）和文本（即 HTML 元素）信号执行操作。代理根据每一步的输入生成一个操作，然后在浏览器环境中执行。该过程将持续进行，直到代理决定停止。 WebVoyager的详细信息，包括环境、交互周期、观察空间和动作空间如下。</p>
+<ol>
+<li>
+<p><strong>浏览环境的构建</strong><br>
+WebVoyager的工作流程始于构建一个自动化的网页浏览环境。使用<strong>Selenium工具</strong>，Agent可以模拟用户的浏览行为，访问真实的网页。这个环境允许Agent像人类用户一样与浏览器窗口交互，但与本地托管的网站不同，它允许Agent探索开放的网络环境，面对实时更新、浮动广告等挑战。</p>
+</li>
+<li>
+<p><strong>交互</strong>的公式化表示和<strong>决策</strong>过程<br>
+WebVoyager的决策过程是一个交互周期，Agent在每一步接收<strong>输入（包括截图和辅助文本）</strong>，然后产生一个<strong>动作</strong>，该动作在浏览器环境中<strong>执行</strong>。如果动作执行期间出现异常，还会将错误信息纳入提示中，要求模型重新生成响应。这个过程持续进行，直到模型生成终止动作或达到最大步数为止。</p>
+</li>
+</ol>
+<p>受到 ReAct Prompting（Yao 等人，2022b）范式的启发，我们还提示我们的 Agent 在生成 Action 代码之前首先生成一个 Reason 的推理过程，即使用 ReAct Prompt 形式。此外，为了避免长时间的网页导航导致的混淆，WebVoyager执行<strong>上下文裁剪</strong>，只保留最近的3个截图，并保留所有思考和动作的历史记录，以更好地指导Agent。</p>
+<ol start="3">
+<li><strong>观察空间</strong>定义<br>
+类似于人类浏览网页，Agent也将网页的视觉信息（屏幕截图）作为主要输入来源。屏幕截图使我们能够避免处理 HTML DOM 树或可访问性树来描绘网页整体结构的负担，这可能导致<strong>文本过于冗长</strong>并影响 Agent 的决策过程。因此观察空间包括当前的<strong>网页截图和辅助文本</strong>。</li>
+</ol>
+<p>受 <strong>Set-of-Mark Prompting</strong> (Yang et al., 2023a) 的启发，作者在网站上<strong>叠加交互元素的边界框</strong>，以更好地指导 Agent 的动作预测。与利用目标检测模块不同，作者利用 GPT-4V-ACT5（一种 Javascript 工具）根据 Web 元素类型提取交互元素，然后在元素的相应区域上覆盖带有数字标签的边界框。</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2024/11/14/LLM-Learning6/webvoyager-1.png" style="zoom:80%;">
+<p>具体来说，如图所示，网页的性质使我们能够使用此工具<strong>精确定位和概述每个交互元素</strong>。分配给每个元素的<strong>数字标签</strong>对于模型识别需要交互的元素也至关重要，从而促进准确的动作确定。我们凭经验选择黑色作为标签的边框和背景，以提高清晰度。作者还为 Agent 提供<strong>辅助文本</strong>作为输入，包括嵌入交互元素中的文本内容、元素的类型，以及 aria-label 属性中可能的一些注释文本。为了简化观察，作者禁用了多个选项卡。在每一步中，代理都会接收当前屏幕截图、辅助文本和历史记录作为输入。</p>
+<p>通过在网页上的交互元素上叠加边框和数字标签，Agent能够更准确地确定需要交互的元素，并执行相应的动作。</p>
+<blockquote>
+<p><strong>Set-of-Mark Prompting</strong>：来自微软、香港科技大学等机构的研究者提出的一种新的视觉 prompt 方法 Set-of-Mark（SoM），来解决 GPT-4V 在细粒度视觉任务上的问题。SoM的机制非常简单，简而言之，通过使用语义分割将图像划分为多个区域并标记每个区域，“我们可以让 GPT-4V 更容易地识别每个对象的位置关系”，仅此而已。</p>
+</blockquote>
+<p>这项研究的重点是，只要对输入到 GPT-4V 的图像稍作修改，就能提高 GPT-4V 的图像识别能力。</p>
+<ol>
+<li>行动空间<br>
+而行动空间则<strong>定义</strong>了Agent可以执行的动作（有限的），如点击、输入、滚动、等待、返回、跳转到搜索引擎等，这都是最常用的鼠标和键盘操作，足以让Agent浏览各种网页并找到任务所需的内容。通过在屏幕截图中使用数字标签，使Agent能够以简洁的行为格式进行响应。一旦任务中的所有问题得到解答，这个动作就会结束迭代并根据任务要求提供一个答案。</li>
+</ol>
+<p><strong>实验设计</strong></p>
+<p>1.选取的网站和任务多样性</p>
+<p>本文选择了15个流行且具有代表性的网站，涵盖了日常生活的不同方面。包括Allrecipes、Amazon、Apple、ArXiv、BBC News、Booking、Cambridge Dictionary、Coursera、ESPN、GitHub、Google Flights、Google Map、Google Search、Huggingface和Wolfram Alpha。此外，Google Search作为一个通用网站，可以作为任何网站的起点，使该框架适用于广泛的场景。</p>
+<p>2.数据集</p>
+<ul>
+<li>自建数据集：数据集的构建采用了自我指导（self-instruct）方法和人工验证相结合的方式。首先，从Mind2Web中<strong>手动采样</strong>并<strong>重写</strong>了一些任务，然后使用GPT-4 Turbo生成约100个新任务，并对每个生成的任务进行<strong>人工验证</strong>和必要的<strong>重写</strong>，以确保其数据的高质量且答案可以在相应的网站上找到。最终收集了每个网站20个任务，共计300个任务。</li>
+<li>GAIA 数据集：从中提取了90个网页浏览任务（Level 1 和 Level 2），并使用 SeeAct 中的50项任务。GAIA 数据集中的任务没有注明具体的网站，本文指示Agent从谷歌搜索开始搜索答案。采用主要的评估指标为任务成功率，衡量成功完成任务的能力，不考虑逐步执行是否最优。将每个任务的最大交互次数设置为15次。</li>
+</ul>
+<blockquote>
+<p>SeeAct Agent 依赖于微调的交叉编码器模型来选择交互的候选元素。相比之下，WebVoyager 不需要任何额外的模块。</p>
+</blockquote>
+<p>3.评估方法</p>
+<ul>
+<li>
+<p>人类评估：人类评估作为主要的评估指标，特别是针对那些具有开放式答案的任务。具体来说，向评估者提供了Agent与网络交互的完整轨迹（所有屏幕截图和所有动作），并要求评估者提供一个二元判断，即Agent是否成功完成了任务。</p>
+</li>
+<li>
+<p>自动评估：使用GPT-4V作为自动评估器的方法，它模仿人类评估者的行为来评估WebVoyager的导航轨迹。向评估器提供任务、WebVoyager的回答以及最后k个截图，并要求它判断Agent是否成功完成任务，其中k是一个超参数。假设GPT-4V强大的多模态推理能力使其能够作为可靠的评估器，从而减轻人工评估员的负担，显著降低未来实验的成本。</p>
+</li>
+</ul>
+<p>4.基线模型</p>
+<ul>
+<li>GPT-4 (All Tools)，它将视觉、网页浏览、代码分析和各种插件集成在一个模型中。</li>
+<li>考虑了一个仅接收网站可访问性树作为输入并进行行为预测的文本基线。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>大模型</category>
+        <category>论文阅读</category>
+        <category>Agent</category>
+      </categories>
+      <tags>
+        <tag>生成式人工智能</tag>
+        <tag>大模型</tag>
+        <tag>Agent</tag>
       </tags>
   </entry>
 </search>
