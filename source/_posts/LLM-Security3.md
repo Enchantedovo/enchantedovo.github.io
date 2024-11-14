@@ -3,8 +3,9 @@ title: 风云卫安全大模型的一些理解
 tags:
   - 大模型
   - 安全大模型
+  - 网络安全
 categories:
-  - [大模型,大模型安全]
+  - [大模型,大模型&安全]
 description: 安全大模型产品-绿盟风云卫理解
 cover: https://s3.bmp.ovh/imgs/2024/04/08/2368e73f30658fe8.png
 date: 2024-11-14 10:43:52

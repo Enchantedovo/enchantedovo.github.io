@@ -1,17 +1,18 @@
 ---
-title: LLM for Security 论文记录 1
+title: LLM for Security 论文记录 0919
 tags:
   - 大模型
-  - Prompt Engineering
-categories:
-  - 大模型
-  - 智能算法安全
-  - 生成式人工智能
   - 网络安全
+  - 大模型安全
+  - 生成式人工智能
+categories:
+  - [大模型,大模型&安全]
+  - [大模型,论文阅读]
 description: LLM for Security 论文记录 0919
 cover: https://s3.bmp.ovh/imgs/2024/04/08/2368e73f30658fe8.png
 date: 2024-09-19 10:54:14
 ---
+> 放一些大模型与安全相关的论文（涵盖范围比较广，比较杂）
 
 # 相关文章
 
