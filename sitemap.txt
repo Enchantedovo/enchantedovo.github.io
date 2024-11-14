@@ -1,3 +1,4 @@
+https://enchantedovo.cn/2024/11/14/LLM-Security3/
 https://enchantedovo.cn/2024/10/17/LLM-Learning5/
 https://enchantedovo.cn/2024/09/19/LLM-Security2/
 https://enchantedovo.cn/2024/07/20/LLM-Learning4/
@@ -63,6 +64,7 @@ https://enchantedovo.cn/tags/Hexo/
 https://enchantedovo.cn/tags/Markdown/
 https://enchantedovo.cn/tags/%E5%8F%AF%E8%A7%86%E5%8C%96/
 https://enchantedovo.cn/tags/Agent/
+https://enchantedovo.cn/tags/%E5%AE%89%E5%85%A8%E5%A4%A7%E6%A8%A1%E5%9E%8B/
 https://enchantedovo.cn/categories/%E6%99%BA%E8%83%BD%E7%AE%97%E6%B3%95%E5%AE%89%E5%85%A8/
 https://enchantedovo.cn/categories/%E5%9B%BD%E7%A7%91%E5%A4%A7%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/
 https://enchantedovo.cn/categories/%E6%99%BA%E8%83%BD%E7%AE%97%E6%B3%95%E5%AE%89%E5%85%A8/%E5%AF%B9%E6%8A%97%E6%94%BB%E5%87%BB/

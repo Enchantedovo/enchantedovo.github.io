@@ -1,0 +1,365 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>风云卫安全大模型的一些理解 | Enchanted to Meet U</title><meta name="keywords" content="大模型,安全大模型"><meta name="author" content="Die Hu"><meta name="copyright" content="Die Hu"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="description" content="安全大模型产品-绿盟风云卫理解">
+<meta property="og:type" content="article">
+<meta property="og:title" content="风云卫安全大模型的一些理解">
+<meta property="og:url" content="https://enchantedovo.cn/2024/11/14/LLM-Security3/index.html">
+<meta property="og:site_name" content="Enchanted to Meet U">
+<meta property="og:description" content="安全大模型产品-绿盟风云卫理解">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s3.bmp.ovh/imgs/2024/04/08/2368e73f30658fe8.png">
+<meta property="article:published_time" content="2024-11-14T02:43:52.000Z">
+<meta property="article:modified_time" content="2024-11-14T02:53:06.216Z">
+<meta property="article:author" content="Die Hu">
+<meta property="article:tag" content="大模型">
+<meta property="article:tag" content="安全大模型">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s3.bmp.ovh/imgs/2024/04/08/2368e73f30658fe8.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://enchantedovo.cn/2024/11/14/LLM-Security3/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css" media="print" onload="this.media='all'"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"简"},
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#121212","position":"bottom-left"},
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isanchor: true
+};
+
+var saveToLocal = {
+  set: function setWithExpiry(key, value, ttl) {
+    const now = new Date()
+    const expiryDay = ttl * 86400000
+    const item = {
+      value: value,
+      expiry: now.getTime() + expiryDay,
+    }
+    localStorage.setItem(key, JSON.stringify(item))
+  },
+
+  get: function getWithExpiry(key) {
+    const itemStr = localStorage.getItem(key)
+
+    if (!itemStr) {
+      return undefined
+    }
+    const item = JSON.parse(itemStr)
+    const now = new Date()
+
+    if (now.getTime() > item.expiry) {
+      localStorage.removeItem(key)
+      return undefined
+    }
+    return item.value
+  }
+}
+
+// https://stackoverflow.com/questions/16839698/jquery-getscript-alternative-in-native-javascript
+const getScript = url => new Promise((resolve, reject) => {
+  const script = document.createElement('script')
+  script.src = url
+  script.async = true
+  script.onerror = reject
+  script.onload = script.onreadystatechange = function() {
+    const loadState = this.readyState
+    if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+    script.onload = script.onreadystatechange = null
+    resolve()
+  }
+  document.head.appendChild(script)
+})</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-11-14 10:53:06'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(function () {  window.activateDarkMode = function () {
+    document.documentElement.setAttribute('data-theme', 'dark')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+    }
+  }
+  window.activateLightMode = function () {
+    document.documentElement.setAttribute('data-theme', 'light')
+   if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+    }
+  }
+  const autoChangeMode = 'false'
+  const t = saveToLocal.get('theme')
+  if (autoChangeMode === '1') {
+    const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+    const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+    const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+    if (t === undefined) {
+      if (isLightMode) activateLightMode()
+      else if (isDarkMode) activateDarkMode()
+      else if (isNotSpecified || hasNoSupport) {
+        const now = new Date()
+        const hour = now.getHours()
+        const isNight = hour <= 6 || hour >= 18
+        isNight ? activateDarkMode() : activateLightMode()
+      }
+      window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+        if (saveToLocal.get('theme') === undefined) {
+          e.matches ? activateDarkMode() : activateLightMode()
+        }
+      })
+    } else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else if (autoChangeMode === '2') {
+    const now = new Date()
+    const hour = now.getHours()
+    const isNight = hour <= 6 || hour >= 18
+    if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+    else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else {
+    if (t === 'dark') activateDarkMode()
+    else if (t === 'light') activateLightMode()
+  }const asideStatus = saveToLocal.get('aside-status')
+if (asideStatus !== undefined) {
+   if (asideStatus === 'hide') {
+     document.documentElement.classList.add('hide-aside')
+   } else {
+     document.documentElement.classList.remove('hide-aside')
+   }
+}const fontSizeVal = saveToLocal.get('global-font-size')
+if (fontSizeVal !== undefined) {
+  document.documentElement.style.setProperty('--global-font-size', fontSizeVal + 'px')
+}})()</script><link rel="stylesheet" href="/css/diy.css"><meta name="generator" content="Hexo 5.3.0"><link rel="alternate" href="/atom.xml" title="Enchanted to Meet U" type="application/atom+xml">
+<link href="https://cdn.bootcss.com/KaTeX/0.11.1/katex.min.css" rel="stylesheet" /></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" data-lazy-src="/img/ava.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">31</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">31</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(https://s3.bmp.ovh/imgs/2024/04/08/2368e73f30658fe8.png)"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Enchanted to Meet U</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">风云卫安全大模型的一些理解</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-11-14T02:43:52.000Z" title="发表于 2024-11-14 10:43:52">2024-11-14</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-11-14T02:53:06.216Z" title="更新于 2024-11-14 10:53:06">2024-11-14</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%A4%A7%E6%A8%A1%E5%9E%8B/">大模型</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%A4%A7%E6%A8%A1%E5%9E%8B/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%AE%89%E5%85%A8/">大模型安全</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">4.4k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>12分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><!-- # 标题一
+## 标题二 -->
+<!--  -->
+<!-- <img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="p1.png"  style="zoom:55%;" /> -->
+<blockquote>
+<p>2023年TechWorld绿盟科技智慧安全大会思考总结</p>
+</blockquote>
+<h1 id="背景">背景</h1>
+<p>绿盟科技应用AI实现安全行业工业范式重塑，通过大模型解决<strong>三</strong>大问题：<strong>实战态势指挥调度、红蓝对抗辅助决策以及安全运营效能提升</strong>。</p>
+<h1 id="基础：高质量语料来源">基础：高质量语料来源</h1>
+<p>绿盟科技经过多年的积累和转化，从过去分散在各处的单点数据逐步构建情报体系，形成知识图谱，最终积累到现在的高质量语料数据体系，覆盖攻、防、情报、知识等多个方面，是目前看到市场上覆盖最全面的<strong>数据体系</strong>。绿盟科技的语料是与绿盟科技的安全工作、组织架构融合在一起的，可以在各类实验室研究、攻防团队积累、安全运营过程中源源不断地生成。</p>
+<h1 id="场景化应用">场景化应用</h1>
+<h2 id="界面自动生成">界面自动生成</h2>
+<h3 id="简介">简介</h3>
+<p><strong>效率提升：周-月级 -&gt; 分钟级</strong></p>
+<p>安全运营的一个重点工作就是<strong>事件监控</strong>，不同场景、不同阶段、不同安全成熟度的客户对于安全运营的需求存在差异，带来大量安全管理平台的界面定制。绿盟风云卫大模型接入，只需完成对应接口开发和组件开发，<strong>由大模型实现页面调度和编排</strong>，几分钟即可生成新界面。</p>
+<h3 id="理解">理解</h3>
+<p>大模型在这一过程中的作用包括：</p>
+<ul>
+<li>自然语言理解： 大模型可以理解用户的自然语言输入，识别他们的需求。例如，用户可以简单地描述想要的界面功能，模型能够解析这些需求并提取关键信息。</li>
+<li>模板匹配和生成： 大模型可以从大量的现有界面模板中学习，识别哪些模板适合特定需求，并在需要时生成新的模板。通过深度学习技术，模型能够自动生成与需求相匹配的用户界面。</li>
+<li>智能推荐： 基于用户的历史行为和偏好，大模型可以智能推荐界面布局和组件。例如，如果用户经常使用某种功能，模型可以自动将其放置在更显眼的位置。</li>
+<li>实时调整与反馈： 大模型可以根据用户的实时反馈进行动态调整。当用户与界面交互时，模型可以捕捉到用户的使用模式，及时更新和优化界面。</li>
+</ul>
+<h3 id="示例">示例</h3>
+<p>假设一家公司需要创建一个监控仪表板，使用大模型可以这样进行：</p>
+<ul>
+<li>用户输入：安全分析师输入“我需要一个显示网络流量和警报的仪表板”。</li>
+<li>模型处理：大模型解析该需求，选择适合的模板，并自动生成相关组件（如流量图表、警报列表）。</li>
+<li>布局生成：模型将这些组件整合到一个界面中，并根据重要性调整其位置，例如将警报放在显眼位置。</li>
+<li>优化反馈：用户使用仪表板后，如果发现某个组件不够突出，模型可以根据这个反馈进行调整，提升用户体验。</li>
+</ul>
+<h2 id="检测规则自动生成">检测规则自动生成</h2>
+<h3 id="简介">简介</h3>
+<p><strong>效率提升：1天 -&gt; 分钟级</strong></p>
+<p>漏洞被披露后，安全厂商生产漏洞检测和防护规则包、客户下载升级并应用周期较长。绿盟风云卫大模型可以<strong>提交对应POC或恶意样本，自动编排检测规则，自动下发</strong>，几分钟完成漏洞应急工作，大大降低风险。</p>
+<h3 id="理解">理解</h3>
+<p>在网络安全领域，<strong>漏洞利用代码（Proof of Concept, POC）</strong> 是指一个小型的程序或代码片段，展示如何利用特定漏洞进行攻击。<strong>恶意样本</strong> 则是指攻击者实际使用的恶意软件或代码，用于破坏系统或窃取数据。</p>
+<p>传统情况下，当一个新的漏洞被公开（例如一个影响软件系统的安全漏洞），安全厂商需要开发相应的检测和防护规则，来帮助企业应对该漏洞。这包括：</p>
+<ol>
+<li><strong>分析漏洞</strong>：专家需要详细研究漏洞是如何工作的。</li>
+<li><strong>编写检测规则</strong>：基于漏洞的行为模式，安全专家编写检测规则，这些规则告诉安全设备如何识别出受到攻击的系统。</li>
+<li><strong>发布规则更新</strong>：厂商将这些规则打包成更新包，客户下载并应用到他们的安全系统中。</li>
+</ol>
+<p>这一过程通常需要花费一天甚至更长的时间，漏洞在这个周期中可能带来风险，因为没有足够快的防护手段。</p>
+<p><strong>风云卫大模型的作用</strong>：</p>
+<p>使用大模型后，整个流程可以被极大简化，效率显著提升。以下是详细的步骤，结合一个例子说明：</p>
+<h3 id="示例：零日漏洞的应急处理">示例：零日漏洞的应急处理</h3>
+<ol>
+<li><strong>漏洞曝光</strong>： 假设一个新的零日漏洞（从未被公开过的漏洞）被披露了，它影响某个常用的企业软件。攻击者通过一个特定的输入序列触发了软件的缓冲区溢出，从而能够远程执行恶意代码。</li>
+<li><strong>提交漏洞利用代码（POC）或恶意样本</strong>： 安全研究人员或安全厂商从漏洞公开的公告中获取了漏洞利用代码（POC），这是一个展示如何利用该漏洞的代码片段。该POC被提交给绿盟风云卫大模型。</li>
+<li><strong>自动生成检测规则</strong>： 大模型接收到POC后，利用其内置的知识和分析能力，自动对漏洞行为进行解析。模型会识别出这个POC的关键特征，例如：哪些网络流量或系统行为与漏洞利用有关（比如特定的数据包格式或特定的系统调用）。接着，它会根据这些特征自动生成对应的<strong>检测规则</strong>，这些规则能用于检测和防御与该漏洞相关的攻击行为。</li>
+<li><strong>发布和应用检测规则</strong>： 在生成规则后，模型会自动下发这些规则到客户的安全设备上（例如入侵检测系统、入侵防御系统等）。整个过程只需几分钟的时间，客户系统即可开始防护。</li>
+</ol>
+<blockquote>
+<p>缓冲区溢出（Buffer Overflow）是一种常见的安全漏洞，它发生在程序试图将数据写入一个固定大小的内存缓冲区时，如果输入的数据超出了缓冲区的大小，程序就会覆盖相邻的内存区域。</p>
+<p>具体过程：</p>
+<ol>
+<li><strong>输入数据</strong>： 攻击者构造一个特定的输入序列，这个序列包含了超出程序预期的数据长度。例如，假设一个程序为用户输入分配了100个字节的缓冲区，但攻击者输入了200个字节的数据。</li>
+<li><strong>触发溢出</strong>： 当程序处理这个输入时，由于没有适当的边界检查，它会将超出部分的数据写入内存的其他区域，这就造成了缓冲区溢出。</li>
+<li><strong>覆盖内存</strong>： 溢出的数据可能会覆盖重要的控制信息，如返回地址或函数指针。返回地址指向程序执行后续代码的地址，攻击者可以精确控制这一地址。</li>
+<li><strong>远程执行恶意代码</strong>： 攻击者可以在输入数据中插入恶意代码（通常称为“payload”），并修改返回地址，使程序在执行完当前函数后跳转到恶意代码的地址。这意味着一旦程序运行到那个点，就会执行攻击者注入的代码，从而实现远程执行恶意代码的目的。</li>
+</ol>
+<p>通过缓冲区溢出，攻击者可以利用软件中的漏洞，改变程序的执行流，实现对系统的控制和恶意操作。这种攻击方式通常用于获取未经授权的访问、数据窃取或其他恶意行为。</p>
+</blockquote>
+<h2 id="分析研判处置自动化">分析研判处置自动化</h2>
+<h3 id="简介">简介</h3>
+<p><strong>效率提升：6小时 -&gt; 分钟级</strong></p>
+<p>高级威胁、复杂事件分析研判响应需要高级专家数天时间。绿盟风云卫大模型能够<strong>生成式引导</strong>运营人员去做分析和响应，降低安全运营门槛。另一方面，<strong>大模型能够将分析此类型事件的固定模式</strong>给记录下来，实现后续自动化分析和响应全过程。同时可以自动化生成SOAR响应处置脚本，自动应用到各类检测和防护设备中。</p>
+<h3 id="理解">理解</h3>
+<p>具体过程：</p>
+<ul>
+<li>事件监测： 安全系统实时监测网络流量、用户行为、系统日志等，识别潜在的安全事件。这些事件可能包括入侵尝试、恶意软件活动或异常流量。</li>
+<li>事件分类和优先级排序： 一旦识别出安全事件，模型会根据预设的规则和学习到的模式，对事件进行分类和优先级排序。例如，将高风险的事件（如针对关键资产的攻击）标记为高优先级，而低风险的事件（如一般的登录失败）标记为低优先级。</li>
+<li>引导分析： 对于高优先级事件，模型可以生成分析指导，提示操作人员需要关注的关键指标和可能的攻击路径。例如，如果检测到异常流量，模型可能建议检查特定用户的活动记录和流量来源。</li>
+<li>自动化响应： 在分析过程中，模型可以自动生成应对策略。例如，当识别到某种类型的攻击时，模型可以自动创建和部署安全编排响应（SOAR）脚本，这些脚本指示安全设备如何响应。例如，立即封锁可疑IP地址、增加特定用户的安全监控等。</li>
+<li>实时反馈与优化： 在事件处置过程中，模型能够实时收集操作人员的反馈，并根据这些反馈优化后续的分析和响应策略。这样，随着时间的推移，模型的准确性和效率会不断提高。</li>
+</ul>
+<blockquote>
+<p>安全编排响应（SOAR）脚本是一种自动化脚本，用于在安全事件发生时协调和执行响应措施。这些脚本将不同的安全工具和流程整合在一起，以实现快速、有效的响应。<br>
+SOAR脚本的主要功能包括：</p>
+<ol>
+<li><strong>自动化任务</strong>： SOAR脚本可以自动执行各种安全任务，如封锁可疑IP地址、隔离受感染的设备、生成安全事件报告等，减少人工干预。</li>
+<li><strong>事件响应流程</strong>： 脚本定义了一系列预设的响应步骤，当特定事件发生时，系统会按照这些步骤自动执行。例如，如果检测到某种类型的攻击，SOAR脚本会自动触发相应的响应措施。</li>
+<li><strong>集成不同工具</strong>： SOAR脚本能够与多种安全工具（如防火墙、入侵检测系统、SIEM等）进行集成，确保各个系统之间的数据和信息能够流畅传递。</li>
+<li><strong>信息共享与报告</strong>： 在响应过程中，SOAR脚本可以自动收集数据并生成报告，便于安全团队后续分析和审计。</li>
+</ol>
+<p><strong>示例：</strong><br>
+假设某公司检测到异常登录尝试，SOAR脚本的执行过程可能如下：</p>
+<ol>
+<li><strong>触发事件</strong>： 检测到来自特定IP的多次失败登录尝试。</li>
+<li><strong>自动化响应</strong>： SOAR脚本自动执行以下步骤：
+<ul>
+<li>封锁该IP地址。</li>
+<li>发送通知给安全团队。</li>
+<li>在SIEM系统中记录事件。</li>
+<li>进行用户活动的进一步审查。</li>
+</ul>
+</li>
+<li><strong>报告生成</strong>： 在事件处理结束后，脚本自动生成一份事件响应报告，总结事件详情和采取的措施。</li>
+</ol>
+<p>SOAR脚本通过自动化响应流程，提高了安全事件的处理速度和效率，减轻了安全团队的负担，使他们能更专注于复杂的安全挑战。</p>
+</blockquote>
+<h2 id="渗透-评估自动化">渗透/评估自动化</h2>
+<h3 id="简介">简介</h3>
+<p><strong>效率提升：1-3天 -&gt; 分钟级</strong></p>
+<p>安全服务人员渗透测试工作需要一天甚至几天时间，绿盟风云卫大模型可以辅助服务人员进行渗透测试，自动化生成测试报告，提升安全服务效率。</p>
+<h3 id="理解">理解</h3>
+<p>假设一个公司希望对其网络安全进行全面评估。安全服务人员通常会按照以下步骤进行渗透测试：</p>
+<ol>
+<li><strong>信息收集</strong>：手动查找目标公司的公开信息，包括域名、IP地址、员工信息等。</li>
+<li><strong>漏洞扫描</strong>：使用工具扫描目标系统，识别潜在的漏洞。</li>
+<li><strong>攻击模拟</strong>：尝试利用识别出的漏洞，进行攻击以评估系统的脆弱性。</li>
+<li><strong>报告生成</strong>：整理测试结果，编写详细的测试报告，提供改进建议。</li>
+</ol>
+<p>在这个过程中，绿盟风云卫大模型可以发挥以下作用：</p>
+<ul>
+<li><strong>自动化信息收集</strong>：模型可以自动化从网络上收集目标公司的相关信息，节省人力和时间。</li>
+<li><strong>智能漏洞识别</strong>：通过大数据分析，模型能够迅速识别常见漏洞，并提供相关的攻击向量。</li>
+<li><strong>模拟攻击</strong>：模型可以根据已有数据模拟攻击，验证系统的防御能力。</li>
+<li><strong>自动生成报告</strong>：测试完成后，模型能够自动整理测试结果，生成结构化的报告，包括发现的漏洞、攻击路径及改进建议，减少服务人员的文书工作。</li>
+</ul>
+<h2 id="红队工作支撑">红队工作支撑</h2>
+<h3 id="简介">简介</h3>
+<p><strong>效率提升：高级专家3-5天 -&gt; 小时级</strong></p>
+<p>红队工具、红队样本、红队路径等生成的工作，红队需要大量时间做数据准备，工具生成等相关工作，通过绿盟风云卫大模型的辅助，快速生成相应红队工具。</p>
+<h3 id="理解">理解</h3>
+<p>在网络安全中，红队负责模拟攻击，以测试系统和网络的安全性。他们需要使用各种工具和技术来执行攻击，发现安全漏洞。这个过程通常需要大量的准备工作，包括生成攻击工具、创建样本和确定攻击路径。<br>
+<strong>具体过程</strong>：</p>
+<ol>
+<li><strong>红队工具的定义</strong>： 红队工具是用于进行渗透测试和模拟攻击的软件或脚本，例如密码破解工具、网络扫描器、漏洞利用框架等。</li>
+<li><strong>红队样本的创建</strong>： 红队样本是指攻击者可能使用的恶意代码或负载，用于测试系统的防御能力。这些样本可以包括特定的恶意软件或攻击脚本。</li>
+<li><strong>红队路径的确定</strong>： 红队路径是攻击者在实施攻击时可能采取的步骤或策略，包括如何突破防御、获取访问权限和提升权限的具体方法。</li>
+</ol>
+<p><strong>使用大模型的优势</strong>：<br>
+通过风云卫大模型，红队可以快速生成所需的工具、样本和路径，具体步骤如下：</p>
+<ol>
+<li><strong>快速生成工具</strong>： 假设红队需要一个新的网络扫描工具。团队可以提供需求，模型会根据最新的安全漏洞和攻击技术自动生成一个符合需求的扫描工具。这可能包括特定的功能，如发现开放端口、识别运行的服务等。</li>
+<li><strong>生成攻击样本</strong>： 红队希望模拟一种新型的网络攻击。通过输入攻击类型（如DDoS攻击或钓鱼攻击），模型可以自动生成相关的恶意样本，这些样本能够模仿真实攻击者的行为。</li>
+<li><strong>确定攻击路径</strong>： 红队想要评估一个新的目标系统的安全性。模型可以分析目标系统的结构，基于现有的安全研究，自动生成可能的攻击路径，包括初始访问、横向移动和权限提升的步骤。</li>
+</ol>
+<h3 id="示例">示例</h3>
+<p>假设一家金融机构邀请红队进行渗透测试，以下是如何通过绿盟风云卫大模型进行准备的示例：</p>
+<ol>
+<li><strong>需求输入</strong>： 红队成员输入需要模拟的攻击类型和目标系统的基本信息。</li>
+<li><strong>工具生成</strong>： 模型根据输入生成一个定制的网络扫描工具，具备识别金融系统常见漏洞的能力。</li>
+<li><strong>样本生成</strong>： 模型自动创建一个钓鱼邮件样本，模仿该金融机构的品牌，增加成功率。</li>
+<li><strong>攻击路径规划</strong>： 模型分析金融系统的架构，生成一个详细的攻击路径，包括从钓鱼邮件到获取用户凭证，再到横向移动到管理系统的步骤。</li>
+</ol>
+<p>通过绿盟风云卫大模型，红队能够快速、有效地生成所需的工具、样本和攻击路径，显著缩短准备时间，提高渗透测试的效率和准确性。这种自动化的支持使红队能够专注于实际的测试和评估，而不是耗费时间在准备工作上。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Die Hu</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://enchantedovo.cn/2024/11/14/LLM-Security3/">https://enchantedovo.cn/2024/11/14/LLM-Security3/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://enchantedovo.cn" target="_blank">Enchanted to Meet U</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%A4%A7%E6%A8%A1%E5%9E%8B/">大模型</a><a class="post-meta__tags" href="/tags/%E5%AE%89%E5%85%A8%E5%A4%A7%E6%A8%A1%E5%9E%8B/">安全大模型</a></div><div class="post_share"><div class="social-share" data-image="https://s3.bmp.ovh/imgs/2024/04/08/2368e73f30658fe8.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2024/10/17/LLM-Learning5/"><img class="next-cover" data-lazy-src="https://s3.bmp.ovh/imgs/2024/04/08/2368e73f30658fe8.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">TrafficLLM 复现 - Evaluation &amp; Server</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2024/04/08/LLM-Learning1/" title="RAG 应知必会"><img class="cover" data-lazy-src="https://s3.bmp.ovh/imgs/2024/04/08/2368e73f30658fe8.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-04-08</div><div class="title">RAG 应知必会</div></div></a></div><div><a href="/2024/04/10/LLM-Learning2/" title="RAG开发的痛点以及解决方案"><img class="cover" data-lazy-src="https://s3.bmp.ovh/imgs/2024/04/08/2368e73f30658fe8.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-04-10</div><div class="title">RAG开发的痛点以及解决方案</div></div></a></div><div><a href="/2024/07/20/LLM-Learning4/" title="论文阅读记录 —— LLM 相关"><img class="cover" data-lazy-src="https://s3.bmp.ovh/imgs/2024/04/08/2368e73f30658fe8.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-07-20</div><div class="title">论文阅读记录 —— LLM 相关</div></div></a></div><div><a href="/2024/10/17/LLM-Learning5/" title="TrafficLLM 复现 - Evaluation & Server"><img class="cover" data-lazy-src="https://s3.bmp.ovh/imgs/2024/04/08/2368e73f30658fe8.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-10-17</div><div class="title">TrafficLLM 复现 - Evaluation & Server</div></div></a></div><div><a href="/2024/09/19/LLM-Security2/" title="LLM for Security 论文记录 1"><img class="cover" data-lazy-src="https://s3.bmp.ovh/imgs/2024/04/08/2368e73f30658fe8.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-09-19</div><div class="title">LLM for Security 论文记录 1</div></div></a></div><div><a href="/2024/07/19/LLM-Learning3/" title="论文阅读记录 —— LLM Agent"><img class="cover" data-lazy-src="https://s3.bmp.ovh/imgs/2024/04/08/2368e73f30658fe8.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-07-19</div><div class="title">论文阅读记录 —— LLM Agent</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" data-lazy-src="/img/ava.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Die Hu</div><div class="author-info__description">———— 🦋的个人小站</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">31</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">31</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Enchantedovo" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:hudie@iie.ac.cn" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">Welcome to My Blog ❤</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%83%8C%E6%99%AF"><span class="toc-number">1.</span> <span class="toc-text">背景</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%EF%BC%9A%E9%AB%98%E8%B4%A8%E9%87%8F%E8%AF%AD%E6%96%99%E6%9D%A5%E6%BA%90"><span class="toc-number">2.</span> <span class="toc-text">基础：高质量语料来源</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9C%BA%E6%99%AF%E5%8C%96%E5%BA%94%E7%94%A8"><span class="toc-number">3.</span> <span class="toc-text">场景化应用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%95%8C%E9%9D%A2%E8%87%AA%E5%8A%A8%E7%94%9F%E6%88%90"><span class="toc-number">3.1.</span> <span class="toc-text">界面自动生成</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%80%E4%BB%8B"><span class="toc-number">3.1.1.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%90%86%E8%A7%A3"><span class="toc-number">3.1.2.</span> <span class="toc-text">理解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A4%BA%E4%BE%8B"><span class="toc-number">3.1.3.</span> <span class="toc-text">示例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A3%80%E6%B5%8B%E8%A7%84%E5%88%99%E8%87%AA%E5%8A%A8%E7%94%9F%E6%88%90"><span class="toc-number">3.2.</span> <span class="toc-text">检测规则自动生成</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%80%E4%BB%8B"><span class="toc-number">3.2.1.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%90%86%E8%A7%A3"><span class="toc-number">3.2.2.</span> <span class="toc-text">理解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A4%BA%E4%BE%8B%EF%BC%9A%E9%9B%B6%E6%97%A5%E6%BC%8F%E6%B4%9E%E7%9A%84%E5%BA%94%E6%80%A5%E5%A4%84%E7%90%86"><span class="toc-number">3.2.3.</span> <span class="toc-text">示例：零日漏洞的应急处理</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%86%E6%9E%90%E7%A0%94%E5%88%A4%E5%A4%84%E7%BD%AE%E8%87%AA%E5%8A%A8%E5%8C%96"><span class="toc-number">3.3.</span> <span class="toc-text">分析研判处置自动化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%80%E4%BB%8B"><span class="toc-number">3.3.1.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%90%86%E8%A7%A3"><span class="toc-number">3.3.2.</span> <span class="toc-text">理解</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B8%97%E9%80%8F-%E8%AF%84%E4%BC%B0%E8%87%AA%E5%8A%A8%E5%8C%96"><span class="toc-number">3.4.</span> <span class="toc-text">渗透&#x2F;评估自动化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%80%E4%BB%8B"><span class="toc-number">3.4.1.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%90%86%E8%A7%A3"><span class="toc-number">3.4.2.</span> <span class="toc-text">理解</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BA%A2%E9%98%9F%E5%B7%A5%E4%BD%9C%E6%94%AF%E6%92%91"><span class="toc-number">3.5.</span> <span class="toc-text">红队工作支撑</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%80%E4%BB%8B"><span class="toc-number">3.5.1.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%90%86%E8%A7%A3"><span class="toc-number">3.5.2.</span> <span class="toc-text">理解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A4%BA%E4%BE%8B"><span class="toc-number">3.5.3.</span> <span class="toc-text">示例</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2024/11/14/LLM-Security3/" title="风云卫安全大模型的一些理解"><img data-lazy-src="https://s3.bmp.ovh/imgs/2024/04/08/2368e73f30658fe8.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="风云卫安全大模型的一些理解"/></a><div class="content"><a class="title" href="/2024/11/14/LLM-Security3/" title="风云卫安全大模型的一些理解">风云卫安全大模型的一些理解</a><time datetime="2024-11-14T02:43:52.000Z" title="发表于 2024-11-14 10:43:52">2024-11-14</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/10/17/LLM-Learning5/" title="TrafficLLM 复现 - Evaluation &amp; Server"><img data-lazy-src="https://s3.bmp.ovh/imgs/2024/04/08/2368e73f30658fe8.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="TrafficLLM 复现 - Evaluation &amp; Server"/></a><div class="content"><a class="title" href="/2024/10/17/LLM-Learning5/" title="TrafficLLM 复现 - Evaluation &amp; Server">TrafficLLM 复现 - Evaluation &amp; Server</a><time datetime="2024-10-17T06:37:32.000Z" title="发表于 2024-10-17 14:37:32">2024-10-17</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/09/19/LLM-Security2/" title="LLM for Security 论文记录 1"><img data-lazy-src="https://s3.bmp.ovh/imgs/2024/04/08/2368e73f30658fe8.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="LLM for Security 论文记录 1"/></a><div class="content"><a class="title" href="/2024/09/19/LLM-Security2/" title="LLM for Security 论文记录 1">LLM for Security 论文记录 1</a><time datetime="2024-09-19T02:54:14.000Z" title="发表于 2024-09-19 10:54:14">2024-09-19</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/07/20/LLM-Learning4/" title="论文阅读记录 —— LLM 相关"><img data-lazy-src="https://s3.bmp.ovh/imgs/2024/04/08/2368e73f30658fe8.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="论文阅读记录 —— LLM 相关"/></a><div class="content"><a class="title" href="/2024/07/20/LLM-Learning4/" title="论文阅读记录 —— LLM 相关">论文阅读记录 —— LLM 相关</a><time datetime="2024-07-20T12:16:39.000Z" title="发表于 2024-07-20 20:16:39">2024-07-20</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/07/19/LLM-Learning3/" title="论文阅读记录 —— LLM Agent"><img data-lazy-src="https://s3.bmp.ovh/imgs/2024/04/08/2368e73f30658fe8.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="论文阅读记录 —— LLM Agent"/></a><div class="content"><a class="title" href="/2024/07/19/LLM-Learning3/" title="论文阅读记录 —— LLM Agent">论文阅读记录 —— LLM Agent</a><time datetime="2024-07-19T11:40:33.000Z" title="发表于 2024-07-19 19:40:33">2024-07-19</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By Die Hu</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">❤Hi, welcome to my blog!❤</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="font-plus" type="button" title="放大字体"><i class="fas fa-plus"></i></button><button id="font-minus" type="button" title="缩小字体"><i class="fas fa-minus"></i></button><button id="translateLink" type="button" title="简繁转换">简</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>function loadValine () {
+  function initValine () {
+    let initData = {
+      el: '#vcomment',
+      appId: 'idIIOSAeq1UbVzvHKh7NdbXC-gzGzoHsz',
+      appKey: 'Ozg70h4ULc79NSqitNLUL3vP',
+      placeholder: 'Please leave your footprints',
+      avatar: 'monsterid',
+      meta: 'nick,mail,link'.split(','),
+      pageSize: '10',
+      lang: 'zh-CN',
+      recordIP: false,
+      serverURLs: '',
+      emojiCDN: '',
+      emojiMaps: "",
+      enableQQ: false,
+      path: window.location.pathname,
+    }
+
+    if (true) { 
+      initData.requiredFields= ('nick,mail'.split(','))
+    }
+    
+    if (false) {
+      const otherData = false
+      initData = Object.assign(initData, otherData)
+    }
+    
+    const valine = new Valine(initData)
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !true) {
+  if (true) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/click-heart.min.js" async="async" mobile="false"></script></div></body></html>
