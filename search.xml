@@ -1960,10 +1960,10 @@ SOAR脚本的主要功能包括：</p>
     <content><![CDATA[<blockquote>
 <p>更新一下论文阅读记录，一直写在了本地的编辑器上，现在更新到博客中（持续更新ing，打算以月为单位更新博客了）</p>
 </blockquote>
-<h1 id="Agent-in-Security">Agent in Security</h1>
+<h1 id="agent-in-security">Agent in Security</h1>
 <!--  -->
 <!-- <img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="p1.png"  style="zoom:55%;" /> -->
-<h2 id="PentestGPT（USENIX）">PentestGPT（USENIX）</h2>
+<h2 id="pentestgpt-usenix">PentestGPT（USENIX）</h2>
 <p>PentestGPT: An LLM-empowered Automatic Penetration Testing Tool</p>
 <blockquote>
 <p>论文：<a href="https://arxiv.org/abs/2308.06782">https://arxiv.org/abs/2308.06782</a><br>
@@ -2005,11 +2005,11 @@ SOAR脚本的主要功能包括：</p>
 </ul>
 <p>针对先验研究发现的：<strong>LLMs具有一定的渗透测试能力，但难以保持长期记忆和解决复杂问题</strong>，作者设计了交互式的PentestGPT。一方面优化LLMs在渗透测试中的使用（设计prompt，渗透计划树等），另一方面利用LLMs的优势提高自动渗透测试的效率和有效性（给人指导）。</p>
 <img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2024/11/14/LLM-Security4/pentestgpt1.png" style="zoom:80%;">
-<p>在推理模块中对于渗透流程的规划，通过渗透计划树：</p>
+<p>在推理模块中对于渗透流程的规划，通过渗透计划树。示例：</p>
 <img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2024/11/14/LLM-Security4/pentestgpt2.png" style="zoom:80%;">
 <p><strong>思考</strong><br>
-<mark>思考：提供了LLM应用到渗透测试的一个思路，比如<strong>渗透计划树的方式记录规划</strong>（后面的AutoAttack也是在PentestGPT基础上改的），但是缺点也很明显，PentestGPT本质上还是一个针对渗透测试提供建议的问答模型，其中人工干预较多，不是一个真正意义上的Agent，所以说后面的一些工作会弥补掉这个Gap，能够直接执行一些渗透命令，并反馈继续</mark></p>
-<h2 id="AUTOATTACKER">AUTOATTACKER</h2>
+提供了LLM应用到渗透测试的一个思路，比如<mark><strong>渗透计划树的方式记录规划以及相关的更新</strong></mark>（后面的AutoAttack也是在PentestGPT基础上改的），但是缺点也很明显，PentestGPT本质上还是一个针对渗透测试提供建议的问答模型，其中人工干预较多，不是一个真正意义上的Agent，所以说后面的一些工作会弥补掉这个Gap，能够直接执行一些渗透命令，并反馈继续</p>
+<h2 id="autoattacker">AUTOATTACKER</h2>
 <p>AUTOATTACKER: A Large Language Model Guided System to Implement Automatic Cyber-attacks</p>
 <blockquote>
 <p>论文：<a href="https://arxiv.org/abs/2403.01038">https://arxiv.org/abs/2403.01038</a><br>
