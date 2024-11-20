@@ -1508,21 +1508,33 @@ Overall the consumption of the world’s resources is undergoing a dangerous rat
     <content><![CDATA[<blockquote>
 <p>争取每月把论文笔记更新一次在博客中💪💪💪</p>
 </blockquote>
-<h1 id="Agent-in-Computer-Control">Agent in Computer Control</h1>
+<h1 id="agent-in-computer-control">Agent in Computer Control</h1>
 <p>主要还是 Web Agent 的相关论文分享</p>
 <!-- ## 标题二 -->
 <!--  -->
 <!-- <img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="p1.png"  style="zoom:55%;" /> -->
-<h2 id="SeeAct-ICML-2024">SeeAct [ICML 2024]</h2>
+<h2 id="seeact-icml-2024">SeeAct [ICML 2024]</h2>
 <p>GPT-4V(ision) is a Generalist Web Agent, if Grounded</p>
 <blockquote>
 <p>论文：<a href="https://arxiv.org/abs/2401.01614">https://arxiv.org/abs/2401.01614</a><br>
 代码：<a href="https://github.com/OSU-NLP-Group/SeeAct">https://github.com/OSU-NLP-Group/SeeAct</a></p>
 </blockquote>
 <img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2024/11/14/LLM-Learning6/seeact.png" style="zoom:80%;">
-<p><strong>研究内容</strong><br>
+<p><strong>概览</strong><br>
 论文探索了 LMM 作为一种能够理解自然语言指令并完成任何网站上任务的通用网络智能体的潜力。SEEACT 结合了<strong>多模态大模型</strong>的能力以提升对网站内容的视觉理解和交互效果，以<strong>将语言模型的输出转化为具体的网页操作（研究的内容）<strong>来工作。论文在 MIND2WEB 上进行了离线评估；另外，通过开发一个运行 Web Agent 的工具，完成了</strong>在线评测</strong>。结果表明，如果手动将 GPT-4V 的文本计划转化为网站操作，它可以在实际网站上成功完成 50% 的任务。这大大优于纯文本 LLM 或专为网络智能体微调的较小模型 (FLAN-T5 和 BLIP-2)。</p>
-<p><Mark>创新点：能够真正生成可执行浏览器的操作，提出几种元素定位的方法：使用html元素属性；提供元素的文本表示作为选择项，让模型做选择题；使用图像标记来定位目标元素（具体使用的算法并没有写）。并且设计了一种在线测评方法。</Mark></p>
+<p><strong>研究内容</strong><br>
+自动化操作网站以完成用户用自然语言描述的任务。</p>
+<blockquote>
+<p>作者主要关注：规划出自然语言描述的动作后，从自然语言指令中提取出具体的网页动作（Ground）</p>
+</blockquote>
+<p><strong>研究动机</strong><br>
+web自动化任务可能相当多样化和复杂，一项任务可能在多个动态呈现的网页上执行 10 多个操作。现有方法主要在HTML输入上使用大模型，这种方式存在以下限制：</p>
+<ul>
+<li>HTML 代码比渲染出的视觉信息噪音更大，并且信息密度较低。</li>
+<li>HTML 本身提供的信息不完整，并且错过了嵌入图像等关键语义。<br>
+为此，作者提出了 SEEACT，这是一种通用 Web Agent，它利用 LMM 的强大功能来实现集成的视觉理解和在 Web 上的操作。</li>
+</ul>
+<p>虽然 GPT-4V 在视觉上理解渲染的网页并在各种网站和任务中以文本形式生成正确的计划方面表现出强大的能力。然而，落地（即将文本计划转化为网站上的精确操作），仍然是一个重大挑战。它涉及选择要交互的正确 HTML 元素以及正确的操作（例如，单击、键入或选择）。</p>
 <p><strong>方法</strong><br>
 🪄<strong>问题描述：动作生成</strong><br>
 动作生成涉及到从自然语言指令中提取出具体的网页动作。这意味着SEEACT模型需要理解用户的指令，并将其转化为可以在网页上执行的具体操作，如点击链接、填写表单等。Prompt要点包括：1）之前的动作历史和当前网页截图；2）之前动作分析；3）截图细节分析；4）下一步行动：基于分析考虑人类的网络浏览习惯和网页设计逻辑，决定下一步操作，每次只生成一个行动。</p>
@@ -1532,7 +1544,9 @@ Overall the consumption of the world’s resources is undergoing a dangerous rat
 <p>文章测试了三种类型的定位方法(如图)：1）元素属性定位：模型生成目标元素的详细属性，如文本和类型，然后使用这些属性在DOM元素中进行匹配，以找到正确的元素。2）文本选择定位：为模型提供元素的文本表示作为选择项，模型从给定的多个选择中确定其意图的元素。3）图像注释定位：在每个候选元素上覆盖边界框和字母标签，模型需要生成对应于目标元素的标签。</p>
 <p><strong>实验结果</strong><br>
 如果提供了准确的元素定位，模型可以在在线评估中成功完成50%的任务。在各种定位策略中，结合HTML文本和视觉信息的方法表现最佳，显著优于仅使用图像注释的策略。在线评估与离线评估之间存在显著差异。</p>
-<h2 id="WebVoyager-ACL-2024-main">WebVoyager [ACL 2024 (main)]</h2>
+<p><strong>思考</strong><br>
+<Mark>创新点：能够真正生成可执行浏览器的操作，提出几种元素定位的方法：使用html元素属性；提供元素的文本表示作为选择项，让模型做选择题；使用图像标记来定位目标元素（具体使用的算法并没有写）。并且设计了一种在线测评方法。</Mark></p>
+<h2 id="webvoyager-acl-2024-main">WebVoyager [ACL 2024 (main)]</h2>
 <p>WebVoyager : Building an End-to-End Web Agent with Large Multimodal Models</p>
 <blockquote>
 <p>论文：<a href="https://arxiv.org/abs/2401.13919">https://arxiv.org/abs/2401.13919</a><br>
@@ -1963,7 +1977,7 @@ SOAR脚本的主要功能包括：</p>
 <h1 id="agent-in-security">Agent in Security</h1>
 <!--  -->
 <!-- <img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="p1.png"  style="zoom:55%;" /> -->
-<h2 id="pentestgpt-usenix">PentestGPT（USENIX）</h2>
+<h2 id="pentestgpt-usenix-2024">PentestGPT [USENIX 2024]</h2>
 <p>PentestGPT: An LLM-empowered Automatic Penetration Testing Tool</p>
 <blockquote>
 <p>论文：<a href="https://arxiv.org/abs/2308.06782">https://arxiv.org/abs/2308.06782</a><br>
