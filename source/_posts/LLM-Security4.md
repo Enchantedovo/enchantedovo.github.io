@@ -18,7 +18,7 @@ date: 2024-11-14 10:57:54
 <!-- {% asset_img p1.png p1 %} -->
 <!-- <img src="p1.png"  style="zoom:55%;" /> -->
 
-## PentestGPT（USENIX）
+## PentestGPT [USENIX 2024]
 PentestGPT: An LLM-empowered Automatic Penetration Testing Tool
 
 > 论文：https://arxiv.org/abs/2308.06782
@@ -60,12 +60,12 @@ PentestGPT: An LLM-empowered Automatic Penetration Testing Tool
 
 <img src="pentestgpt1.png"  style="zoom:80%;" />
 
-在推理模块中对于渗透流程的规划，通过渗透计划树：
+在推理模块中对于渗透流程的规划，通过渗透计划树。示例：
 
 <img src="pentestgpt2.png"  style="zoom:80%;" />
 
 **思考**
-<mark>思考：提供了LLM应用到渗透测试的一个思路，比如**渗透计划树的方式记录规划**（后面的AutoAttack也是在PentestGPT基础上改的），但是缺点也很明显，PentestGPT本质上还是一个针对渗透测试提供建议的问答模型，其中人工干预较多，不是一个真正意义上的Agent，所以说后面的一些工作会弥补掉这个Gap，能够直接执行一些渗透命令，并反馈继续</mark>
+提供了LLM应用到渗透测试的一个思路，比如<mark>**渗透计划树的方式记录规划以及相关的更新**</mark>（后面的AutoAttack也是在PentestGPT基础上改的），但是缺点也很明显，PentestGPT本质上还是一个针对渗透测试提供建议的问答模型，其中人工干预较多，不是一个真正意义上的Agent，所以说后面的一些工作会弥补掉这个Gap，能够直接执行一些渗透命令，并反馈继续
 
 ## AUTOATTACKER
 
