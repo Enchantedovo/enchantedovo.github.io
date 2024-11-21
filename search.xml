@@ -1531,9 +1531,9 @@ Overall the consumption of the world’s resources is undergoing a dangerous rat
 <p>web自动化任务可能相当多样化和复杂，一项任务可能在多个动态呈现的网页上执行 10 多个操作。现有方法主要在HTML输入上使用大模型，这种方式存在以下限制：</p>
 <ul>
 <li>HTML 代码比渲染出的视觉信息噪音更大，并且信息密度较低。</li>
-<li>HTML 本身提供的信息不完整，并且错过了嵌入图像等关键语义。<br>
-为此，作者提出了 SEEACT，这是一种通用 Web Agent，它利用 LMM 的强大功能来实现集成的视觉理解和在 Web 上的操作。</li>
+<li>HTML 本身提供的信息不完整，并且错过了嵌入图像等关键语义。</li>
 </ul>
+<p>为此，作者提出了 SEEACT，这是一种通用 Web Agent，它利用 LMM 的强大功能来实现集成的视觉理解和在 Web 上的操作。</p>
 <p>虽然 GPT-4V 在视觉上理解渲染的网页并在各种网站和任务中以文本形式生成正确的计划方面表现出强大的能力。然而，落地（即将文本计划转化为网站上的精确操作），仍然是一个重大挑战。它涉及选择要交互的正确 HTML 元素以及正确的操作（例如，单击、键入或选择）。</p>
 <h3 id="方法">方法</h3>
 <p>🪄<strong>问题描述：动作生成</strong><br>
@@ -1685,16 +1685,15 @@ Overall the consumption of the world’s resources is undergoing a dangerous rat
 </li>
 </ul>
 <blockquote>
-<p><strong>DPO</strong> (Direct Preference Optimization): 直接优化智能体的偏好，使其能够选择更符合人类期望的行为</p>
+<p><strong>DPO</strong> (Direct Preference Optimization): 直接优化智能体的偏好，使其能够选择更符合人类期望的行为。</p>
 <ul>
 <li>方法: 通过比较智能体自身的行为和人类专家的行为，来计算奖励信号，并更新智能体的策略。</li>
 <li>优点:不需要预先定义奖励函数，更适用于开放域环境；能够有效地学习人类专家的偏好。</li>
-<li>缺点:需要大量的数据来训练；训练过程可能不稳定。<br>
-<strong>拒绝采样微调</strong>(Rejection Sampling Finetuning): 通过选择智能体自身产生的正确轨迹进行微调，来提高智能体在特定环境中的性能。
+<li>缺点:需要大量的数据来训练；训练过程可能不稳定。</li>
+</ul>
+<p><strong>拒绝采样微调</strong>(Rejection Sampling Finetuning): 通过选择智能体自身产生的正确轨迹进行微调，来提高智能体在特定环境中的性能。</p>
 <ul>
 <li>这里的 “拒绝” 指的是筛选出错误的轨迹，只保留正确的轨迹进行微调。</li>
-</ul>
-</li>
 </ul>
 </blockquote>
 <h3 id="实验">实验</h3>
