@@ -7,7 +7,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://s3.bmp.ovh/imgs/2024/04/08/2368e73f30658fe8.png">
 <meta property="article:published_time" content="2024-11-14T03:21:31.000Z">
-<meta property="article:modified_time" content="2024-11-20T12:05:11.724Z">
+<meta property="article:modified_time" content="2024-11-21T08:48:53.201Z">
 <meta property="article:author" content="Die Hu">
 <meta property="article:tag" content="生成式人工智能">
 <meta property="article:tag" content="大模型">
@@ -102,7 +102,7 @@ const getScript = url => new Promise((resolve, reject) => {
   isHome: false,
   isHighlightShrink: false,
   isToc: true,
-  postUpdate: '2024-11-20 20:05:11'
+  postUpdate: '2024-11-21 16:48:53'
 }</script><noscript><style type="text/css">
   #nav {
     opacity: 1
@@ -171,7 +171,7 @@ if (asideStatus !== undefined) {
 if (fontSizeVal !== undefined) {
   document.documentElement.style.setProperty('--global-font-size', fontSizeVal + 'px')
 }})()</script><link rel="stylesheet" href="/css/diy.css"><meta name="generator" content="Hexo 5.3.0"><link rel="alternate" href="/atom.xml" title="Enchanted to Meet U" type="application/atom+xml">
-<link href="https://cdn.bootcss.com/KaTeX/0.11.1/katex.min.css" rel="stylesheet" /></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" data-lazy-src="/img/ava.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">33</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">31</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">20</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(https://s3.bmp.ovh/imgs/2024/04/08/2368e73f30658fe8.png)"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Enchanted to Meet U</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">论文阅读笔记 - Web Agent</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-11-14T03:21:31.000Z" title="发表于 2024-11-14 11:21:31">2024-11-14</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-11-20T12:05:11.724Z" title="更新于 2024-11-20 20:05:11">2024-11-20</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%A4%A7%E6%A8%A1%E5%9E%8B/">大模型</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%A4%A7%E6%A8%A1%E5%9E%8B/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/">论文阅读</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%A4%A7%E6%A8%A1%E5%9E%8B/Agent/">Agent</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">3.2k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>10分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><blockquote>
+<link href="https://cdn.bootcss.com/KaTeX/0.11.1/katex.min.css" rel="stylesheet" /></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" data-lazy-src="/img/ava.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">33</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">31</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">20</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(https://s3.bmp.ovh/imgs/2024/04/08/2368e73f30658fe8.png)"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Enchanted to Meet U</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">论文阅读笔记 - Web Agent</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-11-14T03:21:31.000Z" title="发表于 2024-11-14 11:21:31">2024-11-14</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-11-21T08:48:53.201Z" title="更新于 2024-11-21 16:48:53">2024-11-21</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%A4%A7%E6%A8%A1%E5%9E%8B/">大模型</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%A4%A7%E6%A8%A1%E5%9E%8B/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/">论文阅读</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%A4%A7%E6%A8%A1%E5%9E%8B/Agent/">Agent</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">5k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>15分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><blockquote>
 <p>争取每月把论文笔记更新一次在博客中💪💪💪</p>
 </blockquote>
 <h1 id="agent-in-computer-control">Agent in Computer Control</h1>
@@ -185,51 +185,51 @@ if (fontSizeVal !== undefined) {
 <p>论文：<a target="_blank" rel="noopener" href="https://arxiv.org/abs/2401.01614">https://arxiv.org/abs/2401.01614</a><br>
 代码：<a target="_blank" rel="noopener" href="https://github.com/OSU-NLP-Group/SeeAct">https://github.com/OSU-NLP-Group/SeeAct</a></p>
 </blockquote>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2024/11/14/LLM-Learning6/seeact.png" style="zoom:80%;">
-<p><strong>概览</strong><br>
-论文探索了 LMM 作为一种能够理解自然语言指令并完成任何网站上任务的通用网络智能体的潜力。SEEACT 结合了<strong>多模态大模型</strong>的能力以提升对网站内容的视觉理解和交互效果，以<strong>将语言模型的输出转化为具体的网页操作（研究的内容）<strong>来工作。论文在 MIND2WEB 上进行了离线评估；另外，通过开发一个运行 Web Agent 的工具，完成了</strong>在线评测</strong>。结果表明，如果手动将 GPT-4V 的文本计划转化为网站操作，它可以在实际网站上成功完成 50% 的任务。这大大优于纯文本 LLM 或专为网络智能体微调的较小模型 (FLAN-T5 和 BLIP-2)。</p>
-<p><strong>研究内容</strong><br>
-自动化操作网站以完成用户用自然语言描述的任务。</p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2024/11/14/LLM-Learning6/seeact.png" style="zoom:60%;">
+<h3 id="概览">概览</h3>
+<p>论文探索了 LMM 作为一种能够理解自然语言指令并完成任何网站上任务的通用网络智能体的潜力。SEEACT 结合了<strong>多模态大模型</strong>的能力以提升对网站内容的视觉理解和交互效果，以<strong>将语言模型的输出转化为具体的网页操作（研究的内容）<strong>来工作。论文在 MIND2WEB 上进行了离线评估；另外，通过开发一个运行 Web Agent 的工具，完成了</strong>在线评测</strong>。结果表明，如果手动将 GPT-4V 的文本计划转化为网站操作，它可以在实际网站上成功完成 50% 的任务。这大大优于纯文本 LLM 或专为网络智能体微调的较小模型 (FLAN-T5 和 BLIP-2)。</p>
+<h3 id="研究内容">研究内容</h3>
+<p>自动化操作网站以完成用户用自然语言描述的任务。</p>
 <blockquote>
 <p>作者主要关注：规划出自然语言描述的动作后，从自然语言指令中提取出具体的网页动作（Ground）</p>
 </blockquote>
-<p><strong>研究动机</strong><br>
-web自动化任务可能相当多样化和复杂，一项任务可能在多个动态呈现的网页上执行 10 多个操作。现有方法主要在HTML输入上使用大模型，这种方式存在以下限制：</p>
+<h3 id="研究动机">研究动机</h3>
+<p>web自动化任务可能相当多样化和复杂，一项任务可能在多个动态呈现的网页上执行 10 多个操作。现有方法主要在HTML输入上使用大模型，这种方式存在以下限制：</p>
 <ul>
 <li>HTML 代码比渲染出的视觉信息噪音更大，并且信息密度较低。</li>
 <li>HTML 本身提供的信息不完整，并且错过了嵌入图像等关键语义。<br>
 为此，作者提出了 SEEACT，这是一种通用 Web Agent，它利用 LMM 的强大功能来实现集成的视觉理解和在 Web 上的操作。</li>
 </ul>
 <p>虽然 GPT-4V 在视觉上理解渲染的网页并在各种网站和任务中以文本形式生成正确的计划方面表现出强大的能力。然而，落地（即将文本计划转化为网站上的精确操作），仍然是一个重大挑战。它涉及选择要交互的正确 HTML 元素以及正确的操作（例如，单击、键入或选择）。</p>
-<p><strong>方法</strong><br>
-🪄<strong>问题描述：动作生成</strong><br>
+<h3 id="方法">方法</h3>
+<p>🪄<strong>问题描述：动作生成</strong><br>
 动作生成涉及到从自然语言指令中提取出具体的网页动作。这意味着SEEACT模型需要理解用户的指令，并将其转化为可以在网页上执行的具体操作，如点击链接、填写表单等。Prompt要点包括：1）之前的动作历史和当前网页截图；2）之前动作分析；3）截图细节分析；4）下一步行动：基于分析考虑人类的网络浏览习惯和网页设计逻辑，决定下一步操作，每次只生成一个行动。</p>
 <p>本文研究的问题：将动作描述 <code>a =(e, o, v)</code> (元素,操作,操作所需的附加值) 转换为环境中的可执行动作 <code>a~</code>。从动作描述 <code>a~</code> 导出操作类型 <code>o</code> 和值 <code>v</code> 可以通过字符串解析很好地解决。关键的挑战是<Mark>从生成的 <code>e~</code> 中识别能真正生成浏览器事件的目标元素 <code>e</code>，作者将其称为<strong>Element Grounding（元素定位）</strong></Mark></p>
 <p>🪄<strong>元素定位</strong><br>
 元素定位是指识别并定位网页上与执行任务相关的具体HTML元素。这个过程需要模型能够准确识别并与特定任务相关联的网页元素，比如按钮、输入框等，以确保正确执行动作。</p>
 <p>文章测试了三种类型的定位方法(如图)：1）元素属性定位：模型生成目标元素的详细属性，如文本和类型，然后使用这些属性在DOM元素中进行匹配，以找到正确的元素。2）文本选择定位：为模型提供元素的文本表示作为选择项，模型从给定的多个选择中确定其意图的元素。3）图像注释定位：在每个候选元素上覆盖边界框和字母标签，模型需要生成对应于目标元素的标签。</p>
-<p><strong>实验结果</strong><br>
-如果提供了准确的元素定位，模型可以在在线评估中成功完成50%的任务。在各种定位策略中，结合HTML文本和视觉信息的方法表现最佳，显著优于仅使用图像注释的策略。在线评估与离线评估之间存在显著差异。</p>
-<p><strong>思考</strong><br>
-<Mark>创新点：能够真正生成可执行浏览器的操作，提出几种元素定位的方法：使用html元素属性；提供元素的文本表示作为选择项，让模型做选择题；使用图像标记来定位目标元素（具体使用的算法并没有写）。并且设计了一种在线测评方法。</Mark></p>
+<h3 id="实验结果">实验结果</h3>
+<p>如果提供了准确的元素定位，模型可以在在线评估中成功完成50%的任务。在各种定位策略中，结合HTML文本和视觉信息的方法表现最佳，显著优于仅使用图像注释的策略。在线评估与离线评估之间存在显著差异。</p>
+<h3 id="思考">思考</h3>
+<p><Mark>创新点：能够真正生成可执行浏览器的操作，提出几种元素定位的方法：使用html元素属性；提供元素的文本表示作为选择项，让模型做选择题；使用图像标记来定位目标元素（具体使用的算法并没有写）。并且设计了一种在线测评方法。</Mark></p>
 <h2 id="webvoyager-acl-2024-main">WebVoyager [ACL 2024 (main)]</h2>
 <p>WebVoyager : Building an End-to-End Web Agent with Large Multimodal Models</p>
 <blockquote>
 <p>论文：<a target="_blank" rel="noopener" href="https://arxiv.org/abs/2401.13919">https://arxiv.org/abs/2401.13919</a><br>
 代码：<a target="_blank" rel="noopener" href="https://github.com/MinorJerry/WebVoyager">https://github.com/MinorJerry/WebVoyager</a></p>
 </blockquote>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2024/11/14/LLM-Learning6/webvoyager.png" style="zoom:80%;">
-<p><strong>研究内容</strong><br>
-Web Agent：借助 GPT-4V 这样的多模态模型，与开放网络中的网站交互，自动化完成用户的各项指令。<br>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2024/11/14/LLM-Learning6/webvoyager.png" style="zoom:60%;">
+<h3 id="研究内容">研究内容</h3>
+<p>Web Agent：借助 GPT-4V 这样的多模态模型，与开放网络中的网站交互，自动化完成用户的各项指令。<br>
 目标：构建一个能够在没有任何人工干预的情况下，<strong>自主浏览开放网页</strong>并<strong>完成用户指令</strong>的Agent。</p>
 <p><mark>创新点：考虑视觉，使用了SoM(Set-of-Mark Prompting)提高大模型对屏幕截图的理解能力。</mark></p>
-<p><strong>研究动机</strong><br>
-现有的Agent通常用于处理复杂且冗长的HTML文本这一<strong>单一输入模态</strong>，而忽视了可以将HTML渲染为<strong>视觉网页</strong>这一要点，并且仅在<strong>简化</strong>的网络模拟器或<strong>静态</strong>网络快照中进行评估，很大程度上限制了Agent在现实世界场景中的适用性。</p>
-<p><strong>作者的工作</strong><br>
-作者提出了一种新的<strong>多模态 Web Agent</strong>——WebVoyager，旨在以<strong>端到端</strong>的方式<strong>在线</strong>处理网络任务，即在没有人工介入的情况下从开始到结束自主管理整个过程。</p>
+<h3 id="研究动机">研究动机</h3>
+<p>现有的Agent通常用于处理复杂且冗长的HTML文本这一<strong>单一输入模态</strong>，而忽视了可以将HTML渲染为<strong>视觉网页</strong>这一要点，并且仅在<strong>简化</strong>的网络模拟器或<strong>静态</strong>网络快照中进行评估，很大程度上限制了Agent在现实世界场景中的适用性。</p>
+<h3 id="作者的工作">作者的工作</h3>
+<p>作者提出了一种新的<strong>多模态 Web Agent</strong>——WebVoyager，旨在以<strong>端到端</strong>的方式<strong>在线</strong>处理网络任务，即在没有人工介入的情况下从开始到结束自主管理整个过程。</p>
 <p>构建了一个<strong>新的评估数据集</strong>，包含来自15个常用网站的300个网络任务；并提出了一种自动评估的方法，在在线导航过程中保存屏幕截图，使用GPT-4V自动评估轨迹和最终结果，同时进行人工评估以验证结果。验证了GPT-4V评估器与人类评估的一致性，从而减轻人工评估员的负担，显著降低实验的成本。</p>
 <p>WebVoyager 的任务成功率为55.7%， 显著优于GPT-4（All Tools）的32.7%和纯文本设置的39.0%。</p>
-<p><strong>方法</strong></p>
+<h3 id="方法">方法</h3>
 <p>WebVoyager 整体工作流程如上所示。具体来说：根据指令，WebVoyager 首先实例化一个 Web 浏览器，然后使用来自 Web 的视觉（即屏幕截图）和文本（即 HTML 元素）信号执行操作。Agent根据每一步的输入生成一个操作，然后在浏览器环境中执行。该过程将持续进行，直到Agent决定停止。 WebVoyager的详细设计，包括环境、交互周期、观察空间和动作空间如下。</p>
 <p><strong>1. 浏览环境的构建</strong><br>
 工作流程始于构建一个自动化的网页浏览环境。使用<strong>Selenium工具</strong>，Agent可以模拟用户的浏览行为，访问真实的网页。允许Agent探索开放的网络环境，面对实时更新、浮动广告等挑战。</p>
@@ -242,7 +242,7 @@ Web Agent：借助 GPT-4V 这样的多模态模型，与开放网络中的网�
 <p><strong>3.观察空间</strong><br>
 在每一步中，代理都会接收<strong>当前屏幕截图、辅助文本和历史记录</strong>作为输入。（屏幕截图能够避免处理 HTML DOM 树或可访问性树来描绘网页整体结构的长上下文负担）</p>
 <p>具体来说，受 <strong>Set-of-Mark Prompting</strong> (Yang et al., 2023a) 的启发，作者在网站上<strong>叠加交互元素的边界框</strong>，以更好地指导 Agent 的动作预测。与利用目标检测模块不同，作者利用 <strong>GPT-4V-ACT5</strong>（一种 Javascript 工具）根据 Web 元素类型提取交互元素，然后在元素的相应区域上覆盖带有数字标签的边界框。</p>
-<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2024/11/14/LLM-Learning6/webvoyager-1.png" style="zoom:80%;">
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2024/11/14/LLM-Learning6/webvoyager-1.png" style="zoom:60%;">
 <p>网页的性质使其能够使用此工具<strong>精确定位和概述每个交互元素</strong>。分配给每个元素的<strong>数字标签</strong>对于模型识别需要交互的元素也至关重要，从而促进准确的动作确定。凭经验选择黑色作为标签的边框和背景，以提高清晰度。作者还为 Agent 提供<strong>辅助文本</strong>作为输入，包括嵌入交互元素中的文本内容、元素的类型，以及 aria-label 属性中可能的一些注释文本。为了简化观察，作者禁用了多个选项卡。<br>
 通过在网页上的交互元素上叠加边框和数字标签，Agent能够更准确地确定需要交互的元素，并执行相应的动作。</p>
 <blockquote>
@@ -252,10 +252,10 @@ Web Agent：借助 GPT-4V 这样的多模态模型，与开放网络中的网�
 <p><strong>4.行动空间</strong><br>
 形式：<code>操作+数字标签</code><br>
 行动空间<strong>定义</strong>了Agent可以执行的动作（有限的），如点击、输入、滚动、等待、返回、跳转到搜索引擎等，这都是最常用的鼠标和键盘操作，足以让Agent浏览各种网页并找到任务所需的内容。通过在屏幕截图中使用数字标签，使Agent能够以简洁的行为格式进行响应。</p>
-<p><strong>实验设计</strong></p>
-<p>1.选取的网站和任务多样性<br>
-本文选择了15个流行且具有代表性的网站，涵盖了日常生活的不同方面:包括Allrecipes、Amazon、Apple、ArXiv、BBC News、Booking、Cambridge Dictionary、Coursera、ESPN、GitHub、Google Flights、Google Map、Google Search、Huggingface和Wolfram Alpha。此外，Google Search作为一个通用网站，可以作为任何网站的起点。</p>
-<p>2.数据集</p>
+<h3 id="实验">实验</h3>
+<p><strong>1.选取的网站和任务多样性</strong><br>
+本文选择了15个流行且具有代表性的网站，包括Amazon、Apple等。此外，Google Search作为一个通用网站，可以作为任何网站的起点。</p>
+<p><strong>2.数据集</strong></p>
 <ul>
 <li>自建数据集：数据集的构建采用了自我指导（self-instruct）方法和人工验证相结合的方式。首先，从Mind2Web中<strong>手动采样</strong>并<strong>重写</strong>了一些任务，然后使用GPT-4 Turbo生成约100个新任务，并对每个生成的任务进行<strong>人工验证</strong>和必要的<strong>重写</strong>。最终收集了每个网站20个任务，共计300个任务。</li>
 <li>GAIA 数据集：从中提取了90个网页浏览任务（Level 1 和 Level 2），并使用 SeeAct 中的50项任务。指示Agent从谷歌搜索开始搜索答案。采用主要的评估指标为任务成功率，不考虑逐步执行是否最优。每个任务的最大交互次数设置为15次。</li>
@@ -263,17 +263,141 @@ Web Agent：借助 GPT-4V 这样的多模态模型，与开放网络中的网�
 <blockquote>
 <p>SeeAct Agent 依赖于微调的交叉编码器模型来选择交互的候选元素。相比之下，WebVoyager 不需要任何额外的模块。</p>
 </blockquote>
-<p>3.评估方法</p>
+<p><strong>3.评估方法</strong></p>
 <ul>
 <li>人类评估：主要的评估指标，特别是针对那些具有开放式答案的任务。</li>
 <li>自动评估：使用GPT-4V作为自动评估器。</li>
 </ul>
-<p>4.基线模型</p>
+<p><strong>4.基线模型</strong></p>
 <ul>
 <li>GPT-4 (All Tools)，将视觉、网页浏览、代码分析和各种插件集成在一个模型中。</li>
 <li>考虑了一个仅接收网站可访问性树作为输入并进行行为预测的文本基线。</li>
 </ul>
-</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Die Hu</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://enchantedovo.cn/2024/11/14/LLM-Learning6/">https://enchantedovo.cn/2024/11/14/LLM-Learning6/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://enchantedovo.cn" target="_blank">Enchanted to Meet U</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E7%94%9F%E6%88%90%E5%BC%8F%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">生成式人工智能</a><a class="post-meta__tags" href="/tags/%E5%A4%A7%E6%A8%A1%E5%9E%8B/">大模型</a><a class="post-meta__tags" href="/tags/Agent/">Agent</a></div><div class="post_share"><div class="social-share" data-image="https://s3.bmp.ovh/imgs/2024/04/08/2368e73f30658fe8.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2024/11/14/LLM-Security4/"><img class="next-cover" data-lazy-src="https://s3.bmp.ovh/imgs/2024/04/08/2368e73f30658fe8.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">LLM for Security 论文记录 1114</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2024/09/19/LLM-Security2/" title="LLM for Security 论文记录 0919"><img class="cover" data-lazy-src="https://s3.bmp.ovh/imgs/2024/04/08/2368e73f30658fe8.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-09-19</div><div class="title">LLM for Security 论文记录 0919</div></div></a></div><div><a href="/2024/11/14/LLM-Security4/" title="LLM for Security 论文记录 1114"><img class="cover" data-lazy-src="https://s3.bmp.ovh/imgs/2024/04/08/2368e73f30658fe8.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-11-14</div><div class="title">LLM for Security 论文记录 1114</div></div></a></div><div><a href="/2024/07/10/LLM-Security1/" title="大模型的对抗攻击与防御"><img class="cover" data-lazy-src="https://s3.bmp.ovh/imgs/2024/04/08/2368e73f30658fe8.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-07-10</div><div class="title">大模型的对抗攻击与防御</div></div></a></div><div><a href="/2024/07/19/LLM-Learning3/" title="论文阅读记录 —— LLM Agent"><img class="cover" data-lazy-src="https://s3.bmp.ovh/imgs/2024/04/08/2368e73f30658fe8.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-07-19</div><div class="title">论文阅读记录 —— LLM Agent</div></div></a></div><div><a href="/2024/07/11/AI-Security1/" title="文本生成模型的对抗攻击"><img class="cover" data-lazy-src="https://s3.bmp.ovh/imgs/2024/07/11/f1bc85b0c548d87e.webp" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-07-11</div><div class="title">文本生成模型的对抗攻击</div></div></a></div><div><a href="/2024/04/08/LLM-Learning1/" title="RAG 应知必会"><img class="cover" data-lazy-src="https://s3.bmp.ovh/imgs/2024/04/08/2368e73f30658fe8.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-04-08</div><div class="title">RAG 应知必会</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" data-lazy-src="/img/ava.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Die Hu</div><div class="author-info__description">———— 🦋的个人小站</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">33</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">31</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">20</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Enchantedovo" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:hudie@iie.ac.cn" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">Welcome to My Blog ❤</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#agent-in-computer-control"><span class="toc-number">1.</span> <span class="toc-text">Agent in Computer Control</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#seeact-icml-2024"><span class="toc-number">1.1.</span> <span class="toc-text">SeeAct [ICML 2024]</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#webvoyager-acl-2024-main"><span class="toc-number">1.2.</span> <span class="toc-text">WebVoyager [ACL 2024 (main)]</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2024/11/14/LLM-Learning6/" title="论文阅读笔记 - Web Agent"><img data-lazy-src="https://s3.bmp.ovh/imgs/2024/04/08/2368e73f30658fe8.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="论文阅读笔记 - Web Agent"/></a><div class="content"><a class="title" href="/2024/11/14/LLM-Learning6/" title="论文阅读笔记 - Web Agent">论文阅读笔记 - Web Agent</a><time datetime="2024-11-14T03:21:31.000Z" title="发表于 2024-11-14 11:21:31">2024-11-14</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/11/14/LLM-Security4/" title="LLM for Security 论文记录 1114"><img data-lazy-src="https://s3.bmp.ovh/imgs/2024/04/08/2368e73f30658fe8.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="LLM for Security 论文记录 1114"/></a><div class="content"><a class="title" href="/2024/11/14/LLM-Security4/" title="LLM for Security 论文记录 1114">LLM for Security 论文记录 1114</a><time datetime="2024-11-14T02:57:54.000Z" title="发表于 2024-11-14 10:57:54">2024-11-14</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/11/14/LLM-Security3/" title="风云卫安全大模型的一些理解"><img data-lazy-src="https://s3.bmp.ovh/imgs/2024/04/08/2368e73f30658fe8.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="风云卫安全大模型的一些理解"/></a><div class="content"><a class="title" href="/2024/11/14/LLM-Security3/" title="风云卫安全大模型的一些理解">风云卫安全大模型的一些理解</a><time datetime="2024-11-14T02:43:52.000Z" title="发表于 2024-11-14 10:43:52">2024-11-14</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/10/17/LLM-Learning5/" title="TrafficLLM 复现 - Evaluation &amp; Server"><img data-lazy-src="https://s3.bmp.ovh/imgs/2024/04/08/2368e73f30658fe8.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="TrafficLLM 复现 - Evaluation &amp; Server"/></a><div class="content"><a class="title" href="/2024/10/17/LLM-Learning5/" title="TrafficLLM 复现 - Evaluation &amp; Server">TrafficLLM 复现 - Evaluation &amp; Server</a><time datetime="2024-10-17T06:37:32.000Z" title="发表于 2024-10-17 14:37:32">2024-10-17</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/09/19/LLM-Security2/" title="LLM for Security 论文记录 0919"><img data-lazy-src="https://s3.bmp.ovh/imgs/2024/04/08/2368e73f30658fe8.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="LLM for Security 论文记录 0919"/></a><div class="content"><a class="title" href="/2024/09/19/LLM-Security2/" title="LLM for Security 论文记录 0919">LLM for Security 论文记录 0919</a><time datetime="2024-09-19T02:54:14.000Z" title="发表于 2024-09-19 10:54:14">2024-09-19</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By Die Hu</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">❤Hi, welcome to my blog!❤</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="font-plus" type="button" title="放大字体"><i class="fas fa-plus"></i></button><button id="font-minus" type="button" title="缩小字体"><i class="fas fa-minus"></i></button><button id="translateLink" type="button" title="简繁转换">简</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>function loadValine () {
+<h2 id="autowebglm-kdd-2024">AutoWebGLM [KDD 2024]</h2>
+<p>AutoWebGLM: Bootstrap And Reinforce A Large Language Model-based Web Navigating Agent</p>
+<blockquote>
+<p>论文：<a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2404.03648">AutoWebGLM: A Large Language Model-based Web Navigating Agent</a><br>
+代码：<a target="_blank" rel="noopener" href="https://github.com/THUDM/AutoWebGLM">GitHub - THUDM/AutoWebGLM: An LLM-based Web Navigating Agent (KDD’24)</a></p>
+</blockquote>
+<h3 id="研究内容">研究内容</h3>
+<p>🎨<strong>问题建模</strong></p>
+<ul>
+<li><strong>网页浏览任务定义</strong>：将网页浏览任务视为<strong>序列决策过程</strong>。
+<ul>
+<li><strong>状态 (S)</strong>：当前网页状态，包括HTML结构、URL和窗口位置。</li>
+<li><strong>动作集合 (A)</strong>：所有可能的网页操作，包括点击（click）、滚动（scroll）、输入文本（type）等。</li>
+<li><strong>状态转移 (T)</strong>：模型通过操作改变网页状态，记录历史操作和当前网页内容。</li>
+<li><strong>策略 (π)</strong>：模型根据历史操作记录和当前网页状态，选择下一步的动作，直到任务完成或达到最大操作次数。</li>
+</ul>
+</li>
+</ul>
+<h3 id="动机">动机</h3>
+<p>当前网页浏览智能体在现实环境中表现不能令人满意，由于：</p>
+<ol>
+<li>缺乏统一的<strong>动作空间</strong>：不同网页之间的交互方式差异极大（如表单填写、按钮点击、内容搜索等）。缺乏通用且方便的操作空间，涵盖跨不同网站的浏览器上所有必要的任务执行。</li>
+<li>缺乏<strong>网页简化</strong>方法：网页的多样性和复杂性以及其倾向性的冗长给大模型理解内容和进行正确操作带来了重大挑战。内容丰富的网页的Token长度通常可以达到30k以上。</li>
+<li>缺乏高质量的<strong>训练轨迹</strong>：用于训练强大的基于 LLM 的网络代理的高质量轨迹有限。现有训练的智能体明显<strong>缺乏对网络任务</strong>进行正确推理和自我检查的能力。<strong>一旦陷入错误循环，他们就很难及时纠正问题</strong>。</li>
+</ol>
+<h3 id="方法">方法</h3>
+<h4 id="autowebglm框架设计">AutoWebGLM框架设计</h4>
+<p>受人类浏览模式的启发，作者设计了一种 <strong>HTML 简化算法</strong>来表示网页，简洁地保留重要信息。论文，采用人类与人工智能混合的方法来构建用于<strong>课程培训</strong>的网络浏览数据。然后，通过<strong>强化学习和拒绝采样</strong>来引导模型，以进一步促进网页理解、浏览器操作和高效的任务分解。为了进行测试，作者为现实世界的网页浏览任务建立了<strong>双语基准测试</strong> - AutoWebBench。<br>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2024/11/14/LLM-Learning6/autowebglm.png" style="zoom:60%;"></p>
+<p>🎈<strong>观察空间</strong>：</p>
+<ul>
+<li><strong>HTML</strong>：设计了一种HTML简化算法【通过递归筛选关键节点及其相关元素（祖先、后代和兄弟节点），并剔除冗余内容，保留任务执行所需的最简关键信息结构】，保留关键组件，确保模型能够专注于重要内容。</li>
+<li><strong>当前位置</strong>（其实就是页面截图）：网页滚动位置和页面大小。Agent 使用页面滚动位置来了解当前可见区域的内容，并使用页面高度信息来了解整个页面的比例，为模型提供可视化的空间上下文。</li>
+<li><strong>历史动作</strong>：提供过去操作。有助于代理了解其过去的行为，防止 Agent 因操作失败而陷入重复相同操作的无效循环，通过防止这种错误累积来提高其适应网页浏览任务的复杂性和动态性的能力。</li>
+</ul>
+<p>🎈<strong>动作空间</strong>：</p>
+<ul>
+<li>包括点击（click）、悬停（hover）、选择下拉菜单（select）、输入文本（type_string）、滚动页面（scroll_page）等操作。</li>
+<li>每个操作都以<strong>函数形式</strong>定义，确保模型在网页环境中的执行能力。</li>
+</ul>
+<h4 id="数据准备与任务设计">数据准备与任务设计</h4>
+<p>🎈<strong>数据构建方法</strong></p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2024/11/14/LLM-Learning6/autowebglm1.png" style="zoom:60%;">
+<p><strong>第一阶段：简单任务构建</strong>：</p>
+<ul>
+<li>识别网页结构和基本交互组件，生成<strong>单步</strong>任务（如表单填写、按钮点击）。</li>
+<li>利用<strong>GPT-3.5-Turbo</strong>生成任务描述和操作意图，确保任务多样性和操作可执行性。</li>
+</ul>
+<p><strong>第二阶段：复杂任务构建</strong>：</p>
+<ul>
+<li>收集跨网站复杂任务（如多步搜索、商品排序）。</li>
+<li>人工标注用户任务轨迹，并结合GPT-4生成详细的<strong>操作意图</strong>和<strong>链式思维推理</strong>（Chain-of-Thought）。</li>
+</ul>
+<p>🎈<strong>AutoWebBench评测基准</strong>：<br>
+构建包含<strong>域内数据</strong>（训练集中网页）和<strong>域外数据</strong>（训练集外网页）的测试集，分别用于评估模型在熟悉环境和陌生环境中的表现。</p>
+<p>🎈<strong>模型训练</strong></p>
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2024/11/14/LLM-Learning6/autowebglm2.png" style="zoom:60%;">
+<ul>
+<li><strong>第一步：课程学习（Curriculum Learning）</strong>：
+<ul>
+<li><strong>简单任务阶段</strong>：先训练模型识别网页结构并执行基本操作。</li>
+<li><strong>复杂任务阶段</strong>：训练模型将复杂任务分解为子任务，并根据历史操作选择下一步动作。</li>
+</ul>
+</li>
+<li><strong>第二步：强化学习（Reinforcement Learning）</strong>：
+<ul>
+<li><strong>自采样强化学习</strong>：模型从自己的错误中学习，通过对比真实任务路径和错误操作，优化决策过程。</li>
+<li><strong>损失函数</strong>：结合DPO损失（Direct Preference Optimization）与监督学习损失（SFT Loss），平衡模型的强化学习稳定性与自然语言理解能力。</li>
+</ul>
+</li>
+<li><strong>第三步：拒绝采样微调（Rejection Sampling Fine-Tuning, RFT）</strong>：
+<ul>
+<li>在特定领域网页环境中，采样任务轨迹，利用奖励信号筛选正确轨迹，用于进一步优化模型。</li>
+<li>在<strong>MiniWob++<strong>和</strong>WebArena</strong>沙盒环境中进行训练，生成高质量的网页浏览轨迹数据。</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p><strong>DPO</strong> (Direct Preference Optimization): 直接优化智能体的偏好，使其能够选择更符合人类期望的行为</p>
+<ul>
+<li>方法: 通过比较智能体自身的行为和人类专家的行为，来计算奖励信号，并更新智能体的策略。</li>
+<li>优点:不需要预先定义奖励函数，更适用于开放域环境；能够有效地学习人类专家的偏好。</li>
+<li>缺点:需要大量的数据来训练；训练过程可能不稳定。<br>
+<strong>拒绝采样微调</strong>(Rejection Sampling Finetuning): 通过选择智能体自身产生的正确轨迹进行微调，来提高智能体在特定环境中的性能。
+<ul>
+<li>这里的 “拒绝” 指的是筛选出错误的轨迹，只保留正确的轨迹进行微调。</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<h3 id="实验">实验</h3>
+<p>🎲<strong>对比试验</strong>：</p>
+<ul>
+<li><strong>AutoWebBench</strong>：自构建双语数据集（具体上面有讲）。
+<ul>
+<li><strong>中文任务</strong>：域内成功率65.4%，域外61.8%，显著优于GPT-4（36.7%）。</li>
+<li><strong>英文任务</strong>：域内64.8%，域外58.6%，同样远超其他模型。</li>
+</ul>
+</li>
+<li><strong>Mind2Web</strong>：复杂网页任务数据集，评估模型在跨域任务中的能力。
+<ul>
+<li>AutoWebGLM跨域任务成功率59.5%，明显高于GPT-4（30.9%）和LLaMA2（54.4%）。</li>
+</ul>
+</li>
+<li><strong>MiniWoB++</strong>：模拟环境数据集，用于简单网页交互任务评估。
+<ul>
+<li>MiniWoB++成功率89.3%，超过Html-T5-XL（85.6%）和GPT-4（32.1%）。</li>
+</ul>
+</li>
+<li><strong>WebArena</strong>：模拟真实环境的数据集，用于复杂网页任务测试。
+<ul>
+<li>WebArena成功率18.2%，优于GPT-4（14.4%）。</li>
+</ul>
+</li>
+</ul>
+<p>🎲<strong>消融实验</strong>：</p>
+<ul>
+<li><strong>复杂任务数据</strong>显著提升模型性能，结合简单任务数据可避免基本操作错误。</li>
+<li><strong>DPO训练</strong>增强了模型从错误中学习的能力，<strong>RFT微调</strong>优化了特定领域任务表现。</li>
+</ul>
+<p>🎲<strong>错误分析</strong>：<br>
+主要错误包括幻觉（44%）、图形识别不佳（28%）、任务上下文误解（20%）和弹窗干扰（8%）。</p>
+<h3 id="思考">思考</h3>
+<p><mark>创新点：设计了一种HTML简化算法，并提出<strong>混合人类-AI数据构建方法</strong>以及<strong>多阶段训练策略</strong>（课程学习、强化学习和拒绝采样微调）</mark></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Die Hu</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://enchantedovo.cn/2024/11/14/LLM-Learning6/">https://enchantedovo.cn/2024/11/14/LLM-Learning6/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://enchantedovo.cn" target="_blank">Enchanted to Meet U</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E7%94%9F%E6%88%90%E5%BC%8F%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">生成式人工智能</a><a class="post-meta__tags" href="/tags/%E5%A4%A7%E6%A8%A1%E5%9E%8B/">大模型</a><a class="post-meta__tags" href="/tags/Agent/">Agent</a></div><div class="post_share"><div class="social-share" data-image="https://s3.bmp.ovh/imgs/2024/04/08/2368e73f30658fe8.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2024/11/14/LLM-Security4/"><img class="next-cover" data-lazy-src="https://s3.bmp.ovh/imgs/2024/04/08/2368e73f30658fe8.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">LLM for Security 论文记录 1114</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2024/09/19/LLM-Security2/" title="LLM for Security 论文记录 0919"><img class="cover" data-lazy-src="https://s3.bmp.ovh/imgs/2024/04/08/2368e73f30658fe8.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-09-19</div><div class="title">LLM for Security 论文记录 0919</div></div></a></div><div><a href="/2024/11/14/LLM-Security4/" title="LLM for Security 论文记录 1114"><img class="cover" data-lazy-src="https://s3.bmp.ovh/imgs/2024/04/08/2368e73f30658fe8.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-11-14</div><div class="title">LLM for Security 论文记录 1114</div></div></a></div><div><a href="/2024/07/10/LLM-Security1/" title="大模型的对抗攻击与防御"><img class="cover" data-lazy-src="https://s3.bmp.ovh/imgs/2024/04/08/2368e73f30658fe8.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-07-10</div><div class="title">大模型的对抗攻击与防御</div></div></a></div><div><a href="/2024/07/19/LLM-Learning3/" title="论文阅读记录 —— LLM Agent"><img class="cover" data-lazy-src="https://s3.bmp.ovh/imgs/2024/04/08/2368e73f30658fe8.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-07-19</div><div class="title">论文阅读记录 —— LLM Agent</div></div></a></div><div><a href="/2024/07/11/AI-Security1/" title="文本生成模型的对抗攻击"><img class="cover" data-lazy-src="https://s3.bmp.ovh/imgs/2024/07/11/f1bc85b0c548d87e.webp" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-07-11</div><div class="title">文本生成模型的对抗攻击</div></div></a></div><div><a href="/2024/04/08/LLM-Learning1/" title="RAG 应知必会"><img class="cover" data-lazy-src="https://s3.bmp.ovh/imgs/2024/04/08/2368e73f30658fe8.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-04-08</div><div class="title">RAG 应知必会</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" data-lazy-src="/img/ava.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Die Hu</div><div class="author-info__description">———— 🦋的个人小站</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">33</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">31</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">20</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Enchantedovo" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:hudie@iie.ac.cn" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">Welcome to My Blog ❤</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#agent-in-computer-control"><span class="toc-number">1.</span> <span class="toc-text">Agent in Computer Control</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#seeact-icml-2024"><span class="toc-number">1.1.</span> <span class="toc-text">SeeAct [ICML 2024]</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A6%82%E8%A7%88"><span class="toc-number">1.1.1.</span> <span class="toc-text">概览</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A0%94%E7%A9%B6%E5%86%85%E5%AE%B9"><span class="toc-number">1.1.2.</span> <span class="toc-text">研究内容</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A0%94%E7%A9%B6%E5%8A%A8%E6%9C%BA"><span class="toc-number">1.1.3.</span> <span class="toc-text">研究动机</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%B3%95"><span class="toc-number">1.1.4.</span> <span class="toc-text">方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C%E7%BB%93%E6%9E%9C"><span class="toc-number">1.1.5.</span> <span class="toc-text">实验结果</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%9D%E8%80%83"><span class="toc-number">1.1.6.</span> <span class="toc-text">思考</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#webvoyager-acl-2024-main"><span class="toc-number">1.2.</span> <span class="toc-text">WebVoyager [ACL 2024 (main)]</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A0%94%E7%A9%B6%E5%86%85%E5%AE%B9"><span class="toc-number">1.2.1.</span> <span class="toc-text">研究内容</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A0%94%E7%A9%B6%E5%8A%A8%E6%9C%BA"><span class="toc-number">1.2.2.</span> <span class="toc-text">研究动机</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%9C%E8%80%85%E7%9A%84%E5%B7%A5%E4%BD%9C"><span class="toc-number">1.2.3.</span> <span class="toc-text">作者的工作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%B3%95"><span class="toc-number">1.2.4.</span> <span class="toc-text">方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C"><span class="toc-number">1.2.5.</span> <span class="toc-text">实验</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#autowebglm-kdd-2024"><span class="toc-number">1.3.</span> <span class="toc-text">AutoWebGLM [KDD 2024]</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A0%94%E7%A9%B6%E5%86%85%E5%AE%B9"><span class="toc-number">1.3.1.</span> <span class="toc-text">研究内容</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8A%A8%E6%9C%BA"><span class="toc-number">1.3.2.</span> <span class="toc-text">动机</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%B3%95"><span class="toc-number">1.3.3.</span> <span class="toc-text">方法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#autowebglm%E6%A1%86%E6%9E%B6%E8%AE%BE%E8%AE%A1"><span class="toc-number">1.3.3.1.</span> <span class="toc-text">AutoWebGLM框架设计</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%87%86%E5%A4%87%E4%B8%8E%E4%BB%BB%E5%8A%A1%E8%AE%BE%E8%AE%A1"><span class="toc-number">1.3.3.2.</span> <span class="toc-text">数据准备与任务设计</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C"><span class="toc-number">1.3.4.</span> <span class="toc-text">实验</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%9D%E8%80%83"><span class="toc-number">1.3.5.</span> <span class="toc-text">思考</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2024/11/14/LLM-Learning6/" title="论文阅读笔记 - Web Agent"><img data-lazy-src="https://s3.bmp.ovh/imgs/2024/04/08/2368e73f30658fe8.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="论文阅读笔记 - Web Agent"/></a><div class="content"><a class="title" href="/2024/11/14/LLM-Learning6/" title="论文阅读笔记 - Web Agent">论文阅读笔记 - Web Agent</a><time datetime="2024-11-14T03:21:31.000Z" title="发表于 2024-11-14 11:21:31">2024-11-14</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/11/14/LLM-Security4/" title="LLM for Security 论文记录 1114"><img data-lazy-src="https://s3.bmp.ovh/imgs/2024/04/08/2368e73f30658fe8.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="LLM for Security 论文记录 1114"/></a><div class="content"><a class="title" href="/2024/11/14/LLM-Security4/" title="LLM for Security 论文记录 1114">LLM for Security 论文记录 1114</a><time datetime="2024-11-14T02:57:54.000Z" title="发表于 2024-11-14 10:57:54">2024-11-14</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/11/14/LLM-Security3/" title="风云卫安全大模型的一些理解"><img data-lazy-src="https://s3.bmp.ovh/imgs/2024/04/08/2368e73f30658fe8.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="风云卫安全大模型的一些理解"/></a><div class="content"><a class="title" href="/2024/11/14/LLM-Security3/" title="风云卫安全大模型的一些理解">风云卫安全大模型的一些理解</a><time datetime="2024-11-14T02:43:52.000Z" title="发表于 2024-11-14 10:43:52">2024-11-14</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/10/17/LLM-Learning5/" title="TrafficLLM 复现 - Evaluation &amp; Server"><img data-lazy-src="https://s3.bmp.ovh/imgs/2024/04/08/2368e73f30658fe8.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="TrafficLLM 复现 - Evaluation &amp; Server"/></a><div class="content"><a class="title" href="/2024/10/17/LLM-Learning5/" title="TrafficLLM 复现 - Evaluation &amp; Server">TrafficLLM 复现 - Evaluation &amp; Server</a><time datetime="2024-10-17T06:37:32.000Z" title="发表于 2024-10-17 14:37:32">2024-10-17</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/09/19/LLM-Security2/" title="LLM for Security 论文记录 0919"><img data-lazy-src="https://s3.bmp.ovh/imgs/2024/04/08/2368e73f30658fe8.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="LLM for Security 论文记录 0919"/></a><div class="content"><a class="title" href="/2024/09/19/LLM-Security2/" title="LLM for Security 论文记录 0919">LLM for Security 论文记录 0919</a><time datetime="2024-09-19T02:54:14.000Z" title="发表于 2024-09-19 10:54:14">2024-09-19</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By Die Hu</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">❤Hi, welcome to my blog!❤</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="font-plus" type="button" title="放大字体"><i class="fas fa-plus"></i></button><button id="font-minus" type="button" title="缩小字体"><i class="fas fa-minus"></i></button><button id="translateLink" type="button" title="简繁转换">简</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>function loadValine () {
   function initValine () {
     let initData = {
       el: '#vcomment',
