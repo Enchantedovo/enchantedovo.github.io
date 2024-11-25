@@ -120,7 +120,7 @@ deploy:
 markdown:
   render:
     html: true
-    xhtmlOut: false
+    xhtmlOut: true
     breaks: true
     linkify: true
     typographer: true
