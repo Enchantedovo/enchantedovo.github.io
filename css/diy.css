@@ -164,12 +164,47 @@
 }
 
 #article-container ol {
-  margin-top: 0;
+  margin-top: 0 !important;
   /* margin-bottom: 0; */
 }
 
 #article-container ol li,
 #article-container ul li {
   /* margin: 0 0; */
-  margin-top: 0;
+  margin-top: 0 !important;
+}
+
+
+ol {
+  margin-left: 2em;
+  padding-left: 0;
+}
+
+ol ol {
+  margin-left: 2em;
+}
+
+/* 文章标题样式 */
+#article-container h1:before {
+  content: "H¹ ";
+  color: rgba(175, 173, 173, 0.712);
+}
+
+#article-container h2:before {
+  content: "H² ";
+  color: rgba(175, 173, 173, 0.712);
+}
+
+#article-container h3:before {
+  content: "H³ ";
+  color: rgba(175, 173, 173, 0.712);
+}
+
+/* 目录样式 */
+.post-toc ol {
+  font-size: 9px;
+}
+
+.layout {
+  max-width: 80%
 }
