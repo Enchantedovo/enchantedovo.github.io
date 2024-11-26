@@ -209,18 +209,6 @@ AutoWebGLM: Bootstrap And Reinforce A Large Language Model-based Web Navigating 
   - 在特定领域网页环境中，采样任务轨迹，利用奖励信号筛选正确轨迹，用于进一步优化模型。
   - 在**MiniWob++**和**WebArena**沙盒环境中进行训练，生成高质量的网页浏览轨迹数据。
 
-<ol>
-  <li>第一级列表
-    <ol>
-      <li>第二级列表
-        <ol>
-          <li>第三级列表</li>
-        </ol>
-      </li>
-    </ol>
-  </li>
-</ol>
-
 > **DPO** (Direct Preference Optimization): 直接优化智能体的偏好，使其能够选择更符合人类期望的行为。
 > - 方法: 通过比较智能体自身的行为和人类专家的行为，来计算奖励信号，并更新智能体的策略。
 > - 优点:不需要预先定义奖励函数，更适用于开放域环境；能够有效地学习人类专家的偏好。
