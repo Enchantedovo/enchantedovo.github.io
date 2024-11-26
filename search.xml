@@ -1512,7 +1512,7 @@ Overall the consumption of the world’s resources is undergoing a dangerous rat
 <!-- ## 标题二 -->
 <!--  -->
 <!-- <img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="p1.png"  style="zoom:55%;" /> -->
-<h1 id="seeact-icml-2024">SeeAct [ICML 2024]</h1>
+<h1 id="SeeAct-ICML-2024">SeeAct [ICML 2024]</h1>
 <p>GPT-4V(ision) is a Generalist Web Agent, if Grounded</p>
 <blockquote>
 <p>论文：<a href="https://arxiv.org/abs/2401.01614">https://arxiv.org/abs/2401.01614</a><br>
@@ -1545,24 +1545,24 @@ Overall the consumption of the world’s resources is undergoing a dangerous rat
 <p>如果提供了准确的元素定位，模型可以在在线评估中成功完成50%的任务。在各种定位策略中，结合HTML文本和视觉信息的方法表现最佳，显著优于仅使用图像注释的策略。在线评估与离线评估之间存在显著差异。</p>
 <h2 id="思考">思考</h2>
 <p><Mark>创新点：能够真正生成可执行浏览器的操作，提出几种元素定位的方法：使用html元素属性；提供元素的文本表示作为选择项，让模型做选择题；使用图像标记来定位目标元素（具体使用的算法并没有写）。并且设计了一种在线测评方法。</Mark></p>
-<h1 id="webvoyager-acl-2024">WebVoyager [ACL 2024]</h1>
+<h1 id="WebVoyager-ACL-2024">WebVoyager [ACL 2024]</h1>
 <p>WebVoyager : Building an End-to-End Web Agent with Large Multimodal Models</p>
 <blockquote>
 <p>论文：<a href="https://arxiv.org/abs/2401.13919">https://arxiv.org/abs/2401.13919</a><br>
 代码：<a href="https://github.com/MinorJerry/WebVoyager">https://github.com/MinorJerry/WebVoyager</a></p>
 </blockquote>
 <img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2024/11/14/LLM-Learning6/webvoyager.png" style="zoom:60%;">
-<h2 id="研究内容">研究内容</h2>
+<h2 id="研究内容-2">研究内容</h2>
 <p>Web Agent：借助 GPT-4V 这样的多模态模型，与开放网络中的网站交互，自动化完成用户的各项指令。<br>
 目标：构建一个能够在没有任何人工干预的情况下，<strong>自主浏览开放网页</strong>并<strong>完成用户指令</strong>的Agent。</p>
 <p><mark>创新点：考虑视觉，使用了SoM(Set-of-Mark Prompting)提高大模型对屏幕截图的理解能力。</mark></p>
-<h2 id="研究动机">研究动机</h2>
+<h2 id="研究动机-2">研究动机</h2>
 <p>现有的Agent通常用于处理复杂且冗长的HTML文本这一<strong>单一输入模态</strong>，而忽视了可以将HTML渲染为<strong>视觉网页</strong>这一要点，并且仅在<strong>简化</strong>的网络模拟器或<strong>静态</strong>网络快照中进行评估，很大程度上限制了Agent在现实世界场景中的适用性。</p>
 <h2 id="作者的工作">作者的工作</h2>
 <p>作者提出了一种新的<strong>多模态 Web Agent</strong>——WebVoyager，旨在以<strong>端到端</strong>的方式<strong>在线</strong>处理网络任务，即在没有人工介入的情况下从开始到结束自主管理整个过程。</p>
 <p>构建了一个<strong>新的评估数据集</strong>，包含来自15个常用网站的300个网络任务；并提出了一种自动评估的方法，在在线导航过程中保存屏幕截图，使用GPT-4V自动评估轨迹和最终结果，同时进行人工评估以验证结果。验证了GPT-4V评估器与人类评估的一致性，从而减轻人工评估员的负担，显著降低实验的成本。</p>
 <p>WebVoyager 的任务成功率为55.7%， 显著优于GPT-4（All Tools）的32.7%和纯文本设置的39.0%。</p>
-<h2 id="方法">方法</h2>
+<h2 id="方法-2">方法</h2>
 <p>WebVoyager 整体工作流程如上所示。具体来说：根据指令，WebVoyager 首先实例化一个 Web 浏览器，然后使用来自 Web 的视觉（即屏幕截图）和文本（即 HTML 元素）信号执行操作。Agent根据每一步的输入生成一个操作，然后在浏览器环境中执行。该过程将持续进行，直到Agent决定停止。 WebVoyager的详细设计，包括环境、交互周期、观察空间和动作空间如下。</p>
 <p><strong>1. 浏览环境的构建</strong><br>
 工作流程始于构建一个自动化的网页浏览环境。使用<strong>Selenium工具</strong>，Agent可以模拟用户的浏览行为，访问真实的网页。允许Agent探索开放的网络环境，面对实时更新、浮动广告等挑战。</p>
@@ -1606,13 +1606,13 @@ Overall the consumption of the world’s resources is undergoing a dangerous rat
 <li>GPT-4 (All Tools)，将视觉、网页浏览、代码分析和各种插件集成在一个模型中。</li>
 <li>考虑了一个仅接收网站可访问性树作为输入并进行行为预测的文本基线。</li>
 </ul>
-<h1 id="autowebglm-kdd-2024">AutoWebGLM [KDD 2024]</h1>
+<h1 id="AutoWebGLM-KDD-2024">AutoWebGLM [KDD 2024]</h1>
 <p>AutoWebGLM: Bootstrap And Reinforce A Large Language Model-based Web Navigating Agent</p>
 <blockquote>
 <p>论文：<a href="https://arxiv.org/pdf/2404.03648">AutoWebGLM: A Large Language Model-based Web Navigating Agent</a><br>
 代码：<a href="https://github.com/THUDM/AutoWebGLM">GitHub - THUDM/AutoWebGLM: An LLM-based Web Navigating Agent (KDD’24)</a></p>
 </blockquote>
-<h2 id="研究内容">研究内容</h2>
+<h2 id="研究内容-3">研究内容</h2>
 <p>🎨<strong>问题建模</strong></p>
 <p><strong>网页浏览任务定义</strong>：将网页浏览任务视为<strong>序列决策过程</strong>。</p>
 <ul>
@@ -1628,8 +1628,8 @@ Overall the consumption of the world’s resources is undergoing a dangerous rat
 <li>缺乏<strong>网页简化</strong>方法：网页的多样性和复杂性以及其倾向性的冗长给大模型理解内容和进行正确操作带来了重大挑战。内容丰富的网页的Token长度通常可以达到30k以上。</li>
 <li>缺乏高质量的<strong>训练轨迹</strong>：用于训练强大的基于 LLM 的网络代理的高质量轨迹有限。现有训练的智能体明显<strong>缺乏对网络任务</strong>进行正确推理和自我检查的能力。<strong>一旦陷入错误循环，他们就很难及时纠正问题</strong>。</li>
 </ol>
-<h2 id="方法">方法</h2>
-<h4 id="autowebglm框架设计">AutoWebGLM框架设计</h4>
+<h2 id="方法-3">方法</h2>
+<h4 id="AutoWebGLM框架设计">AutoWebGLM框架设计</h4>
 <p>受人类浏览模式的启发，作者设计了一种 <strong>HTML 简化算法</strong>来表示网页，简洁地保留重要信息。论文，采用人类与人工智能混合的方法来构建用于<strong>课程培训</strong>的网络浏览数据。然后，通过<strong>强化学习和拒绝采样</strong>来引导模型，以进一步促进网页理解、浏览器操作和高效的任务分解。为了进行测试，作者为现实世界的网页浏览任务建立了<strong>双语基准测试</strong> - AutoWebBench。<br>
 <img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2024/11/14/LLM-Learning6/autowebglm.png" style="zoom:60%;"></p>
 <p>🎈<strong>观察空间</strong>：</p>
@@ -1680,17 +1680,6 @@ Overall the consumption of the world’s resources is undergoing a dangerous rat
 </ul>
 </li>
 </ul>
-<ol>
-  <li>第一级列表
-    <ol>
-      <li>第二级列表
-        <ol>
-          <li>第三级列表</li>
-        </ol>
-      </li>
-    </ol>
-  </li>
-</ol>
 <blockquote>
 <p><strong>DPO</strong> (Direct Preference Optimization): 直接优化智能体的偏好，使其能够选择更符合人类期望的行为。</p>
 <ul>
@@ -1703,7 +1692,7 @@ Overall the consumption of the world’s resources is undergoing a dangerous rat
 <li>这里的 “拒绝” 指的是筛选出错误的轨迹，只保留正确的轨迹进行微调。</li>
 </ul>
 </blockquote>
-<h2 id="实验">实验</h2>
+<h2 id="实验-2">实验</h2>
 <p>🎲<strong>对比试验</strong>：</p>
 <ul>
 <li><strong>AutoWebBench</strong>：自构建双语数据集（具体上面有讲）。
@@ -1735,7 +1724,7 @@ Overall the consumption of the world’s resources is undergoing a dangerous rat
 </ul>
 <p>🎲<strong>错误分析</strong>：<br>
 主要错误包括幻觉（44%）、图形识别不佳（28%）、任务上下文误解（20%）和弹窗干扰（8%）。</p>
-<h2 id="思考">思考</h2>
+<h2 id="思考-2">思考</h2>
 <p><mark>创新点：设计了一种HTML简化算法，并提出<strong>混合人类-AI数据构建方法</strong>以及<strong>多阶段训练策略</strong>（课程学习、强化学习和拒绝采样微调）</mark></p>
 ]]></content>
       <categories>
@@ -4142,6 +4131,115 @@ break：接下来，如果缓冲头指针bh为空，或者tmp所指的缓冲头�
       <tags>
         <tag>操作系统</tag>
         <tag>Linux Kernel</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>OpenAI官方的Prompt工程指南</title>
+    <url>/2024/11/26/LLM-Learning7/</url>
+    <content><![CDATA[<blockquote>
+<p>原文：<a href="https://platform.openai.com/docs/guides/prompt-engineering">https://platform.openai.com/docs/guides/prompt-engineering</a><br>
+参考：<a href="https://www.jiqizhixin.com/articles/2023-12-18-17">https://www.jiqizhixin.com/articles/2023-12-18-17</a></p>
+</blockquote>
+<p><strong>共六个策略</strong></p>
+<h1 id="策略一：写清楚指令">策略一：写清楚指令</h1>
+<h2 id="包含更详细的查询信息">包含更详细的查询信息</h2>
+<p>提示中<strong>尽量包含更详细的查询信息（要求）</strong>，从而获得更相关的答案。如下图，同样是总结会议记录，采用这样的提示「用一个段落总结会议记录。然后写下演讲者的 Markdown 列表以及每个要点。最后，列出发言人建议的后续步骤或行动项目（如果有）。」结果会比较好。</p>
+<!--  -->
+<img src= "data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" data-lazy-src="/2024/11/26/LLM-Learning7/1.png" style="zoom:60%;">
+<h2 id="提供示例">提供示例</h2>
+<p>用户可以<strong>提供示例</strong>。例如，当你想让模型模仿一种难以明确描述的回答风格时，用户可以提供少数示例。</p>
+<h2 id="指定步骤">指定步骤</h2>
+<p>第三点是<strong>指定模型完成任务时所需的步骤</strong>。对于有些任务，最好指定步骤如步骤 1、2，显式地写出这些步骤可以使模型更容易地遵循用户意愿。</p>
+<h2 id="指定输出长度">指定输出长度</h2>
+<p>第四点是<strong>指定模型输出的长度</strong>（自己的经验：规定几句比规定多少字，效果更好）。用户可以要求模型生成给定目标长度的输出，目标输出长度可以根据单词、句子、段落等来指定。</p>
+<h2 id="使用分隔符划分各部分">使用分隔符划分各部分</h2>
+<p>第五点是<strong>使用分隔符来明确划分提示的不同部分</strong>（自己的经验：<strong>一般使用<code>****</code>来表示强调，<code>&quot;&quot;&quot;</code>或者<code>###</code>来分段</strong>）。<code>&quot;&quot;&quot;</code>、<code>XML 标签</code>、<code>小节标题</code>等分隔符可以帮助划分要区别对待的文本部分。</p>
+<h2 id="角色扮演">角色扮演</h2>
+<p>第六点是<strong>让模型扮演不同的角色</strong>，以控制其生成的内容。比如说：你是一位Python专家，你是一个专业的审稿人等。</p>
+<h1 id="策略二：提供参考文本">策略二：提供参考文本</h1>
+<p>语言模型会时不时的产生幻觉，自己发明答案，为这些模型提供参考文本可以帮助减少错误输出。需要做到两点：</p>
+<h2 id="提供参考回答">提供参考回答</h2>
+<p>首先是指示模型<strong>使用参考文本回答问题（其实就是RAG）</strong>。如果我们可以为模型提供与当前查询相关的可信信息，那么我们可以指示模型使用提供的信息来组成其答案。比如：使用由三重引号引起来的文本来回答问题。如果在文章中找不到答案，就写「我找不到答案」。</p>
+<h2 id="从参考文本中引用答案">从参考文本中引用答案</h2>
+<p>其次是指示模型<strong>从参考文本中引用答案</strong>。如果输入信息中已经包含了相关知识，就可以直接要求模型在回答问题时引用所提供的文件中的段落。值得注意的是，输出中的引用可以通过在所提供的文件中匹配字符串来进行验证。(如下表)</p>
+<table>
+<thead>
+<tr>
+<th><strong>Role</strong></th>
+<th><strong>Prompt</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SYSTEM</td>
+<td>You will be provided with a document delimited by triple quotes and a question. Your task is to answer the question using only the provided document and to cite the passage(s) of the document used to answer the question. If the document does not contain the information needed to answer this question then simply write: “Insufficient information.” If an answer to the question is provided, it must be annotated with a citation. Use the following format for to cite relevant passages ({“citation”: …}).</td>
+</tr>
+<tr>
+<td>USER</td>
+<td><code>&quot;&quot;&quot;&lt;insert document here&gt;&quot;&quot;&quot;</code> <br> <strong>Question</strong>: <code>&lt;insert question here&gt;</code></td>
+</tr>
+</tbody>
+</table>
+<h1 id="策略三：将复杂的任务拆分为更简单的子任务">策略三：将复杂的任务拆分为更简单的子任务</h1>
+<p>正如软件工程中将复杂系统分解为一组<strong>模块化</strong>组件一样，提交给语言模型的任务也是如此。复杂的任务往往比简单的任务具有更高的错误率，此外，复杂的任务通常可以被重新定义为更简单任务的工作流程。包括三点：</p>
+<h2 id="意图分类">意图分类</h2>
+<p>使用<strong>意图分类</strong>来识别与用户查询最相关的指令。</p>
+<h2 id="总结或过滤长信息">总结或过滤长信息</h2>
+<p>对于需要很<strong>长对话</strong>的对话应用，<strong>总结或过滤</strong>以前的对话。</p>
+<h2 id="分段递归总结长文档">分段递归总结长文档</h2>
+<p>即：<strong>分段总结长文档</strong>并<strong>递归的构建完整摘要</strong>。由于模型具有固定的上下文长度，因此要总结一个很长的文档（例如一本书），我们可以使用<strong>一系列查询来总结文档的每个部分</strong>。章节摘要可以连接起来并进行总结，<strong>生成摘要的摘要</strong>。这个过程可以递归地进行，直到总结整个文档。如果有必要使用前面部分的信息来理解后面的部分，那么另一个有用的技巧是在文本（如书）中任何给定点之前包含文本的运行摘要，同时在该点总结内容。OpenAI 在之前的研究中已经使用 GPT-3 的变体研究了这种过程的有效性。</p>
+<h1 id="策略三：给模型时间去思考-慢思考">策略三：给模型时间去思考（慢思考）</h1>
+<p>对于人类来说，要求给出 17 X 28 的结果，你不会立马给出答案，但随着时间的推移仍然可以算出来。同样，如果模型立即回答而不是花时间找出答案，可能会犯更多的推理错误。在给出答案之前采用思维链可以帮助模型更可靠地推理出正确答案。需要做到三点：</p>
+<h2 id="none"></h2>
+<p>首先是指示模型在急于<strong>得出结论之前找出自己的解决方案</strong>。</p>
+<p>其次是使用<strong>内心独白（inner monologue）<strong>或</strong>连续提问</strong>来<strong>隐藏模型的推理过程</strong>。<br>
+前面的策略表明，模型有时在回答特定问题之前详细推理问题很重要。对于某些应用程序，模型用于得出最终答案的推理过程不适合与用户共享。例如，在辅导应用程序中，我们可能希望鼓励学生得出自己的答案，但模型关于学生解决方案的推理过程可能会向学生揭示答案。</p>
+<blockquote>
+<p><strong>inner monologue</strong> 是一种可以用来缓解这种情况的策略。inner monologue 的思路是指示模型将原本对用户隐藏的部分输出放入结构化格式中，以便于解析它们。然后，在向用户呈现输出之前，将解析输出并且仅使部分输出可见。</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th><strong>Role</strong></th>
+<th><strong>Prompt</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SYSTEM</td>
+<td>按以下步骤回答用户问题：<br>第 1 步 - 首先独立解决问题。不要依赖学生的答案，因为可能有误。将此步骤的所有内容用三重引号 (&quot;&quot;&quot;) 包围。<br>第 2 步 - 将你的解答与学生的答案比较，判断学生的答案是否正确。将此步骤的所有内容用三重引号 (&quot;&quot;&quot;) 包围。<br>第 3 步 - 如果学生答案有误，想出一个不直接透露答案的提示。将此步骤的所有内容用三重引号 (&quot;&quot;&quot;) 包围。<br>第 4 步 - 如果学生答案有误，给出第 3 步的提示（不用三重引号）。用“提示：”替代“第 4 步 - …”。</td>
+</tr>
+<tr>
+<td>USER</td>
+<td>问题陈述：&lt;插入问题陈述&gt; <br> 学生解答：&lt;插入学生解答&gt;</td>
+</tr>
+</tbody>
+</table>
+<p>最后是<strong>询问模型在之前的过程中是否遗漏了任何内容</strong>（灵魂拷问，真有论文写过😂）。</p>
+<h1 id="策略五：使用外部工具-工具调用">策略五：使用外部工具（工具调用）</h1>
+<p>通过向模型提供其他工具的输出来弥补模型的弱点。例如，文本检索系统（有时称为 RAG 或检索增强生成）可以告诉模型相关文档。OpenAI 的 Code Interpreter 可以帮助模型进行数学运算并运行代码。如果一项任务可以通过工具而不是语言模型更可靠或更有效地完成，或许可以考虑利用两者。包括以下：</p>
+<ul>
+<li>使用基于嵌入的搜索实现高效的知识检索；（<strong>RAG</strong>）</li>
+<li>调用外部 API；（<strong>Agent中工具调用</strong>，比如调用代码解释器）</li>
+<li>赋予模型访问特定函数的权限（调用函数）。</li>
+</ul>
+<h1 id="策略六：系统的测试变化">策略六：系统的测试变化</h1>
+<p>有时，很难确定某个更改，比如新的指令或设计，是否真的改善了系统。观察几个案例可能会有所帮助，但在样本量较小的情况下，很难判断这是真正的改进还是偶然的幸运。可能某些更改在特定输入上提高了性能，但在其他情况下则降低了性能。</p>
+<p>评估程序对于优化系统设计非常有用。有效的评估特点是：</p>
+<ul>
+<li>能够代表现实世界中的使用情况（或至少具有多样性）</li>
+<li>包含众多测试案例，从而拥有更强的统计能力</li>
+<li>可以轻松自动化或重复</li>
+</ul>
+<p>评估可以由计算机、人工或两者结合进行。计算机可以自动化那些具有客观标准的评估（例如，有唯一正确答案的问题），也可以用于某些主观或模糊标准的评估，在这种情况下，模型输出由其他模型查询进行评估。<strong>OpenAI Evals</strong> 是一个开源软件框架，提供创建自动化评估的工具。</p>
+]]></content>
+      <categories>
+        <category>大模型</category>
+        <category>Prompt</category>
+      </categories>
+      <tags>
+        <tag>大模型</tag>
+        <tag>Prompt Engineering</tag>
       </tags>
   </entry>
 </search>

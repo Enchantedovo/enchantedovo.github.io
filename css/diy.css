@@ -195,6 +195,11 @@ ol ol {
   color: rgba(175, 173, 173, 0.712);
 }
 
+#article-container.post-content h2 {
+  font-size: 18.5px;
+  margin-top: 0;
+}
+
 #article-container h3:before {
   content: "H³ ";
   color: rgba(175, 173, 173, 0.712);
