@@ -175,6 +175,9 @@
   /* padding-left: 0.2rem !important; */
 }
 
+#article-container.post-content ol>li:before {
+  margin-top: 0.4em;
+}
 /* ol {
   margin-left: 2em;
   padding-left: 0;
@@ -187,6 +190,7 @@ ol ol {
 /* #article-container.post-content ol>li:not(.tab) {
   padding: 0.2em 0.2em 0.2em 0.8em;
 } */
+
 
 /* 文章标题样式 */
 /* #article-container h1:before {
