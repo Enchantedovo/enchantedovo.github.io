@@ -189,10 +189,10 @@ ol ol {
 } */
 
 /* 文章标题样式 */
-#article-container h1:before {
+/* #article-container h1:before {
   content: "H¹ ";
   color: rgba(175, 173, 173, 0.712);
-}
+} */
 
 #article-container h2:before {
   content: "H² ";
